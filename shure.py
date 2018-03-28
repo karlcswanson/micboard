@@ -7,7 +7,6 @@ import threading
 PORT = 2202
 WirelessReceivers = []
 
-
 class WirelessReceiver:
     def __init__(self, ip, type):
         self.ip = ip
