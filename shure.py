@@ -15,8 +15,8 @@ class WirelessReceiver:
         self.type = type
         self.transmitters = []
 
-    def add_transmitter(self, tx):
-        self.transmitters.append(WirelessTransmitter(tx))
+    def add_transmitter(self, tx, slot):
+        self.transmitters.append(WirelessTransmitter(tx, slot))
 
     def get_transmitter_by_channel(self, channel):
         return next((x for x in self.transmitters if x.channel == int(channel)), None)
@@ -66,12 +66,13 @@ class WirelessReceiver:
 
 
 class WirelessTransmitter:
-    def __init__(self, channel):
+    def __init__(self, channel, slot):
         self.chan_name = ''
         self.channel = channel
         self.battery = 255
         self.prev_battery = '1'
         self.timestamp = time.time() - 60
+        self.slot = slot
 
     def set_battery(self, level):
         level = int(level)
@@ -117,14 +118,15 @@ def config():
     cfg = configparser.ConfigParser()
     cfg.read('config.ini')
     for element in cfg.sections():
+        slot = int(filter(str.isdigit, repr(element)))
         rec = check_add_receiver(cfg[element]['ip'],cfg[element]['type'])
-        rec.add_transmitter(cfg.getint(element,'channel'))
+        rec.add_transmitter(cfg.getint(element,'channel'),slot)
 
 def print_ALL():
     for rx in WirelessReceivers:
-        print("IP: {}".format(rx.ip))
+        print("RX Type: {} IP: {} ".format(rx.type, rx.ip))
         for tx in rx.transmitters:
-            print("TX {}: {}  Status: {}".format(tx.channel, tx.chan_name,tx.tx_state()))
+            print("Channel Name: {} Slot: {} TX: {} Status: {}".format(tx.chan_name, tx.slot, tx.channel, tx.tx_state()))
 
 def WirelessPoll():
     while True:
@@ -138,7 +140,8 @@ def WirelessPoll():
                     s.sendall(bytearray(string,'UTF-8'))
                 s.close()
             except socket.error as e:
-                print("send connection  BAD to {}".format(rx.ip))
+                pass
+                # print("send connection  BAD to {}".format(rx.ip))
         time.sleep(5)
 
 def WirelessListen():
@@ -151,7 +154,8 @@ def WirelessListen():
             s.connect((receiver.ip, PORT))
             socks.append(s)
         except socket.error as e:
-            print("listen connection  BAD to {}".format(receiver.ip))
+            pass
+            # print("listen connection  BAD to {}".format(receiver.ip))
 
     while True:
         # process data when data socket buffer receives data
@@ -175,15 +179,15 @@ def state_test():
 
 def main():
     config()
-    # t = threading.Thread(target=WirelessPoll)
-    # t2 = threading.Thread(target=WirelessListen)
-    state_test()
-    # t.start()
-    # t2.start()
+    t1 = threading.Thread(target=WirelessPoll)
+    t2 = threading.Thread(target=WirelessListen)
+    # state_test()
+    t1.start()
+    t2.start()
 
-    # while True:
-        # print_ALL()
-        # time.sleep(3)
+    while True:
+       print_ALL()
+       time.sleep(3)
 
 if __name__ == '__main__':
     main()

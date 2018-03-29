@@ -1,23 +1,34 @@
 #!/usr/bin/python
 
 import shure
-import oled
-import led
+import threading
+# import oled
+# import led
 import time
 
 def main():
-    strip = led.setup()
-    disp = oled.setup()
+    shure.config()
+    t1 = threading.Thread(target=shure.WirelessPoll)
+    t2 = threading.Thread(target=shure.WirelessListen)
+    # state_test()
+    t1.start()
+    t2.start()
 
-    led.strip_test(strip)
+    while True:
+        shure.print_ALL()
+        time.sleep(3)
+    # strip = led.setup()
+    # disp = oled.setup()
 
-    oled.drawImage(disp)
-    time.sleep(1)
-    oled.drawName(disp,"HH06:","KARL")
+    # led.strip_test(strip)
+
+    # oled.drawImage(disp)
+    # time.sleep(1)
+    # oled.drawName(disp,"HH06:","KARL")
     # time.sleep(5)
     # oled.drawName(disp,"T,":)")
 
-    print("Hello World  poo")
+
 
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ slotmap = { 1:(0,15,'GOOD'),
            }
 
 
-numpixels = 180
+numpixels = 128
 datapin  = 10
 clockpin = 11
 def setup():
