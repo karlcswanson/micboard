@@ -4,6 +4,8 @@ import socket
 import select
 import threading
 
+
+DATA_TIMEOUT = 30
 PORT = 2202
 WirelessReceivers = []
 
@@ -13,35 +15,35 @@ class WirelessReceiver:
         self.type = type
         self.transmitters = []
 
-    def add_transmitter(self, channel):
-        self.transmitters.append(WirelessTransmitter(channel))
+    def add_transmitter(self, tx):
+        self.transmitters.append(WirelessTransmitter(tx))
 
-    def get_transmitter_by_channel(self,channel):
+    def get_transmitter_by_channel(self, channel):
         return next((x for x in self.transmitters if x.channel == int(channel)), None)
 
-    def parse_data(self,data):
+    def parse_data(self, data):
         if self.type == 'qlxd' or self.type == 'ulxd':
             return self.ulxd_parse(data)
         if self.type == 'uhfr':
             return self.uhfr_parse(data)
 
-    def ulxd_parse(self,i):
-        res, channel, command = i.split()[1:4]
+    def ulxd_parse(self, data):
+        res, channel, command = data.split()[1:4]
         if res == 'REP':
-            xmit = self.get_transmitter_by_channel(channel)
+            tx = self.get_transmitter_by_channel(channel)
             if command == 'CHAN_NAME':
-                xmit.set_chan_name(i[i.find("{")+1:i.find("}")])
+                tx.set_chan_name(data[data.find("{")+1:data.find("}")])
             if command == 'BATT_BARS':
-                xmit.set_battery(i.split()[4])
+                tx.set_battery(data.split()[4])
 
-    def uhfr_parse(self,i):
-        res, channel, command = i.split()[1:4]
+    def uhfr_parse(self, data):
+        res, channel, command = data.split()[1:4]
         if res == 'REPORT':
-            xmit = self.get_transmitter_by_channel(channel)
+            tx = self.get_transmitter_by_channel(channel)
             if command == 'CHAN_NAME':
-                xmit.set_chan_name(i[21:33])
+                tx.set_chan_name(data[21:33])
             if command == 'TX_BATT':
-                xmit.set_battery(i.split()[4])
+                tx.set_battery(data.split()[4])
 
     def get_channels(self):
         channels = []
@@ -62,7 +64,7 @@ class WirelessReceiver:
 
         return ret
 
-    def manual_update(self,socket):
+    def manual_update(self, socket):
         strings = self.get_query_strings()
         for string in strings:
             socket.sendall(bytearray(string,'UTF-8'))
@@ -73,7 +75,7 @@ class WirelessTransmitter:
         self.chan_name = ''
         self.channel = int(channel)
         self.battery = 255
-        self.prev_battery = 255
+        self.prev_battery = '1'
         self.timestamp = time.time() - 60
 
     def set_battery(self, level):
@@ -81,28 +83,33 @@ class WirelessTransmitter:
         self.battery = level
         if 1 <= level <= 5:
             self.prev_battery = level
-        self.tmestamp = time.time()
+        self.timestamp = time.time()
 
     def set_chan_name(self, chan_name):
         self.chan_name = chan_name
 
     def tx_state(self):
-        if (time.time() - self.timestamp) < 30:
+        if (time.time() - self.timestamp) < DATA_TIMEOUT:
             if 4 <= self.battery <= 5:
                 return 'GOOD'
-            elif self.battery == 3 or (self.battery == 255 and self.prev_battery == 3):
-                return 'REPLACE_BATTERY'
-            elif self.battery <= 2  or (self.battery == 255 and self.prev_battery <= 2):
-                return 'CRITICAL'
             elif self.battery == 255 and 4 <= self.prev_battery <=5:
                 return 'PREV_GOOD'
+            elif self.battery == 3:
+                return 'REPLACE'
+            elif self.battery == 255 and self.prev_battery == 3:
+                return 'PREV_REPLACE'
+            elif 0 <= self.battery <= 2:
+                return 'CRITICAL'
+            elif self.battery == 255 and 0 <= self.prev_battery <= 2:
+                return 'PREV_CRITICAL'
+
         return 'COM_ERROR'
 
 
 def get_receiver_by_ip(ip):
     return next((x for x in WirelessReceivers if x.ip == ip), None)
 
-def check_add_receiver(ip,type):
+def check_add_receiver(ip, type):
     rec = get_receiver_by_ip(ip)
     if rec:
         return rec
@@ -140,7 +147,7 @@ def WirelessPoll():
 
 def WirelessListen():
     socks = []
-    # open up a socket with each reciever
+    # open up a socket with each receiver
     for receiver in WirelessReceivers:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -182,5 +189,5 @@ def main():
         print_ALL()
         time.sleep(3)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
