@@ -8,14 +8,14 @@ colorcode = {'COM_ERROR' : 0xffff00,
              'CRITICAL': 0x800000,
              'PREV_GOOD':0xbf00ff }
 
-slotmap = { 1:(0,3,'COM_ERROR'),
-            2:(4,7,'UNASSIGNED'),
-            3:(8,11,'GOOD'),
-            4:(12,15,'REPLACE_BATTERY'),
-            5:(16,19,'CRITICAL'),
-            6:(20,23,'PREV_GOOD'),
-            7:(24,27,'GOOD'),
-            8:(28,31,'COM_ERROR')
+slotmap = { 1:(0,15,'GOOD'),
+            2:(16,31,'UNASSIGNED'),
+            3:(32,47,'GOOD'),
+            4:(48,63,'REPLACE_BATTERY'),
+            5:(64,79,'CRITICAL'),
+            6:(80,95,'PREV_GOOD'),
+            7:(96,111,'GOOD'),
+            8:(112,127,'GOOD')
            }
 
 
@@ -25,7 +25,7 @@ clockpin = 11
 def setup():
     strip = Adafruit_DotStar(numpixels, datapin, clockpin, order='bgr' )
     strip.begin()
-    strip.setBrightness(64)
+    strip.setBrightness(200)
     return strip
 
 

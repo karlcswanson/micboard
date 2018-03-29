@@ -19,11 +19,11 @@ class WirelessReceiver:
     def get_transmitter_by_channel(self,channel):
         return next((x for x in self.transmitters if x.channel == int(channel)), None)
 
-    def parse_data(self,i):
+    def parse_data(self,data):
         if self.type == 'qlxd' or self.type == 'ulxd':
-            return self.ulxd_parse(i)
+            return self.ulxd_parse(data)
         if self.type == 'uhfr':
-            return self.uhfr_parse(i)
+            return self.uhfr_parse(data)
 
     def ulxd_parse(self,i):
         res, channel, command = i.split()[1:4]
@@ -70,24 +70,24 @@ class WirelessReceiver:
 
 class WirelessTransmitter:
     def __init__(self, channel):
-        self.chan_name = 'DEFAULT'
+        self.chan_name = ''
         self.channel = int(channel)
         self.battery = 255
         self.prev_battery = 255
-        self.battery_check_time = time.time() - 60
+        self.timestamp = time.time() - 60
 
     def set_battery(self, level):
         level = int(level)
         self.battery = level
         if 1 <= level <= 5:
             self.prev_battery = level
-        self.battery_check_time = time.time()
+        self.tmestamp = time.time()
 
     def set_chan_name(self, chan_name):
         self.chan_name = chan_name
 
     def tx_state(self):
-        if (time.time() - self.battery_check_time) < 30:
+        if (time.time() - self.timestamp) < 30:
             if 4 <= self.battery <= 5:
                 return 'GOOD'
             elif self.battery == 3 or (self.battery == 255 and self.prev_battery == 3):
@@ -140,6 +140,7 @@ def WirelessPoll():
 
 def WirelessListen():
     socks = []
+    # open up a socket with each reciever
     for receiver in WirelessReceivers:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -150,6 +151,7 @@ def WirelessListen():
             print("listen connection  BAD to {}".format(receiver.ip))
 
     while True:
+        # process data when data socket buffer receives data
         ready_socks,_,_ = select.select(socks, [], [])
         for sock in ready_socks:
             ip,port = sock.getpeername()
