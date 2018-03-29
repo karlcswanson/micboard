@@ -64,16 +64,11 @@ class WirelessReceiver:
 
         return ret
 
-    def manual_update(self, socket):
-        strings = self.get_query_strings()
-        for string in strings:
-            socket.sendall(bytearray(string,'UTF-8'))
-
 
 class WirelessTransmitter:
     def __init__(self, channel):
         self.chan_name = ''
-        self.channel = int(channel)
+        self.channel = channel
         self.battery = 255
         self.prev_battery = '1'
         self.timestamp = time.time() - 60
@@ -123,26 +118,27 @@ def config():
     cfg.read('config.ini')
     for element in cfg.sections():
         rec = check_add_receiver(cfg[element]['ip'],cfg[element]['type'])
-        rec.add_transmitter(cfg[element]['channel'])
+        rec.add_transmitter(cfg.getint(element,'channel'))
 
 def print_ALL():
     for rx in WirelessReceivers:
         print("IP: {}".format(rx.ip))
         for tx in rx.transmitters:
-            print("TX: {}  Status: {}".format(tx.chan_name,tx.tx_state()))
+            print("TX {}: {}  Status: {}".format(tx.channel, tx.chan_name,tx.tx_state()))
 
 def WirelessPoll():
     while True:
-        for receiver in WirelessReceivers:
+        for rx in WirelessReceivers:
             try:
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 s.settimeout(.2)
-                s.connect((receiver.ip, PORT))
-                receiver.manual_update(s)
+                s.connect((rx.ip, PORT))
+                strings = rx.get_query_strings()
+                for string in strings:
+                    s.sendall(bytearray(string,'UTF-8'))
                 s.close()
             except socket.error as e:
-                print("send connection  BAD to {}".format(receiver.ip))
-
+                print("send connection  BAD to {}".format(rx.ip))
         time.sleep(5)
 
 def WirelessListen():
@@ -169,7 +165,7 @@ def WirelessListen():
 
 def state_test():
     tx = get_receiver_by_ip('10.231.3.50').get_transmitter_by_channel(1)
-    tx.set_battery(5)
+    tx.set_battery(3)
     print("tx: {}".format(tx.tx_state()))
     time.sleep(2)
     tx.set_battery(255)
@@ -179,15 +175,15 @@ def state_test():
 
 def main():
     config()
-    t = threading.Thread(target=WirelessPoll)
-    t2 = threading.Thread(target=WirelessListen)
-    # state_test()
-    t.start()
-    t2.start()
+    # t = threading.Thread(target=WirelessPoll)
+    # t2 = threading.Thread(target=WirelessListen)
+    state_test()
+    # t.start()
+    # t2.start()
 
-    while True:
-        print_ALL()
-        time.sleep(3)
+    # while True:
+        # print_ALL()
+        # time.sleep(3)
 
 if __name__ == '__main__':
     main()
