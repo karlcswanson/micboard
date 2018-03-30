@@ -67,7 +67,7 @@ class WirelessReceiver:
 
 class WirelessTransmitter:
     def __init__(self, channel, slot):
-        self.chan_name = ''
+        self.chan_name = 'DEFAULT'
         self.channel = channel
         self.battery = 255
         self.prev_battery = '1'
@@ -85,6 +85,12 @@ class WirelessTransmitter:
         self.chan_name = chan_name
 
     def tx_state(self):
+        # WCCC Specific State for unassigned microphones
+        name = self.chan_name.split()
+        if name[0][:2] == 'HH' or name[0][:2] == 'BP':
+            if len(name) == 1:
+                return 'UNASSIGNED'
+
         if (time.time() - self.timestamp) < DATA_TIMEOUT:
             if 4 <= self.battery <= 5:
                 return 'GOOD'
@@ -126,7 +132,7 @@ def print_ALL():
     for rx in WirelessReceivers:
         print("RX Type: {} IP: {} ".format(rx.type, rx.ip))
         for tx in rx.transmitters:
-            print("Channel Name: {} Slot: {} TX: {} Status: {}".format(tx.chan_name, tx.slot, tx.channel, tx.tx_state()))
+            print("Channel Name: {} Slot: {} TX: {} State: {}".format(tx.chan_name, tx.slot, tx.channel, tx.tx_state()))
 
 def WirelessPoll():
     while True:
@@ -185,6 +191,7 @@ def main():
     t1.start()
     t2.start()
 
+    time.sleep(2)
     while True:
        print_ALL()
        time.sleep(3)
