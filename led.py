@@ -3,10 +3,10 @@ from dotstar import Adafruit_DotStar
 
 colorcode = {'COM_ERROR' : 0xffff00,
              'UNASSIGNED': 0x000000,
-             'GOOD': 0x66ff33,
+             'GOOD': 0x00ff00,
              'PREV_GOOD':0xbf00ff,
-             'REPLACE' : 0xffff00,
-             'PREV_REPLACE' : 0xffff00,
+             'REPLACE' : 0xff0000,
+             'PREV_REPLACE' : 0xff0000,
              'CRITICAL': 0x800000,
              'PREV_CRITICAL': 0x800000
               }

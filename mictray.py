@@ -71,12 +71,12 @@ def main():
     slot_setup()
 
 
-    t1 = threading.Thread(target=shure.WirelessPoll)
+    # t1 = threading.Thread(target=shure.WirelessPoll)
     t2 = threading.Thread(target=shure.WirelessListen)
     t3 = threading.Thread(target=update_slots)
 
     #
-    t1.start()
+    # t1.start()
     t2.start()
     t3.start()
 

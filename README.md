@@ -1,5 +1,5 @@
 # MicTray
-An inteligent mic tray for ethernet enabled Shure microphones.
+An intelligent mic tray for ethernet enabled Shure microphones.
 
 ## Installation
 raspi-configure spi, i2c
