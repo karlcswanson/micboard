@@ -4,7 +4,6 @@ import socket
 import select
 import threading
 
-
 DATA_TIMEOUT = 30
 PORT = 2202
 WirelessReceivers = []
@@ -35,15 +34,20 @@ class WirelessReceiver:
                 tx.set_chan_name(data[data.find("{")+1:data.find("}")])
             if command == 'BATT_BARS':
                 tx.set_battery(data.split()[4])
+            if command == 'FREQUENCY':
+                tx.set_frequency(data.split()[4])
 
     def uhfr_parse(self, data):
         res, channel, command = data.split()[1:4]
         if res == 'REPORT':
             tx = self.get_transmitter_by_channel(channel)
             if command == 'CHAN_NAME':
+                # grabing this range makes sure we copy channel names with spaces
                 tx.set_chan_name(data[21:33])
             if command == 'TX_BATT':
                 tx.set_battery(data.split()[4])
+            if command == 'FREQUENCY':
+                tx.set_frequency(data.split()[4])
 
     def get_channels(self):
         channels = []
@@ -57,10 +61,13 @@ class WirelessReceiver:
             for i in self.get_channels():
                 ret.append('< GET {} CHAN_NAME >'.format(i))
                 ret.append('< GET {} BATT_BARS >'.format(i))
+                ret.append('< GET {} FREQUENCY >'.format(i))
+
         elif self.type == 'uhfr':
             for i in self.get_channels():
                 ret.append('* GET {} CHAN_NAME *'.format(i))
                 ret.append('* GET {} BATT_BARS *'.format(i))
+                ret.append('* GET {} GROUP_CHAN *'.format(i))
 
         return ret
 
@@ -69,10 +76,15 @@ class WirelessTransmitter:
     def __init__(self, channel, slot):
         self.chan_name = 'DEFAULT'
         self.channel = channel
+        self.frequency = '000000'
         self.battery = 255
         self.prev_battery = '1'
         self.timestamp = time.time() - 60
         self.slot = slot
+
+
+    def set_frequency(self, frequency):
+        self.frequency = frequency[:3] + '.' + frequency[3:]
 
     def set_battery(self, level):
         level = int(level)
@@ -132,7 +144,7 @@ def print_ALL():
     for rx in WirelessReceivers:
         print("RX Type: {} IP: {} ".format(rx.type, rx.ip))
         for tx in rx.transmitters:
-            print("Channel Name: {} Slot: {} TX: {} State: {}".format(tx.chan_name, tx.slot, tx.channel, tx.tx_state()))
+            print("Channel Name: {} Frequency: {} Slot: {} TX: {} State: {}".format(tx.chan_name, tx.frequency, tx.slot, tx.channel, tx.tx_state()))
 
 def WirelessPoll():
     while True:
