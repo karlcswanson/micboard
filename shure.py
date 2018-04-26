@@ -14,6 +14,7 @@ class WirelessReceiver:
         self.type = type
         self.transmitters = []
 
+
     def add_transmitter(self, tx, slot):
         self.transmitters.append(WirelessTransmitter(tx, slot))
 
