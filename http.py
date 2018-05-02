@@ -2,9 +2,20 @@ import cherrypy
 import json
 import threading
 import time
+import os
 import shure
 
 PORT = 8058
+# PATH = os.path.abspath('os.path.dirname(__file__)' + '/static')
+
+print(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static'))
+conf = {
+        '/': {
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static'),
+            'tools.staticdir.index': "1080.html"
+        }
+      }
 
 cherrypy.config.update({'server.socket_port': PORT})
 
@@ -32,8 +43,14 @@ class HelloWorld(object):
         return json_rxs(shure.WirelessReceivers)
     index.exposed = True
 
+class AppName(object):
+    pass
+
 def http():
-    cherrypy.quickstart(HelloWorld())
+    cherrypy.tree.mount(AppName(),'/static',conf)
+    cherrypy.tree.mount(HelloWorld(),'/data.json')
+    cherrypy.engine.start()
+    cherrypy.engine.block()
 
 def main():
     shure.config()

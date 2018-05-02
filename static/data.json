@@ -1,0 +1,136 @@
+{
+    "receivers": [
+        {
+            "ip": "10.231.3.50",
+            "tx": [
+                {
+                    "battery": 255,
+                    "channel": 1,
+                    "frequency": "498.850",
+                    "name": "Amaris",
+                    "slot": 1,
+                    "status": "GOOD"
+                },
+                {
+                    "battery": 255,
+                    "channel": 1,
+                    "frequency": "498.850",
+                    "name": "James",
+                    "slot": 2,
+                    "status": "PREV_GOOD"
+                }
+            ],
+            "type": "uhfr"
+        },
+        {
+            "ip": "10.231.3.44",
+            "tx": [
+                {
+                    "battery": 255,
+                    "channel": 1,
+                    "frequency": "531.975",
+                    "name": "Fatai",
+                    "slot": 3,
+                    "status": "PREV_REPLACE"
+                },
+                {
+                    "battery": 255,
+                    "channel": 1,
+                    "frequency": "531.975",
+                    "name": "Matt",
+                    "slot": 4,
+                    "status": "GOOD"
+                }
+            ],
+            "type": "uhfr"
+        },
+        {
+            "ip": "10.231.3.36",
+            "tx": [
+                {
+                    "battery": 255,
+                    "channel": 1,
+                    "frequency": "532.550",
+                    "name": "Marshall",
+                    "slot": 5,
+                    "status": "COM_ERROR"
+                },
+                {
+                    "battery": 255,
+                    "channel": 1,
+                    "frequency": "532.550",
+                    "name": "Delwin",
+                    "slot": 6,
+                    "status": "CRITICAL"
+                }
+            ],
+            "type": "uhfr"
+        },
+        {
+            "ip": "10.231.3.35",
+            "tx": [
+                {
+                    "battery": 255,
+                    "channel": 1,
+                    "frequency": "525.400",
+                    "name": "",
+                    "slot": 7,
+                    "status": "COM_ERROR"
+                },
+                {
+                    "battery": 255,
+                    "channel": 1,
+                    "frequency": "525.400",
+                    "name": "Backup",
+                    "slot": 8,
+                    "status": "GOOD"
+                }
+            ],
+            "type": "uhfr"
+        },
+        {
+            "ip": "10.231.3.35",
+            "tx": [
+                {
+                    "battery": 255,
+                    "channel": 1,
+                    "frequency": "525.400",
+                    "name": "",
+                    "slot": 9,
+                    "status": "UNASSIGNED"
+                },
+                {
+                    "battery": 255,
+                    "channel": 1,
+                    "frequency": "525.400",
+                    "name": "",
+                    "slot": 10,
+                    "status": "UNASSIGNED"
+                }
+            ],
+            "type": "uhfr"
+        },
+        {
+            "ip": "10.231.3.35",
+            "tx": [
+                {
+                    "battery": 255,
+                    "channel": 1,
+                    "frequency": "525.400",
+                    "name": "Heather",
+                    "slot": 11,
+                    "status": "GOOD"
+                },
+                {
+                    "battery": 255,
+                    "channel": 1,
+                    "frequency": "525.400",
+                    "name": "Steve",
+                    "slot": 12,
+                    "status": "GOOD"
+                }
+            ],
+            "type": "uhfr"
+        }
+    ]
+}

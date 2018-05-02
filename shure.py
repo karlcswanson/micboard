@@ -161,7 +161,7 @@ def WirelessPoll():
             except socket.error as e:
                 pass
                 # print("send connection  BAD to {}".format(rx.ip))
-        time.sleep(5)
+        time.sleep(10)
 
 def WirelessListen():
     socks = []

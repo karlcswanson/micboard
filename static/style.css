@@ -1,0 +1,91 @@
+html,body{
+  background-color:#000000;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+.fullHeight{
+  height: 100%;
+}
+
+.col-sm{
+  color: white;
+  padding-top: .5em;
+}
+
+.col-sm .mic_id{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  text-align: center;
+}
+
+.above-mid{
+  height: 40%;
+}
+.header{
+  height:10%;
+}
+.clock{
+  color: rgb(199, 199, 223);
+  height: inherit;
+  float: right;
+  text-align: right;
+  vertical-align: center;
+  /* position: relative;
+  top: 70%;
+  transform: translateY(-50%); */
+}
+.clock p{
+  font-size: xx-large;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 100;
+  margin:0px;
+
+  position: relative;
+  top:50%;
+  transform: translateY(50%);
+}
+
+.above-mid .col-sm {
+  border: .5px solid;
+  border-color: black;
+}
+.name{
+  font-family: 'Roboto',sans-serif;
+  font-weight: 700;
+  font-size: 20pt;
+  text-align: center;
+
+  position: relative;
+  top:20%;
+  transform: translateY(100%);
+}
+
+/* Backgrounds */
+.GOOD{
+  background: #155724;
+}
+
+.PREV_GOOD{
+  background: #155724;
+  background: -webkit-linear-gradient(to top, #155724, #000000, #000000);
+  background: linear-gradient(to top, #155724, #000000, #000000);
+}
+
+.REPLACE, .PREV_REPLACE{
+  background: #a2ab58;
+  /* background: -webkit-linear-gradient(to top, #a2ab58, #000000); */
+  /* background: linear-gradient(to top, #a2ab58, #000000); */
+}
+
+.CRITICAL, .PREV_CRITICAL{
+  background: #a73737;
+  /* background: -webkit-linear-gradient(to top, #7a2828, #000000); */
+  /* background: linear-gradient(to top, #a73737, #000000); */
+}
+
+.COM_ERROR{
+  background: #523602;
+  background: -webkit-linear-gradient(to top, #523602, #000000, #000000, #000000);
+  background: linear-gradient(to top, #523602, #000000,#000000, #000000);
+}

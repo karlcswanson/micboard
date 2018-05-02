@@ -3,3 +3,5 @@ dotstar.so
 .ftpconfig
 assets/
 *.pyc
+*.DS_Store
+static/serveit.py
