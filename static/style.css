@@ -70,25 +70,30 @@ html,body{
   .col-sm{
     padding-top: unset;
     vertical-align: middle;
+    /* text-align: center; */
   }
   .mic_id{
     display: inline;
     position: unset;
     top: unset;
+    margin: unset;
     transform: unset;
     font-weight: 400;
     font-size: 18pt;
     text-align: left;
+    float:left;
   }
 
   .name{
     font-size: 12pt;
     display: inline;
     position: unset;
-
+    /* float: center; */
+    margin:unset;
     transform: unset;
     font-weight: 300;
     padding-left: 4em;
+    text-align: left;
     font-family: 'Roboto', sans-serif;
 
     font-size: 18pt;
