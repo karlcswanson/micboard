@@ -6,7 +6,7 @@ import os
 import shure
 
 PORT = 8058
-print(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static/1080.hmtl'))
+
 conf = {
         '/': {
             'tools.trailing_slash.extra': False
