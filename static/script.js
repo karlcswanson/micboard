@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 function loadJson(){
   transmitters = [];
-  $.getJSON( "/data.json", function( data ) {
+  $.getJSON( "/data", function( data ) {
       for(i in data.receivers){
           for (j in data.receivers[i].tx){
             transmitters.push(data.receivers[i].tx[j]);
