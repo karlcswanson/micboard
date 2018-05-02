@@ -15,7 +15,7 @@ conf = {
         '/static': {
             'tools.staticdir.on': True,
             'tools.staticdir.dir': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static'),
-            'tools.staticdir.index': "1080.html"
+            'tools.staticdir.index': "index.html"
         }
     }
 cherrypy.config.update({'server.socket_port': PORT})
