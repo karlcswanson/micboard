@@ -44,7 +44,9 @@ class HelloWorld(object):
         response.headers['Content-Type'] = 'application/json'
         return json_rxs(shure.WirelessReceivers)
 
+
 def http():
+    cherrypy.server.socket_host = '0.0.0.0'
     cherrypy.quickstart(HelloWorld(),'/',conf)
 
 def main():

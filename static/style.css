@@ -53,12 +53,47 @@ html,body{
 .name{
   font-family: 'Roboto',sans-serif;
   font-weight: 700;
-  font-size: 20pt;
+  font-size: calc(1vw + 5pt);
   text-align: center;
 
   position: relative;
   top:20%;
   transform: translateY(100%);
+}
+@media (max-width: 980px) {
+  .above-mid {
+    height: unset;
+  }
+  .header{
+    display:none;
+  }
+  .col-sm{
+    padding-top: unset;
+    vertical-align: middle;
+  }
+  .mic_id{
+    display: inline;
+    position: unset;
+    top: unset;
+    transform: unset;
+    font-weight: 400;
+    font-size: 18pt;
+    text-align: left;
+  }
+
+  .name{
+    font-size: 12pt;
+    display: inline;
+    position: unset;
+
+    transform: unset;
+    font-weight: 300;
+    padding-left: 4em;
+    font-family: 'Roboto', sans-serif;
+
+    font-size: 18pt;
+  }
+
 }
 
 /* Backgrounds */
