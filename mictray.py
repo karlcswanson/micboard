@@ -46,6 +46,7 @@ class HelloWorld(object):
 
 
 def http():
+    cherrypy.engine.autoreload_on = False
     cherrypy.server.socket_host = '0.0.0.0'
     cherrypy.quickstart(HelloWorld(),'/',conf)
 

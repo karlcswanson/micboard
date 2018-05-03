@@ -5,3 +5,8 @@ assets/
 *.pyc
 *.DS_Store
 static/serveit.py
+mictray/dist/*
+dist/*
+mictray/build/*
+build/*
+.eggs/*
