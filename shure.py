@@ -3,6 +3,7 @@ import time
 import socket
 import select
 import threading
+import re
 
 DATA_TIMEOUT = 30
 PORT = 2202
@@ -13,7 +14,6 @@ class WirelessReceiver:
         self.ip = ip
         self.type = type
         self.transmitters = []
-
 
     def add_transmitter(self, tx, slot):
         self.transmitters.append(WirelessTransmitter(tx, slot))
@@ -137,7 +137,7 @@ def config():
     cfg = configparser.ConfigParser()
     cfg.read('config.ini')
     for element in cfg.sections():
-        slot = int(filter(str.isdigit, repr(element)))
+        slot = int(re.search(r'\d+', repr(element)).group())
         rec = check_add_receiver(cfg[element]['ip'],cfg[element]['type'])
         rec.add_transmitter(cfg.getint(element,'channel'),slot)
 
