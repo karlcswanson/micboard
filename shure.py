@@ -9,6 +9,8 @@ DATA_TIMEOUT = 30
 PORT = 2202
 WirelessReceivers = []
 
+dataUpdateCall = None
+
 class WirelessReceiver:
     def __init__(self, ip, type):
         self.ip = ip
@@ -72,6 +74,13 @@ class WirelessReceiver:
 
         return ret
 
+    def rx_json(self):
+        tx_data = []
+        for transmitter in self.transmitters:
+            tx_data.append(transmitter.tx_json())
+        data = {'ip': self.ip, 'type': self.type, 'tx': tx_data}
+        return data
+
 
 class WirelessTransmitter:
     def __init__(self, channel, slot):
@@ -79,7 +88,7 @@ class WirelessTransmitter:
         self.channel = channel
         self.frequency = '000000'
         self.battery = 255
-        self.prev_battery = '1'
+        self.prev_battery = 255
         self.timestamp = time.time() - 60
         self.slot = slot
 
@@ -93,6 +102,7 @@ class WirelessTransmitter:
         if 1 <= level <= 5:
             self.prev_battery = level
         self.timestamp = time.time()
+        dataUpdateCall(self.tx_json())
 
     def set_chan_name(self, chan_name):
         self.chan_name = chan_name
@@ -107,7 +117,7 @@ class WirelessTransmitter:
         if (time.time() - self.timestamp) < DATA_TIMEOUT:
             if 4 <= self.battery <= 5:
                 return 'GOOD'
-            elif self.battery == 255 and 4 <= self.prev_battery <=5:
+            elif self.battery == 255 and 4 <= self.prev_battery <= 5:
                 return 'PREV_GOOD'
             elif self.battery == 3:
                 return 'REPLACE'
@@ -119,6 +129,11 @@ class WirelessTransmitter:
                 return 'PREV_CRITICAL'
 
         return 'COM_ERROR'
+
+    def tx_json(self):
+        return {'name': self.chan_name, 'channel': self.channel,
+                        'frequency': self.frequency, 'battery':self.battery,
+                        'status': self.tx_state(), 'slot': self.slot }
 
 
 def get_receiver_by_ip(ip):
@@ -133,9 +148,9 @@ def check_add_receiver(ip, type):
         WirelessReceivers.append(rec)
         return rec
 
-def config():
+def config(file):
     cfg = configparser.ConfigParser()
-    cfg.read('config.ini')
+    cfg.read(file)
     for element in cfg.sections():
         slot = int(re.search(r'\d+', repr(element)).group())
         rec = check_add_receiver(cfg[element]['ip'],cfg[element]['type'])

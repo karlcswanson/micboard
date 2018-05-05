@@ -8,21 +8,10 @@ import shure
 cl = []
 
 
-def rx_data(rx):
-    tx_data = []
-    for tx in rx.transmitters:
-        tx_data.append({'name': tx.chan_name, 'channel': tx.channel,
-                        'frequency': tx.frequency, 'battery':tx.battery,
-                        'status': tx.tx_state(), 'slot': tx.slot })
-
-    data = {'ip': rx.ip, 'type': rx.type, 'tx': tx_data}
-    return data
-
 def json_rxs(rxs):
     data = []
     for rx in rxs:
-        data.append(rx_data(rx))
-
+        data.append(rx.rx_json())
     return json.dumps({'receivers': data}, sort_keys=True, indent=4)
 
 class IndexHandler(web.RequestHandler):
@@ -82,6 +71,7 @@ def twisted():
     ioloop.IOLoop.instance().start()
 
 
+
 def timeGen():
     value = 0
     while True:
@@ -92,11 +82,17 @@ def timeGen():
         writeWeb(val)
 
 def main():
-    shure.config()
-    t1 = threading.Thread(target=twisted)
-    t2 = threading.Thread(target=timeGen)
+    shure.dataUpdateCall = writeWeb
+    shure.config('config.ini')
+    time.sleep(1)
+    t1 = threading.Thread(target=shure.WirelessPoll)
+    t2 = threading.Thread(target=shure.WirelessListen)
+    t3 = threading.Thread(target=twisted)
+    # t4 = threading.Thread(target=timeGen)
     t1.start()
     t2.start()
+    t3.start()
+    # t4.start()
 
 
 
