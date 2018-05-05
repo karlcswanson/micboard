@@ -8,6 +8,11 @@ import asyncio
 
 cl = []
 
+settings = {
+    'static_path': os.path.join(os.path.dirname(__file__), "static")
+    }
+
+
 
 def json_rxs(rxs):
     data = []
@@ -60,7 +65,7 @@ app = web.Application([
     (r'/(favicon.ico)', web.StaticFileHandler, {'path': '../'}),
     (r'/static/(.*)', web.StaticFileHandler, {'path': 'static/'}),
     (r'/(rest_api_example.png)', web.StaticFileHandler, {'path': './'}),
-])
+], **settings)
 
 
 def writeWeb(data):
