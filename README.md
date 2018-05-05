@@ -11,6 +11,11 @@ pip install -r requirements.txt
 python mictray.py
 ```
 
+#### Docker
+```
+docker build .
+docker run -d -p 8888:8888 < image id >
+```
 
 
 
