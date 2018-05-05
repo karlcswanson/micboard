@@ -4,6 +4,7 @@ import threading
 import time
 import os
 import shure
+import asyncio
 
 cl = []
 
@@ -67,6 +68,8 @@ def writeWeb(data):
         c.write_message(data)
 
 def twisted():
+    # https://github.com/tornadoweb/tornado/issues/2308
+    asyncio.set_event_loop(asyncio.new_event_loop())
     app.listen(8058)
     ioloop.IOLoop.instance().start()
 
