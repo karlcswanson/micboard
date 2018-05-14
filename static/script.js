@@ -8,7 +8,7 @@ $(document).ready(function() {
   console.log('Start: ' + start_slot);
   console.log('Stop:  ' + stop_slot);
   if (demo == 'true') {
-    dataURL = '/static/data.json';
+    dataURL = 'static/data.json';
     loadJson();
   }
   else {
