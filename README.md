@@ -14,7 +14,7 @@ python mictray.py
 #### Docker
 ```
 docker build .
-docker run -d -p 8888:8888 < image id >
+docker run -d -p 8058:8058 < image id >
 ```
 
 

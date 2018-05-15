@@ -91,7 +91,7 @@ def timeGen():
 
 def main():
     shure.dataUpdateCall = writeWeb
-    shure.config('config.ini')
+    shure.config(os.path.join(os.path.dirname(__file__), 'config.ini'))
     time.sleep(1)
     t1 = threading.Thread(target=shure.WirelessPoll)
     t2 = threading.Thread(target=shure.WirelessListen)
