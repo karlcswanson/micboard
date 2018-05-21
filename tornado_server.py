@@ -92,8 +92,12 @@ def timeGen():
 def main():
     shure.dataUpdateCall = writeWeb
     shure.config(os.path.join(os.path.dirname(__file__), 'config.ini'))
+
+    for rx in shure.WirelessReceivers:
+        rx.enable_metering(.1)
+
     time.sleep(1)
-    t1 = threading.Thread(target=shure.WirelessPoll)
+    t1 = threading.Thread(target=shure.WirelessQueue)
     t2 = threading.Thread(target=shure.WirelessListen)
     t3 = threading.Thread(target=twisted)
     # t4 = threading.Thread(target=timeGen)

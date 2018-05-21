@@ -4,6 +4,7 @@ import socket
 import select
 import threading
 import re
+import queue
 
 DATA_TIMEOUT = 30
 PORT = 2202
@@ -16,6 +17,11 @@ class WirelessReceiver:
         self.ip = ip
         self.type = type
         self.transmitters = []
+        self.rx_com_status = 'DISCONNECTED'
+        self.writeQueue = queue.Queue()
+
+    def set_rx_com_status(self, status):
+        self.rx_com_status = status
 
     def add_transmitter(self, tx, slot):
         self.transmitters.append(WirelessTransmitter(tx, slot))
@@ -39,6 +45,11 @@ class WirelessReceiver:
                 tx.set_battery(data.split()[4])
             if command == 'FREQUENCY':
                 tx.set_frequency(data.split()[4])
+        elif res == 'SAMPLE':
+            tx = self.get_transmitter_by_channel(channel)
+            tx.set_antenna(data.split()[4])
+            tx.set_rf_level(data.split()[5])
+            tx.set_audio_level(data.split()[6])
 
     def uhfr_parse(self, data):
         res, channel, command = data.split()[1:4]
@@ -51,6 +62,7 @@ class WirelessReceiver:
                 tx.set_battery(data.split()[4])
             if command == 'FREQUENCY':
                 tx.set_frequency(data.split()[4])
+
 
     def get_channels(self):
         channels = []
@@ -74,12 +86,29 @@ class WirelessReceiver:
 
         return ret
 
+    def enable_metering(self, interval):
+        if self.type == 'qlxd' or self.type == 'ulxd':
+            for i in self.get_channels():
+                self.writeQueue.put('< SET {} METER_RATE {:05d} >'.format(i,int(interval * 1000)))
+        elif self.type == 'uhfr':
+            for i in self.get_channels():
+                self.writeQueue.put('* METER {} ALL {:03d} *'.format(i,int(interval/30 * 1000)))
+
+    def disable_metering(self):
+        if self.type == 'qlxd' or self.type == 'ulxd':
+            for i in self.get_channels():
+                self.writeQueue.put('< SET {} METER_RATE 0 >'.format(i))
+        elif self.type == 'uhfr':
+            for i in self.get_channels():
+                self.writeQueue.put('* METER {} ALL STOP *'.format(i))
+
     def rx_json(self):
         tx_data = []
         for transmitter in self.transmitters:
             tx_data.append(transmitter.tx_json())
         data = {'ip': self.ip, 'type': self.type, 'tx': tx_data}
         return data
+
 
 
 class WirelessTransmitter:
@@ -91,10 +120,22 @@ class WirelessTransmitter:
         self.prev_battery = 255
         self.timestamp = time.time() - 60
         self.slot = slot
+        self.audio_level = 0
+        self.rf_level = 0
+        self.antenna = 'XX'
 
 
     def set_frequency(self, frequency):
         self.frequency = frequency[:3] + '.' + frequency[3:]
+
+    def set_antenna(self, antenna):
+        self.antenna = antenna
+
+    def set_audio_level(self, audio_level):
+        self.audio_level = audio_level
+
+    def set_rf_level(self, rf_level):
+        self.rf_level = rf_level
 
     def set_battery(self, level):
         level = int(level)
@@ -102,7 +143,7 @@ class WirelessTransmitter:
         if 1 <= level <= 5:
             self.prev_battery = level
         self.timestamp = time.time()
-        dataUpdateCall(self.tx_json())
+        # dataUpdateCall(self.tx_json())
 
     def set_chan_name(self, chan_name):
         self.chan_name = chan_name
@@ -131,9 +172,11 @@ class WirelessTransmitter:
         return 'COM_ERROR'
 
     def tx_json(self):
-        return {'name': self.chan_name, 'channel': self.channel,
-                        'frequency': self.frequency, 'battery':self.battery,
-                        'status': self.tx_state(), 'slot': self.slot }
+        return {'name': self.chan_name, 'channel': self.channel, 'antenna':self.antenna,
+                'audio_level': self.audio_level, 'rf_level': self.rf_level,
+                'frequency': self.frequency, 'battery':self.battery,
+                'status': self.tx_state(), 'slot': self.slot }
+
 
 
 def get_receiver_by_ip(ip):
@@ -158,15 +201,29 @@ def config(file):
 
 def print_ALL():
     for rx in WirelessReceivers:
-        print("RX Type: {} IP: {} ".format(rx.type, rx.ip))
+        print("RX Type: {} IP: {} Status: {}".format(rx.type, rx.ip, rx.rx_com_status))
         for tx in rx.transmitters:
-            print("Channel Name: {} Frequency: {} Slot: {} TX: {} State: {}".format(tx.chan_name, tx.frequency, tx.slot, tx.channel, tx.tx_state()))
+            print("Channel Name: {} Frequency: {} Slot: {} TX: {} TX State: {}".format(tx.chan_name, tx.frequency, tx.slot, tx.channel, tx.tx_state()))
+
+
+
+
+def WirelessQueue():
+    while True:
+        for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTED'):
+            strings = rx.get_query_strings()
+            for string in strings:
+                rx.writeQueue.put(string)
+
+        time.sleep(10)
 
 def WirelessPoll():
     while True:
         for rx in WirelessReceivers:
             try:
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
                 s.settimeout(.2)
                 s.connect((rx.ip, PORT))
                 strings = rx.get_query_strings()
@@ -184,21 +241,37 @@ def WirelessListen():
     for receiver in WirelessReceivers:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.settimeout(.2)
             s.connect((receiver.ip, PORT))
             socks.append(s)
+            receiver.set_rx_com_status('CONNECTED')
         except socket.error as e:
-            pass
-            # print("listen connection  BAD to {}".format(receiver.ip))
+            receiver.set_rx_com_status('DISCONNECTED')
+            print("listen connection  BAD to {}".format(receiver.ip))
 
     while True:
         # process data when data socket buffer receives data
-        ready_socks,_,_ = select.select(socks, [], [])
-        for sock in ready_socks:
+        read_socks,write_socks,error_socks = select.select(socks, socks, socks)
+        for sock in read_socks:
             ip,port = sock.getpeername()
             data, addr = sock.recvfrom(1024)
             receiver = get_receiver_by_ip(ip)
             receiver.parse_data(repr(data))
+            print(repr(data))
+
+        for sock in write_socks:
+            ip,port = sock.getpeername()
+            receiver = get_receiver_by_ip(ip)
+            if not receiver.writeQueue.empty():
+                string = receiver.writeQueue.get()
+                print(string)
+                sock.sendall(bytearray(string,'UTF-8'))
+
+        for sock in error_socks:
+            ip,port = sock.getpeername()
+            receiver = get_receiver_by_ip(ip)
+            receiver.set_rx_com_status('DISCONNECTED')
 
 
 def state_test():
@@ -212,14 +285,20 @@ def state_test():
 
 
 def main():
-    config()
-    t1 = threading.Thread(target=WirelessPoll)
+    config('config.ini')
+    # t1 = threading.Thread(target=WirelessPoll)
+    t1 = threading.Thread(target=WirelessQueue)
     t2 = threading.Thread(target=WirelessListen)
+
+
     # state_test()
     t1.start()
     t2.start()
 
     time.sleep(2)
+    get_receiver_by_ip('10.231.3.50').enable_metering(.1)
+    time.sleep(4)
+    get_receiver_by_ip('10.231.3.50').disable_metering()
     while True:
        print_ALL()
        time.sleep(3)

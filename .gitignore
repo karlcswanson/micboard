@@ -10,3 +10,4 @@ dist/*
 mictray/build/*
 build/*
 .eggs/*
+static/gifs/*
