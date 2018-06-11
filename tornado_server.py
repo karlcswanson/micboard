@@ -80,17 +80,12 @@ def twisted():
 
 
 
-def timeGen():
-    value = 0
+def socket_send():
     while True:
-        time.sleep(3)
-        print('YOSH!')
-        val = json.dumps({"id": 2, "value" : value})
-        value = value + 1
-        writeWeb(val)
+        # if not shure.data_output_queue.empty():
+        writeWeb(shure.data_output_queue.get())
 
 def main():
-    shure.dataUpdateCall = writeWeb
     shure.config(os.path.join(os.path.dirname(__file__), 'config.ini'))
 
     for rx in shure.WirelessReceivers:
@@ -100,11 +95,14 @@ def main():
     t1 = threading.Thread(target=shure.WirelessQueue)
     t2 = threading.Thread(target=shure.WirelessListen)
     t3 = threading.Thread(target=twisted)
-    # t4 = threading.Thread(target=timeGen)
+    # t4 = threading.Thread(target=socket_send)
     t1.start()
     t2.start()
     t3.start()
     # t4.start()
+    socket_send()
+    # while True:
+        # time.sleep(1)
 
 
 

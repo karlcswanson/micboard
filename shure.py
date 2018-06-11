@@ -10,7 +10,23 @@ DATA_TIMEOUT = 30
 PORT = 2202
 WirelessReceivers = []
 
-dataUpdateCall = None
+data_output_queue = queue.Queue()
+
+udp_command = {}
+udp_command['ulxd'] = {
+                        'start_char'    :    '<',
+                        'stop_char'     :    '>',
+                        'get'           :    'GET',
+                        'set'           :    'SET',
+                        'reply'         :    'REP',
+                        'sample'        :    'SAMPLE',
+                        'chan_name'     :    'CHAN_NAME',
+                        'device_id'     :    'DEVICE_ID',
+                        'frequency'     :    'FREQUENCY',
+                        'battery'       :    'BATT_BARS'
+}
+
+
 
 class WirelessReceiver:
     def __init__(self, ip, type):
@@ -50,6 +66,8 @@ class WirelessReceiver:
             tx.set_antenna(data.split()[4])
             tx.set_rf_level(data.split()[5])
             tx.set_audio_level(data.split()[6])
+            tx.tx_json_push()
+
 
     def uhfr_parse(self, data):
         res, channel, command = data.split()[1:4]
@@ -62,6 +80,15 @@ class WirelessReceiver:
                 tx.set_battery(data.split()[4])
             if command == 'FREQUENCY':
                 tx.set_frequency(data.split()[4])
+        elif res == 'SAMPLE':
+            tx = self.get_transmitter_by_channel(channel)
+            tx.set_antenna(data.split()[4])
+            tx.rf_level.a = data.split()[5]
+            tx.rf_level.b = data.split()[6]
+            tx.set_battery(data.split()[7])
+            tx.set_audio_level(data.split()[8])
+            tx.tx_json_push()
+
 
 
     def get_channels(self):
@@ -86,6 +113,7 @@ class WirelessReceiver:
 
         return ret
 
+
     def enable_metering(self, interval):
         if self.type == 'qlxd' or self.type == 'ulxd':
             for i in self.get_channels():
@@ -106,7 +134,7 @@ class WirelessReceiver:
         tx_data = []
         for transmitter in self.transmitters:
             tx_data.append(transmitter.tx_json())
-        data = {'ip': self.ip, 'type': self.type, 'tx': tx_data}
+        data = {'ip': self.ip, 'type': self.type, 'status': self.rx_com_status, 'tx': tx_data}
         return data
 
 
@@ -132,18 +160,19 @@ class WirelessTransmitter:
         self.antenna = antenna
 
     def set_audio_level(self, audio_level):
-        self.audio_level = audio_level
+        self.audio_level = int(audio_level)
 
     def set_rf_level(self, rf_level):
-        self.rf_level = rf_level
+        self.rf_level = int(rf_level)
 
     def set_battery(self, level):
+        if level == 'U':
+            level = 255
         level = int(level)
         self.battery = level
         if 1 <= level <= 5:
             self.prev_battery = level
         self.timestamp = time.time()
-        # dataUpdateCall(self.tx_json())
 
     def set_chan_name(self, chan_name):
         self.chan_name = chan_name
@@ -177,6 +206,8 @@ class WirelessTransmitter:
                 'frequency': self.frequency, 'battery':self.battery,
                 'status': self.tx_state(), 'slot': self.slot }
 
+    def tx_json_push(self):
+        data_output_queue.put(self.tx_json())
 
 
 def get_receiver_by_ip(ip):
@@ -206,15 +237,12 @@ def print_ALL():
             print("Channel Name: {} Frequency: {} Slot: {} TX: {} TX State: {}".format(tx.chan_name, tx.frequency, tx.slot, tx.channel, tx.tx_state()))
 
 
-
-
 def WirelessQueue():
     while True:
         for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTED'):
             strings = rx.get_query_strings()
             for string in strings:
                 rx.writeQueue.put(string)
-
         time.sleep(10)
 
 def WirelessPoll():
@@ -237,6 +265,7 @@ def WirelessPoll():
 
 def WirelessListen():
     socks = []
+
     # open up a socket with each receiver
     for receiver in WirelessReceivers:
         try:
@@ -251,22 +280,29 @@ def WirelessListen():
             print("listen connection  BAD to {}".format(receiver.ip))
 
     while True:
+        writesocks = []
         # process data when data socket buffer receives data
-        read_socks,write_socks,error_socks = select.select(socks, socks, socks)
+        for sock in socks:
+            ip,port = sock.getpeername()
+            receiver = get_receiver_by_ip(ip)
+            if not receiver.writeQueue.empty():
+                writesocks.append(sock)
+
+        read_socks,write_socks,error_socks = select.select(socks, writesocks, socks)
         for sock in read_socks:
             ip,port = sock.getpeername()
             data, addr = sock.recvfrom(1024)
             receiver = get_receiver_by_ip(ip)
             receiver.parse_data(repr(data))
-            print(repr(data))
+            # print(repr(data))
 
         for sock in write_socks:
             ip,port = sock.getpeername()
             receiver = get_receiver_by_ip(ip)
-            if not receiver.writeQueue.empty():
-                string = receiver.writeQueue.get()
-                print(string)
-                sock.sendall(bytearray(string,'UTF-8'))
+            # if not receiver.writeQueue.empty():
+            string = receiver.writeQueue.get()
+            print(string)
+            sock.sendall(bytearray(string,'UTF-8'))
 
         for sock in error_socks:
             ip,port = sock.getpeername()
@@ -289,7 +325,6 @@ def main():
     # t1 = threading.Thread(target=WirelessPoll)
     t1 = threading.Thread(target=WirelessQueue)
     t2 = threading.Thread(target=WirelessListen)
-
 
     # state_test()
     t1.start()

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:100,300,400,700|Roboto:100,300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="smoothie.js"></script>
+    <title>Mic Monitor</title>
+
+  </head>
+  <body>
+    <canvas id="chart" width="400" height="100"></canvas>
+    <div class="container-fluid fullHeight">
+      <div class="row header">
+        <div class="col-sm-8"></div>
+        <div class="col-sm-4 clock">
+          <p>13:22:17</p>
+        </div>
+      </div>
+      <div class="row above-mid">
+        <h2> HH01: RF</h2>
+      <canvas id="chart-1" width="400" height="100"></canvas>
+      <h2> HH01: Audio</h2>
+      <canvas id="chart-2" width="400" height="100"></canvas>
+      <h2> HH02: RF</h2>
+      <canvas id="chart-3" width="400" height="100"></canvas>
+      <h2> HH02: Audio</h2>
+      <canvas id="chart-4" width="400" height="100"></canvas>
+      </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="graphingsandbox.js"></script>
+
+  </body>
+</html>
