@@ -78,28 +78,20 @@ def twisted():
     app.listen(8058)
     ioloop.IOLoop.instance().start()
 
-
-
 def socket_send():
     while True:
-        # if not shure.data_output_queue.empty():
         writeWeb(shure.data_output_queue.get())
 
 def main():
     shure.config(os.path.join(os.path.dirname(__file__), 'config.ini'))
 
-    for rx in shure.WirelessReceivers:
-        rx.enable_metering(.1)
-
-    time.sleep(1)
+    time.sleep(.1)
     t1 = threading.Thread(target=shure.WirelessQueue)
-    t2 = threading.Thread(target=shure.WirelessListen)
+    t2 = threading.Thread(target=shure.SocketService)
     t3 = threading.Thread(target=twisted)
-    # t4 = threading.Thread(target=socket_send)
     t1.start()
     t2.start()
     t3.start()
-    # t4.start()
     socket_send()
     # while True:
         # time.sleep(1)

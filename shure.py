@@ -35,6 +35,30 @@ class WirelessReceiver:
         self.transmitters = []
         self.rx_com_status = 'DISCONNECTED'
         self.writeQueue = queue.Queue()
+        self.f = None
+        self.socket_watchdog = int(time.perf_counter())
+
+    def socket_connect(self):
+        try:
+            self.f = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.f.settimeout(.2)
+            self.f.connect((self.ip, PORT))
+            self.set_rx_com_status('CONNECTED')
+            self.enable_metering(.1)
+        except socket.error as e:
+            self.set_rx_com_status('DISCONNECTED')
+
+        self.socket_watchdog = int(time.perf_counter())
+
+
+    def socket_disconnect(self):
+        self.f.close()
+        self.set_rx_com_status('DISCONNECTED')
+        self.socket_watchdog = int(time.perf_counter())
+
+
+    def fileno(self):
+        return self.f.fileno()
 
     def set_rx_com_status(self, status):
         self.rx_com_status = status
@@ -236,6 +260,16 @@ def print_ALL():
         for tx in rx.transmitters:
             print("Channel Name: {} Frequency: {} Slot: {} TX: {} TX State: {}".format(tx.chan_name, tx.frequency, tx.slot, tx.channel, tx.tx_state()))
 
+def watchdog_monitor():
+    for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTED'):
+        if (int(time.perf_counter()) - rx.socket_watchdog) > 10:
+            print('disconnected from: {}'.format(rx.ip))
+            rx.socket_disconnect()
+
+    for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'DISCONNECTED'):
+        if (int(time.perf_counter()) - rx.socket_watchdog) > 10:
+            rx.socket_connect()
+
 
 def WirelessQueue():
     while True:
@@ -245,69 +279,33 @@ def WirelessQueue():
                 rx.writeQueue.put(string)
         time.sleep(10)
 
-def WirelessPoll():
-    while True:
-        for rx in WirelessReceivers:
-            try:
-                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-                s.settimeout(.2)
-                s.connect((rx.ip, PORT))
-                strings = rx.get_query_strings()
-                for string in strings:
-                    s.sendall(bytearray(string,'UTF-8'))
-                s.close()
-            except socket.error as e:
-                pass
-                # print("send connection  BAD to {}".format(rx.ip))
-        time.sleep(10)
-
-def WirelessListen():
-    socks = []
-
-    # open up a socket with each receiver
-    for receiver in WirelessReceivers:
-        try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            s.settimeout(.2)
-            s.connect((receiver.ip, PORT))
-            socks.append(s)
-            receiver.set_rx_com_status('CONNECTED')
-        except socket.error as e:
-            receiver.set_rx_com_status('DISCONNECTED')
-            print("listen connection  BAD to {}".format(receiver.ip))
+def SocketService():
+    for rx in WirelessReceivers:
+        rx.socket_connect()
 
     while True:
-        writesocks = []
-        # process data when data socket buffer receives data
-        for sock in socks:
-            ip,port = sock.getpeername()
-            receiver = get_receiver_by_ip(ip)
-            if not receiver.writeQueue.empty():
-                writesocks.append(sock)
+        watchdog_monitor()
+        readrx = [rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTED']
+        writerx = [rx for rx in readrx if not rx.writeQueue.empty()]
 
-        read_socks,write_socks,error_socks = select.select(socks, writesocks, socks)
-        for sock in read_socks:
-            ip,port = sock.getpeername()
-            data, addr = sock.recvfrom(1024)
-            receiver = get_receiver_by_ip(ip)
-            receiver.parse_data(repr(data))
+        read_socks,write_socks,error_socks = select.select(readrx, writerx, readrx, .2)
+
+        for rx in read_socks:
+            data = rx.f.recv(1024)
+            print("read: {} data: {}".format(rx.ip,data))
+            rx.parse_data(repr(data))
+            rx.socket_watchdog = int(time.perf_counter())
             # print(repr(data))
 
-        for sock in write_socks:
-            ip,port = sock.getpeername()
-            receiver = get_receiver_by_ip(ip)
-            # if not receiver.writeQueue.empty():
-            string = receiver.writeQueue.get()
-            print(string)
-            sock.sendall(bytearray(string,'UTF-8'))
+        for rx in write_socks:
+            string = rx.writeQueue.get()
+            print("write: {} data: {}".format(rx.ip,string))
+            # print(string)
+            rx.f.sendall(bytearray(string,'UTF-8'))
 
         for sock in error_socks:
-            ip,port = sock.getpeername()
-            receiver = get_receiver_by_ip(ip)
-            receiver.set_rx_com_status('DISCONNECTED')
+            rx.set_rx_com_status('DISCONNECTED')
+
 
 
 def state_test():
@@ -322,11 +320,9 @@ def state_test():
 
 def main():
     config('config.ini')
-    # t1 = threading.Thread(target=WirelessPoll)
     t1 = threading.Thread(target=WirelessQueue)
     t2 = threading.Thread(target=WirelessListen)
 
-    # state_test()
     t1.start()
     t2.start()
 
