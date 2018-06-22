@@ -7,29 +7,52 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:100,300,400,700|Roboto:100,300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:100i,300,400,700i|Roboto:100,300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="static/style.css">
 
-    <title>Mic Monitor</title>
+    <title>Mic Board</title>
 
   </head>
   <body>
     <div class="container-fluid fullHeight">
-      <div class="row header">
-        <div class="col-sm-8"></div>
-        <div class="col-sm-4 clock">
-          <p>13:22:17</p>
-        </div>
-      </div>
-      <div class="row above-mid">
+
+      <div id="micboard" class="row above-mid">
 
       </div>
     </div>
+    <template id="column-template">
+      <div class="col-sm">
+        <div class="mic_name">
+          <p class="mic_id"></p>
+          <p class="name"></p>
+        </div>
+        <div class="info-drawer">
+          <div class="electrode"></div>
+          <div class="battery-bars">
+            <div class="battery-bar battery-bar-1"></div>
+            <div class="battery-bar battery-bar-2"></div>
+            <div class="battery-bar battery-bar-3"></div>
+            <div class="battery-bar battery-bar-4"></div>
+            <div class="battery-bar battery-bar-5"></div>
+          </div>
+          <canvas class="audio-graph"></canvas>
+          <canvas class="rf-graph"></canvas>
+          <div class="diversity">
+            <div class="diversity-bar diversity-bar-1"></div>
+            <div class="diversity-bar diversity-bar-2"></div>
+          </div>
+        </div>
+      </div>
+    </template>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="static/smoothie.js"></script>
     <script src="static/script.js"></script>
+    <script src="static/demodata.js"></script>
+
   </body>
 </html>

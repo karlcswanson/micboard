@@ -4,7 +4,7 @@
             "ip": "10.231.3.50",
             "tx": [
                 {
-                    "battery": 255,
+                    "battery": 1,
                     "channel": 1,
                     "frequency": "498.850",
                     "name": "Amaris",
@@ -12,7 +12,7 @@
                     "status": "GOOD"
                 },
                 {
-                    "battery": 255,
+                    "battery": 2,
                     "channel": 1,
                     "frequency": "498.850",
                     "name": "James",
@@ -26,7 +26,7 @@
             "ip": "10.231.3.44",
             "tx": [
                 {
-                    "battery": 255,
+                    "battery": 3,
                     "channel": 1,
                     "frequency": "531.975",
                     "name": "Fatai",
@@ -34,7 +34,7 @@
                     "status": "PREV_REPLACE"
                 },
                 {
-                    "battery": 255,
+                    "battery": 4,
                     "channel": 1,
                     "frequency": "531.975",
                     "name": "Matt",
@@ -48,7 +48,7 @@
             "ip": "10.231.3.36",
             "tx": [
                 {
-                    "battery": 255,
+                    "battery": 5,
                     "channel": 1,
                     "frequency": "532.550",
                     "name": "Marshall",

@@ -1,67 +1,153 @@
-html,body{
+html,body {
   background-color:#000000;
   height: 100%;
   margin: 0px;
   padding: 0px;
 }
-.fullHeight{
+.fullHeight {
   height: 100%;
 }
 
-.col-sm{
+.col-sm {
   color: white;
   padding-top: .5em;
 }
-
-.col-sm .mic_id{
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300;
-  text-align: center;
-}
-
-.above-mid{
-  height: 100%;
-}
-.header{
-  display: none;
-  height:10%;
-}
-.clock{
-  color: rgb(199, 199, 223);
-  height: inherit;
-  float: right;
-  text-align: right;
-  vertical-align: center;
-  /* position: relative;
-  top: 70%;
-  transform: translateY(-50%); */
-}
-.clock p{
-  font-size: xx-large;
+.mic_id {
   font-family: 'Roboto Mono', monospace;
   font-weight: 100;
-  margin:0px;
-
-  position: relative;
-  top:50%;
-  transform: translateY(50%);
+  text-align: center;
+  font-style: italic;
+  font-size: 30pt;
+  text-shadow:2px 2px 2px #333333
 }
+
+.above-mid {
+  height: 100%;
+
+}
+
+
 
 .above-mid .col-sm {
   border: .5px solid;
   border-color: black;
+  padding: 0px;
 }
+
+.mic_name {
+  height: calc(100% - 375px)
+}
+
 .name{
-  font-family: 'Roboto',sans-serif;
-  font-weight: 700;
-  font-size: calc(1vw + 5pt);
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 100;
+  font-style: italic;
+  font-size: calc(1vw + 7pt);
   text-align: center;
 
   position: relative;
   top:20%;
-  transform: translateY(100%);
+  transform: translateY(250%);
+  text-shadow:2px 2px 0px #333333
 }
+
+.electrode {
+  position: absolute;
+  left: 0px;
+  bottom: 250px;
+  height: 125px;
+  width: 100%;
+  background-color: purple;
+}
+
+.battery-bars {
+  position: absolute;
+  left:0px;
+  bottom: 225px;
+  height: 25px;
+  width: 100%;
+  background-color: black;
+}
+.battery-bar {
+  width: 20%;
+  height:inherit;
+  border-style: solid;
+  border-width: 4px;
+  border-color: grey;
+  /* background-color: blue; */
+  box-sizing:border-box;
+  float:left;
+}
+
+.batt_led_off{
+  background-color: black;
+}
+
+.batt_led_danger{
+  background-color: red;
+}
+
+.batt_led_warning {
+  background-color: orange;
+}
+.batt_led_good{
+  background-color: green;
+}
+
+
+canvas.audio-graph{
+  position: absolute;
+  left: 0px;
+  bottom:125px;
+  width:100%;
+  height:100px;
+  background-color: green;
+}
+
+canvas.rf-graph {
+  position: absolute;
+  left: 0px;
+  bottom: 25px;
+  width:100%;
+  height:100px;
+  background-color: red;
+}
+
+.diversity {
+  position: absolute;
+  left: 0px;
+  bottom:0px;
+
+  height: 25px;
+  width: 100%;
+  /* background-color: blue; */
+}
+
+.diversity-bar {
+  width: 50%;
+  height:inherit;
+  border-style: solid;
+  border-width: 4px;
+  border-color: grey;
+  /* background-color: blue; */
+  box-sizing:border-box;
+  float:left;
+}
+
+.diversity-bar-on{
+  background-color: blue;
+}
+
+.diversity-bar-off{
+  background-color: black;
+}
+
+
 @media (max-width: 980px) {
+  .info-drawer {
+    display: none;
+  }
+
   .above-mid {
     height: unset;
   }
