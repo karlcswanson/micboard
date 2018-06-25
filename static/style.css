@@ -72,7 +72,7 @@ html,body {
   width: 20%;
   height:inherit;
   border-style: solid;
-  border-width: 4px;
+  border-width: 2px;
   border-color: grey;
   /* background-color: blue; */
   box-sizing:border-box;
@@ -127,7 +127,7 @@ canvas.rf-graph {
   width: 50%;
   height:inherit;
   border-style: solid;
-  border-width: 4px;
+  border-width: 2px;
   border-color: grey;
   /* background-color: blue; */
   box-sizing:border-box;

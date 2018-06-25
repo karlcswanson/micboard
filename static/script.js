@@ -10,6 +10,7 @@ $(document).ready(function() {
   if (demo == 'true') {
     dataURL = 'static/data.json';
     initialMap();
+    autoRandom();
   }
   else {
     initialMap();
@@ -203,13 +204,13 @@ function initChart(chartID) {
   audioChart.addTimeSeries(chart.audioSeries, {
     strokeStyle: 'rgba(0, 255, 0, 1)',
     fillStyle: 'rgba(0, 255, 0, 0.2)',
-    lineWidth: 4
+    lineWidth: 2
   });
 
   rfChart.addTimeSeries(chart.rfSeries, {
     strokeStyle: 'rgba(255, 0, 0, 1)',
     fillStyle: 'rgba(255, 0, 0, 0.2)',
-    lineWidth: 4
+    lineWidth: 2
   });
 
   audioChart.streamTo(audioCanvas, 100);
