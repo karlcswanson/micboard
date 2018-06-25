@@ -12,6 +12,7 @@ html,body {
   color: white;
   padding-top: .5em;
 }
+
 .mic_id {
   font-family: 'Roboto Mono', monospace;
   font-weight: 100;
@@ -25,7 +26,6 @@ html,body {
   height: 100%;
 
 }
-
 
 
 .above-mid .col-sm {

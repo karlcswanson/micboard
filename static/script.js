@@ -17,9 +17,7 @@ $(document).ready(function() {
     setInterval(JsonUpdate, 500);
     // wsConnect();
   }
-
 });
-
 
 function wsConnect(){
   var loc = window.location, new_uri;
@@ -38,7 +36,6 @@ function wsConnect(){
 
   }
 }
-
 
 // https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js
 var getUrlParameter = function getUrlParameter(sParam) {
@@ -66,26 +63,61 @@ function JsonUpdate(){
   });
 }
 
-function updateSlot(data){
-  if (start_slot && stop_slot){
+
+function updateSlot(data) {
+  if (start_slot && stop_slot) {
     if (start_slot <= data.slot && data.slot <= stop_slot) {
-      transmitters[data.slot] = data;
+      updateSelector(data);
     }
   }
   else {
-    transmitters[data.slot] = data;
+    updateSelector(data);
+  }
+}
+
+function updateSelector(data) {
+  var slot = "slot-" + data.slot;
+  var slotSelector = document.getElementById(slot);
+
+  if (transmitters[data.slot].name != data.name) {
+    updateName(slotSelector, data);
+    transmitters[data.slot].name = data.name;
   }
 
-  var slot = "slot-" + data.slot;
-  var t = document.getElementById(slot);
-  t.querySelector('div.mic_name').className = 'mic_name';
-  t.querySelector('div.mic_name').classList.add(data.status);
-  t.querySelector('p.name').innerHTML = data.name;
-  t.querySelector('p.mic_id').innerHTML = prefix + ("0" + data.slot).slice(-2);
-  updateBattery(data);
-  updateDiversity(data);
+  if (transmitters[data.slot].battery != data.battery) {
+    updateBattery(slotSelector, data);
+    transmitters[data.slot].battery = data.battery;
+  }
+
+  if (transmitters[data.slot].antenna != data.antenna) {
+    updateDiversity(slotSelector, data);
+    transmitters[data.slot].antenna = data.antenna;
+  }
+
+  if (transmitters[data.slot].audio_level != data.audio_level) {
+    updateAudioChart(data);
+    transmitters[data.slot].audio_level = data.audio_level;
+  }
+
+  if (transmitters[data.slot].rf_level != data.rf_level) {
+    updateRfChart(data);
+    transmitters[data.slot].rf_level = data.rf_level;
+  }
+}
+
+function updateAudioChart(data) {
   charts[data.slot].audioSeries.append(Date.now(), data.audio_level);
+}
+
+function updateRfChart (data) {
   charts[data.slot].rfSeries.append(Date.now(), data.rf_level);
+}
+
+function updateName(slotSelector, data) {
+  slotSelector.querySelector('div.mic_name').className = 'mic_name';
+  slotSelector.querySelector('div.mic_name').classList.add(data.status);
+  slotSelector.querySelector('p.name').innerHTML = data.name;
+  slotSelector.querySelector('p.mic_id').innerHTML = prefix + ("0" + data.slot).slice(-2);
 }
 
 
@@ -100,21 +132,20 @@ var BatteryTable = {
   'led':[]
 }
 
-function updateBattery(data){
+function updateBattery(slotSelector, data){
   var slot = "slot-" + data.slot;
-  var t = document.getElementById(slot);
+  // var t = document.getElementById(slot);
   var outputBars = BatteryTable[data.battery];
 
-  t.querySelectorAll('.battery-bar').forEach(function (data) {
+  slotSelector.querySelectorAll('.battery-bar').forEach(function (data) {
     data.classList.remove('batt_led_off', 'batt_led_danger','batt_led_warning','batt_led_good');
   });
 
-  t.querySelector('.battery-bar-1').classList.add(outputBars[0]);
-  t.querySelector('.battery-bar-2').classList.add(outputBars[1]);
-  t.querySelector('.battery-bar-3').classList.add(outputBars[2]);
-  t.querySelector('.battery-bar-4').classList.add(outputBars[3]);
-  t.querySelector('.battery-bar-5').classList.add(outputBars[4]);
-
+  slotSelector.querySelector('.battery-bar-1').classList.add(outputBars[0]);
+  slotSelector.querySelector('.battery-bar-2').classList.add(outputBars[1]);
+  slotSelector.querySelector('.battery-bar-3').classList.add(outputBars[2]);
+  slotSelector.querySelector('.battery-bar-4').classList.add(outputBars[3]);
+  slotSelector.querySelector('.battery-bar-5').classList.add(outputBars[4]);
 }
 
 var diversityTable = {
@@ -123,17 +154,15 @@ var diversityTable = {
   'XX': ['diversity-bar-off','diversity-bar-off']
 }
 
-function updateDiversity(data){
-  var slot = "slot-" + data.slot;
-  var t = document.getElementById(slot);
+function updateDiversity(slotSelector, data){
   var outputBars = diversityTable[data.antenna];
 
-  t.querySelectorAll('.diversity-bar').forEach(function (data) {
+  slotSelector.querySelectorAll('.diversity-bar').forEach(function (data) {
     data.classList.remove('diversity-bar-on','diversity-bar-off');
   });
 
-  t.querySelector('.diversity-bar-1').classList.add(outputBars[0]);
-  t.querySelector('.diversity-bar-2').classList.add(outputBars[1]);
+  slotSelector.querySelector('.diversity-bar-1').classList.add(outputBars[0]);
+  slotSelector.querySelector('.diversity-bar-2').classList.add(outputBars[1]);
 }
 
 function dataFilter(data){
@@ -153,11 +182,6 @@ function dataFilter(data){
 }
 
 
-
-
-
-
-
 function initialMap() {
   $.getJSON( dataURL, function(data) {
     dataFilter(data);
@@ -174,7 +198,6 @@ function initialMap() {
     }
   });
 }
-
 
 function initChart(chartID) {
   var chart = {};

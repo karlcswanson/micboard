@@ -98,7 +98,7 @@ function randomCharts(){
   slots.forEach(function(slot){
     charts[slot].audioSeries.append(Date.now(), randomRfGenerator());
     charts[slot].rfSeries.append(Date.now(), randomAudioGenerator());
-    updateDiversity(randomDataGenerator());
+    // updateDiversity(randomDataGenerator());
   })
 }
 
