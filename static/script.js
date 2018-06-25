@@ -17,7 +17,26 @@ $(document).ready(function() {
     setInterval(JsonUpdate, 500);
     // wsConnect();
   }
+
+
+  document.addEventListener("keydown", function(e) {
+    if (e.keyCode == 70) {
+      toggleFullScreen();
+    }
+  }, false);
 });
+
+
+// https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
+function toggleFullScreen() {
+  if (!document.webkitFullscreenElement) {
+      document.documentElement.webkitRequestFullscreen();
+  } else {
+    if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+}
 
 function wsConnect(){
   var loc = window.location, new_uri;
