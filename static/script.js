@@ -15,7 +15,7 @@ $(document).ready(function() {
   else {
     initialMap();
     setInterval(JsonUpdate, 500);
-    // wsConnect();
+    wsConnect();
   }
 
 
@@ -103,6 +103,11 @@ function updateSelector(data) {
     transmitters[data.slot].name = data.name;
   }
 
+  if (transmitters[data.slot].status != data.status) {
+    updateStatus(slotSelector, data);
+    transmitters[data.slot].status = data.status;
+  }
+
   if (transmitters[data.slot].battery != data.battery) {
     updateBattery(slotSelector, data);
     transmitters[data.slot].battery = data.battery;
@@ -133,10 +138,16 @@ function updateRfChart (data) {
 }
 
 function updateName(slotSelector, data) {
-  slotSelector.querySelector('div.mic_name').className = 'mic_name';
-  slotSelector.querySelector('div.mic_name').classList.add(data.status);
+  // slotSelector.querySelector('div.mic_name').className = 'mic_name';
+  // slotSelector.querySelector('div.mic_name').classList.add(data.status);
   slotSelector.querySelector('p.name').innerHTML = data.name;
   slotSelector.querySelector('p.mic_id').innerHTML = prefix + ("0" + data.slot).slice(-2);
+}
+
+function updateStatus(slotSelector, data) {
+  slotSelector.querySelector('div.mic_name').className = 'mic_name';
+  slotSelector.querySelector('div.mic_name').classList.add(data.status);
+
 }
 
 

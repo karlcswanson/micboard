@@ -45,6 +45,8 @@ class WirelessReceiver:
             self.f.connect((self.ip, PORT))
             self.set_rx_com_status('CONNECTED')
             self.enable_metering(.1)
+            for string in self.get_query_strings():
+                self.writeQueue.put(string)
         except socket.error as e:
             self.set_rx_com_status('DISCONNECTED')
 
@@ -77,11 +79,16 @@ class WirelessReceiver:
 
     def ulxd_parse(self, data):
         res, channel, command = data.split()[1:4]
-        if res == 'REP':
+        try:
+            channel = int(channel)
+        except:
+            pass
+        if res == 'REP' and isinstance(channel,int):
             tx = self.get_transmitter_by_channel(channel)
             if command == 'CHAN_NAME':
                 tx.set_chan_name(data[data.find("{")+1:data.find("}")])
             if command == 'BATT_BARS':
+                print('BATTERY UPDATE!')
                 tx.set_battery(data.split()[4])
             if command == 'FREQUENCY':
                 tx.set_frequency(data.split()[4])
@@ -95,7 +102,7 @@ class WirelessReceiver:
 
     def uhfr_parse(self, data):
         res, channel, command = data.split()[1:4]
-        if res == 'REPORT':
+        if res == 'REPORT' and 1 <= channel <= 2:
             tx = self.get_transmitter_by_channel(channel)
             if command == 'CHAN_NAME':
                 # grabing this range makes sure we copy channel names with spaces
@@ -125,9 +132,10 @@ class WirelessReceiver:
         ret = []
         if self.type == 'qlxd' or self.type == 'ulxd':
             for i in self.get_channels():
-                ret.append('< GET {} CHAN_NAME >'.format(i))
-                ret.append('< GET {} BATT_BARS >'.format(i))
-                ret.append('< GET {} FREQUENCY >'.format(i))
+                ret.append('< GET {} ALL >'.format(i))
+                # ret.append('< GET {} CHAN_NAME >'.format(i))
+                # ret.append('< GET {} BATT_BARS >'.format(i))
+                # ret.append('< GET {} FREQUENCY >'.format(i))
 
         elif self.type == 'uhfr':
             for i in self.get_channels():
@@ -292,7 +300,7 @@ def SocketService():
 
         for rx in read_socks:
             data = rx.f.recv(1024)
-            print("read: {} data: {}".format(rx.ip,data))
+            # print("read: {} data: {}".format(rx.ip,data))
             rx.parse_data(repr(data))
             rx.socket_watchdog = int(time.perf_counter())
             # print(repr(data))

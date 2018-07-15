@@ -4,6 +4,7 @@ html,body {
   margin: 0px;
   padding: 0px;
 }
+
 .fullHeight {
   height: 100%;
 }
@@ -26,7 +27,6 @@ html,body {
   height: 100%;
 
 }
-
 
 .above-mid .col-sm {
   border: .5px solid;
@@ -74,7 +74,6 @@ html,body {
   border-style: solid;
   border-width: 2px;
   border-color: grey;
-  /* background-color: blue; */
   box-sizing:border-box;
   float:left;
 }
@@ -120,7 +119,6 @@ canvas.rf-graph {
 
   height: 25px;
   width: 100%;
-  /* background-color: blue; */
 }
 
 .diversity-bar {
@@ -129,7 +127,6 @@ canvas.rf-graph {
   border-style: solid;
   border-width: 2px;
   border-color: grey;
-  /* background-color: blue; */
   box-sizing:border-box;
   float:left;
 }
@@ -199,10 +196,15 @@ canvas.rf-graph {
   background: linear-gradient(to top, #155724, #000000, #000000);
 }
 
-.REPLACE, .PREV_REPLACE{
+.REPLACE {
   background: #a2ab58;
   /* background: -webkit-linear-gradient(to top, #a2ab58, #000000); */
   /* background: linear-gradient(to top, #a2ab58, #000000); */
+}
+.PREV_REPLACE{
+  background: #a2ab58;
+  background: -webkit-linear-gradient(to top, #a2ab58, #000000);
+  background: linear-gradient(to top, #a2ab58, #000000);
 }
 
 .CRITICAL, .PREV_CRITICAL{
@@ -210,6 +212,8 @@ canvas.rf-graph {
   /* background: -webkit-linear-gradient(to top, #7a2828, #000000); */
   /* background: linear-gradient(to top, #a73737, #000000); */
 }
+
+
 
 .COM_ERROR{
   background: #523602;

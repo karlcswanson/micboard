@@ -13,12 +13,26 @@ settings = {
     }
 
 
+# https://stackoverflow.com/questions/5899497/checking-file-extension
+def fileList(extension):
+    files = []
+    fileList = os.listdir(os.path.join(os.path.dirname(__file__), "static/backgrounds"))
+    # print(fileList)
+    for file in fileList:
+        if file.lower().endswith(extension):
+            files.append(file)
+    return files
+
 
 def json_rxs(rxs):
     data = []
     for rx in rxs:
         data.append(rx.rx_json())
-    return json.dumps({'receivers': data}, sort_keys=True, indent=4)
+
+    gifs = fileList('.gif')
+    jpgs = fileList('.jpg')
+
+    return json.dumps({'receivers': data, 'gif': gifs, 'jpg': jpgs}, sort_keys=True, indent=4)
 
 class IndexHandler(web.RequestHandler):
     def get(self):
@@ -35,7 +49,7 @@ class SocketHandler(websocket.WebSocketHandler):
 
     def open(self):
         if self not in cl:
-            self.write_message('WELCOME BOYS!')
+            # self.write_message('WELCOME BOYS!')
             cl.append(self)
 
     def on_close(self):
