@@ -112,6 +112,15 @@ canvas.rf-graph {
   background-color: red;
 }
 
+.frequency{
+  position: absolute;
+  bottom: 80px;
+  right: 5px;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 100;
+  font-style: italic;
+}
+
 .diversity {
   position: absolute;
   left: 0px;

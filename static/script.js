@@ -122,7 +122,10 @@ function updateSelector(data) {
     updateAudioChart(data);
     transmitters[data.slot].audio_level = data.audio_level;
   }
-
+  if (transmitters[data.slot].frequency != data.frequency) {
+    updateFrequency(slotSelector, data);
+    transmitters[data.slot].frequency = data.frequency;
+  }
   if (transmitters[data.slot].rf_level != data.rf_level) {
     updateRfChart(data);
     transmitters[data.slot].rf_level = data.rf_level;
@@ -133,7 +136,11 @@ function updateAudioChart(data) {
   charts[data.slot].audioSeries.append(Date.now(), data.audio_level);
 }
 
-function updateRfChart (data) {
+function updateFrequency(slotSelector, data){
+  slotSelector.querySelector('p.frequency').innerHTML = data.frequency + " Hz";
+}
+
+function updateRfChart(data) {
   charts[data.slot].rfSeries.append(Date.now(), data.rf_level);
 }
 
@@ -223,6 +230,7 @@ function initialMap() {
       t.querySelector('div.mic_name').classList.add(tx[i].status);
       t.querySelector('p.mic_id').innerHTML = prefix + ("0" + tx[i].slot).slice(-2);
       t.querySelector('p.name').innerHTML = tx[i].name;
+      t.querySelector('p.frequency').innerHTML = tx[i].frequency + " Hz";
       document.getElementById('micboard').appendChild(t);
       charts[tx[i].slot] = initChart('slot-' + tx[i].slot);
     }
