@@ -33,6 +33,8 @@ var name_sample = ['Fatai','Marshall','Delwin','Amaris','Tracy TB','Backup',
                    'Matt','Matt ACU','Matt Sax','Karl','Jordan','Josue',
                    'Hallie','Rebekah','Dan','Stephen','Max','Tom','Nick',''];
 
+var prefix_sample = ['HH','BP'];
+
 
 // https://gist.github.com/kerimdzhanov/7529623
 function getRandomInt(min, max) {
@@ -40,9 +42,13 @@ function getRandomInt(min, max) {
 }
 
 function randomNameGenerator(){
+  var prefix = prefix_sample[getRandomInt(0,1)];
+  var channel = getRandomInt(1,16).toString().padStart(2,'0');
+
   var len = name_sample.length;
   var index = getRandomInt(0,len-1);
-  return name_sample[index];
+  var name = name_sample[index]
+  return prefix + channel + ': ' + name;
 }
 
 function randomRfSampleGenerator() {

@@ -1,7 +1,12 @@
-var prefix = "HH"
+// var prefix = "HH"
 var dataURL = '/data';
 var transmitters = {};
 var charts = {};
+
+
+
+var prefix_list = ['BP','HH'];
+
 
 $(document).ready(function() {
   start_slot = getUrlParameter('start_slot');
@@ -147,8 +152,17 @@ function updateRfChart(data) {
 function updateName(slotSelector, data) {
   // slotSelector.querySelector('div.mic_name').className = 'mic_name';
   // slotSelector.querySelector('div.mic_name').classList.add(data.status);
-  slotSelector.querySelector('p.name').innerHTML = data.name;
-  slotSelector.querySelector('p.mic_id').innerHTML = prefix + ("0" + data.slot).slice(-2);
+  var prefix = data.name.substring(0,2);
+  var number = data.name.substring(2,4);
+  if(prefix_list.indexOf(prefix) >= 0 && !isNaN(number))
+  {
+    slotSelector.querySelector('p.mic_id').innerHTML = prefix + number;
+    slotSelector.querySelector('p.name').innerHTML = data.name.substring(6);
+  }
+  else {
+    slotSelector.querySelector('p.mic_id').innerHTML = '';
+    slotSelector.querySelector('p.name').innerHTML = data.name;
+  }
 }
 
 function updateStatus(slotSelector, data) {
@@ -227,10 +241,9 @@ function initialMap() {
     for(i in tx) {
       var t = document.getElementById("column-template").content.cloneNode(true);
       t.querySelector('div.col-sm').id = 'slot-' + tx[i].slot;
-      t.querySelector('div.mic_name').classList.add(tx[i].status);
-      t.querySelector('p.mic_id').innerHTML = prefix + ("0" + tx[i].slot).slice(-2);
-      t.querySelector('p.name').innerHTML = tx[i].name;
-      t.querySelector('p.frequency').innerHTML = tx[i].frequency + " Hz";
+      updateStatus(t,tx[i]);
+      updateName(t,tx[i]);
+      updateFrequency(t,tx[i]);
       document.getElementById('micboard').appendChild(t);
       charts[tx[i].slot] = initChart('slot-' + tx[i].slot);
     }
