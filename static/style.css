@@ -119,6 +119,7 @@ canvas.rf-graph {
   font-family: 'Roboto Mono', monospace;
   font-weight: 100;
   font-style: italic;
+  color: red;
 }
 
 .diversity {

@@ -78,6 +78,7 @@ class WirelessReceiver:
             return self.uhfr_parse(data)
 
     def ulxd_parse(self, data):
+        # print(data)
         res, channel, command = data.split()[1:4]
         try:
             channel = int(channel)
@@ -299,11 +300,17 @@ def SocketService():
         read_socks,write_socks,error_socks = select.select(readrx, writerx, readrx, .2)
 
         for rx in read_socks:
-            data = rx.f.recv(1024)
+            data = rx.f.recv(1024).decode('UTF-8')
+
             # print("read: {} data: {}".format(rx.ip,data))
-            rx.parse_data(repr(data))
+
+            d = '>'
+            data =  [e+d for e in data.split(d) if e]
+
+            for line in data:
+                rx.parse_data(line)
+
             rx.socket_watchdog = int(time.perf_counter())
-            # print(repr(data))
 
         for rx in write_socks:
             string = rx.writeQueue.get()
@@ -313,6 +320,7 @@ def SocketService():
 
         for sock in error_socks:
             rx.set_rx_com_status('DISCONNECTED')
+
 
 
 
