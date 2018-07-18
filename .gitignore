@@ -11,3 +11,8 @@ mictray/build/*
 build/*
 .eggs/*
 static/gifs/*
+*.mp4
+*.gif
+static/backgrounds/*
+node_modules/*
+package-lock.json

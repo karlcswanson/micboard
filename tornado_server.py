@@ -78,6 +78,7 @@ app = web.Application([
     (r'/data', JsonHandler),
     (r'/(favicon.ico)', web.StaticFileHandler, {'path': '../'}),
     (r'/static/(.*)', web.StaticFileHandler, {'path': 'static/'}),
+    (r'/node_modules/(.*)', web.StaticFileHandler, {'path': 'node_modules/'}),
     (r'/(rest_api_example.png)', web.StaticFileHandler, {'path': './'}),
 ], **settings)
 

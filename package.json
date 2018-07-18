@@ -1,0 +1,24 @@
+{
+  "name": "mictray",
+  "version": "1.0.0",
+  "description": "An intelligent mic tray for ethernet enabled Shure microphones.",
+  "main": "tornado_server.py",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karlcswanson/mictray.git"
+  },
+  "author": "karlcswanson@gmail.com",
+  "bugs": {
+    "url": "https://github.com/karlcswanson/mictray/issues"
+  },
+  "homepage": "https://github.com/karlcswanson/mictray#readme",
+  "dependencies": {
+    "bootstrap": "^4.1.2",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3",
+    "smoothie": "^1.35.0"
+  }
+}
