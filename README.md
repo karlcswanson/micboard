@@ -13,11 +13,8 @@ python mictray.py
 
 #### Docker
 ```
-docker build .
-docker run -d -p 8058:8058 < image id >
-
-pass in a config file
-docker run -d -p 8058:8058 -v ${PWD}/config.ini:/tmp/mictray/config.ini <image id>
+docker build -t mictray .
+docker run -d -p 8058:8058 mictray
 ```
 
 
