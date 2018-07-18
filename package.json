@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/karlcswanson/mictray.git"
@@ -14,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/karlcswanson/mictray/issues"
   },
-  "homepage": "https://github.com/karlcswanson/mictray#readme",
+  "homepage": "https://github.com/karlcswanson/mictray",
   "dependencies": {
     "bootstrap": "^4.1.2",
     "jquery": "^3.3.1",
