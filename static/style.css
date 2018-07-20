@@ -17,15 +17,17 @@ html,body {
 .mic_id {
   font-family: 'Roboto Mono', monospace;
   font-weight: 100;
-  text-align: center;
+  /* text-align: center; */
   font-style: italic;
   font-size: 30pt;
-  text-shadow:2px 2px 2px #333333
+  text-shadow:2px 2px 2px #333333;
+
+  position: absolute;
+  top: 0px;
 }
 
 .above-mid {
   height: 100%;
-
 }
 
 .above-mid .col-sm {
@@ -35,7 +37,11 @@ html,body {
 }
 
 .mic_name {
-  height: calc(100% - 375px)
+  height: calc(100% - 375px);
+  /* height: 100%; */
+  display: flex;
+  justify-content:center;
+  align-items:center;
 }
 
 .name{
@@ -43,11 +49,12 @@ html,body {
   font-weight: 100;
   font-style: italic;
   font-size: calc(1vw + 7pt);
-  text-align: center;
+  /* text-align: center; */
 
-  position: relative;
-  top:20%;
-  transform: translateY(250%);
+  /* position: relative; */
+  /* top:20%; */
+  /* transform: translateY(250%); */
+  /* transform:translateY('25%'); */
   text-shadow:2px 2px 0px #333333
 }
 

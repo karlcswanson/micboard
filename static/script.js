@@ -3,6 +3,8 @@ var dataURL = '/data';
 var transmitters = {};
 var charts = {};
 
+var gif_list = {};
+
 
 
 var prefix_list = ['BP','HH'];
@@ -29,6 +31,18 @@ $(document).ready(function() {
       toggleFullScreen();
     }
   }, false);
+
+  document.addEventListener("keydown", function(e) {
+    if (e.keyCode == 73) {
+      toggleInfoDrawer();
+    }
+  }, false);
+
+  document.addEventListener("keydown", function(e) {
+    if (e.keyCode == 71) {
+      toggleGifBackgrounds();
+    }
+  }, false);
 });
 
 
@@ -42,6 +56,35 @@ function toggleFullScreen() {
     }
   }
 }
+
+function toggleInfoDrawer() {
+  $(".info-drawer").toggle();
+  if($(".info-drawer").is(":visible")){
+    $(".mic_name").height("calc(100% - 375px)");
+  } else {
+    $(".mic_name").height("100%");
+  }
+}
+
+
+function toggleGifBackgrounds() {
+  console.log('GIF!');
+  $(".mic_name").each(function(key, value){
+
+    name = $(this).children(".name").html().toLowerCase() + ".gif";
+    if(gif_list.indexOf(name) > -1){
+      $(this).css('background-image', 'url("static/backgrounds/' + name + '")');
+      $(this).css('background-size', 'cover');
+      console.log(name);
+    }
+
+  });
+
+}
+
+
+
+
 
 function wsConnect(){
   var loc = window.location, new_uri;
@@ -235,6 +278,7 @@ function dataFilter(data){
 
 function initialMap() {
   $.getJSON( dataURL, function(data) {
+    gif_list = data['gif'];
     dataFilter(data);
     $(".above-mid").text("");
     var tx = transmitters;

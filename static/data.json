@@ -1,4 +1,11 @@
 {
+  "gif": [
+        "sharon.gif",
+        "marshall.gif",
+        "fatai.gif",
+        "nick.gif",
+        "delwin.gif"
+    ],
     "receivers": [
         {
             "ip": "10.231.3.50",
