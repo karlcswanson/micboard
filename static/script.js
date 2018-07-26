@@ -321,7 +321,8 @@ function initChart(chartID) {
     millisPerPixel: 25,
     grid: {
       verticalSections:0,
-      strokeStyle:'#000000'
+      strokeStyle:'transparent',
+      fillStyle:'transparent'
     },
     labels:{
       disabled:true
