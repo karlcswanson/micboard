@@ -43,8 +43,20 @@ $(document).ready(function() {
       toggleGifBackgrounds();
     }
   }, false);
+
+
+
+
 });
 
+
+function infoToggle() {
+  $('.col-sm').click(function() {
+    if($(window).width() <= 980) {
+      $(this).find(".info-drawer").toggle();
+    }
+  });
+}
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
 function toggleFullScreen() {
@@ -291,6 +303,7 @@ function initialMap() {
       document.getElementById('micboard').appendChild(t);
       charts[tx[i].slot] = initChart('slot-' + tx[i].slot);
     }
+    infoToggle();
   });
 }
 

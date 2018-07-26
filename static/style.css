@@ -11,24 +11,17 @@ html,body {
 
 .col-sm {
   color: white;
-  padding-top: .5em;
+
 }
 
 .mic_id {
   font-family: 'Roboto Mono', monospace;
   font-weight: 100;
-  /* text-align: center; */
   font-style: italic;
-  font-size: 30pt;
   text-shadow:2px 2px 2px #333333;
-
-  position: absolute;
-  top: 0px;
 }
 
-.above-mid {
-  height: 100%;
-}
+
 
 .above-mid .col-sm {
   border: .5px solid;
@@ -36,28 +29,17 @@ html,body {
   padding: 0px;
 }
 
-.mic_name {
-  height: calc(100% - 375px);
-  /* height: 100%; */
-  display: flex;
-  justify-content:center;
-  align-items:center;
-}
+
 
 .name{
   font-family: 'Roboto Mono', monospace;
   font-weight: 100;
   font-style: italic;
-  font-size: calc(1vw + 7pt);
-  /* text-align: center; */
-
-  /* position: relative; */
-  /* top:20%; */
-  /* transform: translateY(250%); */
-  /* transform:translateY('25%'); */
   text-shadow:2px 2px 0px #333333
 }
 
+
+/* .info-bar components */
 .electrode {
   position: absolute;
   left: 0px;
@@ -156,52 +138,110 @@ canvas.rf-graph {
   background-color: black;
 }
 
-
-@media (max-width: 980px) {
-  .info-drawer {
-    display: none;
-  }
-
+@media (min-width: 1280px) {
   .above-mid {
-    height: unset;
+    height: 100%;
   }
-  .header{
-    display:none;
-  }
-  .col-sm{
-    padding-top: unset;
-    vertical-align: middle;
-    /* text-align: center; */
-  }
-  .mic_id{
-    display: inline;
-    position: unset;
-    top: unset;
-    margin: unset;
-    transform: unset;
-    font-weight: 400;
-    font-size: 18pt;
-    text-align: left;
-    float:left;
+  .name {
+    font-size: calc(1vw + 7pt);
   }
 
-  .name{
-    font-size: 12pt;
-    display: inline;
-    position: unset;
-    /* float: center; */
-    margin:unset;
-    transform: unset;
-    font-weight: 300;
-    padding-left: 4em;
-    text-align: left;
-    font-family: 'Roboto', sans-serif;
+  .mic_id {
+    position: absolute;
+    top: 0px;
+    font-size: 30pt;
 
-    font-size: 18pt;
+  }
+  .mic_name {
+    height: calc(100% - 375px);
+    display: flex;
+    justify-content:center;
+    align-items:center;
   }
 
 }
 
+
+@media (max-width: 1280px) {
+  .electrode {
+    display: none;
+  }
+  .info-drawer {
+    /* display: none; */
+    height: 130px;
+  }
+
+
+  .header{
+    display:none;
+
+  }
+  .col-sm{
+    vertical-align: middle;
+    min-width: 256px;
+  }
+  .mic_id{
+    display: inline;
+    font-weight: 400;
+    font-size: 18pt;
+    text-align: left;
+    padding-left: 1em;
+    /* float:left; */
+  }
+
+  .name {
+    float: right;
+    font-size: 12pt;
+    display: inline;
+    font-weight: 300;
+    padding-right: 1em;
+    text-align: right;
+    font-size: 18pt;
+    margin: 0px;
+  }
+
+  .battery-bars {
+    height: 15px;
+    bottom: 115px;
+  }
+  .battery-bar {
+    border-width:1px;
+  }
+
+  .frequency{
+    /* position: absolute; */
+    bottom: 25px;
+    right: 5px;
+    /* font-family: 'Roboto Mono', monospace; */
+    /* font-weight: 100; */
+    /* font-style: italic; */
+    /* color: red; */
+  }
+
+  canvas.audio-graph{
+    height:50px;
+    bottom:65px;
+  }
+  canvas.rf-graph{
+    height:50px;
+    bottom:15px;
+  }
+
+  .diversity {
+    height: 15px;
+  }
+  .diversity-bar {
+    border-width: 1px;
+  }
+
+}
+
+
+@media (max-width: 512px) {
+  .info-drawer {
+    display: none;
+  }
+}
 /* Backgrounds */
 .GOOD{
   background: #155724;
@@ -215,8 +255,6 @@ canvas.rf-graph {
 
 .REPLACE {
   background: #a2ab58;
-  /* background: -webkit-linear-gradient(to top, #a2ab58, #000000); */
-  /* background: linear-gradient(to top, #a2ab58, #000000); */
 }
 .PREV_REPLACE{
   background: #a2ab58;
@@ -226,8 +264,6 @@ canvas.rf-graph {
 
 .CRITICAL, .PREV_CRITICAL{
   background: #a73737;
-  /* background: -webkit-linear-gradient(to top, #7a2828, #000000); */
-  /* background: linear-gradient(to top, #a73737, #000000); */
 }
 
 
