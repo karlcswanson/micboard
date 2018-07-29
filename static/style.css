@@ -47,6 +47,7 @@ html,body {
   height: 125px;
   width: 100%;
   background-color: purple;
+  /* display: none; */
 }
 
 .battery-bars {
@@ -153,12 +154,83 @@ canvas.rf-graph {
 
   }
   .mic_name {
-    height: calc(100% - 375px);
+    /* height: calc(100% - 250px); */
+    /* height: 100%; */
     display: flex;
     justify-content:center;
     align-items:center;
   }
 
+
+
+  .info-drawer {
+    /* height: 250px; */
+  }
+
+  .flexfix {
+    display: none;
+  }
+
+
+  /* electrode & info drawer switch */
+  /* no electrode or info-drawer */
+  .elinfo00 .col-sm .mic_name {
+    height: 100%;
+  }
+
+  .elinfo00 .col-sm .electrode {
+    display: none;
+  }
+
+  .elinfo00 .col-sm .info-drawer {
+    display: none;
+  }
+
+  /* electrode */
+  .elinfo01 .col-sm .mic_name {
+    height: calc(100% - 125px);
+    background-color: black;
+  }
+
+  .elinfo01 .col-sm .electrode {
+    display: block;
+    bottom: 0px;
+  }
+
+  .elinfo01 .col-sm .info-drawer {
+    display: none;
+  }
+
+  .elinfo01 .col-sm .mic_name {
+    /* background-color: black; */
+  }
+
+  /* info drawer */
+  .elinfo10 .col-sm .mic_name {
+    height: calc(100% - 250px);
+  }
+
+  .elinfo10 .col-sm .electrode {
+    display: none;
+  }
+
+  .elinfo10 .col-sm .info-drawer {
+    display: block;
+  }
+
+  /* electrode and info drawer */
+  .elinfo11 .col-sm .mic_name {
+    height: calc(100% - 375px);
+    background-color: black;
+  }
+
+  .elinfo11 .col-sm .electrode {
+    display: block;
+  }
+
+  .elinfo11 .col-sm info-drawer {
+    display: block;
+  }
 }
 
 
@@ -179,7 +251,11 @@ canvas.rf-graph {
   .col-sm{
     vertical-align: middle;
     min-width: 256px;
+    /* flex-grow: 0; */
+    flex-shrink: 1;
   }
+
+
   .mic_id{
     display: inline;
     font-weight: 400;
@@ -242,34 +318,29 @@ canvas.rf-graph {
     display: none;
   }
 }
-/* Backgrounds */
+
+
+/* Background Colors */
 .GOOD{
   background: #155724;
 }
 
 .PREV_GOOD{
   background: #155724;
-  background: -webkit-linear-gradient(to top, #155724, #000000, #000000);
-  background: linear-gradient(to top, #155724, #000000, #000000);
 }
 
 .REPLACE {
   background: #a2ab58;
 }
+
 .PREV_REPLACE{
   background: #a2ab58;
-  background: -webkit-linear-gradient(to top, #a2ab58, #000000);
-  background: linear-gradient(to top, #a2ab58, #000000);
 }
 
 .CRITICAL, .PREV_CRITICAL{
   background: #a73737;
 }
 
-
-
 .COM_ERROR{
   background: #523602;
-  background: -webkit-linear-gradient(to top, #523602, #000000, #000000, #000000);
-  background: linear-gradient(to top, #523602, #000000,#000000, #000000);
 }

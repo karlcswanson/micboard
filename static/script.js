@@ -5,8 +5,6 @@ var charts = {};
 
 var gif_list = {};
 
-
-
 var prefix_list = ['BP','HH'];
 
 
@@ -26,9 +24,16 @@ $(document).ready(function() {
   }
 
 
+
   document.addEventListener("keydown", function(e) {
     if (e.keyCode == 70) {
       toggleFullScreen();
+    }
+  }, false);
+
+  document.addEventListener("keydown", function(e) {
+    if (e.keyCode == 71) {
+      toggleBackgrounds();
     }
   }, false);
 
@@ -37,19 +42,10 @@ $(document).ready(function() {
       toggleInfoDrawer();
     }
   }, false);
-
-  document.addEventListener("keydown", function(e) {
-    if (e.keyCode == 71) {
-      toggleGifBackgrounds();
-    }
-  }, false);
-
-
-
-
 });
 
 
+// enables info-drawer toggle for mobile clients
 function infoToggle() {
   $('.col-sm').click(function() {
     if($(window).width() <= 980) {
@@ -69,17 +65,49 @@ function toggleFullScreen() {
   }
 }
 
+
+
 function toggleInfoDrawer() {
-  $(".info-drawer").toggle();
-  if($(".info-drawer").is(":visible")){
-    $(".mic_name").height("calc(100% - 375px)");
-  } else {
-    $(".mic_name").height("100%");
+  if($("#micboard").hasClass("elinfo00")){
+    $("#micboard").removeClass("elinfo00");
+    $("#micboard").addClass("elinfo01");
+  }
+  else if($("#micboard").hasClass("elinfo01")){
+    $("#micboard").removeClass("elinfo01");
+    $("#micboard").addClass("elinfo10");
+  }
+  else if($("#micboard").hasClass("elinfo10")){
+    $("#micboard").removeClass("elinfo10");
+    $("#micboard").addClass("elinfo11");
+  }
+  else if($("#micboard").hasClass("elinfo11")){
+    $("#micboard").removeClass("elinfo11");
+    $("#micboard").addClass("elinfo00");
   }
 }
 
 
-function toggleGifBackgrounds() {
+function toggleBackgrounds() {
+  if($("#micboard").hasClass("bg-std")){
+    $("#micboard").removeClass("bg-std");
+    $("#micboard").addClass("bg-gif");
+    updateGIFBackgrounds();
+  }
+  else if($("#micboard").hasClass("bg-gif")){
+    $("#micboard").removeClass("bg-gif");
+    $("#micboard").addClass("bg-img");
+    $("#micboard .mic_name").css('background-image', '');
+    $("#micboard .mic_name").css('background-size', '');
+  }
+  else if($("#micboard").hasClass("bg-img")){
+    $("#micboard").removeClass("bg-img");
+    $("#micboard").addClass("bg-std");
+    $("#micboard .mic_name").css('background-image', '');
+    $("#micboard .mic_name").css('background-size', '');
+  }
+}
+
+function updateGIFBackgrounds() {
   console.log('GIF!');
   $(".mic_name").each(function(key, value){
 
@@ -89,10 +117,14 @@ function toggleGifBackgrounds() {
       $(this).css('background-size', 'cover');
       console.log(name);
     }
-
+    else {
+      $(this).css('background-image', '');
+      $(this).css('background-size', '');
+    }
   });
-
 }
+
+
 
 
 
@@ -112,7 +144,6 @@ function wsConnect(){
   socket.onmessage = function(msg){
     mic_data = JSON.parse(msg.data);
     updateSlot(mic_data);
-
   }
 }
 
@@ -205,10 +236,9 @@ function updateRfChart(data) {
 }
 
 function updateName(slotSelector, data) {
-  // slotSelector.querySelector('div.mic_name').className = 'mic_name';
-  // slotSelector.querySelector('div.mic_name').classList.add(data.status);
   var prefix = data.name.substring(0,2);
   var number = data.name.substring(2,4);
+  var name = data.name.substring(6);
   if(prefix_list.indexOf(prefix) >= 0 && !isNaN(number))
   {
     slotSelector.querySelector('p.mic_id').innerHTML = prefix + number;
@@ -218,11 +248,18 @@ function updateName(slotSelector, data) {
     slotSelector.querySelector('p.mic_id').innerHTML = '';
     slotSelector.querySelector('p.name').innerHTML = data.name;
   }
+
+  if($("#micboard").hasClass("bg-gif")){
+    updateGIFBackgrounds();
+  }
 }
 
 function updateStatus(slotSelector, data) {
   slotSelector.querySelector('div.mic_name').className = 'mic_name';
   slotSelector.querySelector('div.mic_name').classList.add(data.status);
+
+  slotSelector.querySelector('div.electrode').className = 'electrode';
+  slotSelector.querySelector('div.electrode').classList.add(data.status);
 
 }
 
@@ -304,7 +341,19 @@ function initialMap() {
       charts[tx[i].slot] = initChart('slot-' + tx[i].slot);
     }
     infoToggle();
+    flexFix();
   });
+}
+
+
+// https://medium.com/developedbyjohn/equal-width-flex-items-a5ba1bfacb77
+// Shouldn't be fixing this with js, yet here I am.
+function flexFix () {
+  var flexFixHTML =   `<div class="col-sm flexfix"></div>
+                       <div class="col-sm flexfix"></div>
+                       <div class="col-sm flexfix"></div>
+                       <div class="col-sm flexfix"></div>`;
+                       $("#micboard").append(flexFixHTML);
 }
 
 function initChart(chartID) {
@@ -317,7 +366,6 @@ function initChart(chartID) {
 
   var chartOptions = {
     responsive:true,
-    // interpolation:'step',
     millisPerPixel: 25,
     grid: {
       verticalSections:0,
