@@ -6,25 +6,20 @@ import threading
 import re
 import queue
 
+from collections import defaultdict
+
+
 DATA_TIMEOUT = 30
 PORT = 2202
 WirelessReceivers = []
 
 data_output_queue = queue.Queue()
 
-udp_command = {}
-udp_command['ulxd'] = {
-                        'start_char'    :    '<',
-                        'stop_char'     :    '>',
-                        'get'           :    'GET',
-                        'set'           :    'SET',
-                        'reply'         :    'REP',
-                        'sample'        :    'SAMPLE',
-                        'chan_name'     :    'CHAN_NAME',
-                        'device_id'     :    'DEVICE_ID',
-                        'frequency'     :    'FREQUENCY',
-                        'battery'       :    'BATT_BARS'
-}
+
+sample = {}
+sample['qlxd'] = ['RF_ANTENNA','RX_RF_LVL','AUDIO_LVL']
+sample['ulxd'] = ['RF_ANTENNA','RX_RF_LVL','AUDIO_LVL']
+sample['axtd'] = []
 
 
 
@@ -37,6 +32,7 @@ class WirelessReceiver:
         self.writeQueue = queue.Queue()
         self.f = None
         self.socket_watchdog = int(time.perf_counter())
+        self.raw = defaultdict(dict)
 
     def socket_connect(self):
         try:
@@ -71,7 +67,18 @@ class WirelessReceiver:
     def get_transmitter_by_channel(self, channel):
         return next((x for x in self.transmitters if x.channel == int(channel)), None)
 
+
+    def parse_raw_rx(self, data):
+        data = data.split()
+        if data[2] in ['1','2','3','4']:
+            tx = self.get_transmitter_by_channel(int(data[2]))
+            tx.parse_raw_tx(' '.join(data[1:-1]),self.type)
+
+        else:
+            self.raw[data[2]] = ' '.join(data[3:-1]).strip('{}').rstrip()
+
     def parse_data(self, data):
+        self.parse_raw_rx(data)
         if self.type == 'qlxd' or self.type == 'ulxd':
             return self.ulxd_parse(data)
         if self.type == 'uhfr':
@@ -134,9 +141,6 @@ class WirelessReceiver:
         if self.type == 'qlxd' or self.type == 'ulxd':
             for i in self.get_channels():
                 ret.append('< GET {} ALL >'.format(i))
-                # ret.append('< GET {} CHAN_NAME >'.format(i))
-                # ret.append('< GET {} BATT_BARS >'.format(i))
-                # ret.append('< GET {} FREQUENCY >'.format(i))
 
         elif self.type == 'uhfr':
             for i in self.get_channels():
@@ -167,7 +171,7 @@ class WirelessReceiver:
         tx_data = []
         for transmitter in self.transmitters:
             tx_data.append(transmitter.tx_json())
-        data = {'ip': self.ip, 'type': self.type, 'status': self.rx_com_status, 'tx': tx_data}
+        data = {'ip': self.ip, 'type': self.type, 'status': self.rx_com_status, 'raw': self.raw, 'tx': tx_data}
         return data
 
 
@@ -184,6 +188,7 @@ class WirelessTransmitter:
         self.audio_level = 0
         self.rf_level = 0
         self.antenna = 'XX'
+        self.raw = defaultdict(dict)
 
 
     def set_frequency(self, frequency):
@@ -237,10 +242,17 @@ class WirelessTransmitter:
         return {'name': self.chan_name, 'channel': self.channel, 'antenna':self.antenna,
                 'audio_level': self.audio_level, 'rf_level': self.rf_level,
                 'frequency': self.frequency, 'battery':self.battery,
-                'status': self.tx_state(), 'slot': self.slot }
+                'status': self.tx_state(), 'slot': self.slot, 'raw': self.raw }
 
     def tx_json_push(self):
         data_output_queue.put(self.tx_json())
+
+    def parse_raw_tx(self,data,type):
+        data = data.split()
+        self.raw[data[2]] = ' '.join(data[3:]).strip('{}').rstrip()
+        if data[2] == 'ALL':
+            for index, val in enumerate(data[3:]):
+                self.raw[sample[type][index]] = val
 
 
 def get_receiver_by_ip(ip):
