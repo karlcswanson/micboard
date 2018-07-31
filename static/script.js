@@ -213,6 +213,10 @@ function updateSelector(data) {
     updateAudioChart(data);
     transmitters[data.slot].audio_level = data.audio_level;
   }
+  if (transmitters[data.slot].offset != data.offset) {
+    updateOffset(slotSelector, data);
+    transmitters[data.slot].offset = data.offset;
+  }
   if (transmitters[data.slot].frequency != data.frequency) {
     updateFrequency(slotSelector, data);
     transmitters[data.slot].frequency = data.frequency;
@@ -225,6 +229,10 @@ function updateSelector(data) {
 
 function updateAudioChart(data) {
   charts[data.slot].audioSeries.append(Date.now(), data.audio_level);
+}
+
+function updateOffset(slotSelector, data){
+  slotSelector.querySelector('p.offset').innerHTML = data.offset + " dB";
 }
 
 function updateFrequency(slotSelector, data){
@@ -376,7 +384,9 @@ function initChart(chartID) {
       disabled:true
     },
     maxValue:115,
-    minValue:0
+    minValue:0,
+    scaleSmoothing:.7,
+    limitFPS:20
   };
   var audioChart = new SmoothieChart(chartOptions);
   var rfChart = new SmoothieChart(chartOptions);

@@ -102,6 +102,16 @@ canvas.rf-graph {
   /* background-color: red; */
 }
 
+.offset {
+  position: absolute;
+  bottom: 180px;
+  right: 5px;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 100;
+  font-style: italic;
+  color: green;
+}
+
 .frequency{
   position: absolute;
   bottom: 80px;
@@ -282,6 +292,16 @@ canvas.rf-graph {
   }
   .battery-bar {
     border-width:1px;
+  }
+
+  .offset{
+    /* position: absolute; */
+    bottom: 75px;
+    right: 5px;
+    /* font-family: 'Roboto Mono', monospace; */
+    /* font-weight: 100; */
+    /* font-style: italic; */
+    /* color: red; */
   }
 
   .frequency{
