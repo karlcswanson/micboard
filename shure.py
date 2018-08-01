@@ -9,6 +9,10 @@ import queue
 from collections import defaultdict
 
 
+# https://github.com/gaetano-guerriero/pypjlink/blob/master/pypjlink/projector.py
+reverse_dict = lambda d: dict(zip(d.values(), d.keys()))
+
+
 DATA_TIMEOUT = 30
 PORT = 2202
 WirelessReceivers = []
@@ -21,7 +25,31 @@ sample['qlxd'] = ['RF_ANTENNA','RX_RF_LVL','AUDIO_LVL']
 sample['ulxd'] = ['RF_ANTENNA','RX_RF_LVL','AUDIO_LVL']
 sample['axtd'] = []
 
+rx_strings = {}
+rx_strings['qlxd'] = {'battery': 'BATT_BARS',
+                      'frequency': 'FREQUENCY',
+                      'audio_level': 'AUDIO_LVL',
+                      'rf_level': 'RX_RF_LVL',
+                      'name': 'CHAN_NAME',
+                      'antenna': 'RF_ANTENNA'}
 
+rx_strings['ulxd'] = {'battery': 'BATT_BARS',
+                      'frequency': 'FREQUENCY',
+                      'audio_level': 'AUDIO_LVL',
+                      'rf_level': 'RX_RF_LVL',
+                      'name': 'CHAN_NAME',
+                      'antenna': 'RF_ANTENNA'}
+
+rx_strings['axtd'] = {'battery': 'TX_BATT_BARS',
+                      'frequency': 'FREQUENCY',
+                      'audio_level': 'AUDIO_LVL',
+                      'rf_level': 'RX_RF_LVL',
+                      'name': 'CHAN_NAME',
+                      'antenna': 'RF_ANTENNA'}
+
+rx_strings_rev = { 'qlxd' : reverse_dict(rx_strings['qlxd']),
+                   'ulxd' : reverse_dict(rx_strings['ulxd']),
+                   'axtd' : reverse_dict(rx_strings['axtd'])}
 
 class WirelessReceiver:
     def __init__(self, ip, type):
@@ -79,10 +107,10 @@ class WirelessReceiver:
 
     def parse_data(self, data):
         self.parse_raw_rx(data)
-        if self.type == 'qlxd' or self.type == 'ulxd':
-            return self.ulxd_parse(data)
-        if self.type == 'uhfr':
-            return self.uhfr_parse(data)
+        # if self.type == 'qlxd' or self.type == 'ulxd':
+            # return self.ulxd_parse(data)
+        # if self.type == 'uhfr':
+            # return self.uhfr_parse(data)
 
     def ulxd_parse(self, data):
         # print(data)
@@ -244,8 +272,14 @@ class WirelessTransmitter:
                 'frequency': self.frequency, 'battery':self.battery,
                 'status': self.tx_state(), 'slot': self.slot, 'raw': self.raw }
 
+    def tx_json_mini(self):
+        data = self.tx_json()
+
+        del data['raw']
+        return data
+
     def tx_json_push(self):
-        data_output_queue.put(self.tx_json())
+        data_output_queue.put(self.tx_json_mini())
 
     def parse_raw_tx(self,data,type):
         data = data.split()
@@ -253,7 +287,21 @@ class WirelessTransmitter:
         if data[2] == 'ALL':
             for index, val in enumerate(data[3:]):
                 self.raw[sample[type][index]] = val
+            self.tx_json_push()
 
+
+        if data[2] == rx_strings[type]['battery']:
+            self.set_battery(data[3])
+        elif data[2] == rx_strings[type]['name']:
+            self.set_chan_name(' '.join(data[3:]).strip('{}').rstrip())
+        elif data[2] == rx_strings[type]['frequency']:
+            self.set_frequency(data[3])
+        elif data[2] == rx_strings[type]['audio_level']:
+            self.set_audio_level(data[3])
+        elif data[2] == rx_strings[type]['rf_level']:
+            self.set_rf_level(data[3])
+        elif data[2] == rx_strings[type]['antenna']:
+            self.set_antenna(data[3])
 
 def get_receiver_by_ip(ip):
     return next((x for x in WirelessReceivers if x.ip == ip), None)
