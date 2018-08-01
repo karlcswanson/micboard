@@ -213,9 +213,9 @@ function updateSelector(data) {
     updateAudioChart(data);
     transmitters[data.slot].audio_level = data.audio_level;
   }
-  if (transmitters[data.slot].offset != data.offset) {
-    updateOffset(slotSelector, data);
-    transmitters[data.slot].offset = data.offset;
+  if (transmitters[data.slot].tx_offset != data.tx_offset) {
+    updateTXOffset(slotSelector, data);
+    transmitters[data.slot].tx_offset = data.tx_offset;
   }
   if (transmitters[data.slot].frequency != data.frequency) {
     updateFrequency(slotSelector, data);
@@ -231,8 +231,8 @@ function updateAudioChart(data) {
   charts[data.slot].audioSeries.append(Date.now(), data.audio_level);
 }
 
-function updateOffset(slotSelector, data){
-  slotSelector.querySelector('p.offset').innerHTML = data.offset + " dB";
+function updateTXOffset(slotSelector, data){
+  slotSelector.querySelector('p.offset').innerHTML = data.tx_offset + " dB";
 }
 
 function updateFrequency(slotSelector, data){
@@ -344,6 +344,7 @@ function initialMap() {
       t.querySelector('div.col-sm').id = 'slot-' + tx[i].slot;
       updateStatus(t,tx[i]);
       updateName(t,tx[i]);
+      updateTXOffset(t,tx[i]);
       updateFrequency(t,tx[i]);
       document.getElementById('micboard').appendChild(t);
       charts[tx[i].slot] = initChart('slot-' + tx[i].slot);

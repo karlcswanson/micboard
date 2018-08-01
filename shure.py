@@ -31,7 +31,8 @@ rx_strings['qlxd'] = {'battery': 'BATT_BARS',
                       'audio_level': 'AUDIO_LVL',
                       'rf_level': 'RX_RF_LVL',
                       'name': 'CHAN_NAME',
-                      'antenna': 'RF_ANTENNA'}
+                      'antenna': 'RF_ANTENNA',
+                      'tx_offset' : 'TX_OFFSET'}
 
 rx_strings['ulxd'] = {'battery': 'BATT_BARS',
                       'frequency': 'FREQUENCY',
@@ -106,11 +107,10 @@ class WirelessReceiver:
             self.raw[data[2]] = ' '.join(data[3:-1]).strip('{}').rstrip()
 
     def parse_data(self, data):
-        self.parse_raw_rx(data)
-        # if self.type == 'qlxd' or self.type == 'ulxd':
-            # return self.ulxd_parse(data)
-        # if self.type == 'uhfr':
-            # return self.uhfr_parse(data)
+        if self.type == 'qlxd' or self.type == 'ulxd':
+            return self.ulxd_parse(data)
+        if self.type == 'uhfr':
+            return self.uhfr_parse(data)
 
     def ulxd_parse(self, data):
         # print(data)
@@ -216,6 +216,7 @@ class WirelessTransmitter:
         self.audio_level = 0
         self.rf_level = 0
         self.antenna = 'XX'
+        self.tx_offset = 0
         self.raw = defaultdict(dict)
 
 
@@ -243,6 +244,11 @@ class WirelessTransmitter:
     def set_chan_name(self, chan_name):
         self.chan_name = chan_name
 
+    def set_tx_offset(self, tx_offset):
+        if tx_offset == '255':
+            tx_offset = '0'
+        self.tx_offset = tx_offset
+
     def tx_state(self):
         # WCCC Specific State for unassigned microphones
         name = self.chan_name.split()
@@ -267,9 +273,10 @@ class WirelessTransmitter:
         return 'COM_ERROR'
 
     def tx_json(self):
-        return {'name': self.chan_name, 'channel': self.channel, 'antenna':self.antenna,
-                'audio_level': self.audio_level, 'rf_level': self.rf_level,
-                'frequency': self.frequency, 'battery':self.battery,
+        return {'name': self.chan_name, 'channel': self.channel,
+                'antenna':self.antenna,'audio_level': self.audio_level,
+                'rf_level': self.rf_level,'frequency': self.frequency,
+                'battery':self.battery,'tx_offset': self.tx_offset,
                 'status': self.tx_state(), 'slot': self.slot, 'raw': self.raw }
 
     def tx_json_mini(self):
@@ -302,6 +309,8 @@ class WirelessTransmitter:
             self.set_rf_level(data[3])
         elif data[2] == rx_strings[type]['antenna']:
             self.set_antenna(data[3])
+        elif data[2] == rx_strings[type]['tx_offset']:
+            self.set_tx_offset(data[3])
 
 def get_receiver_by_ip(ip):
     return next((x for x in WirelessReceivers if x.ip == ip), None)
@@ -368,7 +377,8 @@ def SocketService():
             data =  [e+d for e in data.split(d) if e]
 
             for line in data:
-                rx.parse_data(line)
+                # rx.parse_data(line)
+                rx.parse_raw_rx(data)
 
             rx.socket_watchdog = int(time.perf_counter())
 

@@ -59,7 +59,7 @@ function randomAudioGenerator(){
   return getRandomInt(0,50);
 }
 
-function randomOffsetGenerator() {
+function randomTXOffsetGenerator() {
   return getRandomInt(0,21);
 }
 
@@ -101,7 +101,7 @@ function randomDataGenerator(){
     "antenna": randomRfSampleGenerator(),
     "audio_level": randomAudioGenerator(),
     "rf_level": randomRfGenerator(),
-    "offset": randomOffsetGenerator(),
+    "tx_offset": randomTXOffsetGenerator(),
     "frequency": randomFrequencyGenerator(),
     "slot": slot,
     "battery": battery.battery,
