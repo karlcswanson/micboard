@@ -7,6 +7,7 @@ var gif_list = {};
 
 var prefix_list = ['BP','HH'];
 
+var localURL = ''
 
 $(document).ready(function() {
   start_slot = getUrlParameter('start_slot');
@@ -40,6 +41,13 @@ $(document).ready(function() {
   document.addEventListener("keydown", function(e) {
     if (e.keyCode == 73) {
       toggleInfoDrawer();
+    }
+  }, false);
+
+  document.addEventListener("keydown", function(e) {
+    if (e.keyCode == 81) {
+      generateQR()
+      $('.modal').modal('toggle');
     }
   }, false);
 });
@@ -106,6 +114,23 @@ function toggleBackgrounds() {
     $("#micboard .mic_name").css('background-size', '');
   }
 }
+
+function generateQR(){
+  var qrOptions = {
+    width: 600
+  };
+  $.getJSON( '/data', function(data) {
+    var url = data['url'];
+    url = url + location.pathname + location.search;
+    document.getElementById('largelink').href = url;
+    document.getElementById('largelink').innerHTML = url;
+    QRCode.toCanvas(document.getElementById('qrcode'), url, qrOptions, function (error) {
+      if (error) console.error(error)
+      console.log('success!');
+    })
+  });
+}
+
 
 function updateGIFBackgrounds() {
   console.log('GIF!');
@@ -334,6 +359,7 @@ function dataFilter(data){
 function initialMap() {
   $.getJSON( dataURL, function(data) {
     gif_list = data['gif'];
+    localURL = data['url']
     dataFilter(data);
     $(".above-mid").text("");
     var tx = transmitters;

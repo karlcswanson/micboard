@@ -15,9 +15,23 @@
   <body>
     <div class="container-fluid fullHeight">
 
+      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content modal-dialog-centered">
+
+              <a id="largelink" href=""></a>
+
+            <canvas id="qrcode"></canvas>
+          </div>
+        </div>
+      </div>
+
+
+
       <div id="micboard" class="row above-mid bg-std elinfo11">
 
       </div>
+
     </div>
     <template id="column-template">
       <div class="col-sm">
@@ -52,6 +66,7 @@
     <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="node_modules/smoothie/smoothie.js"></script>
+    <script src="node_modules/qrcode/build/qrcode.min.js"></script>
 
 
     <script src="static/script.js"></script>

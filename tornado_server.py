@@ -5,7 +5,10 @@ import time
 import os
 import shure
 import asyncio
+import socket
 
+
+PORT = 8058
 cl = []
 
 settings = {
@@ -23,6 +26,10 @@ def fileList(extension):
             files.append(file)
     return files
 
+# Its not efficecent to get the IP each time, but for now we'll assume server might have dynamic IP
+def localURL():
+    ip = socket.gethostbyname(socket.gethostname())
+    return 'http://{}:{}'.format(ip,PORT)
 
 def json_rxs(rxs):
     data = []
@@ -31,8 +38,9 @@ def json_rxs(rxs):
 
     gifs = fileList('.gif')
     jpgs = fileList('.jpg')
+    url = localURL()
 
-    return json.dumps({'receivers': data, 'gif': gifs, 'jpg': jpgs}, sort_keys=True, indent=4)
+    return json.dumps({'receivers': data, 'url': url, 'gif': gifs, 'jpg': jpgs}, sort_keys=True, indent=4)
 
 class IndexHandler(web.RequestHandler):
     def get(self):
@@ -90,7 +98,7 @@ def writeWeb(data):
 def twisted():
     # https://github.com/tornadoweb/tornado/issues/2308
     asyncio.set_event_loop(asyncio.new_event_loop())
-    app.listen(8058)
+    app.listen(PORT)
     ioloop.IOLoop.instance().start()
 
 def socket_send():

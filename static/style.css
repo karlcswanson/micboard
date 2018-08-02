@@ -79,6 +79,8 @@ html,body {
   float:left;
 }
 
+
+
 .batt_led_off{
   background-color: var(--color-black);
 }
@@ -130,7 +132,7 @@ canvas.rf-graph {
   font-family: 'Roboto Mono', monospace;
   font-weight: 100;
   font-style: italic;
-  color: red;
+  color: var(--color-red);
 }
 
 .diversity {
@@ -146,14 +148,14 @@ canvas.rf-graph {
   width: 50%;
   height:inherit;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   border-color: var(--color-gray);
   box-sizing:border-box;
   float:left;
 }
 
 .diversity-bar-on{
-  background-color: var(--blue);
+  background-color: var(--color-blue);
 }
 
 .diversity-bar-off{
@@ -386,4 +388,9 @@ canvas.rf-graph {
 .COM_ERROR{
   /* background: black; */
   background: var(--color-black);
+}
+
+
+#largelink {
+  padding-top: 4em;
 }
