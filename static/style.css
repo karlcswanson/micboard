@@ -1,3 +1,5 @@
+@import '/node_modules/@ibm/plex/css/ibm-plex.css';
+
 :root {
   --color-black: #262626;
   --color-red: #DC493A;
@@ -5,6 +7,9 @@
   --color-blue: #006494;
   --color-green: #69B578;
   --color-gray: #616161;
+  /* --color-white: #EBEBEB; */
+  --color-white: #D7D7D7;
+  --color-shadow: #616161;
 }
 
 
@@ -21,15 +26,15 @@ html,body {
 }
 
 .col-sm {
-  color: white;
+  color: var(--color-white);
 
 }
 
 .mic_id {
-  font-family: 'Roboto Mono', monospace;
-  font-weight: 100;
+  font-family: 'IBM Plex Sans';
+  font-weight: 300;
   font-style: italic;
-  text-shadow:2px 2px 2px #333333;
+  /* text-shadow:1px 1px 1px var(--color-shadow); */
 }
 
 
@@ -43,10 +48,10 @@ html,body {
 
 
 .name{
-  font-family: 'Roboto Mono', monospace;
-  font-weight: 100;
-  font-style: italic;
-  text-shadow:2px 2px 0px #333333
+  font-family: 'IBM Plex Sans';
+  font-weight: 400;
+  font-style: bold;
+  /* text-shadow:2px 2px 0px #333333 */
 }
 
 
@@ -73,13 +78,11 @@ html,body {
   width: 20%;
   height:inherit;
   border-style: solid;
-  border-width: 2px;
+  border-width: 2px 1px;
   border-color: var(--color-gray);
   box-sizing:border-box;
   float:left;
 }
-
-
 
 .batt_led_off{
   background-color: var(--color-black);
@@ -119,7 +122,7 @@ canvas.rf-graph {
   position: absolute;
   bottom: 180px;
   right: 5px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: 'IBM Plex Mono';
   font-weight: 100;
   font-style: italic;
   color: var(--color-green);
@@ -129,7 +132,7 @@ canvas.rf-graph {
   position: absolute;
   bottom: 80px;
   right: 5px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: 'IBM Plex Mono';
   font-weight: 100;
   font-style: italic;
   color: var(--color-red);
@@ -293,7 +296,7 @@ canvas.rf-graph {
     float: right;
     font-size: 12pt;
     display: inline;
-    font-weight: 300;
+    font-weight: 400;
     padding-right: 1em;
     text-align: right;
     font-size: 18pt;
