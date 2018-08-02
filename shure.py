@@ -292,8 +292,12 @@ class WirelessTransmitter:
         data = data.split()
         self.raw[data[2]] = ' '.join(data[3:]).strip('{}').rstrip()
         if data[2] == 'ALL':
-            for index, val in enumerate(data[3:]):
-                self.raw[sample[type][index]] = val
+            self.set_antenna(data[3])
+            self.set_rf_level(data[4])
+            self.set_audio_level(data[5])
+            # for index, val in enumerate(data[3:]):
+                # self.raw[sample[type][index]] = val
+
             self.tx_json_push()
 
 
@@ -303,12 +307,6 @@ class WirelessTransmitter:
             self.set_chan_name(' '.join(data[3:]).strip('{}').rstrip())
         elif data[2] == rx_strings[type]['frequency']:
             self.set_frequency(data[3])
-        elif data[2] == rx_strings[type]['audio_level']:
-            self.set_audio_level(data[3])
-        elif data[2] == rx_strings[type]['rf_level']:
-            self.set_rf_level(data[3])
-        elif data[2] == rx_strings[type]['antenna']:
-            self.set_antenna(data[3])
         elif data[2] == rx_strings[type]['tx_offset']:
             self.set_tx_offset(data[3])
 
@@ -374,11 +372,13 @@ def SocketService():
             # print("read: {} data: {}".format(rx.ip,data))
 
             d = '>'
+            if rx.type == 'uhfr':
+                d = '*'
             data =  [e+d for e in data.split(d) if e]
 
             for line in data:
                 # rx.parse_data(line)
-                rx.parse_raw_rx(data)
+                rx.parse_raw_rx(line)
 
             rx.socket_watchdog = int(time.perf_counter())
 

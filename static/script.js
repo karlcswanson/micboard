@@ -209,10 +209,6 @@ function updateSelector(data) {
     transmitters[data.slot].antenna = data.antenna;
   }
 
-  if (transmitters[data.slot].audio_level != data.audio_level) {
-    updateAudioChart(data);
-    transmitters[data.slot].audio_level = data.audio_level;
-  }
   if (transmitters[data.slot].tx_offset != data.tx_offset) {
     updateTXOffset(slotSelector, data);
     transmitters[data.slot].tx_offset = data.tx_offset;
@@ -221,10 +217,12 @@ function updateSelector(data) {
     updateFrequency(slotSelector, data);
     transmitters[data.slot].frequency = data.frequency;
   }
-  if (transmitters[data.slot].rf_level != data.rf_level) {
-    updateRfChart(data);
-    transmitters[data.slot].rf_level = data.rf_level;
-  }
+
+  updateAudioChart(data);
+  transmitters[data.slot].audio_level = data.audio_level;
+
+  updateRfChart(data);
+  transmitters[data.slot].rf_level = data.rf_level;
 }
 
 function updateAudioChart(data) {
@@ -345,6 +343,7 @@ function initialMap() {
       updateStatus(t,tx[i]);
       updateName(t,tx[i]);
       updateTXOffset(t,tx[i]);
+      updateBattery(t,tx[i]);
       updateFrequency(t,tx[i]);
       document.getElementById('micboard').appendChild(t);
       charts[tx[i].slot] = initChart('slot-' + tx[i].slot);
@@ -373,7 +372,7 @@ function initChart(chartID) {
   var audioCanvas = document.getElementById(chartID).querySelector('canvas.audio-graph');
   var rfCanvas = document.getElementById(chartID).querySelector('canvas.rf-graph');
 
-  var chartOptions = {
+  var rfOptions = {
     responsive:true,
     millisPerPixel: 25,
     grid: {
@@ -386,21 +385,39 @@ function initChart(chartID) {
     },
     maxValue:115,
     minValue:0,
-    scaleSmoothing:.7,
+    // scaleSmoothing:.7,
     limitFPS:20
   };
-  var audioChart = new SmoothieChart(chartOptions);
-  var rfChart = new SmoothieChart(chartOptions);
+
+  var audioOptions = {
+    responsive:true,
+    millisPerPixel: 25,
+    grid: {
+      verticalSections:0,
+      strokeStyle:'transparent',
+      fillStyle:'transparent'
+    },
+    labels:{
+      disabled:true
+    },
+    maxValue:50,
+    minValue:0,
+    // scaleSmoothing:.7,
+    limitFPS:20
+  };
+
+  var audioChart = new SmoothieChart(audioOptions);
+  var rfChart = new SmoothieChart(rfOptions);
 
   audioChart.addTimeSeries(chart.audioSeries, {
-    strokeStyle: 'rgba(0, 255, 0, 1)',
-    fillStyle: 'rgba(0, 255, 0, 0.2)',
+    strokeStyle: '#69B578',
+    fillStyle: '',
     lineWidth: 2
   });
 
   rfChart.addTimeSeries(chart.rfSeries, {
-    strokeStyle: 'rgba(255, 0, 0, 1)',
-    fillStyle: 'rgba(255, 0, 0, 0.2)',
+    strokeStyle: '#DC493A',
+    fillStyle: '',
     lineWidth: 2
   });
 

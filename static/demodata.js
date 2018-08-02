@@ -56,7 +56,7 @@ function randomRfSampleGenerator() {
 }
 
 function randomAudioGenerator(){
-  return getRandomInt(0,50);
+  return getRandomInt(0,30);
 }
 
 function randomTXOffsetGenerator() {
@@ -70,7 +70,7 @@ function randomFrequencyGenerator(){
 
 
 function randomRfGenerator(){
-  return getRandomInt(0,115);
+  return getRandomInt(0,50);
 }
 
 function randomBatteryGenerator() {
@@ -114,8 +114,8 @@ function randomDataGenerator(){
 function randomCharts(){
   var slots = Object.keys(transmitters).map(Number);
   slots.forEach(function(slot){
-    charts[slot].audioSeries.append(Date.now(), randomRfGenerator());
-    charts[slot].rfSeries.append(Date.now(), randomAudioGenerator());
+    charts[slot].audioSeries.append(Date.now(), randomAudioGenerator());
+    charts[slot].rfSeries.append(Date.now(), randomRfGenerator());
   })
 }
 

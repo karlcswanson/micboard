@@ -1,5 +1,16 @@
+:root {
+  --color-black: #262626;
+  --color-red: #DC493A;
+  --color-yellow: #F0B67F;
+  --color-blue: #006494;
+  --color-green: #69B578;
+  --color-gray: #616161;
+}
+
+
+
 html,body {
-  background-color:#000000;
+  background-color: var(--color-black);
   height: 100%;
   margin: 0px;
   padding: 0px;
@@ -24,8 +35,8 @@ html,body {
 
 
 .above-mid .col-sm {
-  border: .5px solid;
-  border-color: black;
+  /* border: .5px solid; */
+  border-color: var(--color-black);
   padding: 0px;
 }
 
@@ -56,31 +67,31 @@ html,body {
   bottom: 225px;
   height: 25px;
   width: 100%;
-  background-color: black;
+  background-color: var(--color-black);
 }
 .battery-bar {
   width: 20%;
   height:inherit;
   border-style: solid;
   border-width: 2px;
-  border-color: grey;
+  border-color: var(--color-gray);
   box-sizing:border-box;
   float:left;
 }
 
 .batt_led_off{
-  background-color: black;
+  background-color: var(--color-black);
 }
 
 .batt_led_danger{
-  background-color: red;
+  background-color: var(--color-red);
 }
 
 .batt_led_warning {
-  background-color: orange;
+  background-color: var(--color-yellow);
 }
 .batt_led_good{
-  background-color: green;
+  background-color: var(--color-green);
 }
 
 
@@ -109,7 +120,7 @@ canvas.rf-graph {
   font-family: 'Roboto Mono', monospace;
   font-weight: 100;
   font-style: italic;
-  color: green;
+  color: var(--color-green);
 }
 
 .frequency{
@@ -136,17 +147,17 @@ canvas.rf-graph {
   height:inherit;
   border-style: solid;
   border-width: 2px;
-  border-color: grey;
+  border-color: var(--color-gray);
   box-sizing:border-box;
   float:left;
 }
 
 .diversity-bar-on{
-  background-color: blue;
+  background-color: var(--blue);
 }
 
 .diversity-bar-off{
-  background-color: black;
+  background-color: var(--color-black);
 }
 
 @media (min-width: 1280px) {
@@ -199,7 +210,8 @@ canvas.rf-graph {
   /* electrode */
   .elinfo01 .col-sm .mic_name {
     height: calc(100% - 125px);
-    background-color: black;
+    /* background-color: black; */
+    background: #262626;
   }
 
   .elinfo01 .col-sm .electrode {
@@ -231,7 +243,7 @@ canvas.rf-graph {
   /* electrode and info drawer */
   .elinfo11 .col-sm .mic_name {
     height: calc(100% - 375px);
-    background-color: black;
+    background-color: var(--color-black);
   }
 
   .elinfo11 .col-sm .electrode {
@@ -342,25 +354,36 @@ canvas.rf-graph {
 
 /* Background Colors */
 .GOOD{
-  background: #155724;
+  /* background: #155724; */
+  background: var(--color-green);
 }
 
 .PREV_GOOD{
-  background: #155724;
+  /* background: #155724; */
+  background: var(--color-blue);
 }
 
 .REPLACE {
-  background: #a2ab58;
+  /* background: #a2ab58; */
+  background: var(--color-yellow);
 }
 
 .PREV_REPLACE{
-  background: #a2ab58;
+  /* background: #a2ab58; */
+  background: var(--color-yellow);
 }
 
 .CRITICAL, .PREV_CRITICAL{
-  background: #a73737;
+  /* background: #a73737; */
+  background: var(--color-red);
+}
+
+.UNASSIGNED{
+  /* background: black; */
+  background: var(--color-black);
 }
 
 .COM_ERROR{
-  background: #523602;
+  /* background: black; */
+  background: var(--color-black);
 }
