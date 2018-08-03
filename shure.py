@@ -239,7 +239,7 @@ class WirelessTransmitter:
         self.battery = level
         if 1 <= level <= 5:
             self.prev_battery = level
-        self.timestamp = time.time()
+            self.timestamp = time.time()
 
     def set_chan_name(self, chan_name):
         self.chan_name = chan_name
