@@ -325,10 +325,14 @@ def check_add_receiver(ip, type):
 def config(file):
     cfg = configparser.ConfigParser()
     cfg.read(file)
+    print(cfg['micboard']['prefixes'])
+
+
     for element in cfg.sections():
-        slot = int(re.search(r'\d+', repr(element)).group())
-        rec = check_add_receiver(cfg[element]['ip'],cfg[element]['type'])
-        rec.add_transmitter(cfg.getint(element,'channel'),slot)
+        if 'slot' in element:
+            slot = int(re.search(r'\d+', repr(element)).group())
+            rec = check_add_receiver(cfg[element]['ip'],cfg[element]['type'])
+            rec.add_transmitter(cfg.getint(element,'channel'),slot)
 
 def print_ALL():
     for rx in WirelessReceivers:

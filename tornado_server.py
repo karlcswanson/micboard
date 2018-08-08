@@ -11,6 +11,8 @@ import socket
 PORT = 8058
 cl = []
 
+UPLOAD_FILE_PATH = os.path.join(os.path.dirname(__file__), 'static/backgrounds/')
+
 settings = {
     'static_path': os.path.join(os.path.dirname(__file__), "static")
     }
@@ -79,11 +81,26 @@ class ApiHandler(web.RequestHandler):
     def post(self):
         pass
 
+# https://github.com/tornadoweb/tornado/blob/master/demos/file_upload/file_receiver.py
+class UploadHandler(web.RequestHandler):
+    def post(self):
+        for field_name, files in self.request.files.items():
+            for info in files:
+                filename, content_type = info['filename'], info['content_type']
+                body = info['body']
+                print('POST {} {} {} bytes'.format(filename, content_type, len(body)))
+                f = open(UPLOAD_FILE_PATH + filename, 'wb')
+                f.write(body)
+        self.write('OK')
+
+
+
 app = web.Application([
     (r'/', IndexHandler),
     (r'/ws', SocketHandler),
     (r'/api', ApiHandler),
     (r'/data', JsonHandler),
+    (r'/upload', UploadHandler),
     (r'/(favicon.ico)', web.StaticFileHandler, {'path': '../'}),
     (r'/static/(.*)', web.StaticFileHandler, {'path': 'static/'}),
     (r'/node_modules/(.*)', web.StaticFileHandler, {'path': 'node_modules/'}),
@@ -116,8 +133,6 @@ def main():
     t2.start()
     t3.start()
     socket_send()
-    # while True:
-        # time.sleep(1)
 
 
 

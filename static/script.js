@@ -15,6 +15,12 @@ $(document).ready(function() {
   demo = getUrlParameter('demo');
   if (demo == 'true') {
     dataURL = 'static/data.json';
+    for(i=start_slot; i<= stop_slot;i++){
+      dummy = randomDataGenerator();
+      dummy['slot'] = i;
+      transmitters[i] = dummy;
+    }
+
     initialMap();
     autoRandom();
   }
