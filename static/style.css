@@ -168,6 +168,21 @@ canvas.rf-graph {
   background-color: var(--color-black);
 }
 
+.chartzone  {
+  /* display: none; */
+}
+
+.errorzone {
+  /* display: block; */
+  font-family: IBM Plex Mono;
+  font-weight: 100;
+  font-style: italic;
+  color: var(--color-yellow);
+}
+
+
+
+
 @media (min-width: 1280px) {
   .above-mid {
     height: 100%;
@@ -261,6 +276,24 @@ canvas.rf-graph {
   .elinfo11 .col-sm info-drawer {
     display: block;
   }
+
+  .errortype{
+    position: absolute;
+    bottom: 80px;
+    right: 5px
+  }
+
+  .ip {
+    position: absolute;
+    bottom: 60px;
+    right: 5px;
+  }
+
+  .rxinfo {
+    position: absolute;
+    bottom: 40px;
+    right: 5px;
+  }
 }
 
 
@@ -350,6 +383,24 @@ canvas.rf-graph {
     border-width: 1px;
   }
 
+
+  .errortype{
+    position: absolute;
+    bottom: 75px;
+    right: 5px
+  }
+
+  .ip {
+    position: absolute;
+    bottom: 55px;
+    right: 5px;
+  }
+
+  .rxinfo {
+    position: absolute;
+    bottom: 35px;
+    right: 5px;
+  }
 }
 
 
@@ -391,7 +442,7 @@ canvas.rf-graph {
   background: var(--color-black);
 }
 
-.COM_ERROR{
+.TX_COM_ERROR, .RX_COM_ERROR{
   /* background: black; */
   background: var(--color-black);
 }

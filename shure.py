@@ -198,7 +198,10 @@ class WirelessReceiver:
     def rx_json(self):
         tx_data = []
         for transmitter in self.transmitters:
-            tx_data.append(transmitter.tx_json())
+            data = transmitter.tx_json()
+            if self.rx_com_status == 'DISCONNECTED':
+                data['status'] = 'RX_COM_ERROR'
+            tx_data.append(data)
         data = {'ip': self.ip, 'type': self.type, 'status': self.rx_com_status, 'raw': self.raw, 'tx': tx_data}
         return data
 
@@ -270,7 +273,7 @@ class WirelessTransmitter:
             elif self.battery == 255 and 0 <= self.prev_battery <= 2:
                 return 'PREV_CRITICAL'
 
-        return 'COM_ERROR'
+        return 'TX_COM_ERROR'
 
     def tx_json(self):
         return {'name': self.chan_name, 'channel': self.channel,

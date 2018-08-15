@@ -1,4 +1,3 @@
-// var prefix = "HH"
 var dataURL = '/data';
 var transmitters = {};
 var charts = {};
@@ -7,7 +6,7 @@ var gif_list = {};
 
 var prefix_list = ['BP','HH'];
 
-var localURL = ''
+var localURL = '';
 
 $(document).ready(function() {
   start_slot = getUrlParameter('start_slot');
@@ -15,7 +14,7 @@ $(document).ready(function() {
   demo = getUrlParameter('demo');
   if (demo == 'true') {
     dataURL = 'static/data.json';
-    for(i=start_slot; i<= stop_slot;i++){
+    for(i = start_slot; i <= stop_slot; i++){
       dummy = randomDataGenerator();
       dummy['slot'] = i;
       transmitters[i] = dummy;
@@ -52,8 +51,14 @@ $(document).ready(function() {
 
   document.addEventListener("keydown", function(e) {
     if (e.keyCode == 81) {
-      generateQR()
+      generateQR();
       $('.modal').modal('toggle');
+    }
+  }, false);
+
+  document.addEventListener("keydown", function(e) {
+    if (e.keyCode == 85) {
+      uploadMode();
     }
   }, false);
 });
@@ -138,6 +143,22 @@ function generateQR(){
 }
 
 
+
+function uploadMode(){
+  $(".mic_name").each(function(){
+    filename = $(this).children(".name").html().toLowerCase();
+    $(this).on('dragover',false);
+    $(this).on('drop',function(e){
+
+    });
+    console.log(filename);
+  });
+}
+
+
+
+
+
 function updateGIFBackgrounds() {
   console.log('GIF!');
   $(".mic_name").each(function(key, value){
@@ -197,6 +218,8 @@ var getUrlParameter = function getUrlParameter(sParam) {
 function JsonUpdate(){
   $.getJSON( dataURL, function( data ) {
     for(i in data.receivers) {
+
+      // console.log("IP: " + ip + " TYPE: " + type + " STATUS: " + status);
       for (j in data.receivers[i].tx) {
         updateSlot(data.receivers[i].tx[j]);
       }
@@ -298,8 +321,24 @@ function updateStatus(slotSelector, data) {
   slotSelector.querySelector('div.electrode').className = 'electrode';
   slotSelector.querySelector('div.electrode').classList.add(data.status);
 
+
+  if (data.status == 'RX_COM_ERROR')
+  {
+    slotSelector.querySelector('.chartzone').style.display = 'none';
+    slotSelector.querySelector('.errorzone').style.display = 'block';
+  }
+  else
+  {
+    slotSelector.querySelector('.chartzone').style.display = 'block';
+    slotSelector.querySelector('.errorzone').style.display = 'none';
+  }
 }
 
+
+function updateIP(slotSelector, data) {
+  slotSelector.querySelector('p.ip').innerHTML = data.ip;
+  slotSelector.querySelector('p.rxinfo').innerHTML = data.type + " CH " + data.channel;
+}
 
 var BatteryTable = {
   '0':  ['batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off'],
@@ -313,7 +352,7 @@ var BatteryTable = {
 }
 
 function updateBattery(slotSelector, data){
-  var slot = "slot-" + data.slot;
+  // var slot = "slot-" + data.slot;
   // var t = document.getElementById(slot);
   var outputBars = BatteryTable[data.battery];
 
@@ -349,6 +388,8 @@ function dataFilter(data){
   for(i in data.receivers){
     for (j in data.receivers[i].tx){
       var tx = data.receivers[i].tx[j];
+      tx.ip = data.receivers[i].ip;
+      tx.type = data.receivers[i].type;
       if (start_slot && stop_slot){
         if (start_slot <= tx.slot && tx.slot <= stop_slot) {
           transmitters[tx.slot] = tx;
@@ -377,6 +418,7 @@ function initialMap() {
       updateTXOffset(t,tx[i]);
       updateBattery(t,tx[i]);
       updateFrequency(t,tx[i]);
+      updateIP(t,tx[i]);
       document.getElementById('micboard').appendChild(t);
       charts[tx[i].slot] = initChart('slot-' + tx[i].slot);
     }

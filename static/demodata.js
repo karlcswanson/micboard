@@ -1,7 +1,7 @@
 var batterySample = {
   0:{
       battery: 255,
-      status: ['CRITICAL','UNASSIGNED']
+      status: ['CRITICAL','UNASSIGNED','RX_COM_ERROR','TX_COM_ERROR']
     },
   1:{
       battery: 1,
