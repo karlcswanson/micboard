@@ -30,7 +30,6 @@ $(document).ready(function() {
   }
 
 
-
   document.addEventListener("keydown", function(e) {
     if (e.keyCode == 70) {
       toggleFullScreen();
@@ -61,6 +60,10 @@ $(document).ready(function() {
       uploadMode();
     }
   }, false);
+
+  $(document).ajaxError(function( event, request, settings ) {
+    ActivateErrorBoard();
+  });
 });
 
 
@@ -179,7 +182,10 @@ function updateGIFBackgrounds() {
 
 
 
-
+function ActivateErrorBoard(){
+  $('#micboard').hide();
+  $('.server-error').show();
+}
 
 
 function wsConnect(){
@@ -196,7 +202,15 @@ function wsConnect(){
   socket.onmessage = function(msg){
     mic_data = JSON.parse(msg.data);
     updateSlot(mic_data);
-  }
+  };
+
+  socket.onclose = function(event){
+    ActivateErrorBoard();
+  };
+
+  socket.onerror = function(event){
+    ActivateErrorBoard();
+  };
 }
 
 // https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js
@@ -408,7 +422,7 @@ function initialMap() {
     gif_list = data['gif'];
     localURL = data['url']
     dataFilter(data);
-    $(".above-mid").text("");
+    $("#micboard").text("");
     var tx = transmitters;
     for(i in tx) {
       var t = document.getElementById("column-template").content.cloneNode(true);
