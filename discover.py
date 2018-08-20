@@ -102,7 +102,7 @@ def DCID_Parse():
 
 
 def main():
-    DCID_Parse()
+    #DCID_Parse()
     discover()
 
 
