@@ -14,6 +14,12 @@ reverse_dict = lambda d: dict(zip(d.values(), d.keys()))
 
 
 rx_strings = {}
+
+
+rx_strings['UHFR'] = {'battery': 'TX_BAT',
+                      'frequency': 'FREQUENCY',
+                      'name': 'CHAN_NAME'}
+
 rx_strings['qlxd'] = {'battery': 'BATT_BARS',
                       'frequency': 'FREQUENCY',
                       'audio_level': 'AUDIO_LVL',

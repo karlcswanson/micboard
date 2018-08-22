@@ -29,6 +29,11 @@ $(document).ready(function() {
     wsConnect();
   }
 
+  document.addEventListener("keydown", function(e) {
+    if (e.keyCode == 68) {
+      window.location.href = '/?demo=true&start_slot=1&stop_slot=8';
+    }
+  }, false);
 
   document.addEventListener("keydown", function(e) {
     if (e.keyCode == 70) {

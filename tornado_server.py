@@ -3,9 +3,11 @@ import json
 import threading
 import time
 import os
-import shure
 import asyncio
 import socket
+
+import shure
+import config
 
 
 PORT = 8058
@@ -123,7 +125,7 @@ def socket_send():
         writeWeb(shure.data_output_queue.get())
 
 def main():
-    shure.config(os.path.join(os.path.dirname(__file__), 'config.ini'))
+    config.read_config(os.path.join(os.path.dirname(__file__), 'config.ini'))
 
     time.sleep(.1)
     t1 = threading.Thread(target=shure.WirelessQueue)
