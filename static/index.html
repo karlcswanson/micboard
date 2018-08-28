@@ -5,6 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link rel="apple-touch-icon" href="static/logo.png">
+
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <!-- <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:100i,300,400,700i|Roboto:100,300,400,700" rel="stylesheet"> -->
@@ -73,7 +76,8 @@
         </div>
       </div>
     </template>
-
+    <!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
@@ -84,6 +88,7 @@
 
     <script src="static/script.js"></script>
     <script src="static/demodata.js"></script>
+    <script>if (window.module) module = window.module;</script>
 
   </body>
 </html>
