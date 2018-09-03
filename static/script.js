@@ -33,43 +33,36 @@ $(document).ready(function() {
     if (e.keyCode == 68) {
       window.location.href = '/?demo=true&start_slot=1&stop_slot=8';
     }
-  }, false);
 
-  document.addEventListener("keydown", function(e) {
     if (e.keyCode == 70) {
       toggleFullScreen();
     }
-  }, false);
 
-  document.addEventListener("keydown", function(e) {
     if (e.keyCode == 71) {
       toggleBackgrounds();
     }
-  }, false);
 
-  document.addEventListener("keydown", function(e) {
     if (e.keyCode == 73) {
       toggleInfoDrawer();
     }
-  }, false);
 
-  document.addEventListener("keydown", function(e) {
     if (e.keyCode == 81) {
       generateQR();
       $('.modal').modal('toggle');
     }
-  }, false);
 
-  document.addEventListener("keydown", function(e) {
     if (e.keyCode == 85) {
       uploadMode();
     }
   }, false);
 
+  
+
   $(document).ajaxError(function( event, request, settings ) {
     ActivateErrorBoard();
   });
 });
+
 
 
 // enables info-drawer toggle for mobile clients

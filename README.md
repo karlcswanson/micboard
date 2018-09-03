@@ -8,7 +8,12 @@ An intelligent mic tray for ethernet enabled Shure microphones.
 sudo apt-get update
 sudo apt-get install python-pip
 pip install -r requirements.txt
-python mictray.py
+
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+sudo apt-get install nodejs
+npm install
+
+python tornado_server.py
 ```
 
 #### Docker

@@ -23,7 +23,8 @@ class WirelessReceiver:
 
     def socket_connect(self):
         try:
-            self.f = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.f = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #TCP
+            # self.f = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #UDP
             self.f.settimeout(.2)
             self.f.connect((self.ip, PORT))
             self.set_rx_com_status('CONNECTED')

@@ -4,13 +4,17 @@ import struct
 import xml.etree.ElementTree as ET
 
 
+import shure
+
 MCAST_GRP = '239.255.254.253'
 MCAST_PORT = 8427
 
 
-rx_types = ['UHFR','QLXD','ULXD','AXTD','WWB']
+rx_types = ['UHFR','QLXD','ULXD','AXTD']
 
 deviceList = {}
+
+discovered = {}
 
 # https://stackoverflow.com/questions/603852/multicast-in-python
 def discover():
@@ -25,12 +29,18 @@ def discover():
     while True:
         data, (ip,_) = sock.recvfrom(1024)
         data = data.decode('UTF-8',errors="ignore")
-        # print(data)
+        print(data)
         type = rx_type(data)
         dcid = dcid_find(data)
         if type is not '':
             device = dcid_get(dcid)
-            print('RX: {} at: {} DCID: {} BAND: {}'.format(type,ip,dcid,device['band']))
+            # print('RX: {} at: {} DCID: {} BAND: {}'.format(type,ip,dcid,device['band']))
+            add_rx(ip,type)
+
+def add_rx(ip,rx_type):
+    # rx = { 'ip': ip,
+           # 'type': rx_type }
+    discovered[ip] = { 'type': rx_type.lower() }
 
 def rx_type(data):
     rx = ''
@@ -79,7 +89,6 @@ def DCID_Parse_old():
 
 
 def DCID_Parse():
-
     tree = ET.parse('DCIDMap.xml')
     root = tree.getroot()
 
@@ -102,7 +111,7 @@ def DCID_Parse():
 
 
 def main():
-    #DCID_Parse()
+    DCID_Parse()
     discover()
 
 
