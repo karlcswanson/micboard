@@ -12,7 +12,6 @@ config = {}
 
 
 
-
 def local_app_dir():
     path = os.getcwd()
     if sys.platform.startswith('linux'):

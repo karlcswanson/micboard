@@ -2,8 +2,6 @@ import time
 import socket
 import select
 import threading
-# import re
-# import queue
 
 from receiver import WirelessReceiver
 from transmitter import WirelessTransmitter, data_output_queue
@@ -29,23 +27,6 @@ def check_add_receiver(ip, type):
         WirelessReceivers.append(rec)
         return rec
 
-# def config(file):
-#     cfg = configparser.ConfigParser()
-#     cfg.read(file)
-#     print(cfg['micboard']['prefixes'])
-#
-#
-#     for element in cfg.sections():
-#         if 'slot' in element:
-#             slot = int(re.search(r'\d+', repr(element)).group())
-#             rec = check_add_receiver(cfg[element]['ip'],cfg[element]['type'])
-#             rec.add_transmitter(cfg.getint(element,'channel'),slot)
-#
-#         if 'display' in element:
-#             display = int(re.search(r'\d+', repr(element)).group())
-#             start_slot = cfg[element]['start_slot']
-#             stop_slot = cfg[element]['stop_slot']
-#             print("display: {} start: {} stop: {}".format(display, start_slot, stop_slot))
 
 def print_ALL():
     for rx in WirelessReceivers:
@@ -107,10 +88,6 @@ def SocketService():
 
         for sock in error_socks:
             rx.set_rx_com_status('DISCONNECTED')
-
-
-
-
 
 
 
