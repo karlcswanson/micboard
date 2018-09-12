@@ -56,7 +56,7 @@ $(document).ready(function() {
     }
   }, false);
 
-  
+
 
   $(document).ajaxError(function( event, request, settings ) {
     ActivateErrorBoard();
@@ -310,11 +310,11 @@ function updateRfChart(data) {
 function updateName(slotSelector, data) {
   var prefix = data.name.substring(0,2);
   var number = data.name.substring(2,4);
-  var name = data.name.substring(6);
+  var name = data.name.substring(5);
   if(prefix_list.indexOf(prefix) >= 0 && !isNaN(number))
   {
     slotSelector.querySelector('p.mic_id').innerHTML = prefix + number;
-    slotSelector.querySelector('p.name').innerHTML = data.name.substring(6);
+    slotSelector.querySelector('p.name').innerHTML = name;
   }
   else {
     slotSelector.querySelector('p.mic_id').innerHTML = '';

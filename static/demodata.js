@@ -48,7 +48,7 @@ function randomNameGenerator(){
   var len = name_sample.length;
   var index = getRandomInt(0,len-1);
   var name = name_sample[index]
-  return prefix + channel + ': ' + name;
+  return prefix + channel + ' ' + name;
 }
 
 function randomRfSampleGenerator() {
