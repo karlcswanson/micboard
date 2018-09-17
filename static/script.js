@@ -61,6 +61,8 @@ $(document).ready(function() {
   $(document).ajaxError(function( event, request, settings ) {
     ActivateErrorBoard();
   });
+
+
 });
 
 
@@ -147,12 +149,12 @@ function generateQR(){
 
 function uploadMode(){
   $(".mic_name").each(function(){
-    filename = $(this).children(".name").html().toLowerCase();
     $(this).on('dragover',false);
     $(this).on('drop',function(e){
-
+      slot_name = $(this).children(".name").html().toLowerCase();
+      e.preventDefault();
+      console.log("bin:  " + slot_name + " FileName: " + e.originalEvent.dataTransfer.files[0].name);
     });
-    console.log(filename);
   });
 }
 
