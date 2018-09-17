@@ -23,8 +23,10 @@ class WirelessReceiver:
 
     def socket_connect(self):
         try:
-            self.f = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #TCP
-            # self.f = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #UDP
+            if self.type in ['qlxd','ulxd','axtd']:
+                self.f = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #TCP
+            elif self.type == 'uhfr':
+                self.f = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #UDP
             self.f.settimeout(.2)
             self.f.connect((self.ip, PORT))
             self.set_rx_com_status('CONNECTED')
@@ -57,13 +59,16 @@ class WirelessReceiver:
 
 
     def parse_raw_rx(self, data):
-        data = data.split()
-        if data[2] in ['1','2','3','4']:
-            tx = self.get_transmitter_by_channel(int(data[2]))
-            tx.parse_raw_tx(' '.join(data[1:-1]),self.type)
+        data = data.strip('< >').strip('* ')
+        data = data.replace('{','').replace('}','')
+        split = data.split()
 
-        else:
-            self.raw[data[2]] = ' '.join(data[3:-1]).strip('{}').rstrip()
+        if split[0] in ['REP','REPORT','SAMPLE'] and split[1] in ['1','2','3','4']:
+            tx = self.get_transmitter_by_channel(int(split[1]))
+            tx.parse_raw_tx(data,self.type)
+
+        elif split[0] in ['REP','REPORT']:
+            self.raw[split[1]] = ' '.join(split[2:])
 
     def parse_data(self, data):
         if self.type == 'qlxd' or self.type == 'ulxd':
@@ -125,7 +130,7 @@ class WirelessReceiver:
 
     def get_query_strings(self):
         ret = []
-        if self.type == 'qlxd' or self.type == 'ulxd':
+        if self.type in ['qlxd','ulxd','axtd']:
             for i in self.get_channels():
                 ret.append('< GET {} ALL >'.format(i))
 
@@ -139,7 +144,7 @@ class WirelessReceiver:
 
 
     def enable_metering(self, interval):
-        if self.type == 'qlxd' or self.type == 'ulxd':
+        if self.type in ['qlxd','ulxd','axtd']:
             for i in self.get_channels():
                 self.writeQueue.put('< SET {} METER_RATE {:05d} >'.format(i,int(interval * 1000)))
         elif self.type == 'uhfr':
@@ -147,7 +152,7 @@ class WirelessReceiver:
                 self.writeQueue.put('* METER {} ALL {:03d} *'.format(i,int(interval/30 * 1000)))
 
     def disable_metering(self):
-        if self.type == 'qlxd' or self.type == 'ulxd':
+        if self.type in ['qlxd','ulxd','axtd']:
             for i in self.get_channels():
                 self.writeQueue.put('< SET {} METER_RATE 0 >'.format(i))
         elif self.type == 'uhfr':

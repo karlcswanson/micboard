@@ -10,6 +10,7 @@ WirelessReceivers = []
 
 
 sample = {}
+sample['uhfr'] = []
 sample['qlxd'] = ['RF_ANTENNA','RX_RF_LVL','AUDIO_LVL']
 sample['ulxd'] = ['RF_ANTENNA','RX_RF_LVL','AUDIO_LVL']
 sample['axtd'] = []

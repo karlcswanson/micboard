@@ -16,7 +16,7 @@ reverse_dict = lambda d: dict(zip(d.values(), d.keys()))
 rx_strings = {}
 
 
-rx_strings['UHFR'] = {'battery': 'TX_BAT',
+rx_strings['uhfr'] = {'battery': 'TX_BAT',
                       'frequency': 'FREQUENCY',
                       'name': 'CHAN_NAME'}
 
@@ -131,23 +131,25 @@ class WirelessTransmitter:
         data_output_queue.put(self.tx_json_mini())
 
     def parse_raw_tx(self,data,type):
-        data = data.split()
-        self.raw[data[2]] = ' '.join(data[3:]).strip('{}').rstrip()
-        if data[2] == 'ALL':
-            self.set_antenna(data[3])
-            self.set_rf_level(data[4])
-            self.set_audio_level(data[5])
+        split = data.split()
+
+        self.raw[split[2]] = ' '.join(split[3:])
+
+        if split[0] == 'SAMPLE' and split[2] == 'ALL':
+            self.set_antenna(split[3])
+            self.set_rf_level(split[4])
+            self.set_audio_level(split[5])
             # for index, val in enumerate(data[3:]):
                 # self.raw[sample[type][index]] = val
 
             self.tx_json_push()
 
-
-        if data[2] == rx_strings[type]['battery']:
-            self.set_battery(data[3])
-        elif data[2] == rx_strings[type]['name']:
-            self.set_chan_name(' '.join(data[3:]).strip('{}').rstrip())
-        elif data[2] == rx_strings[type]['frequency']:
-            self.set_frequency(data[3])
-        elif data[2] == rx_strings[type]['tx_offset']:
-            self.set_tx_offset(data[3])
+        if split[0] in ['REP','REPLY']:
+            if split[2] == rx_strings[type]['battery']:
+                self.set_battery(split[3])
+            elif split[2] == rx_strings[type]['name']:
+                self.set_chan_name(' '.join(split[3:]))
+            elif split[2] == rx_strings[type]['frequency']:
+                self.set_frequency(split[3])
+            elif split[2] == rx_strings[type]['tx_offset']:
+                self.set_tx_offset(split[3])
