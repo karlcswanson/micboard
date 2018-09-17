@@ -86,9 +86,11 @@ class ApiHandler(web.RequestHandler):
 # https://github.com/tornadoweb/tornado/blob/master/demos/file_upload/file_receiver.py
 class UploadHandler(web.RequestHandler):
     def post(self):
+        filename = self.get_argument('filename')
         for field_name, files in self.request.files.items():
             for info in files:
-                filename, content_type = info['filename'], info['content_type']
+                # filename = info['filename']
+                content_type = info['content_type']
                 body = info['body']
                 print('POST {} {} {} bytes'.format(filename, content_type, len(body)))
                 f = open(UPLOAD_FILE_PATH + filename, 'wb')

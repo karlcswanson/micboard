@@ -153,13 +153,34 @@ function uploadMode(){
     $(this).on('drop',function(e){
       slot_name = $(this).children(".name").html().toLowerCase();
       e.preventDefault();
-      console.log("bin:  " + slot_name + " FileName: " + e.originalEvent.dataTransfer.files[0].name);
+      upload = e.originalEvent.dataTransfer.files[0];
+      extension = upload.name.split(/[\s.]+/).pop().toLowerCase();
+      filename = slot_name + "." + extension;
+      console.log("bin:  " + slot_name + " FileName: " + upload.name + " newName:  " + filename);
+
+      sendFile(upload,filename);
     });
   });
 }
 
 
+// https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications
+function sendFile(file, filename) {
+  var uri = "/upload";
+  var xhr = new XMLHttpRequest();
+  var fd = new FormData();
 
+  xhr.open("POST", uri, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      alert(xhr.responseText); // handle response.
+    }
+  };
+  fd.append('myFile', file);
+  fd.append('filename', filename);
+  // Initiate a multipart/form-data upload
+  xhr.send(fd);
+}
 
 
 function updateGIFBackgrounds() {
