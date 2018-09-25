@@ -106,6 +106,10 @@ function toggleInfoDrawer() {
     $("#micboard").removeClass("elinfo11");
     $("#micboard").addClass("elinfo00");
   }
+
+  if ($("#micboard").hasClass("uploadmode")) {
+    showDivSize();
+  }
 }
 
 
@@ -145,9 +149,18 @@ function generateQR(){
   });
 }
 
-
+function showDivSize() {
+  e = document.getElementsByClassName("mic_name")[0]
+  width = window.getComputedStyle(e)["width"]
+  height = window.getComputedStyle(e)["height"]
+  string = width + " x " + height
+  $(".mic_id").html(string)
+}
 
 function uploadMode(){
+  document.getElementById("micboard").classList.add("uploadmode")
+  showDivSize()
+
   $(".mic_name").each(function(){
     $(this).on('dragover',false);
     $(this).on('drop',function(e){
@@ -264,6 +277,9 @@ function JsonUpdate(){
 
 
 function updateSlot(data) {
+  if (document.getElementById("micboard").classList.contains("uploadmode")) {
+    return
+  }
   if (start_slot && stop_slot) {
     if (start_slot <= data.slot && data.slot <= stop_slot) {
       updateSelector(data);
