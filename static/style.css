@@ -40,6 +40,10 @@ html,body {
   /* text-shadow:1px 1px 1px var(--color-shadow); */
 }
 
+.uploadmode .mic_name .mic_id {
+  font-size: 1vw;
+}
+
 
 
 .above-mid .col-sm {

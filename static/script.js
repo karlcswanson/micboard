@@ -151,7 +151,7 @@ function generateQR(){
 
 function showDivSize() {
   e = document.getElementsByClassName("mic_name")[0]
-  width = window.getComputedStyle(e)["width"]
+  width = Math.ceil(parseInt(window.getComputedStyle(e)["width"]))
   height = window.getComputedStyle(e)["height"]
   string = width + " x " + height
   $(".mic_id").html(string)
@@ -186,7 +186,7 @@ function sendFile(file, filename) {
   xhr.open("POST", uri, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
-      alert(xhr.responseText); // handle response.
+      console.log(xhr.responseText); // handle response.
     }
   };
   fd.append('myFile', file);
