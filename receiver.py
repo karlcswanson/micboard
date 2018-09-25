@@ -1,7 +1,6 @@
 import time
 import queue
 import socket
-
 from collections import defaultdict
 
 from transmitter import WirelessTransmitter
@@ -30,7 +29,7 @@ class WirelessReceiver:
             self.f.settimeout(.2)
             self.f.connect((self.ip, PORT))
             self.set_rx_com_status('CONNECTED')
-            self.enable_metering(.1)
+            # self.enable_metering(.1)
             for string in self.get_query_strings():
                 self.writeQueue.put(string)
         except socket.error as e:

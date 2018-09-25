@@ -56,4 +56,5 @@ def read_config(file):
             start_slot = cfg[element]['start_slot']
             stop_slot = cfg[element]['stop_slot']
 
-            print("display: {} start: {} stop: {}".format(display, start_slot, stop_slot))
+            # print("display: {} start: {} stop: {}".format(display, start_slot, stop_slot))
+    
