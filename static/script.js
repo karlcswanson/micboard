@@ -52,7 +52,9 @@ $(document).ready(function() {
     }
 
     if (e.keyCode == 85) {
-      uploadMode();
+      if(!$("#micboard").hasClass("uploadmode")) {
+        uploadMode();
+      }
     }
   }, false);
 
@@ -418,21 +420,23 @@ function updateBattery(slotSelector, data){
   slotSelector.querySelector('.battery-bar-5').classList.add(outputBars[4]);
 }
 
-var diversityTable = {
-  'AX': ['diversity-bar-on','diversity-bar-off'],
-  'XB': ['diversity-bar-off','diversity-bar-on'],
-  'XX': ['diversity-bar-off','diversity-bar-off']
-}
 
 function updateDiversity(slotSelector, data){
-  var outputBars = diversityTable[data.antenna];
-
-  slotSelector.querySelectorAll('.diversity-bar').forEach(function (data) {
-    data.classList.remove('diversity-bar-on','diversity-bar-off');
-  });
-
-  slotSelector.querySelector('.diversity-bar-1').classList.add(outputBars[0]);
-  slotSelector.querySelector('.diversity-bar-2').classList.add(outputBars[1]);
+  div = slotSelector.querySelector('.diversity')
+  var newBar = ""
+  for(var i = 0; i < data.antenna.length; i++) {
+    char = data.antenna.charAt(i)
+    switch (char) {
+      case 'A':
+      case 'B': newBar += '<div class="diversity-bar diversity-bar-blue"></div>'
+                break;
+      case 'R': newBar += '<div class="diversity-bar diversity-bar-red"></div>'
+                break;
+      case 'X': newBar += '<div class="diversity-bar diversity-bar-off"></div>'
+                break;
+    }
+  }
+  div.innerHTML = newBar
 }
 
 function dataFilter(data){

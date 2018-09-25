@@ -166,8 +166,13 @@ canvas.rf-graph {
   box-sizing:border-box;
 }
 
-.diversity-bar-on{
+
+.diversity-bar-blue{
   background-color: var(--color-blue);
+}
+
+.diversity-bar-red{
+  background-color: var(--color-red);
 }
 
 .diversity-bar-off{

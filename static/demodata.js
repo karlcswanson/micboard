@@ -25,7 +25,7 @@ var batterySample = {
     }
 }
 
-var rfSample = ['AX','XB','XX'];
+var rfSample = ['AX','XB','XX','BRXX','XRXB','XXBR'];
 
 
 var name_sample = ['Fatai','Marshall','Delwin','Amaris','Tracy TB','Backup',
@@ -52,7 +52,7 @@ function randomNameGenerator(){
 }
 
 function randomRfSampleGenerator() {
-  return rfSample[getRandomInt(0,2)];
+  return rfSample[getRandomInt(0,5)];
 }
 
 function randomAudioGenerator(){
