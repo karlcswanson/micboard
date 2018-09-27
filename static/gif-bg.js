@@ -1,3 +1,14 @@
+$(document).ready(function() {
+  window.addEventListener("resize", showDivSize);
+  document.addEventListener("keydown", function(e) {
+    if (e.keyCode == 85) {
+      if(!$("#micboard").hasClass("uploadmode")) {
+        uploadMode();
+      }
+    }
+  },false);
+});
+
 function showDivSize() {
   if($("#micboard").hasClass("uploadmode")) {
     e = document.getElementsByClassName("mic_name")[0]

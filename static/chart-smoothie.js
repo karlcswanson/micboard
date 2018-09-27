@@ -1,10 +1,12 @@
-function initChart(chartID) {
+var charts = {};
+
+function initChart(slotSelector) {
   var chart = {};
   chart.audioSeries = new TimeSeries();
   chart.rfSeries = new TimeSeries();
 
-  var audioCanvas = document.getElementById(chartID).querySelector('canvas.audio-graph');
-  var rfCanvas = document.getElementById(chartID).querySelector('canvas.rf-graph');
+  var audioCanvas = slotSelector.querySelector('canvas.audio-graph');
+  var rfCanvas = slotSelector.querySelector('canvas.rf-graph');
 
   var rfOptions = {
     responsive:true,

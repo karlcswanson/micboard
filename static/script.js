@@ -1,6 +1,5 @@
 var dataURL = '/data';
 var transmitters = {};
-var charts = {};
 
 var gif_list = {};
 
@@ -50,12 +49,6 @@ $(document).ready(function() {
       generateQR();
       $('.modal').modal('toggle');
     }
-
-    if (e.keyCode == 85) {
-      if(!$("#micboard").hasClass("uploadmode")) {
-        uploadMode();
-      }
-    }
   }, false);
 
 
@@ -63,7 +56,7 @@ $(document).ready(function() {
   $(document).ajaxError(function( event, request, settings ) {
     ActivateErrorBoard();
   });
-  window.addEventListener("resize", showDivSize);
+
 
 });
 
@@ -406,8 +399,8 @@ function initialMap() {
       updateBattery(t,tx[i]);
       updateFrequency(t,tx[i]);
       updateIP(t,tx[i]);
+      charts[tx[i].slot] = initChart(t);
       document.getElementById('micboard').appendChild(t);
-      charts[tx[i].slot] = initChart('slot-' + tx[i].slot);
     }
     infoToggle();
     flexFix();
