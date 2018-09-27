@@ -18,10 +18,10 @@ function createWindow() {
   // and load the index.html of the app.
   // win.loadFile('static/index.html')
   win.loadURL(`http://localhost:8058/`)
-  // win.loadURL(`file://${__dirname}/static/index.html`, { baseURLForDataURL: `file://${__dirname}`})
+  // win.loadURL(`file://${__dirname}/static/index.html`,)
 
   // Open the DevTools.
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   win.on('closed', () => {
