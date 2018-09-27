@@ -63,7 +63,7 @@ $(document).ready(function() {
   $(document).ajaxError(function( event, request, settings ) {
     ActivateErrorBoard();
   });
-
+  window.addEventListener("resize", showDivSize);
 
 });
 
@@ -152,11 +152,13 @@ function generateQR(){
 }
 
 function showDivSize() {
-  e = document.getElementsByClassName("mic_name")[0]
-  width = Math.ceil(parseInt(window.getComputedStyle(e)["width"]))
-  height = window.getComputedStyle(e)["height"]
-  string = width + " x " + height
-  $(".mic_id").html(string)
+  if($("#micboard").hasClass("uploadmode")) {
+    e = document.getElementsByClassName("mic_name")[0]
+    width = Math.ceil(parseInt(window.getComputedStyle(e)["width"]))
+    height = window.getComputedStyle(e)["height"]
+    string = width + " x " + height
+    $(".mic_id").html(string)
+  }
 }
 
 function uploadMode(){
