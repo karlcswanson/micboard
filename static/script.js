@@ -8,20 +8,25 @@ var prefix_list = ['BP','HH'];
 var localURL = '';
 
 $(document).ready(function() {
-  start_slot = getUrlParameter('start_slot');
-  stop_slot = getUrlParameter('stop_slot');
+  start_slot = parseInt(getUrlParameter('start_slot'));
+  stop_slot = parseInt(getUrlParameter('stop_slot'));
+
+  if(isNaN(start_slot)) {
+    start_slot = 1
+  }
+  if(isNaN(stop_slot)) {
+    stop_slot = 12
+  }
+
   demo = getUrlParameter('demo');
   if (demo == 'true') {
-    dataURL = 'static/data.json';
-    for(i = start_slot; i <= stop_slot; i++){
-      dummy = randomDataGenerator();
-      dummy['slot'] = i;
-      transmitters[i] = dummy;
+    for(var i = start_slot; i <= stop_slot; i++) {
+      transmitters[i] = randomDataGenerator(i);
     }
-
     initialMap();
     autoRandom();
   }
+
   else {
     initialMap();
     setInterval(JsonUpdate, 500);
@@ -48,6 +53,12 @@ $(document).ready(function() {
     if (e.keyCode == 81) {
       generateQR();
       $('.modal').modal('toggle');
+    }
+
+    if (e.keyCode == 85) {
+      if(!$("#micboard").hasClass("uploadmode")) {
+        uploadMode();
+      }
     }
   }, false);
 
@@ -387,7 +398,10 @@ function initialMap() {
   $.getJSON( dataURL, function(data) {
     gif_list = data['gif'];
     localURL = data['url']
-    dataFilter(data);
+    if (getUrlParameter('demo') !== 'true') {
+      dataFilter(data)
+    }
+
     $("#micboard").text("");
     var tx = transmitters;
     for(i in tx) {

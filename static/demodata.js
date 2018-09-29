@@ -28,13 +28,22 @@ var batterySample = {
 var rfSample = ['AX','XB','XX','BRXX','XRXB','XXBR'];
 
 
-var name_sample = ['Fatai','Marshall','Delwin','Amaris','Tracy TB','Backup',
-                   'Steve','Heather','JE','Sharon','Clary','Bob','Del ACU',
+var name_sample = ['Fatai','Marshall','Delwin','Tracy TB','Backup',
+                   'Steve','JE','Sharon','Bob','Del ACU','Troy',
                    'Matt','Matt ACU','Matt Sax','Karl','Jordan','Josue',
                    'Hallie','Rebekah','Dan','Stephen','Max','Tom','Nick',''];
 
 var prefix_sample = ['HH','BP'];
 
+var type_sample = ['ULXD','QLXD','ULXD','AXTD']
+
+function randomIPGenerator() {
+  return "192.168.103." + getRandomInt(50,150)
+}
+
+function randomTypeGenerator() {
+    return type_sample[getRandomInt(0,type_sample.length - 1)]
+}
 
 // https://gist.github.com/kerimdzhanov/7529623
 function getRandomInt(min, max) {
@@ -49,6 +58,35 @@ function randomNameGenerator(){
   var index = getRandomInt(0,len-1);
   var name = name_sample[index]
   return prefix + channel + ' ' + name;
+}
+
+function current_names() {
+  var names = []
+  var slots = Object.keys(transmitters).map(Number);
+
+  for(i in slots){
+    name = transmitters[slots[i]].name
+    prefix = name.substring(0,2)
+    number = name.substring(2,4)
+    name = name.substring(5)
+    names.push(name)
+  }
+  return names
+}
+
+function uniqueRandomNameGenerator(slot){
+  var used_names = current_names()
+  namebank = name_sample.filter( el => !used_names.includes(el));
+
+  var len = namebank.length;
+  var index = getRandomInt(0,len-1);
+  var name = namebank[index]
+
+
+  var channel = slot.toString().padStart(2,'0');
+  output = 'HH' + channel + ' ' + name;
+  console.log(output)
+  return output
 }
 
 function randomRfSampleGenerator() {
@@ -68,7 +106,6 @@ function randomFrequencyGenerator(){
   return frequency.toFixed(3)
 }
 
-
 function randomRfGenerator(){
   return getRandomInt(0,50);
 }
@@ -86,18 +123,11 @@ function randomBatteryGenerator() {
   return res;
 }
 
-function randomDataGenerator(){
-  var slots = Object.keys(transmitters).map(Number);
-  var min = Math.min.apply(Math, slots);
-  var max = Math.max.apply(Math, slots);
-  var slot = getRandomInt(min, max);
-
+function randomDataGenerator(slot){
   var battery = randomBatteryGenerator();
 
-
-
   var res = {
-    "name": randomNameGenerator(),
+    "name": uniqueRandomNameGenerator(slot),
     "antenna": randomRfSampleGenerator(),
     "audio_level": randomAudioGenerator(),
     "rf_level": randomRfGenerator(),
@@ -105,11 +135,42 @@ function randomDataGenerator(){
     "frequency": randomFrequencyGenerator(),
     "slot": slot,
     "battery": battery.battery,
-    "status": battery.status
+    "status": battery.status,
+    "ip": randomIPGenerator(),
+    "channel": getRandomInt(1,4),
+    "type": randomTypeGenerator()
   }
   return res;
 
 }
+
+function meteteredRandomDataGenerator(update){
+  var slots = Object.keys(transmitters).map(Number);
+  var slot = slots[getRandomInt(0, slots.length - 1)];
+  data = JSON.parse(JSON.stringify(transmitters[slot]))
+
+  var battery = randomBatteryGenerator();
+
+  switch(update){
+    case "name":        data["name"] = uniqueRandomNameGenerator(slot)
+                        break;
+    case "antenna":     data["antenna"] = randomRfSampleGenerator()
+                        break;
+    case "tx_offset":   data["tx_offset"] = randomTXOffsetGenerator()
+                        break;
+    case "frequency":   data["frequency"] = randomFrequencyGenerator()
+                        break;
+    case "battery":
+    case "status":      data["battery"] = battery.battery
+                        data["status"] = battery.status
+                        break
+
+  }
+  return data;
+
+}
+
+
 
 function randomCharts(){
   var slots = Object.keys(transmitters).map(Number);
@@ -119,11 +180,27 @@ function randomCharts(){
   })
 }
 
-function autoUpdateNames(){
-    updateSlot(randomDataGenerator());
-}
 
 function autoRandom(){
-  setInterval(autoUpdateNames,500);
+  setInterval(function(){
+    updateSlot(meteteredRandomDataGenerator("name"));
+  },1250)
+
+  setInterval( function () {
+    updateSlot(meteteredRandomDataGenerator("antenna"))
+  },90)
+
+  setInterval(function(){
+    updateSlot(meteteredRandomDataGenerator("battery"))
+  },1250)
+
+  setInterval(function(){
+    updateSlot(meteteredRandomDataGenerator("tx_offset"))
+  },750)
+
+  setInterval(function(){
+    updateSlot(meteteredRandomDataGenerator("frequency"))
+  },750)
+
   setInterval(randomCharts,125);
 }
