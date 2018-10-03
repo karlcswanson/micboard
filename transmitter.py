@@ -6,7 +6,7 @@ data_output_queue = queue.Queue()
 
 
 
-DATA_TIMEOUT = 30
+DATA_TIMEOUT = 30*60
 
 
 # https://github.com/gaetano-guerriero/pypjlink/blob/master/pypjlink/projector.py
@@ -87,9 +87,8 @@ class WirelessTransmitter:
         self.chan_name = chan_name
 
     def set_tx_offset(self, tx_offset):
-        if tx_offset == '255':
-            tx_offset = '0'
-        self.tx_offset = tx_offset
+        if tx_offset != '255':
+            self.tx_offset = int(tx_offset)
 
     def tx_state(self):
         # WCCC Specific State for unassigned microphones

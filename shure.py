@@ -37,12 +37,12 @@ def print_ALL():
 
 def watchdog_monitor():
     for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTED'):
-        if (int(time.perf_counter()) - rx.socket_watchdog) > 10:
+        if (int(time.perf_counter()) - rx.socket_watchdog) > 20:
             print('disconnected from: {}'.format(rx.ip))
             rx.socket_disconnect()
 
     for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'DISCONNECTED'):
-        if (int(time.perf_counter()) - rx.socket_watchdog) > 10:
+        if (int(time.perf_counter()) - rx.socket_watchdog) > 20:
             rx.socket_connect()
 
 

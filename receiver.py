@@ -1,4 +1,5 @@
 import time
+import datetime
 import queue
 import socket
 from collections import defaultdict
@@ -29,8 +30,12 @@ class WirelessReceiver:
             self.f.settimeout(.2)
             self.f.connect((self.ip, PORT))
             self.set_rx_com_status('CONNECTED')
-            # self.enable_metering(.1)
-            for string in self.get_query_strings():
+            self.enable_metering(.1)
+
+            # if self.ip == '10.231.1.154':
+            #     self.enable_metering(.1)
+
+            for string in self.get_all():
                 self.writeQueue.put(string)
         except socket.error as e:
             self.set_rx_com_status('DISCONNECTED')
@@ -49,6 +54,12 @@ class WirelessReceiver:
 
     def set_rx_com_status(self, status):
         self.rx_com_status = status
+        if status == 'CONNECTED':
+            print("Connected to {} at {}".format(self.ip,datetime.datetime.now()))
+        elif status == 'DISCONNECTED':
+            print("Disconnected from {} at {}".format(self.ip,datetime.datetime.now()))
+
+
 
     def add_transmitter(self, tx, slot):
         self.transmitters.append(WirelessTransmitter(tx, slot))
@@ -127,11 +138,31 @@ class WirelessReceiver:
             channels.append(transmitter.channel)
         return channels
 
-    def get_query_strings(self):
+    def get_all(self):
         ret = []
         if self.type in ['qlxd','ulxd','axtd']:
             for i in self.get_channels():
                 ret.append('< GET {} ALL >'.format(i))
+
+        elif self.type == 'uhfr':
+            for i in self.get_channels():
+                ret.append('* GET {} CHAN_NAME *'.format(i))
+                ret.append('* GET {} BATT_BARS *'.format(i))
+                ret.append('* GET {} GROUP_CHAN *'.format(i))
+
+        return ret
+
+    def get_query_strings(self):
+        ret = []
+        if self.type in ['qlxd','ulxd']:
+            for i in self.get_channels():
+                ret.append('< GET {} CHAN_NAME >'.format(i))
+                ret.append('< GET {} BATT_BARS >'.format(i))
+
+        elif self.type == 'axtd':
+            for i in self.get_channels():
+                ret.append('< GET {} CHAN_NAME >'.format(i))
+                ret.append('< GET {} TX_BATT_BARS >'.format(i))
 
         elif self.type == 'uhfr':
             for i in self.get_channels():
@@ -165,5 +196,5 @@ class WirelessReceiver:
             if self.rx_com_status == 'DISCONNECTED':
                 data['status'] = 'RX_COM_ERROR'
             tx_data.append(data)
-        data = {'ip': self.ip, 'type': self.type, 'status': self.rx_com_status, 'raw': self.raw, 'tx': tx_data}
+        data = {'ip': self.ip, 'type': self.type, 'status': self.rx_com_status, 'raw': self.raw, 'tx': tx_data, 'queue':self.writeQueue.qsize() }
         return data
