@@ -32,6 +32,8 @@ https://github.com/pyenv/pyenv/issues/443
 `env PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install -v 3.4.3`
 
 
+
+
 ### Grafana & Influx DB notes
 docker volume create grafana-storage
 docker volume create influxdb-storage

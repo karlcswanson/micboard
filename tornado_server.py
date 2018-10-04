@@ -10,7 +10,7 @@ import shure
 import config
 
 
-PORT = 8058
+# PORT = 8058
 cl = []
 
 UPLOAD_FILE_PATH = os.path.join(os.path.dirname(__file__), 'static/backgrounds/')
@@ -33,7 +33,7 @@ def fileList(extension):
 # Its not efficecent to get the IP each time, but for now we'll assume server might have dynamic IP
 def localURL():
     ip = socket.gethostbyname(socket.gethostname())
-    return 'http://{}:{}'.format(ip,PORT)
+    return 'http://{}:{}'.format(ip,config.config_tree['port'])
 
 def json_rxs(rxs):
     data = []
@@ -44,7 +44,10 @@ def json_rxs(rxs):
     jpgs = fileList('.jpg')
     url = localURL()
 
-    return json.dumps({'receivers': data, 'url': url, 'gif': gifs, 'jpg': jpgs}, sort_keys=True, indent=4)
+
+
+    return json.dumps({'receivers': data, 'url': url, 'gif': gifs, 'jpg': jpgs,
+                       'config': config.config_tree }, sort_keys=True, indent=4)
 
 class IndexHandler(web.RequestHandler):
     def get(self):
@@ -119,7 +122,7 @@ def writeWeb(data):
 def twisted():
     # https://github.com/tornadoweb/tornado/issues/2308
     asyncio.set_event_loop(asyncio.new_event_loop())
-    app.listen(PORT)
+    app.listen(config.config_tree['port'])
     ioloop.IOLoop.instance().start()
 
 def socket_send():

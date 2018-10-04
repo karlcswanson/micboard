@@ -2,8 +2,9 @@ var dataURL = '/data';
 var transmitters = {};
 
 var gif_list = {};
+var config = {};
 
-var prefix_list = ['BP','HH'];
+// var prefix_list = ['BP','HH'];
 
 var localURL = '';
 
@@ -290,7 +291,7 @@ function updateName(slotSelector, data) {
   var prefix = data.name.substring(0,2);
   var number = data.name.substring(2,4);
   var name = data.name.substring(5);
-  if(prefix_list.indexOf(prefix) >= 0 && !isNaN(number))
+  if(config['prefixes'].indexOf(prefix) >= 0 && !isNaN(number))
   {
     slotSelector.querySelector('p.mic_id').innerHTML = prefix + number;
     slotSelector.querySelector('p.name').innerHTML = name;
@@ -396,8 +397,9 @@ function dataFilter(data){
 
 function initialMap() {
   $.getJSON( dataURL, function(data) {
-    gif_list = data['gif'];
+    gif_list = data['gif']
     localURL = data['url']
+    config = data['config']
     if (getUrlParameter('demo') !== 'true') {
       dataFilter(data)
     }

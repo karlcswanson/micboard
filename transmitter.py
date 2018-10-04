@@ -2,6 +2,8 @@ import time
 import queue
 from collections import defaultdict
 
+import config
+
 data_output_queue = queue.Queue()
 
 
@@ -93,7 +95,7 @@ class WirelessTransmitter:
     def tx_state(self):
         # WCCC Specific State for unassigned microphones
         name = self.chan_name.split()
-        if name[0][:2] == 'HH' or name[0][:2] == 'BP':
+        if name[0][:2] in config.config_tree['prefixes']:
             if len(name) == 1:
                 return 'UNASSIGNED'
 

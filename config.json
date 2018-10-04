@@ -4,51 +4,51 @@
   "slots": [
     {
       "slot": 1,
-      "ip" : "10.231.0.151",
+      "ip" : "10.231.1.151",
       "channel": 1,
-      "mode" : "poll"
+      "type": "qlxd"
     },
     {
       "slot": 2,
-      "ip" : "10.231.0.152",
+      "ip" : "10.231.1.152",
       "channel": 1,
-      "mode" : "poll"
+      "type": "qlxd"
     },
     {
       "slot": 3,
-      "ip" : "10.231.0.153",
+      "ip" : "10.231.1.153",
       "channel": 1,
-      "mode" : "poll"
+      "type": "qlxd"
     },
     {
       "slot": 4,
-      "ip" : "10.231.0.154",
+      "ip" : "10.231.1.154",
       "channel": 1,
-      "mode" : "poll"
+      "type": "qlxd"
     },
     {
       "slot": 5,
-      "ip" : "10.231.0.155",
+      "ip" : "10.231.1.155",
       "channel": 1,
-      "mode" : "poll"
+      "type": "qlxd"
     },
     {
       "slot": 6,
-      "ip" : "10.231.0.156",
+      "ip" : "10.231.1.156",
       "channel": 1,
-      "mode" : "poll"
+      "type": "qlxd"
     },
     {
       "slot": 7,
-      "ip" : "10.231.0.157",
+      "ip" : "10.231.1.157",
       "channel": 1,
-      "mode" : "poll"
+      "type": "qlxd"
     },
     {
       "slot": 8,
-      "ip" : "10.231.0.158",
+      "ip" : "10.231.1.158",
       "channel": 1,
-      "mode" : "poll"
+      "type": "qlxd"
     }
   ]
 }

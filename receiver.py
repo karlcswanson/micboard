@@ -32,9 +32,6 @@ class WirelessReceiver:
             self.set_rx_com_status('CONNECTED')
             self.enable_metering(.1)
 
-            # if self.ip == '10.231.1.154':
-            #     self.enable_metering(.1)
-
             for string in self.get_all():
                 self.writeQueue.put(string)
         except socket.error as e:
@@ -58,8 +55,6 @@ class WirelessReceiver:
             print("Connected to {} at {}".format(self.ip,datetime.datetime.now()))
         elif status == 'DISCONNECTED':
             print("Disconnected from {} at {}".format(self.ip,datetime.datetime.now()))
-
-
 
     def add_transmitter(self, tx, slot):
         self.transmitters.append(WirelessTransmitter(tx, slot))
