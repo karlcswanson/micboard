@@ -128,20 +128,3 @@ def twisted():
 def socket_send():
     while True:
         writeWeb(shure.data_output_queue.get())
-
-def main():
-    config.read_config(os.path.join(os.path.dirname(__file__), 'config.ini'))
-
-    time.sleep(.1)
-    t1 = threading.Thread(target=shure.WirelessQueue)
-    t2 = threading.Thread(target=shure.SocketService)
-    t3 = threading.Thread(target=twisted)
-    t1.start()
-    t2.start()
-    t3.start()
-    socket_send()
-
-
-
-if __name__ == '__main__':
-    main()

@@ -89,24 +89,3 @@ def SocketService():
 
         for sock in error_socks:
             rx.set_rx_com_status('DISCONNECTED')
-
-
-
-def main():
-    config('config.ini')
-    t1 = threading.Thread(target=WirelessQueue)
-    t2 = threading.Thread(target=WirelessListen)
-
-    t1.start()
-    t2.start()
-
-    time.sleep(2)
-    get_receiver_by_ip('10.231.3.50').enable_metering(.1)
-    time.sleep(4)
-    get_receiver_by_ip('10.231.3.50').disable_metering()
-    while True:
-       print_ALL()
-       time.sleep(3)
-
-if __name__ == '__main__':
-    main()
