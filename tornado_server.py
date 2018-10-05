@@ -9,8 +9,6 @@ import socket
 import shure
 import config
 
-
-# PORT = 8058
 cl = []
 
 UPLOAD_FILE_PATH = os.path.join(os.path.dirname(__file__), 'static/backgrounds/')
@@ -18,7 +16,6 @@ UPLOAD_FILE_PATH = os.path.join(os.path.dirname(__file__), 'static/backgrounds/'
 settings = {
     'static_path': os.path.join(os.path.dirname(__file__), "static")
     }
-
 
 # https://stackoverflow.com/questions/5899497/checking-file-extension
 def fileList(extension):
@@ -110,7 +107,7 @@ app = web.Application([
     (r'/upload', UploadHandler),
     (r'/(favicon.ico)', web.StaticFileHandler, {'path': '../'}),
     (r'/static/(.*)', web.StaticFileHandler, {'path': 'static/'}),
-    (r'/node_modules/(.*)', web.StaticFileHandler, {'path': 'node_modules/'}),
+    # (r'/node_modules/(.*)', web.StaticFileHandler, {'path': 'node_modules/'}),
     (r'/(rest_api_example.png)', web.StaticFileHandler, {'path': './'}),
 ], **settings)
 

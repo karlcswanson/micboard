@@ -7,6 +7,7 @@ import { updateGIFBackgrounds } from './gif.js'
 import { initChart, charts } from './chart-smoothie.js'
 import { randomDataGenerator, autoRandom } from './demodata.js'
 import './style.css'
+// import '/node_modules/@ibm/plex/css/ibm-plex.css'
 
 var dataURL = '/data';
 export var transmitters = {};
