@@ -1,4 +1,4 @@
-import configparser
+# import configparser
 import shure
 import re
 import os
@@ -42,16 +42,16 @@ def config_path():
         exit()
 
 # old .ini config parser
-def read_config(file):
-    cfg = configparser.ConfigParser()
-    cfg.read(file)
-
-
-    for element in cfg.sections():
-        if 'slot' in element:
-            slot = int(re.search(r'\d+', repr(element)).group())
-            rec = shure.check_add_receiver(cfg[element]['ip'],cfg[element]['type'])
-            rec.add_transmitter(cfg.getint(element,'channel'),slot)
+# def read_config(file):
+#     cfg = configparser.ConfigParser()
+#     cfg.read(file)
+#
+#
+#     for element in cfg.sections():
+#         if 'slot' in element:
+#             slot = int(re.search(r'\d+', repr(element)).group())
+#             rec = shure.check_add_receiver(cfg[element]['ip'],cfg[element]['type'])
+#             rec.add_transmitter(cfg.getint(element,'channel'),slot)
 
 
 def read_json_config(file):
