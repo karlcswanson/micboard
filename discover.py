@@ -1,5 +1,6 @@
 import socket
 import struct
+import json
 
 import xml.etree.ElementTree as ET
 
@@ -29,12 +30,12 @@ def discover():
     while True:
         data, (ip,_) = sock.recvfrom(1024)
         data = data.decode('UTF-8',errors="ignore")
-        print(data)
+        # print(data)
         type = rx_type(data)
         dcid = dcid_find(data)
         if type is not '':
             device = dcid_get(dcid)
-            # print('RX: {} at: {} DCID: {} BAND: {}'.format(type,ip,dcid,device['band']))
+            print('RX: {} at: {} DCID: {} BAND: {}'.format(type,ip,dcid,device['band']))
             add_rx(ip,type)
 
 def add_rx(ip,rx_type):
@@ -88,8 +89,8 @@ def DCID_Parse_old():
     print(deviceList)
 
 
-def DCID_Parse():
-    tree = ET.parse('DCIDMap.xml')
+def DCID_Parse(file):
+    tree = ET.parse(file)
     root = tree.getroot()
 
     devices = root.findall('./MapEntry')
@@ -107,11 +108,24 @@ def DCID_Parse():
             dev = {'model': model,'model_name':model_name, 'band':band }
             deviceList[dccid.text] = dev
 
+def dcid_save_to_file(file):
+    with open(file,'w') as f:
+        json.dump(deviceList,f, indent=2, separators=(',',': '), sort_keys=True)
+        f.write('\n')
 
+def dcid_restore_from_file(file):
+    global deviceList
+    with open(file,'r') as f:
+        deviceList = json.load(f)
+
+def updateDCIDmap(inputFile,outputFile):
+    DCID_Parse(inputFile);
+    dcid_save_to_file(outputFile)
 
 
 def main():
-    DCID_Parse()
+    # updateDCIDmap('DCIDmap.xml','dcid.json')
+    dcid_restore_from_file('dcid.json')
     discover()
 
 

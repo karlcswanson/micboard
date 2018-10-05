@@ -1,16 +1,29 @@
-var dataURL = '/data';
-var transmitters = {};
+"use strict";
 
-var gif_list = {};
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import QRCode from 'qrcode'
+import { updateGIFBackgrounds } from './gif.js'
+import { initChart, charts } from './chart-smoothie.js'
+import { randomDataGenerator, autoRandom } from './demodata.js'
+import './style.css'
+
+var dataURL = '/data';
+export var transmitters = {};
+
+export var gif_list = {};
+
 var config = {};
 
-// var prefix_list = ['BP','HH'];
-
 var localURL = '';
+let start_slot = parseInt(getUrlParameter('start_slot'));
+let stop_slot = parseInt(getUrlParameter('stop_slot'));
+let demo = getUrlParameter('demo');
 
 $(document).ready(function() {
-  start_slot = parseInt(getUrlParameter('start_slot'));
-  stop_slot = parseInt(getUrlParameter('stop_slot'));
+  let start_slot = parseInt(getUrlParameter('start_slot'));
+  let stop_slot = parseInt(getUrlParameter('stop_slot'));
+  let demo = getUrlParameter('demo');
 
   if(isNaN(start_slot)) {
     start_slot = 1
@@ -19,7 +32,7 @@ $(document).ready(function() {
     stop_slot = 12
   }
 
-  demo = getUrlParameter('demo');
+
   if (demo == 'true') {
     for(var i = start_slot; i <= stop_slot; i++) {
       transmitters[i] = randomDataGenerator(i);
@@ -175,7 +188,7 @@ function wsConnect(){
   var socket = new WebSocket(new_uri);
 
   socket.onmessage = function(msg){
-    mic_data = JSON.parse(msg.data);
+    var mic_data = JSON.parse(msg.data);
     updateSlot(mic_data);
   };
 
@@ -189,7 +202,8 @@ function wsConnect(){
 }
 
 // https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js
-var getUrlParameter = function getUrlParameter(sParam) {
+// var getUrlParameter = function getUrlParameter(sParam) {
+function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
         sParameterName,
@@ -206,10 +220,10 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 function JsonUpdate(){
   $.getJSON( dataURL, function( data ) {
-    for(i in data.receivers) {
+    for(var i in data.receivers) {
 
       // console.log("IP: " + ip + " TYPE: " + type + " STATUS: " + status);
-      for (j in data.receivers[i].tx) {
+      for (var j in data.receivers[i].tx) {
         updateSlot(data.receivers[i].tx[j]);
       }
     }
@@ -217,7 +231,7 @@ function JsonUpdate(){
 }
 
 
-function updateSlot(data) {
+export function updateSlot(data) {
   if (document.getElementById("micboard").classList.contains("uploadmode")) {
     return
   }
@@ -359,10 +373,10 @@ function updateBattery(slotSelector, data){
 
 
 function updateDiversity(slotSelector, data){
-  div = slotSelector.querySelector('.diversity')
+  let div = slotSelector.querySelector('.diversity')
   var newBar = ""
   for(var i = 0; i < data.antenna.length; i++) {
-    char = data.antenna.charAt(i)
+    let char = data.antenna.charAt(i)
     switch (char) {
       case 'A':
       case 'B': newBar += '<div class="diversity-bar diversity-bar-blue"></div>'
@@ -377,8 +391,8 @@ function updateDiversity(slotSelector, data){
 }
 
 function dataFilter(data){
-  for(i in data.receivers){
-    for (j in data.receivers[i].tx){
+  for(var i in data.receivers){
+    for (var j in data.receivers[i].tx){
       var tx = data.receivers[i].tx[j];
       tx.ip = data.receivers[i].ip;
       tx.type = data.receivers[i].type;
@@ -406,7 +420,7 @@ function initialMap() {
 
     $("#micboard").text("");
     var tx = transmitters;
-    for(i in tx) {
+    for(let i in tx) {
       var t = document.getElementById("column-template").content.cloneNode(true);
       t.querySelector('div.col-sm').id = 'slot-' + tx[i].slot;
       updateStatus(t,tx[i]);
@@ -431,5 +445,9 @@ function flexFix () {
                        <div class="col-sm flexfix"></div>
                        <div class="col-sm flexfix"></div>
                        <div class="col-sm flexfix"></div>`;
-                       $("#micboard").append(flexFixHTML);
+  $("#micboard").append(flexFixHTML);
 }
+
+// module.exports = {
+//   updateSlot: updateSlot
+// };

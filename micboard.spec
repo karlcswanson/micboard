@@ -3,10 +3,10 @@
 block_cipher = None
 
 
-a = Analysis(['tornado_server.py'],
-             pathex=['/Users/karl/Dropbox/brainstorm/Projects/Current Projects/micbox/dev/mictray'],
+a = Analysis(['micboard.py'],
+             pathex=['/Users/karl/Dropbox/brainstorm/Projects/Current Projects/micbox/dev/micboard'],
              binaries=[],
-             datas=[('config.ini','.'),
+             datas=[('config.json','.'),
                     ('static/','.')],
              hiddenimports=[],
              hookspath=[],
@@ -22,7 +22,7 @@ exe = EXE(pyz,
           a.binaries,
           a.zipfiles,
           a.datas,
-          name='tornado_server',
+          name='micboard',
           debug=False,
           strip=False,
           upx=True,

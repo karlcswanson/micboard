@@ -1,6 +1,9 @@
-var charts = {};
+"use strict";
+import { TimeSeries, SmoothieChart } from 'smoothie'
 
-function initChart(slotSelector) {
+export var charts = {};
+
+export function initChart(slotSelector) {
   var chart = {};
   chart.audioSeries = new TimeSeries();
   chart.rfSeries = new TimeSeries();

@@ -1,3 +1,8 @@
+"use strict";
+
+import { gif_list } from "./script.js"
+
+
 $(document).ready(function() {
   window.addEventListener("resize", showDivSize);
 });
@@ -50,8 +55,7 @@ function sendFile(file, filename) {
 }
 
 
-function updateGIFBackgrounds() {
-  console.log('GIF!');
+export function updateGIFBackgrounds() {
   $(".mic_name").each(function(key, value){
 
     name = $(this).children(".name").html().toLowerCase() + ".gif";

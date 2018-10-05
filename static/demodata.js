@@ -1,4 +1,10 @@
-var batterySample = {
+"use strict";
+
+import { transmitters, updateSlot } from "./script.js"
+import { charts } from './chart-smoothie.js'
+
+
+const batterySample = {
   0:{
       battery: 255,
       status: ['CRITICAL','UNASSIGNED','RX_COM_ERROR','TX_COM_ERROR']
@@ -25,24 +31,24 @@ var batterySample = {
     }
 }
 
-var rfSample = ['AX','XB','XX','BRXX','XRXB','XXBR'];
+const rfSample = ['AX','XB','XX','BRXX','XRXB','XXBR'];
 
 
-var name_sample = ['Fatai','Marshall','Delwin','Tracy TB','Backup',
+const name_sample = ['Fatai','Marshall','Delwin','Tracy TB','Backup',
                    'Steve','JE','Sharon','Bob','Del ACU','Troy',
                    'Matt','Matt ACU','Matt Sax','Karl','Jordan','Josue',
                    'Hallie','Rebekah','Dan','Stephen','Max','Tom','Nick',''];
 
-var prefix_sample = ['HH','BP'];
+const prefix_sample = ['HH','BP'];
 
-var type_sample = ['ULXD','QLXD','ULXD','AXTD']
+const type_sample = ['ULXD','QLXD','ULXD','AXTD']
 
 function randomIPGenerator() {
   return "192.168.103." + getRandomInt(50,150)
 }
 
 function randomTypeGenerator() {
-    return type_sample[getRandomInt(0,type_sample.length - 1)]
+  return type_sample[getRandomInt(0,type_sample.length - 1)]
 }
 
 // https://gist.github.com/kerimdzhanov/7529623
@@ -64,10 +70,10 @@ function current_names() {
   var names = []
   var slots = Object.keys(transmitters).map(Number);
 
-  for(i in slots){
+  for(let i in slots){
     name = transmitters[slots[i]].name
-    prefix = name.substring(0,2)
-    number = name.substring(2,4)
+    let prefix = name.substring(0,2)
+    let number = name.substring(2,4)
     name = name.substring(5)
     names.push(name)
   }
@@ -75,16 +81,16 @@ function current_names() {
 }
 
 function uniqueRandomNameGenerator(slot){
-  var used_names = current_names()
-  namebank = name_sample.filter( el => !used_names.includes(el));
+  let used_names = current_names()
+  let namebank = name_sample.filter( el => !used_names.includes(el));
 
-  var len = namebank.length;
-  var index = getRandomInt(0,len-1);
-  var name = namebank[index]
+  let len = namebank.length;
+  let index = getRandomInt(0,len-1);
+  let name = namebank[index]
 
 
-  var channel = slot.toString().padStart(2,'0');
-  output = 'HH' + channel + ' ' + name;
+  let channel = slot.toString().padStart(2,'0');
+  let output = 'HH' + channel + ' ' + name;
   console.log(output)
   return output
 }
@@ -102,7 +108,7 @@ function randomTXOffsetGenerator() {
 }
 
 function randomFrequencyGenerator(){
-  frequency =  getRandomInt(474,597) + (getRandomInt(0,40) * .025)
+  let frequency =  getRandomInt(474,597) + (getRandomInt(0,40) * .025)
   return frequency.toFixed(3)
 }
 
@@ -123,7 +129,7 @@ function randomBatteryGenerator() {
   return res;
 }
 
-function randomDataGenerator(slot){
+export function randomDataGenerator(slot){
   var battery = randomBatteryGenerator();
 
   var res = {
@@ -147,7 +153,7 @@ function randomDataGenerator(slot){
 function meteteredRandomDataGenerator(update){
   var slots = Object.keys(transmitters).map(Number);
   var slot = slots[getRandomInt(0, slots.length - 1)];
-  data = JSON.parse(JSON.stringify(transmitters[slot]))
+  let data = JSON.parse(JSON.stringify(transmitters[slot]))
 
   var battery = randomBatteryGenerator();
 
@@ -181,7 +187,7 @@ function randomCharts(){
 }
 
 
-function autoRandom(){
+export function autoRandom(){
   setInterval(function(){
     updateSlot(meteteredRandomDataGenerator("name"));
   },1250)
