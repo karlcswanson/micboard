@@ -8,7 +8,7 @@ import tornado_server
 import shure
 
 def main():
-    config.read_json_config(os.path.join(os.path.dirname(__file__), 'config.json'))
+    config.config()
 
     time.sleep(.1)
     t1 = threading.Thread(target=shure.WirelessQueue)

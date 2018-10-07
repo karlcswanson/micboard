@@ -9,26 +9,26 @@ $(document).ready(function() {
 
 function showDivSize() {
   if($("#micboard").hasClass("uploadmode")) {
-    e = document.getElementsByClassName("mic_name")[0]
-    width = Math.ceil(parseInt(window.getComputedStyle(e)["width"]))
-    height = window.getComputedStyle(e)["height"]
-    string = width + " x " + height
+    let e = document.getElementsByClassName("mic_name")[0]
+    let width = Math.ceil(parseInt(window.getComputedStyle(e)["width"]))
+    let height = window.getComputedStyle(e)["height"]
+    let string = width + " x " + height
     $(".mic_id").html(string)
   }
 }
 
-function uploadMode(){
+export function uploadMode(){
   document.getElementById("micboard").classList.add("uploadmode")
   showDivSize()
 
   $(".mic_name").each(function(){
     $(this).on('dragover',false);
     $(this).on('drop',function(e){
-      slot_name = $(this).children(".name").html().toLowerCase();
+      let slot_name = $(this).children(".name").html().toLowerCase();
       e.preventDefault();
-      upload = e.originalEvent.dataTransfer.files[0];
-      extension = upload.name.split(/[\s.]+/).pop().toLowerCase();
-      filename = slot_name + "." + extension;
+      let upload = e.originalEvent.dataTransfer.files[0];
+      let extension = upload.name.split(/[\s.]+/).pop().toLowerCase();
+      let filename = slot_name + "." + extension;
       console.log("bin:  " + slot_name + " FileName: " + upload.name + " newName:  " + filename);
 
       sendFile(upload,filename);
@@ -60,7 +60,7 @@ export function updateGIFBackgrounds() {
 
     name = $(this).children(".name").html().toLowerCase() + ".gif";
     if(gif_list.indexOf(name) > -1){
-      $(this).css('background-image', 'url("static/backgrounds/' + name + '")');
+      $(this).css('background-image', 'url("bg/' + name + '")');
       $(this).css('background-size', 'cover');
       console.log(name);
     }

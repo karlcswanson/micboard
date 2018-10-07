@@ -11,8 +11,6 @@ import config
 
 cl = []
 
-UPLOAD_FILE_PATH = os.path.join(os.path.dirname(__file__), 'static/backgrounds/')
-
 settings = {
     'static_path': os.path.join(os.path.dirname(__file__), "static")
     }
@@ -20,7 +18,7 @@ settings = {
 # https://stackoverflow.com/questions/5899497/checking-file-extension
 def fileList(extension):
     files = []
-    fileList = os.listdir(os.path.join(os.path.dirname(__file__), "static/backgrounds"))
+    fileList = os.listdir(config.gif_dir)
     # print(fileList)
     for file in fileList:
         if file.lower().endswith(extension):
@@ -61,7 +59,6 @@ class SocketHandler(websocket.WebSocketHandler):
 
     def open(self):
         if self not in cl:
-            # self.write_message('WELCOME BOYS!')
             cl.append(self)
 
     def on_close(self):
@@ -93,7 +90,7 @@ class UploadHandler(web.RequestHandler):
                 content_type = info['content_type']
                 body = info['body']
                 print('POST {} {} {} bytes'.format(filename, content_type, len(body)))
-                f = open(UPLOAD_FILE_PATH + filename, 'wb')
+                f = open(os.path.join(config.gif_dir, filename), 'wb')
                 f.write(body)
         self.write('OK')
 
@@ -107,6 +104,7 @@ app = web.Application([
     (r'/upload', UploadHandler),
     (r'/(favicon.ico)', web.StaticFileHandler, {'path': '../'}),
     (r'/static/(.*)', web.StaticFileHandler, {'path': 'static/'}),
+    (r'/bg/(.*)', web.StaticFileHandler, {'path': config.get_gif_dir()}),
     # (r'/node_modules/(.*)', web.StaticFileHandler, {'path': 'node_modules/'}),
     (r'/(rest_api_example.png)', web.StaticFileHandler, {'path': './'}),
 ], **settings)

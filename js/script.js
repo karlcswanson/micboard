@@ -3,7 +3,7 @@
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import QRCode from 'qrcode'
-import { updateGIFBackgrounds } from './gif.js'
+import { updateGIFBackgrounds, uploadMode } from './gif.js'
 import { initChart, charts } from './chart-smoothie.js'
 import { randomDataGenerator, autoRandom } from './demodata.js'
 import '../css/style.css'
@@ -448,7 +448,3 @@ function flexFix () {
                        <div class="col-sm flexfix"></div>`;
   $("#micboard").append(flexFixHTML);
 }
-
-// module.exports = {
-//   updateSlot: updateSlot
-// };
