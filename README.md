@@ -31,7 +31,8 @@ xcode-select --install
 https://github.com/pyenv/pyenv/issues/443
 `env PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install -v 3.4.3`
 
-
+### Git Notes
+`git pull origin master
 
 
 ### Grafana & Influx DB notes

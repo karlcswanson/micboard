@@ -45,7 +45,7 @@ const selectPort = () => {
 
 const createPyProc = () => {
   let port = '' + selectPort()
-  let script = path.join(__dirname, 'dist', 'tornado_server')
+  let script = path.join(__dirname, 'dist', 'micboard')
   pyProc = require('child_process').spawn(script)
   if (pyProc != null) {
     console.log('child process success')

@@ -5,7 +5,8 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
-  entry: ['./static/script.js','./static/gif.js','./static/chart-smoothie.js','./static/demodata.js'],
+  // entry: ['./js/script.js','./js/gif.js','./js/chart-smoothie.js','./js/demodata.js'],
+  entry: ['./js/script.js'],
   output: {
     path: path.resolve(__dirname, 'static'),
     filename: 'bundle.js'
@@ -21,6 +22,16 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/'
+            }
+        }]
       }
     ]
   }

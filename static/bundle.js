@@ -86,6 +86,4388 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./css/style.css":
+/*!***********************!*\
+  !*** ./css/style.css ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("\nvar content = __webpack_require__(/*! !../node_modules/css-loader!./style.css */ \"./node_modules/css-loader/index.js!./css/style.css\");\n\nif(typeof content === 'string') content = [[module.i, content, '']];\n\nvar transform;\nvar insertInto;\n\n\n\nvar options = {\"hmr\":true}\n\noptions.transform = transform\noptions.insertInto = undefined;\n\nvar update = __webpack_require__(/*! ../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\n\nif(content.locals) module.exports = content.locals;\n\nif(false) {}\n\n//# sourceURL=webpack:///./css/style.css?");
+
+/***/ }),
+
+/***/ "./js/chart-smoothie.js":
+/*!******************************!*\
+  !*** ./js/chart-smoothie.js ***!
+  \******************************/
+/*! exports provided: charts, initChart */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"charts\", function() { return charts; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"initChart\", function() { return initChart; });\n/* harmony import */ var smoothie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! smoothie */ \"./node_modules/smoothie/smoothie.js\");\n/* harmony import */ var smoothie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(smoothie__WEBPACK_IMPORTED_MODULE_0__);\n\n\n\nvar charts = {};\n\nfunction initChart(slotSelector) {\n  var chart = {};\n  chart.audioSeries = new smoothie__WEBPACK_IMPORTED_MODULE_0__[\"TimeSeries\"]();\n  chart.rfSeries = new smoothie__WEBPACK_IMPORTED_MODULE_0__[\"TimeSeries\"]();\n\n  var audioCanvas = slotSelector.querySelector('canvas.audio-graph');\n  var rfCanvas = slotSelector.querySelector('canvas.rf-graph');\n\n  var rfOptions = {\n    responsive:true,\n    millisPerPixel: 25,\n    grid: {\n      verticalSections:0,\n      strokeStyle:'transparent',\n      fillStyle:'transparent'\n    },\n    labels:{\n      disabled:true\n    },\n    maxValue:115,\n    minValue:0,\n    // scaleSmoothing:.7,\n    limitFPS:20\n  };\n\n  var audioOptions = {\n    responsive:true,\n    millisPerPixel: 25,\n    grid: {\n      verticalSections:0,\n      strokeStyle:'transparent',\n      fillStyle:'transparent'\n    },\n    labels:{\n      disabled:true\n    },\n    maxValue:50,\n    minValue:0,\n    // scaleSmoothing:.7,\n    limitFPS:20\n  };\n\n  var audioChart = new smoothie__WEBPACK_IMPORTED_MODULE_0__[\"SmoothieChart\"](audioOptions);\n  var rfChart = new smoothie__WEBPACK_IMPORTED_MODULE_0__[\"SmoothieChart\"](rfOptions);\n\n  audioChart.addTimeSeries(chart.audioSeries, {\n    strokeStyle: '#69B578',\n    fillStyle: '',\n    lineWidth: 2\n  });\n\n  rfChart.addTimeSeries(chart.rfSeries, {\n    strokeStyle: '#DC493A',\n    fillStyle: '',\n    lineWidth: 2\n  });\n\n  audioChart.streamTo(audioCanvas, 100);\n  rfChart.streamTo(rfCanvas, 100);\n  return chart;\n}\n\n\n//# sourceURL=webpack:///./js/chart-smoothie.js?");
+
+/***/ }),
+
+/***/ "./js/demodata.js":
+/*!************************!*\
+  !*** ./js/demodata.js ***!
+  \************************/
+/*! exports provided: randomDataGenerator, autoRandom */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"randomDataGenerator\", function() { return randomDataGenerator; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"autoRandom\", function() { return autoRandom; });\n/* harmony import */ var _script_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./script.js */ \"./js/script.js\");\n/* harmony import */ var _chart_smoothie_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./chart-smoothie.js */ \"./js/chart-smoothie.js\");\n\n\n\n\n\n\nconst batterySample = {\n  0:{\n      battery: 255,\n      status: ['CRITICAL','UNASSIGNED','RX_COM_ERROR','TX_COM_ERROR']\n    },\n  1:{\n      battery: 1,\n      status: ['CRITICAL']\n    },\n  2:{\n      battery: 2,\n      status: ['CRITICAL']\n    },\n  3:{\n      battery: 3,\n      status: ['REPLACE','PREV_REPLACE']\n    },\n  4:{\n      battery: 4,\n      status: ['GOOD','PREV_GOOD','UNASSIGNED']\n    },\n  5:{\n      battery: 5,\n      status: ['GOOD','PREV_GOOD']\n    }\n}\n\nconst rfSample = ['AX','XB','XX','BRXX','XRXB','XXBR'];\n\n\nconst name_sample = ['Fatai','Marshall','Delwin','Tracy TB','Backup',\n                   'Steve','JE','Sharon','Bob','Del ACU','Troy',\n                   'Matt','Matt ACU','Matt Sax','Karl','Jordan','Josue',\n                   'Hallie','Rebekah','Dan','Stephen','Max','Tom','Nick',''];\n\nconst prefix_sample = ['HH','BP'];\n\nconst type_sample = ['ULXD','QLXD','ULXD','AXTD']\n\nfunction randomIPGenerator() {\n  return \"192.168.103.\" + getRandomInt(50,150)\n}\n\nfunction randomTypeGenerator() {\n  return type_sample[getRandomInt(0,type_sample.length - 1)]\n}\n\n// https://gist.github.com/kerimdzhanov/7529623\nfunction getRandomInt(min, max) {\n  return Math.floor(Math.random() * (max - min + 1) + min);\n}\n\nfunction randomNameGenerator(){\n  var prefix = prefix_sample[getRandomInt(0,1)];\n  var channel = getRandomInt(1,16).toString().padStart(2,'0');\n\n  var len = name_sample.length;\n  var index = getRandomInt(0,len-1);\n  var name = name_sample[index]\n  return prefix + channel + ' ' + name;\n}\n\nfunction current_names() {\n  var names = []\n  var slots = Object.keys(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"transmitters\"]).map(Number);\n\n  for(let i in slots){\n    name = _script_js__WEBPACK_IMPORTED_MODULE_0__[\"transmitters\"][slots[i]].name\n    let prefix = name.substring(0,2)\n    let number = name.substring(2,4)\n    name = name.substring(5)\n    names.push(name)\n  }\n  return names\n}\n\nfunction uniqueRandomNameGenerator(slot){\n  let used_names = current_names()\n  let namebank = name_sample.filter( el => !used_names.includes(el));\n\n  let len = namebank.length;\n  let index = getRandomInt(0,len-1);\n  let name = namebank[index]\n\n\n  let channel = slot.toString().padStart(2,'0');\n  let output = 'HH' + channel + ' ' + name;\n  console.log(output)\n  return output\n}\n\nfunction randomRfSampleGenerator() {\n  return rfSample[getRandomInt(0,5)];\n}\n\nfunction randomAudioGenerator(){\n  return getRandomInt(0,30);\n}\n\nfunction randomTXOffsetGenerator() {\n  return getRandomInt(0,21);\n}\n\nfunction randomFrequencyGenerator(){\n  let frequency =  getRandomInt(474,597) + (getRandomInt(0,40) * .025)\n  return frequency.toFixed(3)\n}\n\nfunction randomRfGenerator(){\n  return getRandomInt(0,50);\n}\n\nfunction randomBatteryGenerator() {\n  var batt_index = getRandomInt(0,5);\n  var battery = batterySample[batt_index];\n  var len = battery.status.length;\n  var status_index = getRandomInt(0,len-1);\n\n  var res = {\n              battery: battery.battery,\n              status: battery.status[status_index]\n            }\n  return res;\n}\n\nfunction randomDataGenerator(slot){\n  var battery = randomBatteryGenerator();\n\n  var res = {\n    \"name\": uniqueRandomNameGenerator(slot),\n    \"antenna\": randomRfSampleGenerator(),\n    \"audio_level\": randomAudioGenerator(),\n    \"rf_level\": randomRfGenerator(),\n    \"tx_offset\": randomTXOffsetGenerator(),\n    \"frequency\": randomFrequencyGenerator(),\n    \"slot\": slot,\n    \"battery\": battery.battery,\n    \"status\": battery.status,\n    \"ip\": randomIPGenerator(),\n    \"channel\": getRandomInt(1,4),\n    \"type\": randomTypeGenerator()\n  }\n  return res;\n\n}\n\nfunction meteteredRandomDataGenerator(update){\n  var slots = Object.keys(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"transmitters\"]).map(Number);\n  var slot = slots[getRandomInt(0, slots.length - 1)];\n  let data = JSON.parse(JSON.stringify(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"transmitters\"][slot]))\n\n  var battery = randomBatteryGenerator();\n\n  switch(update){\n    case \"name\":        data[\"name\"] = uniqueRandomNameGenerator(slot)\n                        break;\n    case \"antenna\":     data[\"antenna\"] = randomRfSampleGenerator()\n                        break;\n    case \"tx_offset\":   data[\"tx_offset\"] = randomTXOffsetGenerator()\n                        break;\n    case \"frequency\":   data[\"frequency\"] = randomFrequencyGenerator()\n                        break;\n    case \"battery\":\n    case \"status\":      data[\"battery\"] = battery.battery\n                        data[\"status\"] = battery.status\n                        break\n\n  }\n  return data;\n\n}\n\n\n\nfunction randomCharts(){\n  var slots = Object.keys(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"transmitters\"]).map(Number);\n  slots.forEach(function(slot){\n    _chart_smoothie_js__WEBPACK_IMPORTED_MODULE_1__[\"charts\"][slot].audioSeries.append(Date.now(), randomAudioGenerator());\n    _chart_smoothie_js__WEBPACK_IMPORTED_MODULE_1__[\"charts\"][slot].rfSeries.append(Date.now(), randomRfGenerator());\n  })\n}\n\n\nfunction autoRandom(){\n  setInterval(function(){\n    Object(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"updateSlot\"])(meteteredRandomDataGenerator(\"name\"));\n  },1250)\n\n  setInterval( function () {\n    Object(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"updateSlot\"])(meteteredRandomDataGenerator(\"antenna\"))\n  },90)\n\n  setInterval(function(){\n    Object(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"updateSlot\"])(meteteredRandomDataGenerator(\"battery\"))\n  },1250)\n\n  setInterval(function(){\n    Object(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"updateSlot\"])(meteteredRandomDataGenerator(\"tx_offset\"))\n  },750)\n\n  setInterval(function(){\n    Object(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"updateSlot\"])(meteteredRandomDataGenerator(\"frequency\"))\n  },750)\n\n  setInterval(randomCharts,125);\n}\n\n\n//# sourceURL=webpack:///./js/demodata.js?");
+
+/***/ }),
+
+/***/ "./js/gif.js":
+/*!*******************!*\
+  !*** ./js/gif.js ***!
+  \*******************/
+/*! exports provided: updateGIFBackgrounds */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"updateGIFBackgrounds\", function() { return updateGIFBackgrounds; });\n/* harmony import */ var _script_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./script.js */ \"./js/script.js\");\n\n\n\n\n\n$(document).ready(function() {\n  window.addEventListener(\"resize\", showDivSize);\n});\n\nfunction showDivSize() {\n  if($(\"#micboard\").hasClass(\"uploadmode\")) {\n    e = document.getElementsByClassName(\"mic_name\")[0]\n    width = Math.ceil(parseInt(window.getComputedStyle(e)[\"width\"]))\n    height = window.getComputedStyle(e)[\"height\"]\n    string = width + \" x \" + height\n    $(\".mic_id\").html(string)\n  }\n}\n\nfunction uploadMode(){\n  document.getElementById(\"micboard\").classList.add(\"uploadmode\")\n  showDivSize()\n\n  $(\".mic_name\").each(function(){\n    $(this).on('dragover',false);\n    $(this).on('drop',function(e){\n      slot_name = $(this).children(\".name\").html().toLowerCase();\n      e.preventDefault();\n      upload = e.originalEvent.dataTransfer.files[0];\n      extension = upload.name.split(/[\\s.]+/).pop().toLowerCase();\n      filename = slot_name + \".\" + extension;\n      console.log(\"bin:  \" + slot_name + \" FileName: \" + upload.name + \" newName:  \" + filename);\n\n      sendFile(upload,filename);\n    });\n  });\n}\n\n// https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications\nfunction sendFile(file, filename) {\n  var uri = \"/upload\";\n  var xhr = new XMLHttpRequest();\n  var fd = new FormData();\n\n  xhr.open(\"POST\", uri, true);\n  xhr.onreadystatechange = function() {\n    if (xhr.readyState == 4 && xhr.status == 200) {\n      console.log(xhr.responseText); // handle response.\n    }\n  };\n  fd.append('myFile', file);\n  fd.append('filename', filename);\n  // Initiate a multipart/form-data upload\n  xhr.send(fd);\n}\n\n\nfunction updateGIFBackgrounds() {\n  $(\".mic_name\").each(function(key, value){\n\n    name = $(this).children(\".name\").html().toLowerCase() + \".gif\";\n    if(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"gif_list\"].indexOf(name) > -1){\n      $(this).css('background-image', 'url(\"static/backgrounds/' + name + '\")');\n      $(this).css('background-size', 'cover');\n      console.log(name);\n    }\n    else {\n      $(this).css('background-image', '');\n      $(this).css('background-size', '');\n    }\n  });\n}\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")))\n\n//# sourceURL=webpack:///./js/gif.js?");
+
+/***/ }),
+
+/***/ "./js/script.js":
+/*!**********************!*\
+  !*** ./js/script.js ***!
+  \**********************/
+/*! exports provided: transmitters, gif_list, updateSlot */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"transmitters\", function() { return transmitters; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"gif_list\", function() { return gif_list; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"updateSlot\", function() { return updateSlot; });\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.js\");\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ \"./node_modules/bootstrap/dist/css/bootstrap.min.css\");\n/* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var qrcode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! qrcode */ \"./node_modules/qrcode/lib/browser.js\");\n/* harmony import */ var qrcode__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(qrcode__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _gif_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./gif.js */ \"./js/gif.js\");\n/* harmony import */ var _chart_smoothie_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./chart-smoothie.js */ \"./js/chart-smoothie.js\");\n/* harmony import */ var _demodata_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./demodata.js */ \"./js/demodata.js\");\n/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../css/style.css */ \"./css/style.css\");\n/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_css_style_css__WEBPACK_IMPORTED_MODULE_6__);\n/* harmony import */ var _node_modules_ibm_plex_css_ibm_plex_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../node_modules/@ibm/plex/css/ibm-plex.css */ \"./node_modules/@ibm/plex/css/ibm-plex.css\");\n/* harmony import */ var _node_modules_ibm_plex_css_ibm_plex_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_node_modules_ibm_plex_css_ibm_plex_css__WEBPACK_IMPORTED_MODULE_7__);\n\n\n\n\n\n\n\n\n\n\n\nvar dataURL = '/data';\nvar transmitters = {};\n\nvar gif_list = {};\n\nvar config = {};\n\nvar localURL = '';\nlet start_slot = parseInt(getUrlParameter('start_slot'));\nlet stop_slot = parseInt(getUrlParameter('stop_slot'));\nlet demo = getUrlParameter('demo');\n\n$(document).ready(function() {\n  let start_slot = parseInt(getUrlParameter('start_slot'));\n  let stop_slot = parseInt(getUrlParameter('stop_slot'));\n  let demo = getUrlParameter('demo');\n\n  if(isNaN(start_slot)) {\n    start_slot = 1\n  }\n  if(isNaN(stop_slot)) {\n    stop_slot = 12\n  }\n\n\n  if (demo == 'true') {\n    for(var i = start_slot; i <= stop_slot; i++) {\n      transmitters[i] = Object(_demodata_js__WEBPACK_IMPORTED_MODULE_5__[\"randomDataGenerator\"])(i);\n    }\n    initialMap();\n    Object(_demodata_js__WEBPACK_IMPORTED_MODULE_5__[\"autoRandom\"])();\n  }\n\n  else {\n    initialMap();\n    setInterval(JsonUpdate, 500);\n    wsConnect();\n  }\n\n  document.addEventListener(\"keydown\", function(e) {\n    if (e.keyCode == 68) {\n      window.location.href = '/?demo=true&start_slot=1&stop_slot=8';\n    }\n\n    if (e.keyCode == 70) {\n      toggleFullScreen();\n    }\n\n    if (e.keyCode == 71) {\n      toggleBackgrounds();\n    }\n\n    if (e.keyCode == 73) {\n      toggleInfoDrawer();\n    }\n\n    if (e.keyCode == 81) {\n      generateQR();\n      $('.modal').modal('toggle');\n    }\n\n    if (e.keyCode == 85) {\n      if(!$(\"#micboard\").hasClass(\"uploadmode\")) {\n        uploadMode();\n      }\n    }\n  }, false);\n\n\n\n  $(document).ajaxError(function( event, request, settings ) {\n    ActivateErrorBoard();\n  });\n\n\n});\n\n\n\n// enables info-drawer toggle for mobile clients\nfunction infoToggle() {\n  $('.col-sm').click(function() {\n    if($(window).width() <= 980) {\n      $(this).find(\".info-drawer\").toggle();\n    }\n  });\n}\n\n// https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API\nfunction toggleFullScreen() {\n  if (!document.webkitFullscreenElement) {\n      document.documentElement.webkitRequestFullscreen();\n  } else {\n    if (document.webkitExitFullscreen) {\n      document.webkitExitFullscreen();\n    }\n  }\n}\n\n\n\nfunction toggleInfoDrawer() {\n  if($(\"#micboard\").hasClass(\"elinfo00\")){\n    $(\"#micboard\").removeClass(\"elinfo00\");\n    $(\"#micboard\").addClass(\"elinfo01\");\n  }\n  else if($(\"#micboard\").hasClass(\"elinfo01\")){\n    $(\"#micboard\").removeClass(\"elinfo01\");\n    $(\"#micboard\").addClass(\"elinfo10\");\n  }\n  else if($(\"#micboard\").hasClass(\"elinfo10\")){\n    $(\"#micboard\").removeClass(\"elinfo10\");\n    $(\"#micboard\").addClass(\"elinfo11\");\n  }\n  else if($(\"#micboard\").hasClass(\"elinfo11\")){\n    $(\"#micboard\").removeClass(\"elinfo11\");\n    $(\"#micboard\").addClass(\"elinfo00\");\n  }\n\n  if ($(\"#micboard\").hasClass(\"uploadmode\")) {\n    showDivSize();\n  }\n}\n\n\nfunction toggleBackgrounds() {\n  if($(\"#micboard\").hasClass(\"bg-std\")){\n    $(\"#micboard\").removeClass(\"bg-std\");\n    $(\"#micboard\").addClass(\"bg-gif\");\n    Object(_gif_js__WEBPACK_IMPORTED_MODULE_3__[\"updateGIFBackgrounds\"])();\n  }\n  else if($(\"#micboard\").hasClass(\"bg-gif\")){\n    $(\"#micboard\").removeClass(\"bg-gif\");\n    $(\"#micboard\").addClass(\"bg-img\");\n    $(\"#micboard .mic_name\").css('background-image', '');\n    $(\"#micboard .mic_name\").css('background-size', '');\n  }\n  else if($(\"#micboard\").hasClass(\"bg-img\")){\n    $(\"#micboard\").removeClass(\"bg-img\");\n    $(\"#micboard\").addClass(\"bg-std\");\n    $(\"#micboard .mic_name\").css('background-image', '');\n    $(\"#micboard .mic_name\").css('background-size', '');\n  }\n}\n\nfunction generateQR(){\n  var qrOptions = {\n    width: 600\n  };\n  $.getJSON( '/data', function(data) {\n    var url = data['url'];\n    url = url + location.pathname + location.search;\n    document.getElementById('largelink').href = url;\n    document.getElementById('largelink').innerHTML = url;\n    qrcode__WEBPACK_IMPORTED_MODULE_2___default.a.toCanvas(document.getElementById('qrcode'), url, qrOptions, function (error) {\n      if (error) console.error(error)\n      console.log('success!');\n    })\n  });\n}\n\n\nfunction ActivateErrorBoard(){\n  $('#micboard').hide();\n  $('.server-error').show();\n}\n\n\nfunction wsConnect(){\n  var loc = window.location, new_uri;\n  if (loc.protocol === \"https:\") {\n    new_uri = \"wss:\";\n  } else {\n    new_uri = \"ws:\";\n  }\n  new_uri += \"//\" + loc.host;\n  new_uri +=  \"/ws\";\n  var socket = new WebSocket(new_uri);\n\n  socket.onmessage = function(msg){\n    var mic_data = JSON.parse(msg.data);\n    updateSlot(mic_data);\n  };\n\n  socket.onclose = function(event){\n    ActivateErrorBoard();\n  };\n\n  socket.onerror = function(event){\n    ActivateErrorBoard();\n  };\n}\n\n// https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js\n// var getUrlParameter = function getUrlParameter(sParam) {\nfunction getUrlParameter(sParam) {\n    var sPageURL = decodeURIComponent(window.location.search.substring(1)),\n        sURLVariables = sPageURL.split('&'),\n        sParameterName,\n        i;\n\n    for (i = 0; i < sURLVariables.length; i++) {\n        sParameterName = sURLVariables[i].split('=');\n\n        if (sParameterName[0] === sParam) {\n            return sParameterName[1] === undefined ? true : sParameterName[1];\n        }\n    }\n};\n\nfunction JsonUpdate(){\n  $.getJSON( dataURL, function( data ) {\n    for(var i in data.receivers) {\n\n      // console.log(\"IP: \" + ip + \" TYPE: \" + type + \" STATUS: \" + status);\n      for (var j in data.receivers[i].tx) {\n        updateSlot(data.receivers[i].tx[j]);\n      }\n    }\n  });\n}\n\n\nfunction updateSlot(data) {\n  if (document.getElementById(\"micboard\").classList.contains(\"uploadmode\")) {\n    return\n  }\n  if (start_slot && stop_slot) {\n    if (start_slot <= data.slot && data.slot <= stop_slot) {\n      updateSelector(data);\n    }\n  }\n  else {\n    updateSelector(data);\n  }\n}\n\nfunction updateSelector(data) {\n  var slot = \"slot-\" + data.slot;\n  var slotSelector = document.getElementById(slot);\n\n  if (transmitters[data.slot].name != data.name) {\n    updateName(slotSelector, data);\n    transmitters[data.slot].name = data.name;\n  }\n\n  if (transmitters[data.slot].status != data.status) {\n    updateStatus(slotSelector, data);\n    transmitters[data.slot].status = data.status;\n  }\n\n  if (transmitters[data.slot].battery != data.battery) {\n    updateBattery(slotSelector, data);\n    transmitters[data.slot].battery = data.battery;\n  }\n\n  if (transmitters[data.slot].antenna != data.antenna) {\n    updateDiversity(slotSelector, data);\n    transmitters[data.slot].antenna = data.antenna;\n  }\n\n  if (transmitters[data.slot].tx_offset != data.tx_offset) {\n    updateTXOffset(slotSelector, data);\n    transmitters[data.slot].tx_offset = data.tx_offset;\n  }\n  if (transmitters[data.slot].frequency != data.frequency) {\n    updateFrequency(slotSelector, data);\n    transmitters[data.slot].frequency = data.frequency;\n  }\n\n  updateAudioChart(data);\n  transmitters[data.slot].audio_level = data.audio_level;\n\n  updateRfChart(data);\n  transmitters[data.slot].rf_level = data.rf_level;\n}\n\nfunction updateAudioChart(data) {\n  _chart_smoothie_js__WEBPACK_IMPORTED_MODULE_4__[\"charts\"][data.slot].audioSeries.append(Date.now(), data.audio_level);\n}\n\nfunction updateTXOffset(slotSelector, data){\n  slotSelector.querySelector('p.offset').innerHTML = data.tx_offset + \" dB\";\n}\n\nfunction updateFrequency(slotSelector, data){\n  slotSelector.querySelector('p.frequency').innerHTML = data.frequency + \" Hz\";\n}\n\nfunction updateRfChart(data) {\n  _chart_smoothie_js__WEBPACK_IMPORTED_MODULE_4__[\"charts\"][data.slot].rfSeries.append(Date.now(), data.rf_level);\n}\n\nfunction updateName(slotSelector, data) {\n  var prefix = data.name.substring(0,2);\n  var number = data.name.substring(2,4);\n  var name = data.name.substring(5);\n  if(config['prefixes'].indexOf(prefix) >= 0 && !isNaN(number))\n  {\n    slotSelector.querySelector('p.mic_id').innerHTML = prefix + number;\n    slotSelector.querySelector('p.name').innerHTML = name;\n  }\n  else {\n    slotSelector.querySelector('p.mic_id').innerHTML = '';\n    slotSelector.querySelector('p.name').innerHTML = data.name;\n  }\n\n  if($(\"#micboard\").hasClass(\"bg-gif\")){\n    Object(_gif_js__WEBPACK_IMPORTED_MODULE_3__[\"updateGIFBackgrounds\"])();\n  }\n}\n\nfunction updateStatus(slotSelector, data) {\n  slotSelector.querySelector('div.mic_name').className = 'mic_name';\n  slotSelector.querySelector('div.mic_name').classList.add(data.status);\n\n  slotSelector.querySelector('div.electrode').className = 'electrode';\n  slotSelector.querySelector('div.electrode').classList.add(data.status);\n\n\n  if (data.status == 'RX_COM_ERROR')\n  {\n    slotSelector.querySelector('.chartzone').style.display = 'none';\n    slotSelector.querySelector('.errorzone').style.display = 'block';\n  }\n  else\n  {\n    slotSelector.querySelector('.chartzone').style.display = 'block';\n    slotSelector.querySelector('.errorzone').style.display = 'none';\n  }\n}\n\n\nfunction updateIP(slotSelector, data) {\n  slotSelector.querySelector('p.ip').innerHTML = data.ip;\n  slotSelector.querySelector('p.rxinfo').innerHTML = data.type + \" CH \" + data.channel;\n}\n\nvar BatteryTable = {\n  '0':  ['batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off'],\n  '1':  ['batt_led_danger', 'batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off'],\n  '2':  ['batt_led_danger', 'batt_led_danger', 'batt_led_off', 'batt_led_off', 'batt_led_off'],\n  '3':  ['batt_led_warning', 'batt_led_warning', 'batt_led_warning', 'batt_led_off', 'batt_led_off'],\n  '4':  ['batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_off'],\n  '5':  ['batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_good'],\n  '255':['batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off'],\n  'led':[]\n}\n\nfunction updateBattery(slotSelector, data){\n  var outputBars = BatteryTable[data.battery];\n\n  slotSelector.querySelectorAll('.battery-bar').forEach(function (data) {\n    data.classList.remove('batt_led_off', 'batt_led_danger','batt_led_warning','batt_led_good');\n  });\n\n  slotSelector.querySelector('.battery-bar-1').classList.add(outputBars[0]);\n  slotSelector.querySelector('.battery-bar-2').classList.add(outputBars[1]);\n  slotSelector.querySelector('.battery-bar-3').classList.add(outputBars[2]);\n  slotSelector.querySelector('.battery-bar-4').classList.add(outputBars[3]);\n  slotSelector.querySelector('.battery-bar-5').classList.add(outputBars[4]);\n}\n\n\nfunction updateDiversity(slotSelector, data){\n  let div = slotSelector.querySelector('.diversity')\n  var newBar = \"\"\n  for(var i = 0; i < data.antenna.length; i++) {\n    let char = data.antenna.charAt(i)\n    switch (char) {\n      case 'A':\n      case 'B': newBar += '<div class=\"diversity-bar diversity-bar-blue\"></div>'\n                break;\n      case 'R': newBar += '<div class=\"diversity-bar diversity-bar-red\"></div>'\n                break;\n      case 'X': newBar += '<div class=\"diversity-bar diversity-bar-off\"></div>'\n                break;\n    }\n  }\n  div.innerHTML = newBar\n}\n\nfunction dataFilter(data){\n  for(var i in data.receivers){\n    for (var j in data.receivers[i].tx){\n      var tx = data.receivers[i].tx[j];\n      tx.ip = data.receivers[i].ip;\n      tx.type = data.receivers[i].type;\n      if (start_slot && stop_slot){\n        if (start_slot <= tx.slot && tx.slot <= stop_slot) {\n          transmitters[tx.slot] = tx;\n        }\n      }\n      else {\n        transmitters[tx.slot] = tx;\n      }\n    }\n  }\n}\n\n\nfunction initialMap() {\n  $.getJSON( dataURL, function(data) {\n    gif_list = data['gif']\n    localURL = data['url']\n    config = data['config']\n    if (getUrlParameter('demo') !== 'true') {\n      dataFilter(data)\n    }\n\n    $(\"#micboard\").text(\"\");\n    var tx = transmitters;\n    for(let i in tx) {\n      var t = document.getElementById(\"column-template\").content.cloneNode(true);\n      t.querySelector('div.col-sm').id = 'slot-' + tx[i].slot;\n      updateStatus(t,tx[i]);\n      updateName(t,tx[i]);\n      updateTXOffset(t,tx[i]);\n      updateBattery(t,tx[i]);\n      updateFrequency(t,tx[i]);\n      updateIP(t,tx[i]);\n      _chart_smoothie_js__WEBPACK_IMPORTED_MODULE_4__[\"charts\"][tx[i].slot] = Object(_chart_smoothie_js__WEBPACK_IMPORTED_MODULE_4__[\"initChart\"])(t);\n      document.getElementById('micboard').appendChild(t);\n    }\n    infoToggle();\n    flexFix();\n  });\n}\n\n\n// https://medium.com/developedbyjohn/equal-width-flex-items-a5ba1bfacb77\n// Shouldn't be fixing this with js, yet here I am.\nfunction flexFix () {\n  var flexFixHTML =   `<div class=\"col-sm flexfix\"></div>\n                       <div class=\"col-sm flexfix\"></div>\n                       <div class=\"col-sm flexfix\"></div>\n                       <div class=\"col-sm flexfix\"></div>`;\n  $(\"#micboard\").append(flexFixHTML);\n}\n\n// module.exports = {\n//   updateSlot: updateSlot\n// };\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")))\n\n//# sourceURL=webpack:///./js/script.js?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Bold.woff":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Bold.woff ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Bold.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Bold.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-BoldItalic.woff":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-BoldItalic.woff ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-BoldItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-BoldItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ExtraLight.woff":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ExtraLight.woff ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ExtraLight.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ExtraLight.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ExtraLightItalic.woff":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ExtraLightItalic.woff ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ExtraLightItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ExtraLightItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Italic.woff":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Italic.woff ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Italic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Italic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Light.woff":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Light.woff ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Light.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Light.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-LightItalic.woff":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-LightItalic.woff ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-LightItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-LightItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Medium.woff":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Medium.woff ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Medium.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Medium.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-MediumItalic.woff":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-MediumItalic.woff ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-MediumItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-MediumItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Regular.woff":
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Regular.woff ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Regular.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Regular.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-SemiBold.woff":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-SemiBold.woff ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-SemiBold.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-SemiBold.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-SemiBoldItalic.woff":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-SemiBoldItalic.woff ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-SemiBoldItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-SemiBoldItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Text.woff":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Text.woff ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Text.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Text.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-TextItalic.woff":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-TextItalic.woff ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-TextItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-TextItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Thin.woff":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Thin.woff ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Thin.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Thin.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ThinItalic.woff":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ThinItalic.woff ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ThinItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ThinItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Cyrillic.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Cyrillic.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Bold-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin1.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin1.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Bold-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin2.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin2.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Bold-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin3.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin3.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Bold-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Pi.woff2":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Pi.woff2 ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Bold-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Cyrillic.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Cyrillic.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-BoldItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin1.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin1.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-BoldItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin2.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin2.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-BoldItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin3.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin3.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-BoldItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Pi.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Pi.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-BoldItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Cyrillic.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Cyrillic.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ExtraLight-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin1.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin1.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ExtraLight-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin2.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin2.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ExtraLight-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin3.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin3.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ExtraLight-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Pi.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Pi.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ExtraLight-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Cyrillic.woff2":
+/*!************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Cyrillic.woff2 ***!
+  \************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ExtraLightItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin1.woff2":
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin1.woff2 ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ExtraLightItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin2.woff2":
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin2.woff2 ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ExtraLightItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin3.woff2":
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin3.woff2 ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ExtraLightItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Pi.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Pi.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ExtraLightItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Cyrillic.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Cyrillic.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Italic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin1.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin1.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Italic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin2.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin2.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Italic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin3.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin3.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Italic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Pi.woff2":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Pi.woff2 ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Italic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Cyrillic.woff2":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Cyrillic.woff2 ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Light-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin1.woff2":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin1.woff2 ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Light-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin2.woff2":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin2.woff2 ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Light-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin3.woff2":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin3.woff2 ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Light-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Pi.woff2":
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Pi.woff2 ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Light-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Cyrillic.woff2":
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Cyrillic.woff2 ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-LightItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin1.woff2":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin1.woff2 ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-LightItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin2.woff2":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin2.woff2 ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-LightItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin3.woff2":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin3.woff2 ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-LightItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Pi.woff2":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Pi.woff2 ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-LightItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Cyrillic.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Cyrillic.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Medium-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin1.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin1.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Medium-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin2.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin2.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Medium-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin3.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin3.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Medium-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Pi.woff2":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Pi.woff2 ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Medium-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Cyrillic.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Cyrillic.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-MediumItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin1.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin1.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-MediumItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin2.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin2.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-MediumItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin3.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin3.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-MediumItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Pi.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Pi.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-MediumItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Cyrillic.woff2":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Cyrillic.woff2 ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Regular-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin1.woff2":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin1.woff2 ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Regular-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin2.woff2":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin2.woff2 ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Regular-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin3.woff2":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin3.woff2 ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Regular-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Pi.woff2":
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Pi.woff2 ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Regular-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Cyrillic.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Cyrillic.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-SemiBold-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin1.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin1.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-SemiBold-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin2.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin2.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-SemiBold-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin3.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin3.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-SemiBold-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Pi.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Pi.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-SemiBold-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Cyrillic.woff2":
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Cyrillic.woff2 ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-SemiBoldItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin1.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin1.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-SemiBoldItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin2.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin2.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-SemiBoldItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin3.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin3.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-SemiBoldItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Pi.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Pi.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-SemiBoldItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Cyrillic.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Cyrillic.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Text-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin1.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin1.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Text-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin2.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin2.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Text-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin3.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin3.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Text-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Pi.woff2":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Pi.woff2 ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Text-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Cyrillic.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Cyrillic.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-TextItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin1.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin1.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-TextItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin2.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin2.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-TextItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin3.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin3.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-TextItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Pi.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Pi.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-TextItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Cyrillic.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Cyrillic.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Thin-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin1.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin1.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Thin-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin2.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin2.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Thin-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin3.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin3.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Thin-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Pi.woff2":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Pi.woff2 ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-Thin-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Cyrillic.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Cyrillic.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ThinItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin1.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin1.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ThinItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin2.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin2.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ThinItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin3.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin3.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ThinItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Pi.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Pi.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexMono-ThinItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Bold.woff":
+/*!***********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Bold.woff ***!
+  \***********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Bold.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Bold.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-BoldItalic.woff":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-BoldItalic.woff ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-BoldItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-BoldItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ExtraLight.woff":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ExtraLight.woff ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ExtraLight.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ExtraLight.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ExtraLightItalic.woff":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ExtraLightItalic.woff ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ExtraLightItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ExtraLightItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Italic.woff":
+/*!*************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Italic.woff ***!
+  \*************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Italic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Italic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Light.woff":
+/*!************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Light.woff ***!
+  \************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Light.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Light.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-LightItalic.woff":
+/*!******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-LightItalic.woff ***!
+  \******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-LightItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-LightItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Medium.woff":
+/*!*************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Medium.woff ***!
+  \*************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Medium.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Medium.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-MediumItalic.woff":
+/*!*******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-MediumItalic.woff ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-MediumItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-MediumItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Regular.woff":
+/*!**************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Regular.woff ***!
+  \**************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Regular.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Regular.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-SemiBold.woff":
+/*!***************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-SemiBold.woff ***!
+  \***************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-SemiBold.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-SemiBold.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-SemiBoldItalic.woff":
+/*!*********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-SemiBoldItalic.woff ***!
+  \*********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-SemiBoldItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-SemiBoldItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Text.woff":
+/*!***********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Text.woff ***!
+  \***********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Text.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Text.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-TextItalic.woff":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-TextItalic.woff ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-TextItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-TextItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Thin.woff":
+/*!***********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Thin.woff ***!
+  \***********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Thin.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Thin.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ThinItalic.woff":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ThinItalic.woff ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ThinItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ThinItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin1.woff2":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin1.woff2 ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Bold-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin2.woff2":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin2.woff2 ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Bold-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin3.woff2":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin3.woff2 ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Bold-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Pi.woff2":
+/*!*************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Pi.woff2 ***!
+  \*************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Bold-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin1.woff2":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin1.woff2 ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-BoldItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin2.woff2":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin2.woff2 ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-BoldItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin3.woff2":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin3.woff2 ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-BoldItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Pi.woff2":
+/*!*******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Pi.woff2 ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-BoldItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin1.woff2":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin1.woff2 ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ExtraLight-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin2.woff2":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin2.woff2 ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ExtraLight-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin3.woff2":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin3.woff2 ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ExtraLight-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Pi.woff2":
+/*!*******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Pi.woff2 ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ExtraLight-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin1.woff2":
+/*!*****************************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin1.woff2 ***!
+  \*****************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ExtraLightItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin2.woff2":
+/*!*****************************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin2.woff2 ***!
+  \*****************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ExtraLightItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin3.woff2":
+/*!*****************************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin3.woff2 ***!
+  \*****************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ExtraLightItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Pi.woff2":
+/*!*************************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Pi.woff2 ***!
+  \*************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ExtraLightItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin1.woff2":
+/*!*******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin1.woff2 ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Italic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin2.woff2":
+/*!*******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin2.woff2 ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Italic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin3.woff2":
+/*!*******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin3.woff2 ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Italic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Pi.woff2":
+/*!***************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Pi.woff2 ***!
+  \***************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Italic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin1.woff2":
+/*!******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin1.woff2 ***!
+  \******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Light-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin2.woff2":
+/*!******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin2.woff2 ***!
+  \******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Light-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin3.woff2":
+/*!******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin3.woff2 ***!
+  \******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Light-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Pi.woff2":
+/*!**************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Pi.woff2 ***!
+  \**************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Light-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin1.woff2":
+/*!************************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin1.woff2 ***!
+  \************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-LightItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin2.woff2":
+/*!************************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin2.woff2 ***!
+  \************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-LightItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin3.woff2":
+/*!************************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin3.woff2 ***!
+  \************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-LightItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Pi.woff2":
+/*!********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Pi.woff2 ***!
+  \********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-LightItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin1.woff2":
+/*!*******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin1.woff2 ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Medium-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin2.woff2":
+/*!*******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin2.woff2 ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Medium-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin3.woff2":
+/*!*******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin3.woff2 ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Medium-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Pi.woff2":
+/*!***************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Pi.woff2 ***!
+  \***************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Medium-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin1.woff2":
+/*!*************************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin1.woff2 ***!
+  \*************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-MediumItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin2.woff2":
+/*!*************************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin2.woff2 ***!
+  \*************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-MediumItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin3.woff2":
+/*!*************************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin3.woff2 ***!
+  \*************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-MediumItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Pi.woff2":
+/*!*********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Pi.woff2 ***!
+  \*********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-MediumItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin1.woff2":
+/*!********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin1.woff2 ***!
+  \********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Regular-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin2.woff2":
+/*!********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin2.woff2 ***!
+  \********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Regular-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin3.woff2":
+/*!********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin3.woff2 ***!
+  \********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Regular-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Pi.woff2":
+/*!****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Pi.woff2 ***!
+  \****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Regular-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin1.woff2":
+/*!*********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin1.woff2 ***!
+  \*********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-SemiBold-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin2.woff2":
+/*!*********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin2.woff2 ***!
+  \*********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-SemiBold-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin3.woff2":
+/*!*********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin3.woff2 ***!
+  \*********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-SemiBold-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Pi.woff2":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Pi.woff2 ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-SemiBold-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin1.woff2":
+/*!***************************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin1.woff2 ***!
+  \***************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-SemiBoldItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin2.woff2":
+/*!***************************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin2.woff2 ***!
+  \***************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-SemiBoldItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin3.woff2":
+/*!***************************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin3.woff2 ***!
+  \***************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-SemiBoldItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Pi.woff2":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Pi.woff2 ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-SemiBoldItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin1.woff2":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin1.woff2 ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Text-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin2.woff2":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin2.woff2 ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Text-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin3.woff2":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin3.woff2 ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Text-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Pi.woff2":
+/*!*************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Pi.woff2 ***!
+  \*************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Text-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin1.woff2":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin1.woff2 ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-TextItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin2.woff2":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin2.woff2 ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-TextItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin3.woff2":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin3.woff2 ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-TextItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Pi.woff2":
+/*!*******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Pi.woff2 ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-TextItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin1.woff2":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin1.woff2 ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Thin-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin2.woff2":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin2.woff2 ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Thin-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin3.woff2":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin3.woff2 ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Thin-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Pi.woff2":
+/*!*************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Pi.woff2 ***!
+  \*************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-Thin-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin1.woff2":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin1.woff2 ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ThinItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin2.woff2":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin2.woff2 ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ThinItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin3.woff2":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin3.woff2 ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ThinItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Pi.woff2":
+/*!*******************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Pi.woff2 ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansCondensed-ThinItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Bold.woff":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Bold.woff ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansHebrew-Bold.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Bold.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-ExtraLight.woff":
+/*!***********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-ExtraLight.woff ***!
+  \***********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansHebrew-ExtraLight.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-ExtraLight.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Light.woff":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Light.woff ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansHebrew-Light.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Light.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Medium.woff":
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Medium.woff ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansHebrew-Medium.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Medium.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Regular.woff":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Regular.woff ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansHebrew-Regular.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Regular.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-SemiBold.woff":
+/*!*********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-SemiBold.woff ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansHebrew-SemiBold.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-SemiBold.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Text.woff":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Text.woff ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansHebrew-Text.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Text.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Thin.woff":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Thin.woff ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSansHebrew-Thin.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Thin.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Bold.woff":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Bold.woff ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Bold.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Bold.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-BoldItalic.woff":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-BoldItalic.woff ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-BoldItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-BoldItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ExtraLight.woff":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ExtraLight.woff ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ExtraLight.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ExtraLight.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ExtraLightItalic.woff":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ExtraLightItalic.woff ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ExtraLightItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ExtraLightItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Italic.woff":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Italic.woff ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Italic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Italic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Light.woff":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Light.woff ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Light.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Light.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-LightItalic.woff":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-LightItalic.woff ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-LightItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-LightItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Medium.woff":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Medium.woff ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Medium.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Medium.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-MediumItalic.woff":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-MediumItalic.woff ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-MediumItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-MediumItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Regular.woff":
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Regular.woff ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Regular.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Regular.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-SemiBold.woff":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-SemiBold.woff ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-SemiBold.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-SemiBold.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-SemiBoldItalic.woff":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-SemiBoldItalic.woff ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-SemiBoldItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-SemiBoldItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Text.woff":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Text.woff ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Text.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Text.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-TextItalic.woff":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-TextItalic.woff ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-TextItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-TextItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Thin.woff":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Thin.woff ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Thin.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Thin.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ThinItalic.woff":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ThinItalic.woff ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ThinItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ThinItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Cyrillic.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Cyrillic.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Bold-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Greek.woff2":
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Greek.woff2 ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Bold-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin1.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin1.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Bold-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin2.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin2.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Bold-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin3.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin3.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Bold-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Pi.woff2":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Pi.woff2 ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Bold-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Cyrillic.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Cyrillic.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-BoldItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Greek.woff2":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Greek.woff2 ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-BoldItalic-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin1.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin1.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-BoldItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin2.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin2.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-BoldItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin3.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin3.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-BoldItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Pi.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Pi.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-BoldItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Cyrillic.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Cyrillic.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ExtraLight-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Greek.woff2":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Greek.woff2 ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ExtraLight-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin1.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin1.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ExtraLight-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin2.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin2.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ExtraLight-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin3.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin3.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ExtraLight-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Pi.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Pi.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ExtraLight-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Cyrillic.woff2":
+/*!************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Cyrillic.woff2 ***!
+  \************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ExtraLightItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Greek.woff2":
+/*!*********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Greek.woff2 ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ExtraLightItalic-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin1.woff2":
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin1.woff2 ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ExtraLightItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin2.woff2":
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin2.woff2 ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ExtraLightItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin3.woff2":
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin3.woff2 ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ExtraLightItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Pi.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Pi.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ExtraLightItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Cyrillic.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Cyrillic.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Italic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Greek.woff2":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Greek.woff2 ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Italic-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin1.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin1.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Italic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin2.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin2.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Italic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin3.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin3.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Italic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Pi.woff2":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Pi.woff2 ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Italic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Cyrillic.woff2":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Cyrillic.woff2 ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Light-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Greek.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Greek.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Light-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin1.woff2":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin1.woff2 ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Light-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin2.woff2":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin2.woff2 ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Light-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin3.woff2":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin3.woff2 ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Light-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Pi.woff2":
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Pi.woff2 ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Light-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Cyrillic.woff2":
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Cyrillic.woff2 ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-LightItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Greek.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Greek.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-LightItalic-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin1.woff2":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin1.woff2 ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-LightItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin2.woff2":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin2.woff2 ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-LightItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin3.woff2":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin3.woff2 ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-LightItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Pi.woff2":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Pi.woff2 ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-LightItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Cyrillic.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Cyrillic.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Medium-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Greek.woff2":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Greek.woff2 ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Medium-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin1.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin1.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Medium-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin2.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin2.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Medium-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin3.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin3.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Medium-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Pi.woff2":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Pi.woff2 ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Medium-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Cyrillic.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Cyrillic.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-MediumItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Greek.woff2":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Greek.woff2 ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-MediumItalic-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin1.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin1.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-MediumItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin2.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin2.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-MediumItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin3.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin3.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-MediumItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Pi.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Pi.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-MediumItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Cyrillic.woff2":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Cyrillic.woff2 ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Regular-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Greek.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Greek.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Regular-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin1.woff2":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin1.woff2 ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Regular-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin2.woff2":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin2.woff2 ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Regular-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin3.woff2":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin3.woff2 ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Regular-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Pi.woff2":
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Pi.woff2 ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Regular-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Cyrillic.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Cyrillic.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-SemiBold-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Greek.woff2":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Greek.woff2 ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-SemiBold-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin1.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin1.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-SemiBold-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin2.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin2.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-SemiBold-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin3.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin3.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-SemiBold-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Pi.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Pi.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-SemiBold-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Cyrillic.woff2":
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Cyrillic.woff2 ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-SemiBoldItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Greek.woff2":
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Greek.woff2 ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-SemiBoldItalic-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin1.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin1.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-SemiBoldItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin2.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin2.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-SemiBoldItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin3.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin3.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-SemiBoldItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Pi.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Pi.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-SemiBoldItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Cyrillic.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Cyrillic.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Text-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Greek.woff2":
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Greek.woff2 ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Text-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin1.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin1.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Text-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin2.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin2.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Text-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin3.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin3.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Text-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Pi.woff2":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Pi.woff2 ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Text-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Cyrillic.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Cyrillic.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-TextItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Greek.woff2":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Greek.woff2 ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-TextItalic-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin1.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin1.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-TextItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin2.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin2.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-TextItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin3.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin3.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-TextItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Pi.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Pi.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-TextItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Cyrillic.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Cyrillic.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Thin-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Greek.woff2":
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Greek.woff2 ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Thin-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin1.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin1.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Thin-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin2.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin2.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Thin-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin3.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin3.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Thin-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Pi.woff2":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Pi.woff2 ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-Thin-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Cyrillic.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Cyrillic.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ThinItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Greek.woff2":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Greek.woff2 ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ThinItalic-Greek.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Greek.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin1.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin1.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ThinItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin2.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin2.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ThinItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin3.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin3.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ThinItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Pi.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Pi.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSans-ThinItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Bold.woff":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Bold.woff ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Bold.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Bold.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-BoldItalic.woff":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-BoldItalic.woff ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-BoldItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-BoldItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ExtraLight.woff":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ExtraLight.woff ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ExtraLight.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ExtraLight.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ExtraLightItalic.woff":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ExtraLightItalic.woff ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ExtraLightItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ExtraLightItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Italic.woff":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Italic.woff ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Italic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Italic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Light.woff":
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Light.woff ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Light.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Light.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-LightItalic.woff":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-LightItalic.woff ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-LightItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-LightItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Medium.woff":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Medium.woff ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Medium.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Medium.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-MediumItalic.woff":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-MediumItalic.woff ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-MediumItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-MediumItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Regular.woff":
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Regular.woff ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Regular.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Regular.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-SemiBold.woff":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-SemiBold.woff ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-SemiBold.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-SemiBold.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-SemiBoldItalic.woff":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-SemiBoldItalic.woff ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-SemiBoldItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-SemiBoldItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Text.woff":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Text.woff ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Text.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Text.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-TextItalic.woff":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-TextItalic.woff ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-TextItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-TextItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Thin.woff":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Thin.woff ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Thin.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Thin.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ThinItalic.woff":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ThinItalic.woff ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ThinItalic.woff\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ThinItalic.woff?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Cyrillic.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Cyrillic.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Bold-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin1.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin1.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Bold-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin2.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin2.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Bold-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin3.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin3.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Bold-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Pi.woff2":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Pi.woff2 ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Bold-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Cyrillic.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Cyrillic.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-BoldItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin1.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin1.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-BoldItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin2.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin2.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-BoldItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin3.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin3.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-BoldItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Pi.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Pi.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-BoldItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Cyrillic.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Cyrillic.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ExtraLight-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin1.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin1.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ExtraLight-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin2.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin2.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ExtraLight-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin3.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin3.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ExtraLight-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Pi.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Pi.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ExtraLight-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Cyrillic.woff2":
+/*!**************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Cyrillic.woff2 ***!
+  \**************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ExtraLightItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin1.woff2":
+/*!************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin1.woff2 ***!
+  \************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ExtraLightItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin2.woff2":
+/*!************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin2.woff2 ***!
+  \************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ExtraLightItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin3.woff2":
+/*!************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin3.woff2 ***!
+  \************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ExtraLightItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Pi.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Pi.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ExtraLightItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Cyrillic.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Cyrillic.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Italic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin1.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin1.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Italic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin2.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin2.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Italic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin3.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin3.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Italic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Pi.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Pi.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Italic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Cyrillic.woff2":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Cyrillic.woff2 ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Light-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin1.woff2":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin1.woff2 ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Light-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin2.woff2":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin2.woff2 ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Light-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin3.woff2":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin3.woff2 ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Light-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Pi.woff2":
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Pi.woff2 ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Light-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Cyrillic.woff2":
+/*!*********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Cyrillic.woff2 ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-LightItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin1.woff2":
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin1.woff2 ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-LightItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin2.woff2":
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin2.woff2 ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-LightItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin3.woff2":
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin3.woff2 ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-LightItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Pi.woff2":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Pi.woff2 ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-LightItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Cyrillic.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Cyrillic.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Medium-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin1.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin1.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Medium-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin2.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin2.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Medium-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin3.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin3.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Medium-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Pi.woff2":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Pi.woff2 ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Medium-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Cyrillic.woff2":
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Cyrillic.woff2 ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-MediumItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin1.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin1.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-MediumItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin2.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin2.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-MediumItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin3.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin3.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-MediumItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Pi.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Pi.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-MediumItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Cyrillic.woff2":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Cyrillic.woff2 ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Regular-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin1.woff2":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin1.woff2 ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Regular-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin2.woff2":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin2.woff2 ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Regular-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin3.woff2":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin3.woff2 ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Regular-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Pi.woff2":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Pi.woff2 ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Regular-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Cyrillic.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Cyrillic.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-SemiBold-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin1.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin1.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-SemiBold-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin2.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin2.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-SemiBold-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin3.woff2":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin3.woff2 ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-SemiBold-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Pi.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Pi.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-SemiBold-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Cyrillic.woff2":
+/*!************************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Cyrillic.woff2 ***!
+  \************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-SemiBoldItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin1.woff2":
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin1.woff2 ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-SemiBoldItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin2.woff2":
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin2.woff2 ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-SemiBoldItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin3.woff2":
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin3.woff2 ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-SemiBoldItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Pi.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Pi.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-SemiBoldItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Cyrillic.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Cyrillic.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Text-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin1.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin1.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Text-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin2.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin2.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Text-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin3.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin3.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Text-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Pi.woff2":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Pi.woff2 ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Text-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Cyrillic.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Cyrillic.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-TextItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin1.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin1.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-TextItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin2.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin2.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-TextItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin3.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin3.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-TextItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Pi.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Pi.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-TextItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Cyrillic.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Cyrillic.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Thin-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin1.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin1.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Thin-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin2.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin2.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Thin-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin3.woff2":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin3.woff2 ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Thin-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Pi.woff2":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Pi.woff2 ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-Thin-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Cyrillic.woff2":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Cyrillic.woff2 ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ThinItalic-Cyrillic.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Cyrillic.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin1.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin1.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ThinItalic-Latin1.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin1.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin2.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin2.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ThinItalic-Latin2.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin2.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin3.woff2":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin3.woff2 ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ThinItalic-Latin3.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin3.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Pi.woff2":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Pi.woff2 ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"fonts/IBMPlexSerif-ThinItalic-Pi.woff2\";\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Pi.woff2?");
+
+/***/ }),
+
+/***/ "./node_modules/@ibm/plex/css/ibm-plex.css":
+/*!*************************************************!*\
+  !*** ./node_modules/@ibm/plex/css/ibm-plex.css ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("\nvar content = __webpack_require__(/*! !../../../css-loader!./ibm-plex.css */ \"./node_modules/css-loader/index.js!./node_modules/@ibm/plex/css/ibm-plex.css\");\n\nif(typeof content === 'string') content = [[module.i, content, '']];\n\nvar transform;\nvar insertInto;\n\n\n\nvar options = {\"hmr\":true}\n\noptions.transform = transform\noptions.insertInto = undefined;\n\nvar update = __webpack_require__(/*! ../../../style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\n\nif(content.locals) module.exports = content.locals;\n\nif(false) {}\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/css/ibm-plex.css?");
+
+/***/ }),
+
 /***/ "./node_modules/bootstrap/dist/css/bootstrap.min.css":
 /*!***********************************************************!*\
   !*** ./node_modules/bootstrap/dist/css/bootstrap.min.css ***!
@@ -120,6 +4502,28 @@ eval("\n\nvar G = __webpack_require__(/*! window-or-global */ \"./node_modules/w
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js!./css/style.css":
+/*!*************************************************!*\
+  !*** ./node_modules/css-loader!./css/style.css ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"/* @import '/node_modules/@ibm/plex/css/ibm-plex.css'; */\\n\\n:root {\\n  --color-black: #262626;\\n  --color-red: #DC493A;\\n  /* --color-yellow: #7E52A0; */\\n  /* --color-yellow: #EE8434; */\\n  --color-yellow: #EF9D51 ;\\n  --color-blue: #006494;\\n  --color-green: #69B578;\\n  --color-gray: #616161;\\n  --color-white: #D7D7D7; /* good?\\n  /* --color-white: #D7D7D7; */\\n  /* --color-white:#888888; */\\n  --color-shadow: #616161;\\n}\\n\\n\\n\\nhtml,body {\\n  background-color: var(--color-black);\\n  height: 100%;\\n  margin: 0px;\\n  padding: 0px;\\n}\\n\\n.fullHeight {\\n  height: 100%;\\n}\\n\\n.col-sm {\\n  color: var(--color-white);\\n\\n}\\n\\n.mic_id {\\n  font-family: 'IBM Plex Sans';\\n  font-weight: 300;\\n  font-style: italic;\\n  /* text-shadow:1px 1px 1px var(--color-shadow); */\\n}\\n\\n.uploadmode .mic_name .mic_id {\\n  font-size: 1vw;\\n}\\n\\n\\n\\n.above-mid .col-sm {\\n  /* border: .5px solid; */\\n  border-color: var(--color-black);\\n  padding: 0px;\\n}\\n\\n\\n\\n.name{\\n  font-family: 'IBM Plex Sans';\\n  font-weight: 400;\\n  font-style: bold;\\n  /* text-shadow:2px 2px 0px #333333 */\\n}\\n\\n\\n/* .info-bar components */\\n.electrode {\\n  position: absolute;\\n  left: 0px;\\n  bottom: 250px;\\n  height: 125px;\\n  width: 100%;\\n  /* background-color: purple; */\\n  /* display: none; */\\n}\\n\\n.battery-bars {\\n  position: absolute;\\n  display: table;\\n  table-layout: fixed;\\n  left:0px;\\n  bottom: 225px;\\n  height: 25px;\\n  width: 100%;\\n  background-color: var(--color-black);\\n}\\n.battery-bar {\\n  display: table-cell;\\n  height:inherit;\\n  border-style: solid;\\n  border-width: 2px 1px;\\n  border-color: var(--color-gray);\\n  box-sizing:border-box;\\n}\\n\\n.batt_led_off{\\n  background-color: var(--color-black);\\n}\\n\\n.batt_led_danger{\\n  background-color: var(--color-red);\\n}\\n\\n.batt_led_warning {\\n  background-color: var(--color-yellow);\\n}\\n.batt_led_good{\\n  background-color: var(--color-green);\\n}\\n\\n\\ncanvas.audio-graph{\\n  position: absolute;\\n  left: 0px;\\n  bottom:125px;\\n  width:100%;\\n  height:100px;\\n  /* background-color: green; */\\n}\\n\\ncanvas.rf-graph {\\n  position: absolute;\\n  left: 0px;\\n  bottom: 25px;\\n  width:100%;\\n  height:100px;\\n  /* background-color: red; */\\n}\\n\\n.offset {\\n  position: absolute;\\n  bottom: 180px;\\n  right: 5px;\\n  font-family: 'IBM Plex Mono';\\n  font-weight: 100;\\n  font-style: italic;\\n  color: var(--color-green);\\n}\\n\\n.frequency{\\n  position: absolute;\\n  bottom: 80px;\\n  right: 5px;\\n  font-family: 'IBM Plex Mono';\\n  font-weight: 100;\\n  font-style: italic;\\n  color: var(--color-red);\\n}\\n\\n.diversity {\\n  position: absolute;\\n  display: table;\\n  table-layout: fixed;\\n  left: 0px;\\n  bottom:0px;\\n\\n  height: 25px;\\n  width: 100%;\\n}\\n\\n.diversity-bar {\\n  display: table-cell;\\n  height:inherit;\\n  border-style: solid;\\n  border-width: 1px;\\n  border-color: var(--color-gray);\\n  box-sizing:border-box;\\n}\\n\\n\\n.diversity-bar-blue{\\n  background-color: var(--color-blue);\\n}\\n\\n.diversity-bar-red{\\n  background-color: var(--color-red);\\n}\\n\\n.diversity-bar-off{\\n  background-color: var(--color-black);\\n}\\n\\n.chartzone  {\\n  /* display: none; */\\n}\\n\\n.errorzone {\\n  /* display: block; */\\n  font-family: IBM Plex Mono;\\n  font-weight: 100;\\n  font-style: italic;\\n  color: var(--color-yellow);\\n}\\n\\n\\n\\n\\n@media (min-width: 1280px) {\\n  .above-mid {\\n    height: 100%;\\n  }\\n  .name {\\n    font-size: calc(1vw + 7pt);\\n  }\\n\\n  .mic_id {\\n    position: absolute;\\n    top: 0px;\\n    font-size: 30pt;\\n\\n  }\\n  .mic_name {\\n    /* height: calc(100% - 250px); */\\n    /* height: 100%; */\\n    display: flex;\\n    justify-content:center;\\n    align-items:center;\\n  }\\n\\n\\n\\n  .info-drawer {\\n    /* height: 250px; */\\n  }\\n\\n  .flexfix {\\n    display: none;\\n  }\\n\\n\\n  /* electrode & info drawer switch */\\n  /* no electrode or info-drawer */\\n  .elinfo00 .col-sm .mic_name {\\n    height: 100%;\\n  }\\n\\n  .elinfo00 .col-sm .electrode {\\n    display: none;\\n  }\\n\\n  .elinfo00 .col-sm .info-drawer {\\n    display: none;\\n  }\\n\\n  /* electrode */\\n  .elinfo01 .col-sm .mic_name {\\n    height: calc(100% - 125px);\\n    /* background-color: black; */\\n    background: #262626;\\n  }\\n\\n  .elinfo01 .col-sm .electrode {\\n    display: block;\\n    bottom: 0px;\\n  }\\n\\n  .elinfo01 .col-sm .info-drawer {\\n    display: none;\\n  }\\n\\n  .elinfo01 .col-sm .mic_name {\\n    /* background-color: black; */\\n  }\\n\\n  /* info drawer */\\n  .elinfo10 .col-sm .mic_name {\\n    height: calc(100% - 250px);\\n  }\\n\\n  .elinfo10 .col-sm .electrode {\\n    display: none;\\n  }\\n\\n  .elinfo10 .col-sm .info-drawer {\\n    display: block;\\n  }\\n\\n  /* electrode and info drawer */\\n  .elinfo11 .col-sm .mic_name {\\n    height: calc(100% - 375px);\\n    background-color: var(--color-black);\\n  }\\n\\n  .elinfo11 .col-sm .electrode {\\n    display: block;\\n  }\\n\\n  .elinfo11 .col-sm info-drawer {\\n    display: block;\\n  }\\n\\n  .errortype{\\n    position: absolute;\\n    bottom: 80px;\\n    right: 5px\\n  }\\n\\n  .ip {\\n    position: absolute;\\n    bottom: 60px;\\n    right: 5px;\\n  }\\n\\n  .rxinfo {\\n    position: absolute;\\n    bottom: 40px;\\n    right: 5px;\\n  }\\n}\\n\\n\\n@media (max-width: 1280px) {\\n  .electrode {\\n    display: none;\\n  }\\n  .info-drawer {\\n    /* display: none; */\\n    height: 130px;\\n  }\\n\\n\\n  .header{\\n    display:none;\\n\\n  }\\n  .col-sm{\\n    vertical-align: middle;\\n    min-width: 256px;\\n    /* flex-grow: 0; */\\n    flex-shrink: 1;\\n  }\\n\\n\\n  .mic_id{\\n    display: inline;\\n    font-weight: 400;\\n    font-size: 18pt;\\n    text-align: left;\\n    padding-left: 1em;\\n    /* float:left; */\\n  }\\n\\n  .name {\\n    float: right;\\n    font-size: 12pt;\\n    display: inline;\\n    font-weight: 400;\\n    padding-right: 1em;\\n    text-align: right;\\n    font-size: 18pt;\\n    margin: 0px;\\n  }\\n\\n  .battery-bars {\\n    height: 15px;\\n    bottom: 115px;\\n  }\\n  .battery-bar {\\n    border-width:1px;\\n  }\\n\\n  .offset{\\n    /* position: absolute; */\\n    bottom: 75px;\\n    right: 5px;\\n    /* font-family: 'Roboto Mono', monospace; */\\n    /* font-weight: 100; */\\n    /* font-style: italic; */\\n    /* color: red; */\\n  }\\n\\n  .frequency{\\n    /* position: absolute; */\\n    bottom: 25px;\\n    right: 5px;\\n    /* font-family: 'Roboto Mono', monospace; */\\n    /* font-weight: 100; */\\n    /* font-style: italic; */\\n    /* color: red; */\\n  }\\n\\n  canvas.audio-graph{\\n    height:50px;\\n    bottom:65px;\\n  }\\n  canvas.rf-graph{\\n    height:50px;\\n    bottom:15px;\\n  }\\n\\n  .diversity {\\n    height: 15px;\\n  }\\n  .diversity-bar {\\n    border-width: 1px;\\n  }\\n\\n\\n  .errortype{\\n    position: absolute;\\n    bottom: 75px;\\n    right: 5px\\n  }\\n\\n  .ip {\\n    position: absolute;\\n    bottom: 55px;\\n    right: 5px;\\n  }\\n\\n  .rxinfo {\\n    position: absolute;\\n    bottom: 35px;\\n    right: 5px;\\n  }\\n}\\n\\n\\n@media (max-width: 512px) {\\n  .info-drawer {\\n    display: none;\\n  }\\n}\\n\\n\\n/* Background Colors */\\n.GOOD{\\n  /* background: #155724; */\\n  background: var(--color-green);\\n}\\n\\n.PREV_GOOD{\\n  /* background: #155724; */\\n  background: var(--color-blue);\\n}\\n\\n.REPLACE {\\n  /* background: #a2ab58; */\\n  background: var(--color-yellow);\\n}\\n\\n.PREV_REPLACE{\\n  /* background: #a2ab58; */\\n  background: var(--color-yellow);\\n}\\n\\n.CRITICAL, .PREV_CRITICAL{\\n  /* background: #a73737; */\\n  background: var(--color-red);\\n}\\n\\n.UNASSIGNED{\\n  /* background: black; */\\n  background: var(--color-black);\\n}\\n\\n.TX_COM_ERROR, .RX_COM_ERROR{\\n  /* background: black; */\\n  background: var(--color-black);\\n}\\n\\n\\n#largelink {\\n  padding-top: 4em;\\n}\\n\\n\\n.server-error {\\n  display: none;\\n  background-color: var(--color-blue);\\n  color: var(--color-white);\\n  margin-left: -15px;\\n  margin-right: -15px;\\n  padding: 3em;\\n}\\n\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./css/style.css?./node_modules/css-loader");
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/@ibm/plex/css/ibm-plex.css":
+/*!***************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/@ibm/plex/css/ibm-plex.css ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("var escape = __webpack_require__(/*! ../../../css-loader/lib/url/escape.js */ \"./node_modules/css-loader/lib/url/escape.js\");\nexports = module.exports = __webpack_require__(/*! ../../../css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Mono Bold\\\"), local(\\\"IBMPlexMono-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Bold.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Bold.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Mono Bold\\\"), local(\\\"IBMPlexMono-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Mono Bold\\\"), local(\\\"IBMPlexMono-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Mono Bold\\\"), local(\\\"IBMPlexMono-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Mono Bold\\\"), local(\\\"IBMPlexMono-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Mono Bold\\\"), local(\\\"IBMPlexMono-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Bold-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Mono Bold Italic\\\"), local(\\\"IBMPlexMono-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-BoldItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-BoldItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Mono Bold Italic\\\"), local(\\\"IBMPlexMono-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Mono Bold Italic\\\"), local(\\\"IBMPlexMono-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Mono Bold Italic\\\"), local(\\\"IBMPlexMono-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Mono Bold Italic\\\"), local(\\\"IBMPlexMono-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Mono Bold Italic\\\"), local(\\\"IBMPlexMono-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-BoldItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Mono ExtraLight\\\"), local(\\\"IBMPlexMono-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ExtraLight.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ExtraLight.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Mono ExtraLight\\\"), local(\\\"IBMPlexMono-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Mono ExtraLight\\\"), local(\\\"IBMPlexMono-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Mono ExtraLight\\\"), local(\\\"IBMPlexMono-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Mono ExtraLight\\\"), local(\\\"IBMPlexMono-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Mono ExtraLight\\\"), local(\\\"IBMPlexMono-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLight-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Mono ExtraLight Italic\\\"), local(\\\"IBMPlexMono-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ExtraLightItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ExtraLightItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Mono ExtraLight Italic\\\"), local(\\\"IBMPlexMono-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Mono ExtraLight Italic\\\"), local(\\\"IBMPlexMono-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Mono ExtraLight Italic\\\"), local(\\\"IBMPlexMono-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Mono ExtraLight Italic\\\"), local(\\\"IBMPlexMono-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Mono ExtraLight Italic\\\"), local(\\\"IBMPlexMono-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ExtraLightItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Mono Italic\\\"), local(\\\"IBMPlexMono-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Italic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Italic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Mono Italic\\\"), local(\\\"IBMPlexMono-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Mono Italic\\\"), local(\\\"IBMPlexMono-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Mono Italic\\\"), local(\\\"IBMPlexMono-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Mono Italic\\\"), local(\\\"IBMPlexMono-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Mono Italic\\\"), local(\\\"IBMPlexMono-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Italic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Mono Light\\\"), local(\\\"IBMPlexMono-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Light.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Light.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Mono Light\\\"), local(\\\"IBMPlexMono-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Mono Light\\\"), local(\\\"IBMPlexMono-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Mono Light\\\"), local(\\\"IBMPlexMono-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Mono Light\\\"), local(\\\"IBMPlexMono-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Mono Light\\\"), local(\\\"IBMPlexMono-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Light-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Mono Light Italic\\\"), local(\\\"IBMPlexMono-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-LightItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-LightItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Mono Light Italic\\\"), local(\\\"IBMPlexMono-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Mono Light Italic\\\"), local(\\\"IBMPlexMono-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Mono Light Italic\\\"), local(\\\"IBMPlexMono-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Mono Light Italic\\\"), local(\\\"IBMPlexMono-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Mono Light Italic\\\"), local(\\\"IBMPlexMono-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-LightItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Mono Medium\\\"), local(\\\"IBMPlexMono-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Medium.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Medium.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Mono Medium\\\"), local(\\\"IBMPlexMono-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Mono Medium\\\"), local(\\\"IBMPlexMono-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Mono Medium\\\"), local(\\\"IBMPlexMono-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Mono Medium\\\"), local(\\\"IBMPlexMono-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Mono Medium\\\"), local(\\\"IBMPlexMono-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Medium-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Mono Medium Italic\\\"), local(\\\"IBMPlexMono-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-MediumItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-MediumItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Mono Medium Italic\\\"), local(\\\"IBMPlexMono-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Mono Medium Italic\\\"), local(\\\"IBMPlexMono-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Mono Medium Italic\\\"), local(\\\"IBMPlexMono-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Mono Medium Italic\\\"), local(\\\"IBMPlexMono-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Mono Medium Italic\\\"), local(\\\"IBMPlexMono-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-MediumItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Mono\\\"), local(\\\"IBMPlexMono\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Regular.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Regular.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Mono\\\"), local(\\\"IBMPlexMono\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Mono\\\"), local(\\\"IBMPlexMono\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Mono\\\"), local(\\\"IBMPlexMono\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Mono\\\"), local(\\\"IBMPlexMono\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Mono\\\"), local(\\\"IBMPlexMono\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Regular-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Mono SemiBold\\\"), local(\\\"IBMPlexMono-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-SemiBold.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-SemiBold.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Mono SemiBold\\\"), local(\\\"IBMPlexMono-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Mono SemiBold\\\"), local(\\\"IBMPlexMono-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Mono SemiBold\\\"), local(\\\"IBMPlexMono-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Mono SemiBold\\\"), local(\\\"IBMPlexMono-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Mono SemiBold\\\"), local(\\\"IBMPlexMono-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Mono SemiBold Italic\\\"), local(\\\"IBMPlexMono-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-SemiBoldItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-SemiBoldItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Mono SemiBold Italic\\\"), local(\\\"IBMPlexMono-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Mono SemiBold Italic\\\"), local(\\\"IBMPlexMono-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Mono SemiBold Italic\\\"), local(\\\"IBMPlexMono-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Mono SemiBold Italic\\\"), local(\\\"IBMPlexMono-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Mono SemiBold Italic\\\"), local(\\\"IBMPlexMono-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-SemiBoldItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Mono Text\\\"), local(\\\"IBMPlexMono-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Text.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Text.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Mono Text\\\"), local(\\\"IBMPlexMono-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Mono Text\\\"), local(\\\"IBMPlexMono-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Mono Text\\\"), local(\\\"IBMPlexMono-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Mono Text\\\"), local(\\\"IBMPlexMono-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Mono Text\\\"), local(\\\"IBMPlexMono-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Text-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Mono Text Italic\\\"), local(\\\"IBMPlexMono-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-TextItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-TextItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Mono Text Italic\\\"), local(\\\"IBMPlexMono-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Mono Text Italic\\\"), local(\\\"IBMPlexMono-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Mono Text Italic\\\"), local(\\\"IBMPlexMono-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Mono Text Italic\\\"), local(\\\"IBMPlexMono-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Mono Text Italic\\\"), local(\\\"IBMPlexMono-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-TextItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Mono Thin\\\"), local(\\\"IBMPlexMono-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Thin.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Thin.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Mono Thin\\\"), local(\\\"IBMPlexMono-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Mono Thin\\\"), local(\\\"IBMPlexMono-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Mono Thin\\\"), local(\\\"IBMPlexMono-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Mono Thin\\\"), local(\\\"IBMPlexMono-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Mono Thin\\\"), local(\\\"IBMPlexMono-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-Thin-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Mono Thin Italic\\\"), local(\\\"IBMPlexMono-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ThinItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-ThinItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Mono Thin Italic\\\"), local(\\\"IBMPlexMono-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Mono Thin Italic\\\"), local(\\\"IBMPlexMono-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Mono Thin Italic\\\"), local(\\\"IBMPlexMono-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Mono Thin Italic\\\"), local(\\\"IBMPlexMono-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Mono';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Mono Thin Italic\\\"), local(\\\"IBMPlexMono-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Mono/fonts/split/woff2/IBMPlexMono-ThinItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Bold\\\"), local(\\\"IBMPlexSans-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Bold.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Bold.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Bold\\\"), local(\\\"IBMPlexSans-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Bold\\\"), local(\\\"IBMPlexSans-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Bold\\\"), local(\\\"IBMPlexSans-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Bold\\\"), local(\\\"IBMPlexSans-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Bold\\\"), local(\\\"IBMPlexSans-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Bold\\\"), local(\\\"IBMPlexSans-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Bold-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Bold Italic\\\"), local(\\\"IBMPlexSans-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-BoldItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-BoldItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Bold Italic\\\"), local(\\\"IBMPlexSans-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Bold Italic\\\"), local(\\\"IBMPlexSans-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Bold Italic\\\"), local(\\\"IBMPlexSans-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Bold Italic\\\"), local(\\\"IBMPlexSans-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Bold Italic\\\"), local(\\\"IBMPlexSans-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Bold Italic\\\"), local(\\\"IBMPlexSans-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-BoldItalic-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans ExtraLight\\\"), local(\\\"IBMPlexSans-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ExtraLight.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ExtraLight.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans ExtraLight\\\"), local(\\\"IBMPlexSans-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans ExtraLight\\\"), local(\\\"IBMPlexSans-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans ExtraLight\\\"), local(\\\"IBMPlexSans-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans ExtraLight\\\"), local(\\\"IBMPlexSans-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans ExtraLight\\\"), local(\\\"IBMPlexSans-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans ExtraLight\\\"), local(\\\"IBMPlexSans-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLight-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans ExtraLight Italic\\\"), local(\\\"IBMPlexSans-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ExtraLightItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ExtraLightItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans ExtraLight Italic\\\"), local(\\\"IBMPlexSans-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans ExtraLight Italic\\\"), local(\\\"IBMPlexSans-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans ExtraLight Italic\\\"), local(\\\"IBMPlexSans-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans ExtraLight Italic\\\"), local(\\\"IBMPlexSans-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans ExtraLight Italic\\\"), local(\\\"IBMPlexSans-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans ExtraLight Italic\\\"), local(\\\"IBMPlexSans-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ExtraLightItalic-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Italic\\\"), local(\\\"IBMPlexSans-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Italic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Italic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Italic\\\"), local(\\\"IBMPlexSans-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Italic\\\"), local(\\\"IBMPlexSans-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Italic\\\"), local(\\\"IBMPlexSans-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Italic\\\"), local(\\\"IBMPlexSans-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Italic\\\"), local(\\\"IBMPlexSans-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Italic\\\"), local(\\\"IBMPlexSans-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Italic-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Light\\\"), local(\\\"IBMPlexSans-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Light.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Light.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Light\\\"), local(\\\"IBMPlexSans-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Light\\\"), local(\\\"IBMPlexSans-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Light\\\"), local(\\\"IBMPlexSans-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Light\\\"), local(\\\"IBMPlexSans-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Light\\\"), local(\\\"IBMPlexSans-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Light\\\"), local(\\\"IBMPlexSans-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Light-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Light Italic\\\"), local(\\\"IBMPlexSans-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-LightItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-LightItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Light Italic\\\"), local(\\\"IBMPlexSans-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Light Italic\\\"), local(\\\"IBMPlexSans-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Light Italic\\\"), local(\\\"IBMPlexSans-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Light Italic\\\"), local(\\\"IBMPlexSans-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Light Italic\\\"), local(\\\"IBMPlexSans-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Light Italic\\\"), local(\\\"IBMPlexSans-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-LightItalic-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Medium\\\"), local(\\\"IBMPlexSans-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Medium.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Medium.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Medium\\\"), local(\\\"IBMPlexSans-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Medium\\\"), local(\\\"IBMPlexSans-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Medium\\\"), local(\\\"IBMPlexSans-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Medium\\\"), local(\\\"IBMPlexSans-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Medium\\\"), local(\\\"IBMPlexSans-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Medium\\\"), local(\\\"IBMPlexSans-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Medium-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Medium Italic\\\"), local(\\\"IBMPlexSans-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-MediumItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-MediumItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Medium Italic\\\"), local(\\\"IBMPlexSans-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Medium Italic\\\"), local(\\\"IBMPlexSans-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Medium Italic\\\"), local(\\\"IBMPlexSans-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Medium Italic\\\"), local(\\\"IBMPlexSans-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Medium Italic\\\"), local(\\\"IBMPlexSans-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Medium Italic\\\"), local(\\\"IBMPlexSans-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-MediumItalic-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans\\\"), local(\\\"IBMPlexSans\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Regular.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Regular.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans\\\"), local(\\\"IBMPlexSans\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans\\\"), local(\\\"IBMPlexSans\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans\\\"), local(\\\"IBMPlexSans\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans\\\"), local(\\\"IBMPlexSans\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans\\\"), local(\\\"IBMPlexSans\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans\\\"), local(\\\"IBMPlexSans\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Regular-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans SemiBold\\\"), local(\\\"IBMPlexSans-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-SemiBold.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-SemiBold.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans SemiBold\\\"), local(\\\"IBMPlexSans-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans SemiBold\\\"), local(\\\"IBMPlexSans-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans SemiBold\\\"), local(\\\"IBMPlexSans-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans SemiBold\\\"), local(\\\"IBMPlexSans-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans SemiBold\\\"), local(\\\"IBMPlexSans-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans SemiBold\\\"), local(\\\"IBMPlexSans-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBold-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans SemiBold Italic\\\"), local(\\\"IBMPlexSans-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-SemiBoldItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-SemiBoldItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans SemiBold Italic\\\"), local(\\\"IBMPlexSans-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans SemiBold Italic\\\"), local(\\\"IBMPlexSans-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans SemiBold Italic\\\"), local(\\\"IBMPlexSans-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans SemiBold Italic\\\"), local(\\\"IBMPlexSans-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans SemiBold Italic\\\"), local(\\\"IBMPlexSans-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans SemiBold Italic\\\"), local(\\\"IBMPlexSans-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-SemiBoldItalic-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Text\\\"), local(\\\"IBMPlexSans-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Text.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Text.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Text\\\"), local(\\\"IBMPlexSans-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Text\\\"), local(\\\"IBMPlexSans-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Text\\\"), local(\\\"IBMPlexSans-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Text\\\"), local(\\\"IBMPlexSans-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Text\\\"), local(\\\"IBMPlexSans-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Text\\\"), local(\\\"IBMPlexSans-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Text-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Text Italic\\\"), local(\\\"IBMPlexSans-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-TextItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-TextItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Text Italic\\\"), local(\\\"IBMPlexSans-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Text Italic\\\"), local(\\\"IBMPlexSans-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Text Italic\\\"), local(\\\"IBMPlexSans-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Text Italic\\\"), local(\\\"IBMPlexSans-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Text Italic\\\"), local(\\\"IBMPlexSans-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Text Italic\\\"), local(\\\"IBMPlexSans-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-TextItalic-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Thin\\\"), local(\\\"IBMPlexSans-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Thin.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Thin.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Thin\\\"), local(\\\"IBMPlexSans-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Thin\\\"), local(\\\"IBMPlexSans-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Thin\\\"), local(\\\"IBMPlexSans-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Thin\\\"), local(\\\"IBMPlexSans-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Thin\\\"), local(\\\"IBMPlexSans-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Thin\\\"), local(\\\"IBMPlexSans-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-Thin-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Thin Italic\\\"), local(\\\"IBMPlexSans-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ThinItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ThinItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Thin Italic\\\"), local(\\\"IBMPlexSans-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Thin Italic\\\"), local(\\\"IBMPlexSans-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Thin Italic\\\"), local(\\\"IBMPlexSans-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Thin Italic\\\"), local(\\\"IBMPlexSans-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Thin Italic\\\"), local(\\\"IBMPlexSans-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Thin Italic\\\"), local(\\\"IBMPlexSans-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Greek.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans/fonts/split/woff2/IBMPlexSans-ThinItalic-Greek.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Condensed Bold\\\"), local(\\\"IBMPlexSansCondensed-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Bold.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Bold.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Condensed Bold\\\"), local(\\\"IBMPlexSansCondensed-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Condensed Bold\\\"), local(\\\"IBMPlexSansCondensed-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Condensed Bold\\\"), local(\\\"IBMPlexSansCondensed-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Condensed Bold\\\"), local(\\\"IBMPlexSansCondensed-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Bold-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Condensed Bold Italic\\\"), local(\\\"IBMPlexSansCondensed-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-BoldItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-BoldItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Condensed Bold Italic\\\"), local(\\\"IBMPlexSansCondensed-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Condensed Bold Italic\\\"), local(\\\"IBMPlexSansCondensed-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Condensed Bold Italic\\\"), local(\\\"IBMPlexSansCondensed-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Condensed Bold Italic\\\"), local(\\\"IBMPlexSansCondensed-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-BoldItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans Condensed ExtraLight\\\"), local(\\\"IBMPlexSansCondensed-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ExtraLight.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ExtraLight.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans Condensed ExtraLight\\\"), local(\\\"IBMPlexSansCondensed-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans Condensed ExtraLight\\\"), local(\\\"IBMPlexSansCondensed-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans Condensed ExtraLight\\\"), local(\\\"IBMPlexSansCondensed-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans Condensed ExtraLight\\\"), local(\\\"IBMPlexSansCondensed-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLight-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans Condensed ExtraLight Italic\\\"), local(\\\"IBMPlexSansCondensed-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ExtraLightItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ExtraLightItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans Condensed ExtraLight Italic\\\"), local(\\\"IBMPlexSansCondensed-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans Condensed ExtraLight Italic\\\"), local(\\\"IBMPlexSansCondensed-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans Condensed ExtraLight Italic\\\"), local(\\\"IBMPlexSansCondensed-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans Condensed ExtraLight Italic\\\"), local(\\\"IBMPlexSansCondensed-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ExtraLightItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Condensed Italic\\\"), local(\\\"IBMPlexSansCondensed-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Italic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Italic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Condensed Italic\\\"), local(\\\"IBMPlexSansCondensed-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Condensed Italic\\\"), local(\\\"IBMPlexSansCondensed-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Condensed Italic\\\"), local(\\\"IBMPlexSansCondensed-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Condensed Italic\\\"), local(\\\"IBMPlexSansCondensed-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Italic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Condensed Light\\\"), local(\\\"IBMPlexSansCondensed-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Light.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Light.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Condensed Light\\\"), local(\\\"IBMPlexSansCondensed-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Condensed Light\\\"), local(\\\"IBMPlexSansCondensed-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Condensed Light\\\"), local(\\\"IBMPlexSansCondensed-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Condensed Light\\\"), local(\\\"IBMPlexSansCondensed-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Light-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Condensed Light Italic\\\"), local(\\\"IBMPlexSansCondensed-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-LightItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-LightItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Condensed Light Italic\\\"), local(\\\"IBMPlexSansCondensed-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Condensed Light Italic\\\"), local(\\\"IBMPlexSansCondensed-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Condensed Light Italic\\\"), local(\\\"IBMPlexSansCondensed-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Condensed Light Italic\\\"), local(\\\"IBMPlexSansCondensed-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-LightItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Condensed Medium\\\"), local(\\\"IBMPlexSansCondensed-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Medium.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Medium.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Condensed Medium\\\"), local(\\\"IBMPlexSansCondensed-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Condensed Medium\\\"), local(\\\"IBMPlexSansCondensed-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Condensed Medium\\\"), local(\\\"IBMPlexSansCondensed-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Condensed Medium\\\"), local(\\\"IBMPlexSansCondensed-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Medium-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Condensed Medium Italic\\\"), local(\\\"IBMPlexSansCondensed-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-MediumItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-MediumItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Condensed Medium Italic\\\"), local(\\\"IBMPlexSansCondensed-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Condensed Medium Italic\\\"), local(\\\"IBMPlexSansCondensed-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Condensed Medium Italic\\\"), local(\\\"IBMPlexSansCondensed-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Condensed Medium Italic\\\"), local(\\\"IBMPlexSansCondensed-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-MediumItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Condensed\\\"), local(\\\"IBMPlexSansCondensed\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Regular.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Regular.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Condensed\\\"), local(\\\"IBMPlexSansCondensed\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Condensed\\\"), local(\\\"IBMPlexSansCondensed\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Condensed\\\"), local(\\\"IBMPlexSansCondensed\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Condensed\\\"), local(\\\"IBMPlexSansCondensed\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Regular-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans Condensed SemiBold\\\"), local(\\\"IBMPlexSansCondensed-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-SemiBold.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-SemiBold.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans Condensed SemiBold\\\"), local(\\\"IBMPlexSansCondensed-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans Condensed SemiBold\\\"), local(\\\"IBMPlexSansCondensed-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans Condensed SemiBold\\\"), local(\\\"IBMPlexSansCondensed-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans Condensed SemiBold\\\"), local(\\\"IBMPlexSansCondensed-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBold-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans Condensed SemiBold Italic\\\"), local(\\\"IBMPlexSansCondensed-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-SemiBoldItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-SemiBoldItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans Condensed SemiBold Italic\\\"), local(\\\"IBMPlexSansCondensed-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans Condensed SemiBold Italic\\\"), local(\\\"IBMPlexSansCondensed-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans Condensed SemiBold Italic\\\"), local(\\\"IBMPlexSansCondensed-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans Condensed SemiBold Italic\\\"), local(\\\"IBMPlexSansCondensed-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-SemiBoldItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Condensed Text\\\"), local(\\\"IBMPlexSansCondensed-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Text.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Text.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Condensed Text\\\"), local(\\\"IBMPlexSansCondensed-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Condensed Text\\\"), local(\\\"IBMPlexSansCondensed-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Condensed Text\\\"), local(\\\"IBMPlexSansCondensed-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Condensed Text\\\"), local(\\\"IBMPlexSansCondensed-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Text-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Condensed Text Italic\\\"), local(\\\"IBMPlexSansCondensed-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-TextItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-TextItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Condensed Text Italic\\\"), local(\\\"IBMPlexSansCondensed-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Condensed Text Italic\\\"), local(\\\"IBMPlexSansCondensed-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Condensed Text Italic\\\"), local(\\\"IBMPlexSansCondensed-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Condensed Text Italic\\\"), local(\\\"IBMPlexSansCondensed-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-TextItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Condensed Thin\\\"), local(\\\"IBMPlexSansCondensed-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Thin.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-Thin.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Condensed Thin\\\"), local(\\\"IBMPlexSansCondensed-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Condensed Thin\\\"), local(\\\"IBMPlexSansCondensed-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Condensed Thin\\\"), local(\\\"IBMPlexSansCondensed-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Condensed Thin\\\"), local(\\\"IBMPlexSansCondensed-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-Thin-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Condensed Thin Italic\\\"), local(\\\"IBMPlexSansCondensed-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ThinItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/complete/woff/IBMPlexSansCondensed-ThinItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Condensed Thin Italic\\\"), local(\\\"IBMPlexSansCondensed-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Condensed Thin Italic\\\"), local(\\\"IBMPlexSansCondensed-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Condensed Thin Italic\\\"), local(\\\"IBMPlexSansCondensed-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Condensed';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Condensed Thin Italic\\\"), local(\\\"IBMPlexSansCondensed-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Condensed/fonts/split/woff2/IBMPlexSansCondensed-ThinItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Hebrew';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Sans Hebrew Bold\\\"), local(\\\"IBMPlexSansHebrew-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Bold.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Bold.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Hebrew';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Sans Hebrew ExtraLight\\\"), local(\\\"IBMPlexSansHebrew-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-ExtraLight.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-ExtraLight.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Hebrew';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Sans Hebrew Light\\\"), local(\\\"IBMPlexSansHebrew-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Light.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Light.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Hebrew';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Sans Hebrew Medium\\\"), local(\\\"IBMPlexSansHebrew-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Medium.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Medium.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Hebrew';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Sans Hebrew\\\"), local(\\\"IBMPlexSansHebrew\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Regular.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Regular.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Hebrew';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Sans Hebrew SemiBold\\\"), local(\\\"IBMPlexSansHebrew-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-SemiBold.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-SemiBold.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Hebrew';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Sans Hebrew Text\\\"), local(\\\"IBMPlexSansHebrew-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Text.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Text.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Sans Hebrew';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Sans Hebrew Thin\\\"), local(\\\"IBMPlexSansHebrew-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Thin.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Sans-Hebrew/fonts/complete/woff/IBMPlexSansHebrew-Thin.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Serif Bold\\\"), local(\\\"IBMPlexSerif-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Bold.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Bold.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Serif Bold\\\"), local(\\\"IBMPlexSerif-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Serif Bold\\\"), local(\\\"IBMPlexSerif-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Serif Bold\\\"), local(\\\"IBMPlexSerif-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Serif Bold\\\"), local(\\\"IBMPlexSerif-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Serif Bold\\\"), local(\\\"IBMPlexSerif-Bold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Serif Bold Italic\\\"), local(\\\"IBMPlexSerif-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-BoldItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-BoldItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Serif Bold Italic\\\"), local(\\\"IBMPlexSerif-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Serif Bold Italic\\\"), local(\\\"IBMPlexSerif-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Serif Bold Italic\\\"), local(\\\"IBMPlexSerif-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Serif Bold Italic\\\"), local(\\\"IBMPlexSerif-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 700;\\n  src: local(\\\"IBM Plex Serif Bold Italic\\\"), local(\\\"IBMPlexSerif-BoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Serif ExtraLight\\\"), local(\\\"IBMPlexSerif-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ExtraLight.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ExtraLight.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Serif ExtraLight\\\"), local(\\\"IBMPlexSerif-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Serif ExtraLight\\\"), local(\\\"IBMPlexSerif-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Serif ExtraLight\\\"), local(\\\"IBMPlexSerif-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Serif ExtraLight\\\"), local(\\\"IBMPlexSerif-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Serif ExtraLight\\\"), local(\\\"IBMPlexSerif-ExtraLight\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLight-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Serif ExtraLight Italic\\\"), local(\\\"IBMPlexSerif-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ExtraLightItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ExtraLightItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Serif ExtraLight Italic\\\"), local(\\\"IBMPlexSerif-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Serif ExtraLight Italic\\\"), local(\\\"IBMPlexSerif-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Serif ExtraLight Italic\\\"), local(\\\"IBMPlexSerif-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Serif ExtraLight Italic\\\"), local(\\\"IBMPlexSerif-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 200;\\n  src: local(\\\"IBM Plex Serif ExtraLight Italic\\\"), local(\\\"IBMPlexSerif-ExtraLightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ExtraLightItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Serif Italic\\\"), local(\\\"IBMPlexSerif-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Italic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Italic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Serif Italic\\\"), local(\\\"IBMPlexSerif-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Serif Italic\\\"), local(\\\"IBMPlexSerif-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Serif Italic\\\"), local(\\\"IBMPlexSerif-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Serif Italic\\\"), local(\\\"IBMPlexSerif-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Serif Italic\\\"), local(\\\"IBMPlexSerif-Italic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Serif Light\\\"), local(\\\"IBMPlexSerif-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Light.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Light.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Serif Light\\\"), local(\\\"IBMPlexSerif-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Serif Light\\\"), local(\\\"IBMPlexSerif-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Serif Light\\\"), local(\\\"IBMPlexSerif-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Serif Light\\\"), local(\\\"IBMPlexSerif-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Serif Light\\\"), local(\\\"IBMPlexSerif-Light\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Light-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Serif Light Italic\\\"), local(\\\"IBMPlexSerif-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-LightItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-LightItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Serif Light Italic\\\"), local(\\\"IBMPlexSerif-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Serif Light Italic\\\"), local(\\\"IBMPlexSerif-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Serif Light Italic\\\"), local(\\\"IBMPlexSerif-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Serif Light Italic\\\"), local(\\\"IBMPlexSerif-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 300;\\n  src: local(\\\"IBM Plex Serif Light Italic\\\"), local(\\\"IBMPlexSerif-LightItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-LightItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Serif Medium\\\"), local(\\\"IBMPlexSerif-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Medium.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Medium.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Serif Medium\\\"), local(\\\"IBMPlexSerif-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Serif Medium\\\"), local(\\\"IBMPlexSerif-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Serif Medium\\\"), local(\\\"IBMPlexSerif-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Serif Medium\\\"), local(\\\"IBMPlexSerif-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Serif Medium\\\"), local(\\\"IBMPlexSerif-Medium\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Medium-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Serif Medium Italic\\\"), local(\\\"IBMPlexSerif-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-MediumItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-MediumItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Serif Medium Italic\\\"), local(\\\"IBMPlexSerif-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Serif Medium Italic\\\"), local(\\\"IBMPlexSerif-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Serif Medium Italic\\\"), local(\\\"IBMPlexSerif-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Serif Medium Italic\\\"), local(\\\"IBMPlexSerif-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 500;\\n  src: local(\\\"IBM Plex Serif Medium Italic\\\"), local(\\\"IBMPlexSerif-MediumItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Serif\\\"), local(\\\"IBMPlexSerif\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Regular.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Regular.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Serif\\\"), local(\\\"IBMPlexSerif\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Serif\\\"), local(\\\"IBMPlexSerif\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Serif\\\"), local(\\\"IBMPlexSerif\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Serif\\\"), local(\\\"IBMPlexSerif\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 400;\\n  src: local(\\\"IBM Plex Serif\\\"), local(\\\"IBMPlexSerif\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Serif SemiBold\\\"), local(\\\"IBMPlexSerif-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-SemiBold.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-SemiBold.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Serif SemiBold\\\"), local(\\\"IBMPlexSerif-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Serif SemiBold\\\"), local(\\\"IBMPlexSerif-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Serif SemiBold\\\"), local(\\\"IBMPlexSerif-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Serif SemiBold\\\"), local(\\\"IBMPlexSerif-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Serif SemiBold\\\"), local(\\\"IBMPlexSerif-SemiBold\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBold-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Serif SemiBold Italic\\\"), local(\\\"IBMPlexSerif-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-SemiBoldItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-SemiBoldItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Serif SemiBold Italic\\\"), local(\\\"IBMPlexSerif-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Serif SemiBold Italic\\\"), local(\\\"IBMPlexSerif-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Serif SemiBold Italic\\\"), local(\\\"IBMPlexSerif-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Serif SemiBold Italic\\\"), local(\\\"IBMPlexSerif-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 600;\\n  src: local(\\\"IBM Plex Serif SemiBold Italic\\\"), local(\\\"IBMPlexSerif-SemiBoldItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-SemiBoldItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Serif Text\\\"), local(\\\"IBMPlexSerif-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Text.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Text.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Serif Text\\\"), local(\\\"IBMPlexSerif-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Serif Text\\\"), local(\\\"IBMPlexSerif-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Serif Text\\\"), local(\\\"IBMPlexSerif-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Serif Text\\\"), local(\\\"IBMPlexSerif-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Serif Text\\\"), local(\\\"IBMPlexSerif-Text\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Text-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Serif Text Italic\\\"), local(\\\"IBMPlexSerif-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-TextItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-TextItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Serif Text Italic\\\"), local(\\\"IBMPlexSerif-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Serif Text Italic\\\"), local(\\\"IBMPlexSerif-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Serif Text Italic\\\"), local(\\\"IBMPlexSerif-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Serif Text Italic\\\"), local(\\\"IBMPlexSerif-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 450;\\n  src: local(\\\"IBM Plex Serif Text Italic\\\"), local(\\\"IBMPlexSerif-TextItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-TextItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Serif Thin\\\"), local(\\\"IBMPlexSerif-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Thin.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-Thin.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Serif Thin\\\"), local(\\\"IBMPlexSerif-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Serif Thin\\\"), local(\\\"IBMPlexSerif-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Serif Thin\\\"), local(\\\"IBMPlexSerif-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Serif Thin\\\"), local(\\\"IBMPlexSerif-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: normal;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Serif Thin\\\"), local(\\\"IBMPlexSerif-Thin\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Thin-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Serif Thin Italic\\\"), local(\\\"IBMPlexSerif-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ThinItalic.woff */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/complete/woff/IBMPlexSerif-ThinItalic.woff\")) + \") format(\\\"woff\\\"); }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Serif Thin Italic\\\"), local(\\\"IBMPlexSerif-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Cyrillic.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Cyrillic.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0400-045F, U+0472-0473, U+0490-049D, U+04A0-04A5, U+04AA-04AB, U+04AE-04B3, U+04B6-04BB, U+04C0-04C2, U+04CF-04D9, U+04DC-04DF, U+04E2-04E9, U+04EE-04F5, U+04F8-04F9; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Serif Thin Italic\\\"), local(\\\"IBMPlexSerif-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Pi.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Pi.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0E3F, U+2032-2033, U+2070, U+2075-2079, U+2080-2081, U+2083, U+2085-2089, U+2113, U+2116, U+2126, U+212E, U+2150-2151, U+2153-215E, U+2190-2199, U+21A9-21AA, U+21B0-21B3, U+21B6-21B7, U+21BA-21BB, U+21C4, U+21C6, U+2202, U+2206, U+220F, U+2211, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+2713, U+274C, U+2B0E-2B11, U+EBE1-EBE7, U+ECE0, U+EFCC; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Serif Thin Italic\\\"), local(\\\"IBMPlexSerif-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin3.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin3.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Serif Thin Italic\\\"), local(\\\"IBMPlexSerif-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin2.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin2.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF, U+FB01-FB02; }\\n\\n@font-face {\\n  font-family: 'IBM Plex Serif';\\n  font-style: italic;\\n  font-weight: 100;\\n  src: local(\\\"IBM Plex Serif Thin Italic\\\"), local(\\\"IBMPlexSerif-ThinItalic\\\"), url(\" + escape(__webpack_require__(/*! ../IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin1.woff2 */ \"./node_modules/@ibm/plex/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-ThinItalic-Latin1.woff2\")) + \") format(\\\"woff2\\\");\\n  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+FB01-FB02; }\\n\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./node_modules/@ibm/plex/css/ibm-plex.css?./node_modules/css-loader");
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js!./node_modules/bootstrap/dist/css/bootstrap.min.css":
 /*!*************************************************************************************!*\
   !*** ./node_modules/css-loader!./node_modules/bootstrap/dist/css/bootstrap.min.css ***!
@@ -131,17 +4535,6 @@ eval("exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./static/style.css":
-/*!****************************************************!*\
-  !*** ./node_modules/css-loader!./static/style.css ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\nexports.push([module.i, \"@import url(/node_modules/@ibm/plex/css/ibm-plex.css);\", \"\"]);\n\n// module\nexports.push([module.i, \":root {\\n  --color-black: #262626;\\n  --color-red: #DC493A;\\n  /* --color-yellow: #7E52A0; */\\n  /* --color-yellow: #EE8434; */\\n  --color-yellow: #EF9D51 ;\\n  --color-blue: #006494;\\n  --color-green: #69B578;\\n  --color-gray: #616161;\\n  --color-white: #D7D7D7; /* good?\\n  /* --color-white: #D7D7D7; */\\n  /* --color-white:#888888; */\\n  --color-shadow: #616161;\\n}\\n\\n\\n\\nhtml,body {\\n  background-color: var(--color-black);\\n  height: 100%;\\n  margin: 0px;\\n  padding: 0px;\\n}\\n\\n.fullHeight {\\n  height: 100%;\\n}\\n\\n.col-sm {\\n  color: var(--color-white);\\n\\n}\\n\\n.mic_id {\\n  font-family: 'IBM Plex Sans';\\n  font-weight: 300;\\n  font-style: italic;\\n  /* text-shadow:1px 1px 1px var(--color-shadow); */\\n}\\n\\n.uploadmode .mic_name .mic_id {\\n  font-size: 1vw;\\n}\\n\\n\\n\\n.above-mid .col-sm {\\n  /* border: .5px solid; */\\n  border-color: var(--color-black);\\n  padding: 0px;\\n}\\n\\n\\n\\n.name{\\n  font-family: 'IBM Plex Sans';\\n  font-weight: 400;\\n  font-style: bold;\\n  /* text-shadow:2px 2px 0px #333333 */\\n}\\n\\n\\n/* .info-bar components */\\n.electrode {\\n  position: absolute;\\n  left: 0px;\\n  bottom: 250px;\\n  height: 125px;\\n  width: 100%;\\n  /* background-color: purple; */\\n  /* display: none; */\\n}\\n\\n.battery-bars {\\n  position: absolute;\\n  display: table;\\n  table-layout: fixed;\\n  left:0px;\\n  bottom: 225px;\\n  height: 25px;\\n  width: 100%;\\n  background-color: var(--color-black);\\n}\\n.battery-bar {\\n  display: table-cell;\\n  height:inherit;\\n  border-style: solid;\\n  border-width: 2px 1px;\\n  border-color: var(--color-gray);\\n  box-sizing:border-box;\\n}\\n\\n.batt_led_off{\\n  background-color: var(--color-black);\\n}\\n\\n.batt_led_danger{\\n  background-color: var(--color-red);\\n}\\n\\n.batt_led_warning {\\n  background-color: var(--color-yellow);\\n}\\n.batt_led_good{\\n  background-color: var(--color-green);\\n}\\n\\n\\ncanvas.audio-graph{\\n  position: absolute;\\n  left: 0px;\\n  bottom:125px;\\n  width:100%;\\n  height:100px;\\n  /* background-color: green; */\\n}\\n\\ncanvas.rf-graph {\\n  position: absolute;\\n  left: 0px;\\n  bottom: 25px;\\n  width:100%;\\n  height:100px;\\n  /* background-color: red; */\\n}\\n\\n.offset {\\n  position: absolute;\\n  bottom: 180px;\\n  right: 5px;\\n  font-family: 'IBM Plex Mono';\\n  font-weight: 100;\\n  font-style: italic;\\n  color: var(--color-green);\\n}\\n\\n.frequency{\\n  position: absolute;\\n  bottom: 80px;\\n  right: 5px;\\n  font-family: 'IBM Plex Mono';\\n  font-weight: 100;\\n  font-style: italic;\\n  color: var(--color-red);\\n}\\n\\n.diversity {\\n  position: absolute;\\n  display: table;\\n  table-layout: fixed;\\n  left: 0px;\\n  bottom:0px;\\n\\n  height: 25px;\\n  width: 100%;\\n}\\n\\n.diversity-bar {\\n  display: table-cell;\\n  height:inherit;\\n  border-style: solid;\\n  border-width: 1px;\\n  border-color: var(--color-gray);\\n  box-sizing:border-box;\\n}\\n\\n\\n.diversity-bar-blue{\\n  background-color: var(--color-blue);\\n}\\n\\n.diversity-bar-red{\\n  background-color: var(--color-red);\\n}\\n\\n.diversity-bar-off{\\n  background-color: var(--color-black);\\n}\\n\\n.chartzone  {\\n  /* display: none; */\\n}\\n\\n.errorzone {\\n  /* display: block; */\\n  font-family: IBM Plex Mono;\\n  font-weight: 100;\\n  font-style: italic;\\n  color: var(--color-yellow);\\n}\\n\\n\\n\\n\\n@media (min-width: 1280px) {\\n  .above-mid {\\n    height: 100%;\\n  }\\n  .name {\\n    font-size: calc(1vw + 7pt);\\n  }\\n\\n  .mic_id {\\n    position: absolute;\\n    top: 0px;\\n    font-size: 30pt;\\n\\n  }\\n  .mic_name {\\n    /* height: calc(100% - 250px); */\\n    /* height: 100%; */\\n    display: flex;\\n    justify-content:center;\\n    align-items:center;\\n  }\\n\\n\\n\\n  .info-drawer {\\n    /* height: 250px; */\\n  }\\n\\n  .flexfix {\\n    display: none;\\n  }\\n\\n\\n  /* electrode & info drawer switch */\\n  /* no electrode or info-drawer */\\n  .elinfo00 .col-sm .mic_name {\\n    height: 100%;\\n  }\\n\\n  .elinfo00 .col-sm .electrode {\\n    display: none;\\n  }\\n\\n  .elinfo00 .col-sm .info-drawer {\\n    display: none;\\n  }\\n\\n  /* electrode */\\n  .elinfo01 .col-sm .mic_name {\\n    height: calc(100% - 125px);\\n    /* background-color: black; */\\n    background: #262626;\\n  }\\n\\n  .elinfo01 .col-sm .electrode {\\n    display: block;\\n    bottom: 0px;\\n  }\\n\\n  .elinfo01 .col-sm .info-drawer {\\n    display: none;\\n  }\\n\\n  .elinfo01 .col-sm .mic_name {\\n    /* background-color: black; */\\n  }\\n\\n  /* info drawer */\\n  .elinfo10 .col-sm .mic_name {\\n    height: calc(100% - 250px);\\n  }\\n\\n  .elinfo10 .col-sm .electrode {\\n    display: none;\\n  }\\n\\n  .elinfo10 .col-sm .info-drawer {\\n    display: block;\\n  }\\n\\n  /* electrode and info drawer */\\n  .elinfo11 .col-sm .mic_name {\\n    height: calc(100% - 375px);\\n    background-color: var(--color-black);\\n  }\\n\\n  .elinfo11 .col-sm .electrode {\\n    display: block;\\n  }\\n\\n  .elinfo11 .col-sm info-drawer {\\n    display: block;\\n  }\\n\\n  .errortype{\\n    position: absolute;\\n    bottom: 80px;\\n    right: 5px\\n  }\\n\\n  .ip {\\n    position: absolute;\\n    bottom: 60px;\\n    right: 5px;\\n  }\\n\\n  .rxinfo {\\n    position: absolute;\\n    bottom: 40px;\\n    right: 5px;\\n  }\\n}\\n\\n\\n@media (max-width: 1280px) {\\n  .electrode {\\n    display: none;\\n  }\\n  .info-drawer {\\n    /* display: none; */\\n    height: 130px;\\n  }\\n\\n\\n  .header{\\n    display:none;\\n\\n  }\\n  .col-sm{\\n    vertical-align: middle;\\n    min-width: 256px;\\n    /* flex-grow: 0; */\\n    flex-shrink: 1;\\n  }\\n\\n\\n  .mic_id{\\n    display: inline;\\n    font-weight: 400;\\n    font-size: 18pt;\\n    text-align: left;\\n    padding-left: 1em;\\n    /* float:left; */\\n  }\\n\\n  .name {\\n    float: right;\\n    font-size: 12pt;\\n    display: inline;\\n    font-weight: 400;\\n    padding-right: 1em;\\n    text-align: right;\\n    font-size: 18pt;\\n    margin: 0px;\\n  }\\n\\n  .battery-bars {\\n    height: 15px;\\n    bottom: 115px;\\n  }\\n  .battery-bar {\\n    border-width:1px;\\n  }\\n\\n  .offset{\\n    /* position: absolute; */\\n    bottom: 75px;\\n    right: 5px;\\n    /* font-family: 'Roboto Mono', monospace; */\\n    /* font-weight: 100; */\\n    /* font-style: italic; */\\n    /* color: red; */\\n  }\\n\\n  .frequency{\\n    /* position: absolute; */\\n    bottom: 25px;\\n    right: 5px;\\n    /* font-family: 'Roboto Mono', monospace; */\\n    /* font-weight: 100; */\\n    /* font-style: italic; */\\n    /* color: red; */\\n  }\\n\\n  canvas.audio-graph{\\n    height:50px;\\n    bottom:65px;\\n  }\\n  canvas.rf-graph{\\n    height:50px;\\n    bottom:15px;\\n  }\\n\\n  .diversity {\\n    height: 15px;\\n  }\\n  .diversity-bar {\\n    border-width: 1px;\\n  }\\n\\n\\n  .errortype{\\n    position: absolute;\\n    bottom: 75px;\\n    right: 5px\\n  }\\n\\n  .ip {\\n    position: absolute;\\n    bottom: 55px;\\n    right: 5px;\\n  }\\n\\n  .rxinfo {\\n    position: absolute;\\n    bottom: 35px;\\n    right: 5px;\\n  }\\n}\\n\\n\\n@media (max-width: 512px) {\\n  .info-drawer {\\n    display: none;\\n  }\\n}\\n\\n\\n/* Background Colors */\\n.GOOD{\\n  /* background: #155724; */\\n  background: var(--color-green);\\n}\\n\\n.PREV_GOOD{\\n  /* background: #155724; */\\n  background: var(--color-blue);\\n}\\n\\n.REPLACE {\\n  /* background: #a2ab58; */\\n  background: var(--color-yellow);\\n}\\n\\n.PREV_REPLACE{\\n  /* background: #a2ab58; */\\n  background: var(--color-yellow);\\n}\\n\\n.CRITICAL, .PREV_CRITICAL{\\n  /* background: #a73737; */\\n  background: var(--color-red);\\n}\\n\\n.UNASSIGNED{\\n  /* background: black; */\\n  background: var(--color-black);\\n}\\n\\n.TX_COM_ERROR, .RX_COM_ERROR{\\n  /* background: black; */\\n  background: var(--color-black);\\n}\\n\\n\\n#largelink {\\n  padding-top: 4em;\\n}\\n\\n\\n.server-error {\\n  display: none;\\n  background-color: var(--color-blue);\\n  color: var(--color-white);\\n  margin-left: -15px;\\n  margin-right: -15px;\\n  padding: 3em;\\n}\\n\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./static/style.css?./node_modules/css-loader");
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/lib/css-base.js":
 /*!*************************************************!*\
   !*** ./node_modules/css-loader/lib/css-base.js ***!
@@ -150,6 +4543,17 @@ eval("exports = module.exports = __webpack_require__(/*! ../node_modules/css-loa
 /***/ (function(module, exports) {
 
 eval("/*\n\tMIT License http://www.opensource.org/licenses/mit-license.php\n\tAuthor Tobias Koppers @sokra\n*/\n// css base code, injected by the css-loader\nmodule.exports = function(useSourceMap) {\n\tvar list = [];\n\n\t// return the list of modules as css string\n\tlist.toString = function toString() {\n\t\treturn this.map(function (item) {\n\t\t\tvar content = cssWithMappingToString(item, useSourceMap);\n\t\t\tif(item[2]) {\n\t\t\t\treturn \"@media \" + item[2] + \"{\" + content + \"}\";\n\t\t\t} else {\n\t\t\t\treturn content;\n\t\t\t}\n\t\t}).join(\"\");\n\t};\n\n\t// import a list of modules into the list\n\tlist.i = function(modules, mediaQuery) {\n\t\tif(typeof modules === \"string\")\n\t\t\tmodules = [[null, modules, \"\"]];\n\t\tvar alreadyImportedModules = {};\n\t\tfor(var i = 0; i < this.length; i++) {\n\t\t\tvar id = this[i][0];\n\t\t\tif(typeof id === \"number\")\n\t\t\t\talreadyImportedModules[id] = true;\n\t\t}\n\t\tfor(i = 0; i < modules.length; i++) {\n\t\t\tvar item = modules[i];\n\t\t\t// skip already imported module\n\t\t\t// this implementation is not 100% perfect for weird media query combinations\n\t\t\t//  when a module is imported multiple times with different media queries.\n\t\t\t//  I hope this will never occur (Hey this way we have smaller bundles)\n\t\t\tif(typeof item[0] !== \"number\" || !alreadyImportedModules[item[0]]) {\n\t\t\t\tif(mediaQuery && !item[2]) {\n\t\t\t\t\titem[2] = mediaQuery;\n\t\t\t\t} else if(mediaQuery) {\n\t\t\t\t\titem[2] = \"(\" + item[2] + \") and (\" + mediaQuery + \")\";\n\t\t\t\t}\n\t\t\t\tlist.push(item);\n\t\t\t}\n\t\t}\n\t};\n\treturn list;\n};\n\nfunction cssWithMappingToString(item, useSourceMap) {\n\tvar content = item[1] || '';\n\tvar cssMapping = item[3];\n\tif (!cssMapping) {\n\t\treturn content;\n\t}\n\n\tif (useSourceMap && typeof btoa === 'function') {\n\t\tvar sourceMapping = toComment(cssMapping);\n\t\tvar sourceURLs = cssMapping.sources.map(function (source) {\n\t\t\treturn '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'\n\t\t});\n\n\t\treturn [content].concat(sourceURLs).concat([sourceMapping]).join('\\n');\n\t}\n\n\treturn [content].join('\\n');\n}\n\n// Adapted from convert-source-map (MIT)\nfunction toComment(sourceMap) {\n\t// eslint-disable-next-line no-undef\n\tvar base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));\n\tvar data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;\n\n\treturn '/*# ' + data + ' */';\n}\n\n\n//# sourceURL=webpack:///./node_modules/css-loader/lib/css-base.js?");
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/lib/url/escape.js":
+/*!***************************************************!*\
+  !*** ./node_modules/css-loader/lib/url/escape.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = function escape(url) {\n    if (typeof url !== 'string') {\n        return url\n    }\n    // If url is already wrapped in quotes, remove them\n    if (/^['\"].*['\"]$/.test(url)) {\n        url = url.slice(1, -1);\n    }\n    // Should url be wrapped?\n    // See https://drafts.csswg.org/css-values-3/#urls\n    if (/[\"'() \\t\\n]/.test(url)) {\n        return '\"' + url.replace(/\"/g, '\\\\\"').replace(/\\n/g, '\\\\n') + '\"'\n    }\n\n    return url\n}\n\n\n//# sourceURL=webpack:///./node_modules/css-loader/lib/url/escape.js?");
 
 /***/ }),
 
@@ -553,73 +4957,14 @@ eval("/* WEBPACK VAR INJECTION */(function(global) {\nmodule.exports = (typeof s
 
 /***/ }),
 
-/***/ "./static/chart-smoothie.js":
-/*!**********************************!*\
-  !*** ./static/chart-smoothie.js ***!
-  \**********************************/
-/*! exports provided: charts, initChart */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"charts\", function() { return charts; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"initChart\", function() { return initChart; });\n/* harmony import */ var smoothie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! smoothie */ \"./node_modules/smoothie/smoothie.js\");\n/* harmony import */ var smoothie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(smoothie__WEBPACK_IMPORTED_MODULE_0__);\n\n\n\nvar charts = {};\n\nfunction initChart(slotSelector) {\n  var chart = {};\n  chart.audioSeries = new smoothie__WEBPACK_IMPORTED_MODULE_0__[\"TimeSeries\"]();\n  chart.rfSeries = new smoothie__WEBPACK_IMPORTED_MODULE_0__[\"TimeSeries\"]();\n\n  var audioCanvas = slotSelector.querySelector('canvas.audio-graph');\n  var rfCanvas = slotSelector.querySelector('canvas.rf-graph');\n\n  var rfOptions = {\n    responsive:true,\n    millisPerPixel: 25,\n    grid: {\n      verticalSections:0,\n      strokeStyle:'transparent',\n      fillStyle:'transparent'\n    },\n    labels:{\n      disabled:true\n    },\n    maxValue:115,\n    minValue:0,\n    // scaleSmoothing:.7,\n    limitFPS:20\n  };\n\n  var audioOptions = {\n    responsive:true,\n    millisPerPixel: 25,\n    grid: {\n      verticalSections:0,\n      strokeStyle:'transparent',\n      fillStyle:'transparent'\n    },\n    labels:{\n      disabled:true\n    },\n    maxValue:50,\n    minValue:0,\n    // scaleSmoothing:.7,\n    limitFPS:20\n  };\n\n  var audioChart = new smoothie__WEBPACK_IMPORTED_MODULE_0__[\"SmoothieChart\"](audioOptions);\n  var rfChart = new smoothie__WEBPACK_IMPORTED_MODULE_0__[\"SmoothieChart\"](rfOptions);\n\n  audioChart.addTimeSeries(chart.audioSeries, {\n    strokeStyle: '#69B578',\n    fillStyle: '',\n    lineWidth: 2\n  });\n\n  rfChart.addTimeSeries(chart.rfSeries, {\n    strokeStyle: '#DC493A',\n    fillStyle: '',\n    lineWidth: 2\n  });\n\n  audioChart.streamTo(audioCanvas, 100);\n  rfChart.streamTo(rfCanvas, 100);\n  return chart;\n}\n\n\n//# sourceURL=webpack:///./static/chart-smoothie.js?");
-
-/***/ }),
-
-/***/ "./static/demodata.js":
-/*!****************************!*\
-  !*** ./static/demodata.js ***!
-  \****************************/
-/*! exports provided: randomDataGenerator, autoRandom */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"randomDataGenerator\", function() { return randomDataGenerator; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"autoRandom\", function() { return autoRandom; });\n/* harmony import */ var _script_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./script.js */ \"./static/script.js\");\n/* harmony import */ var _chart_smoothie_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./chart-smoothie.js */ \"./static/chart-smoothie.js\");\n\n\n\n\n\n\nconst batterySample = {\n  0:{\n      battery: 255,\n      status: ['CRITICAL','UNASSIGNED','RX_COM_ERROR','TX_COM_ERROR']\n    },\n  1:{\n      battery: 1,\n      status: ['CRITICAL']\n    },\n  2:{\n      battery: 2,\n      status: ['CRITICAL']\n    },\n  3:{\n      battery: 3,\n      status: ['REPLACE','PREV_REPLACE']\n    },\n  4:{\n      battery: 4,\n      status: ['GOOD','PREV_GOOD','UNASSIGNED']\n    },\n  5:{\n      battery: 5,\n      status: ['GOOD','PREV_GOOD']\n    }\n}\n\nconst rfSample = ['AX','XB','XX','BRXX','XRXB','XXBR'];\n\n\nconst name_sample = ['Fatai','Marshall','Delwin','Tracy TB','Backup',\n                   'Steve','JE','Sharon','Bob','Del ACU','Troy',\n                   'Matt','Matt ACU','Matt Sax','Karl','Jordan','Josue',\n                   'Hallie','Rebekah','Dan','Stephen','Max','Tom','Nick',''];\n\nconst prefix_sample = ['HH','BP'];\n\nconst type_sample = ['ULXD','QLXD','ULXD','AXTD']\n\nfunction randomIPGenerator() {\n  return \"192.168.103.\" + getRandomInt(50,150)\n}\n\nfunction randomTypeGenerator() {\n  return type_sample[getRandomInt(0,type_sample.length - 1)]\n}\n\n// https://gist.github.com/kerimdzhanov/7529623\nfunction getRandomInt(min, max) {\n  return Math.floor(Math.random() * (max - min + 1) + min);\n}\n\nfunction randomNameGenerator(){\n  var prefix = prefix_sample[getRandomInt(0,1)];\n  var channel = getRandomInt(1,16).toString().padStart(2,'0');\n\n  var len = name_sample.length;\n  var index = getRandomInt(0,len-1);\n  var name = name_sample[index]\n  return prefix + channel + ' ' + name;\n}\n\nfunction current_names() {\n  var names = []\n  var slots = Object.keys(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"transmitters\"]).map(Number);\n\n  for(let i in slots){\n    name = _script_js__WEBPACK_IMPORTED_MODULE_0__[\"transmitters\"][slots[i]].name\n    let prefix = name.substring(0,2)\n    let number = name.substring(2,4)\n    name = name.substring(5)\n    names.push(name)\n  }\n  return names\n}\n\nfunction uniqueRandomNameGenerator(slot){\n  let used_names = current_names()\n  let namebank = name_sample.filter( el => !used_names.includes(el));\n\n  let len = namebank.length;\n  let index = getRandomInt(0,len-1);\n  let name = namebank[index]\n\n\n  let channel = slot.toString().padStart(2,'0');\n  let output = 'HH' + channel + ' ' + name;\n  console.log(output)\n  return output\n}\n\nfunction randomRfSampleGenerator() {\n  return rfSample[getRandomInt(0,5)];\n}\n\nfunction randomAudioGenerator(){\n  return getRandomInt(0,30);\n}\n\nfunction randomTXOffsetGenerator() {\n  return getRandomInt(0,21);\n}\n\nfunction randomFrequencyGenerator(){\n  let frequency =  getRandomInt(474,597) + (getRandomInt(0,40) * .025)\n  return frequency.toFixed(3)\n}\n\nfunction randomRfGenerator(){\n  return getRandomInt(0,50);\n}\n\nfunction randomBatteryGenerator() {\n  var batt_index = getRandomInt(0,5);\n  var battery = batterySample[batt_index];\n  var len = battery.status.length;\n  var status_index = getRandomInt(0,len-1);\n\n  var res = {\n              battery: battery.battery,\n              status: battery.status[status_index]\n            }\n  return res;\n}\n\nfunction randomDataGenerator(slot){\n  var battery = randomBatteryGenerator();\n\n  var res = {\n    \"name\": uniqueRandomNameGenerator(slot),\n    \"antenna\": randomRfSampleGenerator(),\n    \"audio_level\": randomAudioGenerator(),\n    \"rf_level\": randomRfGenerator(),\n    \"tx_offset\": randomTXOffsetGenerator(),\n    \"frequency\": randomFrequencyGenerator(),\n    \"slot\": slot,\n    \"battery\": battery.battery,\n    \"status\": battery.status,\n    \"ip\": randomIPGenerator(),\n    \"channel\": getRandomInt(1,4),\n    \"type\": randomTypeGenerator()\n  }\n  return res;\n\n}\n\nfunction meteteredRandomDataGenerator(update){\n  var slots = Object.keys(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"transmitters\"]).map(Number);\n  var slot = slots[getRandomInt(0, slots.length - 1)];\n  let data = JSON.parse(JSON.stringify(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"transmitters\"][slot]))\n\n  var battery = randomBatteryGenerator();\n\n  switch(update){\n    case \"name\":        data[\"name\"] = uniqueRandomNameGenerator(slot)\n                        break;\n    case \"antenna\":     data[\"antenna\"] = randomRfSampleGenerator()\n                        break;\n    case \"tx_offset\":   data[\"tx_offset\"] = randomTXOffsetGenerator()\n                        break;\n    case \"frequency\":   data[\"frequency\"] = randomFrequencyGenerator()\n                        break;\n    case \"battery\":\n    case \"status\":      data[\"battery\"] = battery.battery\n                        data[\"status\"] = battery.status\n                        break\n\n  }\n  return data;\n\n}\n\n\n\nfunction randomCharts(){\n  var slots = Object.keys(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"transmitters\"]).map(Number);\n  slots.forEach(function(slot){\n    _chart_smoothie_js__WEBPACK_IMPORTED_MODULE_1__[\"charts\"][slot].audioSeries.append(Date.now(), randomAudioGenerator());\n    _chart_smoothie_js__WEBPACK_IMPORTED_MODULE_1__[\"charts\"][slot].rfSeries.append(Date.now(), randomRfGenerator());\n  })\n}\n\n\nfunction autoRandom(){\n  setInterval(function(){\n    Object(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"updateSlot\"])(meteteredRandomDataGenerator(\"name\"));\n  },1250)\n\n  setInterval( function () {\n    Object(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"updateSlot\"])(meteteredRandomDataGenerator(\"antenna\"))\n  },90)\n\n  setInterval(function(){\n    Object(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"updateSlot\"])(meteteredRandomDataGenerator(\"battery\"))\n  },1250)\n\n  setInterval(function(){\n    Object(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"updateSlot\"])(meteteredRandomDataGenerator(\"tx_offset\"))\n  },750)\n\n  setInterval(function(){\n    Object(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"updateSlot\"])(meteteredRandomDataGenerator(\"frequency\"))\n  },750)\n\n  setInterval(randomCharts,125);\n}\n\n\n//# sourceURL=webpack:///./static/demodata.js?");
-
-/***/ }),
-
-/***/ "./static/gif.js":
-/*!***********************!*\
-  !*** ./static/gif.js ***!
-  \***********************/
-/*! exports provided: updateGIFBackgrounds */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"updateGIFBackgrounds\", function() { return updateGIFBackgrounds; });\n/* harmony import */ var _script_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./script.js */ \"./static/script.js\");\n\n\n\n\n\n$(document).ready(function() {\n  window.addEventListener(\"resize\", showDivSize);\n});\n\nfunction showDivSize() {\n  if($(\"#micboard\").hasClass(\"uploadmode\")) {\n    e = document.getElementsByClassName(\"mic_name\")[0]\n    width = Math.ceil(parseInt(window.getComputedStyle(e)[\"width\"]))\n    height = window.getComputedStyle(e)[\"height\"]\n    string = width + \" x \" + height\n    $(\".mic_id\").html(string)\n  }\n}\n\nfunction uploadMode(){\n  document.getElementById(\"micboard\").classList.add(\"uploadmode\")\n  showDivSize()\n\n  $(\".mic_name\").each(function(){\n    $(this).on('dragover',false);\n    $(this).on('drop',function(e){\n      slot_name = $(this).children(\".name\").html().toLowerCase();\n      e.preventDefault();\n      upload = e.originalEvent.dataTransfer.files[0];\n      extension = upload.name.split(/[\\s.]+/).pop().toLowerCase();\n      filename = slot_name + \".\" + extension;\n      console.log(\"bin:  \" + slot_name + \" FileName: \" + upload.name + \" newName:  \" + filename);\n\n      sendFile(upload,filename);\n    });\n  });\n}\n\n// https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications\nfunction sendFile(file, filename) {\n  var uri = \"/upload\";\n  var xhr = new XMLHttpRequest();\n  var fd = new FormData();\n\n  xhr.open(\"POST\", uri, true);\n  xhr.onreadystatechange = function() {\n    if (xhr.readyState == 4 && xhr.status == 200) {\n      console.log(xhr.responseText); // handle response.\n    }\n  };\n  fd.append('myFile', file);\n  fd.append('filename', filename);\n  // Initiate a multipart/form-data upload\n  xhr.send(fd);\n}\n\n\nfunction updateGIFBackgrounds() {\n  $(\".mic_name\").each(function(key, value){\n\n    name = $(this).children(\".name\").html().toLowerCase() + \".gif\";\n    if(_script_js__WEBPACK_IMPORTED_MODULE_0__[\"gif_list\"].indexOf(name) > -1){\n      $(this).css('background-image', 'url(\"static/backgrounds/' + name + '\")');\n      $(this).css('background-size', 'cover');\n      console.log(name);\n    }\n    else {\n      $(this).css('background-image', '');\n      $(this).css('background-size', '');\n    }\n  });\n}\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")))\n\n//# sourceURL=webpack:///./static/gif.js?");
-
-/***/ }),
-
-/***/ "./static/script.js":
-/*!**************************!*\
-  !*** ./static/script.js ***!
-  \**************************/
-/*! exports provided: transmitters, gif_list, updateSlot */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"transmitters\", function() { return transmitters; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"gif_list\", function() { return gif_list; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"updateSlot\", function() { return updateSlot; });\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.js\");\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ \"./node_modules/bootstrap/dist/css/bootstrap.min.css\");\n/* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var qrcode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! qrcode */ \"./node_modules/qrcode/lib/browser.js\");\n/* harmony import */ var qrcode__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(qrcode__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _gif_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./gif.js */ \"./static/gif.js\");\n/* harmony import */ var _chart_smoothie_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./chart-smoothie.js */ \"./static/chart-smoothie.js\");\n/* harmony import */ var _demodata_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./demodata.js */ \"./static/demodata.js\");\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./style.css */ \"./static/style.css\");\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_style_css__WEBPACK_IMPORTED_MODULE_6__);\n\n\n\n\n\n\n\n\n\n// import '/node_modules/@ibm/plex/css/ibm-plex.css'\n\nvar dataURL = '/data';\nvar transmitters = {};\n\nvar gif_list = {};\n\nvar config = {};\n\nvar localURL = '';\nlet start_slot = parseInt(getUrlParameter('start_slot'));\nlet stop_slot = parseInt(getUrlParameter('stop_slot'));\nlet demo = getUrlParameter('demo');\n\n$(document).ready(function() {\n  let start_slot = parseInt(getUrlParameter('start_slot'));\n  let stop_slot = parseInt(getUrlParameter('stop_slot'));\n  let demo = getUrlParameter('demo');\n\n  if(isNaN(start_slot)) {\n    start_slot = 1\n  }\n  if(isNaN(stop_slot)) {\n    stop_slot = 12\n  }\n\n\n  if (demo == 'true') {\n    for(var i = start_slot; i <= stop_slot; i++) {\n      transmitters[i] = Object(_demodata_js__WEBPACK_IMPORTED_MODULE_5__[\"randomDataGenerator\"])(i);\n    }\n    initialMap();\n    Object(_demodata_js__WEBPACK_IMPORTED_MODULE_5__[\"autoRandom\"])();\n  }\n\n  else {\n    initialMap();\n    setInterval(JsonUpdate, 500);\n    wsConnect();\n  }\n\n  document.addEventListener(\"keydown\", function(e) {\n    if (e.keyCode == 68) {\n      window.location.href = '/?demo=true&start_slot=1&stop_slot=8';\n    }\n\n    if (e.keyCode == 70) {\n      toggleFullScreen();\n    }\n\n    if (e.keyCode == 71) {\n      toggleBackgrounds();\n    }\n\n    if (e.keyCode == 73) {\n      toggleInfoDrawer();\n    }\n\n    if (e.keyCode == 81) {\n      generateQR();\n      $('.modal').modal('toggle');\n    }\n\n    if (e.keyCode == 85) {\n      if(!$(\"#micboard\").hasClass(\"uploadmode\")) {\n        uploadMode();\n      }\n    }\n  }, false);\n\n\n\n  $(document).ajaxError(function( event, request, settings ) {\n    ActivateErrorBoard();\n  });\n\n\n});\n\n\n\n// enables info-drawer toggle for mobile clients\nfunction infoToggle() {\n  $('.col-sm').click(function() {\n    if($(window).width() <= 980) {\n      $(this).find(\".info-drawer\").toggle();\n    }\n  });\n}\n\n// https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API\nfunction toggleFullScreen() {\n  if (!document.webkitFullscreenElement) {\n      document.documentElement.webkitRequestFullscreen();\n  } else {\n    if (document.webkitExitFullscreen) {\n      document.webkitExitFullscreen();\n    }\n  }\n}\n\n\n\nfunction toggleInfoDrawer() {\n  if($(\"#micboard\").hasClass(\"elinfo00\")){\n    $(\"#micboard\").removeClass(\"elinfo00\");\n    $(\"#micboard\").addClass(\"elinfo01\");\n  }\n  else if($(\"#micboard\").hasClass(\"elinfo01\")){\n    $(\"#micboard\").removeClass(\"elinfo01\");\n    $(\"#micboard\").addClass(\"elinfo10\");\n  }\n  else if($(\"#micboard\").hasClass(\"elinfo10\")){\n    $(\"#micboard\").removeClass(\"elinfo10\");\n    $(\"#micboard\").addClass(\"elinfo11\");\n  }\n  else if($(\"#micboard\").hasClass(\"elinfo11\")){\n    $(\"#micboard\").removeClass(\"elinfo11\");\n    $(\"#micboard\").addClass(\"elinfo00\");\n  }\n\n  if ($(\"#micboard\").hasClass(\"uploadmode\")) {\n    showDivSize();\n  }\n}\n\n\nfunction toggleBackgrounds() {\n  if($(\"#micboard\").hasClass(\"bg-std\")){\n    $(\"#micboard\").removeClass(\"bg-std\");\n    $(\"#micboard\").addClass(\"bg-gif\");\n    Object(_gif_js__WEBPACK_IMPORTED_MODULE_3__[\"updateGIFBackgrounds\"])();\n  }\n  else if($(\"#micboard\").hasClass(\"bg-gif\")){\n    $(\"#micboard\").removeClass(\"bg-gif\");\n    $(\"#micboard\").addClass(\"bg-img\");\n    $(\"#micboard .mic_name\").css('background-image', '');\n    $(\"#micboard .mic_name\").css('background-size', '');\n  }\n  else if($(\"#micboard\").hasClass(\"bg-img\")){\n    $(\"#micboard\").removeClass(\"bg-img\");\n    $(\"#micboard\").addClass(\"bg-std\");\n    $(\"#micboard .mic_name\").css('background-image', '');\n    $(\"#micboard .mic_name\").css('background-size', '');\n  }\n}\n\nfunction generateQR(){\n  var qrOptions = {\n    width: 600\n  };\n  $.getJSON( '/data', function(data) {\n    var url = data['url'];\n    url = url + location.pathname + location.search;\n    document.getElementById('largelink').href = url;\n    document.getElementById('largelink').innerHTML = url;\n    qrcode__WEBPACK_IMPORTED_MODULE_2___default.a.toCanvas(document.getElementById('qrcode'), url, qrOptions, function (error) {\n      if (error) console.error(error)\n      console.log('success!');\n    })\n  });\n}\n\n\nfunction ActivateErrorBoard(){\n  $('#micboard').hide();\n  $('.server-error').show();\n}\n\n\nfunction wsConnect(){\n  var loc = window.location, new_uri;\n  if (loc.protocol === \"https:\") {\n    new_uri = \"wss:\";\n  } else {\n    new_uri = \"ws:\";\n  }\n  new_uri += \"//\" + loc.host;\n  new_uri +=  \"/ws\";\n  var socket = new WebSocket(new_uri);\n\n  socket.onmessage = function(msg){\n    var mic_data = JSON.parse(msg.data);\n    updateSlot(mic_data);\n  };\n\n  socket.onclose = function(event){\n    ActivateErrorBoard();\n  };\n\n  socket.onerror = function(event){\n    ActivateErrorBoard();\n  };\n}\n\n// https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js\n// var getUrlParameter = function getUrlParameter(sParam) {\nfunction getUrlParameter(sParam) {\n    var sPageURL = decodeURIComponent(window.location.search.substring(1)),\n        sURLVariables = sPageURL.split('&'),\n        sParameterName,\n        i;\n\n    for (i = 0; i < sURLVariables.length; i++) {\n        sParameterName = sURLVariables[i].split('=');\n\n        if (sParameterName[0] === sParam) {\n            return sParameterName[1] === undefined ? true : sParameterName[1];\n        }\n    }\n};\n\nfunction JsonUpdate(){\n  $.getJSON( dataURL, function( data ) {\n    for(var i in data.receivers) {\n\n      // console.log(\"IP: \" + ip + \" TYPE: \" + type + \" STATUS: \" + status);\n      for (var j in data.receivers[i].tx) {\n        updateSlot(data.receivers[i].tx[j]);\n      }\n    }\n  });\n}\n\n\nfunction updateSlot(data) {\n  if (document.getElementById(\"micboard\").classList.contains(\"uploadmode\")) {\n    return\n  }\n  if (start_slot && stop_slot) {\n    if (start_slot <= data.slot && data.slot <= stop_slot) {\n      updateSelector(data);\n    }\n  }\n  else {\n    updateSelector(data);\n  }\n}\n\nfunction updateSelector(data) {\n  var slot = \"slot-\" + data.slot;\n  var slotSelector = document.getElementById(slot);\n\n  if (transmitters[data.slot].name != data.name) {\n    updateName(slotSelector, data);\n    transmitters[data.slot].name = data.name;\n  }\n\n  if (transmitters[data.slot].status != data.status) {\n    updateStatus(slotSelector, data);\n    transmitters[data.slot].status = data.status;\n  }\n\n  if (transmitters[data.slot].battery != data.battery) {\n    updateBattery(slotSelector, data);\n    transmitters[data.slot].battery = data.battery;\n  }\n\n  if (transmitters[data.slot].antenna != data.antenna) {\n    updateDiversity(slotSelector, data);\n    transmitters[data.slot].antenna = data.antenna;\n  }\n\n  if (transmitters[data.slot].tx_offset != data.tx_offset) {\n    updateTXOffset(slotSelector, data);\n    transmitters[data.slot].tx_offset = data.tx_offset;\n  }\n  if (transmitters[data.slot].frequency != data.frequency) {\n    updateFrequency(slotSelector, data);\n    transmitters[data.slot].frequency = data.frequency;\n  }\n\n  updateAudioChart(data);\n  transmitters[data.slot].audio_level = data.audio_level;\n\n  updateRfChart(data);\n  transmitters[data.slot].rf_level = data.rf_level;\n}\n\nfunction updateAudioChart(data) {\n  _chart_smoothie_js__WEBPACK_IMPORTED_MODULE_4__[\"charts\"][data.slot].audioSeries.append(Date.now(), data.audio_level);\n}\n\nfunction updateTXOffset(slotSelector, data){\n  slotSelector.querySelector('p.offset').innerHTML = data.tx_offset + \" dB\";\n}\n\nfunction updateFrequency(slotSelector, data){\n  slotSelector.querySelector('p.frequency').innerHTML = data.frequency + \" Hz\";\n}\n\nfunction updateRfChart(data) {\n  _chart_smoothie_js__WEBPACK_IMPORTED_MODULE_4__[\"charts\"][data.slot].rfSeries.append(Date.now(), data.rf_level);\n}\n\nfunction updateName(slotSelector, data) {\n  var prefix = data.name.substring(0,2);\n  var number = data.name.substring(2,4);\n  var name = data.name.substring(5);\n  if(config['prefixes'].indexOf(prefix) >= 0 && !isNaN(number))\n  {\n    slotSelector.querySelector('p.mic_id').innerHTML = prefix + number;\n    slotSelector.querySelector('p.name').innerHTML = name;\n  }\n  else {\n    slotSelector.querySelector('p.mic_id').innerHTML = '';\n    slotSelector.querySelector('p.name').innerHTML = data.name;\n  }\n\n  if($(\"#micboard\").hasClass(\"bg-gif\")){\n    Object(_gif_js__WEBPACK_IMPORTED_MODULE_3__[\"updateGIFBackgrounds\"])();\n  }\n}\n\nfunction updateStatus(slotSelector, data) {\n  slotSelector.querySelector('div.mic_name').className = 'mic_name';\n  slotSelector.querySelector('div.mic_name').classList.add(data.status);\n\n  slotSelector.querySelector('div.electrode').className = 'electrode';\n  slotSelector.querySelector('div.electrode').classList.add(data.status);\n\n\n  if (data.status == 'RX_COM_ERROR')\n  {\n    slotSelector.querySelector('.chartzone').style.display = 'none';\n    slotSelector.querySelector('.errorzone').style.display = 'block';\n  }\n  else\n  {\n    slotSelector.querySelector('.chartzone').style.display = 'block';\n    slotSelector.querySelector('.errorzone').style.display = 'none';\n  }\n}\n\n\nfunction updateIP(slotSelector, data) {\n  slotSelector.querySelector('p.ip').innerHTML = data.ip;\n  slotSelector.querySelector('p.rxinfo').innerHTML = data.type + \" CH \" + data.channel;\n}\n\nvar BatteryTable = {\n  '0':  ['batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off'],\n  '1':  ['batt_led_danger', 'batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off'],\n  '2':  ['batt_led_danger', 'batt_led_danger', 'batt_led_off', 'batt_led_off', 'batt_led_off'],\n  '3':  ['batt_led_warning', 'batt_led_warning', 'batt_led_warning', 'batt_led_off', 'batt_led_off'],\n  '4':  ['batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_off'],\n  '5':  ['batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_good'],\n  '255':['batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off'],\n  'led':[]\n}\n\nfunction updateBattery(slotSelector, data){\n  var outputBars = BatteryTable[data.battery];\n\n  slotSelector.querySelectorAll('.battery-bar').forEach(function (data) {\n    data.classList.remove('batt_led_off', 'batt_led_danger','batt_led_warning','batt_led_good');\n  });\n\n  slotSelector.querySelector('.battery-bar-1').classList.add(outputBars[0]);\n  slotSelector.querySelector('.battery-bar-2').classList.add(outputBars[1]);\n  slotSelector.querySelector('.battery-bar-3').classList.add(outputBars[2]);\n  slotSelector.querySelector('.battery-bar-4').classList.add(outputBars[3]);\n  slotSelector.querySelector('.battery-bar-5').classList.add(outputBars[4]);\n}\n\n\nfunction updateDiversity(slotSelector, data){\n  let div = slotSelector.querySelector('.diversity')\n  var newBar = \"\"\n  for(var i = 0; i < data.antenna.length; i++) {\n    let char = data.antenna.charAt(i)\n    switch (char) {\n      case 'A':\n      case 'B': newBar += '<div class=\"diversity-bar diversity-bar-blue\"></div>'\n                break;\n      case 'R': newBar += '<div class=\"diversity-bar diversity-bar-red\"></div>'\n                break;\n      case 'X': newBar += '<div class=\"diversity-bar diversity-bar-off\"></div>'\n                break;\n    }\n  }\n  div.innerHTML = newBar\n}\n\nfunction dataFilter(data){\n  for(var i in data.receivers){\n    for (var j in data.receivers[i].tx){\n      var tx = data.receivers[i].tx[j];\n      tx.ip = data.receivers[i].ip;\n      tx.type = data.receivers[i].type;\n      if (start_slot && stop_slot){\n        if (start_slot <= tx.slot && tx.slot <= stop_slot) {\n          transmitters[tx.slot] = tx;\n        }\n      }\n      else {\n        transmitters[tx.slot] = tx;\n      }\n    }\n  }\n}\n\n\nfunction initialMap() {\n  $.getJSON( dataURL, function(data) {\n    gif_list = data['gif']\n    localURL = data['url']\n    config = data['config']\n    if (getUrlParameter('demo') !== 'true') {\n      dataFilter(data)\n    }\n\n    $(\"#micboard\").text(\"\");\n    var tx = transmitters;\n    for(let i in tx) {\n      var t = document.getElementById(\"column-template\").content.cloneNode(true);\n      t.querySelector('div.col-sm').id = 'slot-' + tx[i].slot;\n      updateStatus(t,tx[i]);\n      updateName(t,tx[i]);\n      updateTXOffset(t,tx[i]);\n      updateBattery(t,tx[i]);\n      updateFrequency(t,tx[i]);\n      updateIP(t,tx[i]);\n      _chart_smoothie_js__WEBPACK_IMPORTED_MODULE_4__[\"charts\"][tx[i].slot] = Object(_chart_smoothie_js__WEBPACK_IMPORTED_MODULE_4__[\"initChart\"])(t);\n      document.getElementById('micboard').appendChild(t);\n    }\n    infoToggle();\n    flexFix();\n  });\n}\n\n\n// https://medium.com/developedbyjohn/equal-width-flex-items-a5ba1bfacb77\n// Shouldn't be fixing this with js, yet here I am.\nfunction flexFix () {\n  var flexFixHTML =   `<div class=\"col-sm flexfix\"></div>\n                       <div class=\"col-sm flexfix\"></div>\n                       <div class=\"col-sm flexfix\"></div>\n                       <div class=\"col-sm flexfix\"></div>`;\n  $(\"#micboard\").append(flexFixHTML);\n}\n\n// module.exports = {\n//   updateSlot: updateSlot\n// };\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")))\n\n//# sourceURL=webpack:///./static/script.js?");
-
-/***/ }),
-
-/***/ "./static/style.css":
-/*!**************************!*\
-  !*** ./static/style.css ***!
-  \**************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("\nvar content = __webpack_require__(/*! !../node_modules/css-loader!./style.css */ \"./node_modules/css-loader/index.js!./static/style.css\");\n\nif(typeof content === 'string') content = [[module.i, content, '']];\n\nvar transform;\nvar insertInto;\n\n\n\nvar options = {\"hmr\":true}\n\noptions.transform = transform\noptions.insertInto = undefined;\n\nvar update = __webpack_require__(/*! ../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\n\nif(content.locals) module.exports = content.locals;\n\nif(false) {}\n\n//# sourceURL=webpack:///./static/style.css?");
-
-/***/ }),
-
 /***/ 0:
-/*!************************************************************************************************!*\
-  !*** multi ./static/script.js ./static/gif.js ./static/chart-smoothie.js ./static/demodata.js ***!
-  \************************************************************************************************/
+/*!****************************!*\
+  !*** multi ./js/script.js ***!
+  \****************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__(/*! ./static/script.js */\"./static/script.js\");\n__webpack_require__(/*! ./static/gif.js */\"./static/gif.js\");\n__webpack_require__(/*! ./static/chart-smoothie.js */\"./static/chart-smoothie.js\");\nmodule.exports = __webpack_require__(/*! ./static/demodata.js */\"./static/demodata.js\");\n\n\n//# sourceURL=webpack:///multi_./static/script.js_./static/gif.js_./static/chart-smoothie.js_./static/demodata.js?");
+eval("module.exports = __webpack_require__(/*! ./js/script.js */\"./js/script.js\");\n\n\n//# sourceURL=webpack:///multi_./js/script.js?");
 
 /***/ })
 
