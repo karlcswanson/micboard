@@ -51,10 +51,10 @@ class WirelessReceiver:
 
     def set_rx_com_status(self, status):
         self.rx_com_status = status
-        if status == 'CONNECTED':
-            print("Connected to {} at {}".format(self.ip,datetime.datetime.now()))
-        elif status == 'DISCONNECTED':
-            print("Disconnected from {} at {}".format(self.ip,datetime.datetime.now()))
+        # if status == 'CONNECTED':
+        #     print("Connected to {} at {}".format(self.ip,datetime.datetime.now()))
+        # elif status == 'DISCONNECTED':
+        #     print("Disconnected from {} at {}".format(self.ip,datetime.datetime.now()))
 
     def add_transmitter(self, tx, slot):
         self.transmitters.append(WirelessTransmitter(tx, slot))
@@ -62,69 +62,20 @@ class WirelessReceiver:
     def get_transmitter_by_channel(self, channel):
         return next((x for x in self.transmitters if x.channel == int(channel)), None)
 
-
     def parse_raw_rx(self, data):
         data = data.strip('< >').strip('* ')
         data = data.replace('{','').replace('}','')
         split = data.split()
-
-        if split[0] in ['REP','REPORT','SAMPLE'] and split[1] in ['1','2','3','4']:
-            tx = self.get_transmitter_by_channel(int(split[1]))
-            tx.parse_raw_tx(data,self.type)
-
-        elif split[0] in ['REP','REPORT']:
-            self.raw[split[1]] = ' '.join(split[2:])
-
-    def parse_data(self, data):
-        if self.type == 'qlxd' or self.type == 'ulxd':
-            return self.ulxd_parse(data)
-        if self.type == 'uhfr':
-            return self.uhfr_parse(data)
-
-    def ulxd_parse(self, data):
-        # print(data)
-        res, channel, command = data.split()[1:4]
         try:
-            channel = int(channel)
+            if split[0] in ['REP','REPORT','SAMPLE'] and split[1] in ['1','2','3','4']:
+                tx = self.get_transmitter_by_channel(int(split[1]))
+                tx.parse_raw_tx(data,self.type)
+
+            elif split[0] in ['REP','REPORT']:
+                self.raw[split[1]] = ' '.join(split[2:])
         except:
-            pass
-        if res == 'REP' and isinstance(channel,int):
-            tx = self.get_transmitter_by_channel(channel)
-            if command == 'CHAN_NAME':
-                tx.set_chan_name(data[data.find("{")+1:data.find("}")])
-            if command == 'BATT_BARS':
-                print('BATTERY UPDATE!')
-                tx.set_battery(data.split()[4])
-            if command == 'FREQUENCY':
-                tx.set_frequency(data.split()[4])
-        elif res == 'SAMPLE':
-            tx = self.get_transmitter_by_channel(channel)
-            tx.set_antenna(data.split()[4])
-            tx.set_rf_level(data.split()[5])
-            tx.set_audio_level(data.split()[6])
-            tx.tx_json_push()
-
-
-    def uhfr_parse(self, data):
-        res, channel, command = data.split()[1:4]
-        if res == 'REPORT' and 1 <= channel <= 2:
-            tx = self.get_transmitter_by_channel(channel)
-            if command == 'CHAN_NAME':
-                # grabing this range makes sure we copy channel names with spaces
-                tx.set_chan_name(data[21:33])
-            if command == 'TX_BATT':
-                tx.set_battery(data.split()[4])
-            if command == 'FREQUENCY':
-                tx.set_frequency(data.split()[4])
-        elif res == 'SAMPLE':
-            tx = self.get_transmitter_by_channel(channel)
-            tx.set_antenna(data.split()[4])
-            tx.rf_level.a = data.split()[5]
-            tx.rf_level.b = data.split()[6]
-            tx.set_battery(data.split()[7])
-            tx.set_audio_level(data.split()[8])
-            tx.tx_json_push()
-
+            print("Index Error(RX): {}".format(data))
+            exit()
 
 
     def get_channels(self):

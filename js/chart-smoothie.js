@@ -4,14 +4,14 @@ import { TimeSeries, SmoothieChart } from 'smoothie'
 export var charts = {};
 
 export function initChart(slotSelector) {
-  var chart = {};
+  let chart = {};
   chart.audioSeries = new TimeSeries();
   chart.rfSeries = new TimeSeries();
 
-  var audioCanvas = slotSelector.querySelector('canvas.audio-graph');
-  var rfCanvas = slotSelector.querySelector('canvas.rf-graph');
+  let audioCanvas = slotSelector.querySelector('canvas.audio-graph');
+  let rfCanvas = slotSelector.querySelector('canvas.rf-graph');
 
-  var rfOptions = {
+  const rfOptions = {
     responsive:true,
     millisPerPixel: 25,
     grid: {
@@ -28,7 +28,7 @@ export function initChart(slotSelector) {
     limitFPS:20
   };
 
-  var audioOptions = {
+  const audioOptions = {
     responsive:true,
     millisPerPixel: 25,
     grid: {
@@ -45,8 +45,8 @@ export function initChart(slotSelector) {
     limitFPS:20
   };
 
-  var audioChart = new SmoothieChart(audioOptions);
-  var rfChart = new SmoothieChart(rfOptions);
+  let audioChart = new SmoothieChart(audioOptions);
+  let rfChart = new SmoothieChart(rfOptions);
 
   audioChart.addTimeSeries(chart.audioSeries, {
     strokeStyle: '#69B578',

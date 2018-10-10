@@ -35,9 +35,9 @@ const rfSample = ['AX','XB','XX','BRXX','XRXB','XXBR'];
 
 
 const name_sample = ['Fatai','Marshall','Delwin','Tracy TB','Backup',
-                   'Steve','JE','Sharon','Bob','Del ACU','Troy',
-                   'Matt','Matt ACU','Matt Sax','Karl','Jordan','Josue',
-                   'Hallie','Rebekah','Dan','Stephen','Max','Tom','Nick',''];
+                     'Steve','JE','Sharon','Bob','Del ACU','Troy',
+                     'Matt','Matt ACU','Matt Sax','Karl','Jordan','Josue',
+                     'Hallie','Rebekah','Dan','Stephen','Max','Tom','Nick',''];
 
 const prefix_sample = ['HH','BP'];
 
@@ -91,7 +91,6 @@ function uniqueRandomNameGenerator(slot){
 
   let channel = slot.toString().padStart(2,'0');
   let output = 'HH' + channel + ' ' + name;
-  console.log(output)
   return output
 }
 
@@ -117,12 +116,12 @@ function randomRfGenerator(){
 }
 
 function randomBatteryGenerator() {
-  var batt_index = getRandomInt(0,5);
-  var battery = batterySample[batt_index];
-  var len = battery.status.length;
-  var status_index = getRandomInt(0,len-1);
+  const batt_index = getRandomInt(0,5);
+  let battery = batterySample[batt_index];
+  let len = battery.status.length;
+  let status_index = getRandomInt(0,len-1);
 
-  var res = {
+  let res = {
               battery: battery.battery,
               status: battery.status[status_index]
             }
@@ -169,7 +168,7 @@ function meteteredRandomDataGenerator(update){
     case "battery":
     case "status":      data["battery"] = battery.battery
                         data["status"] = battery.status
-                        break
+                        break;
 
   }
   return data;
@@ -177,12 +176,12 @@ function meteteredRandomDataGenerator(update){
 }
 
 
-
 function randomCharts(){
+  const date = Date.now()
   var slots = Object.keys(transmitters).map(Number);
   slots.forEach(function(slot){
-    charts[slot].audioSeries.append(Date.now(), randomAudioGenerator());
-    charts[slot].rfSeries.append(Date.now(), randomRfGenerator());
+    charts[slot].audioSeries.append(date, randomAudioGenerator());
+    charts[slot].rfSeries.append(date, randomRfGenerator());
   })
 }
 
@@ -208,5 +207,5 @@ export function autoRandom(){
     updateSlot(meteteredRandomDataGenerator("frequency"))
   },750)
 
-  setInterval(randomCharts,125);
+  setInterval(randomCharts,300);
 }

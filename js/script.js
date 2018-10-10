@@ -6,11 +6,15 @@ import QRCode from 'qrcode'
 import { updateGIFBackgrounds, uploadMode } from './gif.js'
 import { initChart, charts } from './chart-smoothie.js'
 import { randomDataGenerator, autoRandom } from './demodata.js'
+
+// import './transmitter.jsx'
+
 import '../css/style.css'
 import '../node_modules/@ibm/plex/css/ibm-plex.css'
 
 var dataURL = '/data';
-export var transmitters = {};
+// export var transmitters = {};
+export var transmitters = [];
 
 export var gif_list = {};
 
@@ -44,7 +48,7 @@ $(document).ready(function() {
 
   else {
     initialMap();
-    setInterval(JsonUpdate, 500);
+    setInterval(JsonUpdate, 1000);
     wsConnect();
   }
 
@@ -71,18 +75,11 @@ $(document).ready(function() {
     }
 
     if (e.keyCode == 85) {
-      if(!$("#micboard").hasClass("uploadmode")) {
+      if(!document.getElementById("micboard").classList.contains("uploadmode")) {
         uploadMode();
       }
     }
   }, false);
-
-
-
-  $(document).ajaxError(function( event, request, settings ) {
-    ActivateErrorBoard();
-  });
-
 
 });
 
@@ -109,65 +106,69 @@ function toggleFullScreen() {
 }
 
 
+function swapClass(selector, currentClass, newClass) {
+  selector.classList.remove(currentClass)
+  selector.classList.add(newClass)
+}
+
 
 function toggleInfoDrawer() {
-  if($("#micboard").hasClass("elinfo00")){
-    $("#micboard").removeClass("elinfo00");
-    $("#micboard").addClass("elinfo01");
-  }
-  else if($("#micboard").hasClass("elinfo01")){
-    $("#micboard").removeClass("elinfo01");
-    $("#micboard").addClass("elinfo10");
-  }
-  else if($("#micboard").hasClass("elinfo10")){
-    $("#micboard").removeClass("elinfo10");
-    $("#micboard").addClass("elinfo11");
-  }
-  else if($("#micboard").hasClass("elinfo11")){
-    $("#micboard").removeClass("elinfo11");
-    $("#micboard").addClass("elinfo00");
+  let selector = document.getElementById("micboard")
+
+  if(selector.classList.contains("elinfo00")) {
+    swapClass(selector,"elinfo00","elinfo01")
   }
 
-  if ($("#micboard").hasClass("uploadmode")) {
+  else if(selector.classList.contains("elinfo01")) {
+    swapClass(selector,"elinfo01","elinfo10")
+  }
+
+  else if(selector.classList.contains("elinfo10")) {
+    swapClass(selector,"elinfo10","elinfo11")
+  }
+
+  else if(selector.classList.contains("elinfo11")) {
+    swapClass(selector,"elinfo11","elinfo00")
+  }
+
+  if (selector.classList.contains("uploadmode")) {
     showDivSize();
   }
 }
 
 
 function toggleBackgrounds() {
-  if($("#micboard").hasClass("bg-std")){
-    $("#micboard").removeClass("bg-std");
-    $("#micboard").addClass("bg-gif");
-    updateGIFBackgrounds();
+  let selector = document.getElementById("micboard")
+
+  if(selector.classList.contains("bg-std")) {
+    swapClass(selector,"bt-std","bg-gif")
+    updateGIFBackgrounds()
   }
-  else if($("#micboard").hasClass("bg-gif")){
-    $("#micboard").removeClass("bg-gif");
-    $("#micboard").addClass("bg-img");
+  else if(selector.classList.contains("bg-gif")) {
+    swapClass(selector,"bt-gif","bg-img")
     $("#micboard .mic_name").css('background-image', '');
     $("#micboard .mic_name").css('background-size', '');
   }
-  else if($("#micboard").hasClass("bg-img")){
-    $("#micboard").removeClass("bg-img");
-    $("#micboard").addClass("bg-std");
+  else if(selector.classList.contains("bg-img")){
+    swapClass(selector,"bt-img","bg-std")
+
     $("#micboard .mic_name").css('background-image', '');
     $("#micboard .mic_name").css('background-size', '');
   }
 }
 
 function generateQR(){
-  var qrOptions = {
+  const qrOptions = {
     width: 600
   };
-  $.getJSON( '/data', function(data) {
-    var url = data['url'];
-    url = url + location.pathname + location.search;
-    document.getElementById('largelink').href = url;
-    document.getElementById('largelink').innerHTML = url;
-    QRCode.toCanvas(document.getElementById('qrcode'), url, qrOptions, function (error) {
-      if (error) console.error(error)
-      console.log('success!');
-    })
-  });
+
+  let url = localURL + location.pathname + location.search;
+  document.getElementById('largelink').href = url;
+  document.getElementById('largelink').innerHTML = url;
+  QRCode.toCanvas(document.getElementById('qrcode'), url, qrOptions, function (error) {
+    if (error) console.error(error)
+    console.log('success!');
+  })
 }
 
 
@@ -178,7 +179,7 @@ function ActivateErrorBoard(){
 
 
 function wsConnect(){
-  var loc = window.location, new_uri;
+  let loc = window.location, new_uri;
   if (loc.protocol === "https:") {
     new_uri = "wss:";
   } else {
@@ -186,7 +187,7 @@ function wsConnect(){
   }
   new_uri += "//" + loc.host;
   new_uri +=  "/ws";
-  var socket = new WebSocket(new_uri);
+  let socket = new WebSocket(new_uri);
 
   socket.onmessage = function(msg){
     var mic_data = JSON.parse(msg.data);
@@ -220,10 +221,12 @@ function getUrlParameter(sParam) {
 };
 
 function JsonUpdate(){
-  $.getJSON( dataURL, function( data ) {
+  fetch(dataURL)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
     for(var i in data.receivers) {
-
-      // console.log("IP: " + ip + " TYPE: " + type + " STATUS: " + status);
       for (var j in data.receivers[i].tx) {
         updateSlot(data.receivers[i].tx[j]);
       }
@@ -280,14 +283,15 @@ function updateSelector(data) {
   }
 
   updateAudioChart(data);
-  transmitters[data.slot].audio_level = data.audio_level;
+  // transmitters[data.slot].audio_level = data.audio_level;
 
   updateRfChart(data);
-  transmitters[data.slot].rf_level = data.rf_level;
+  // transmitters[data.slot].rf_level = data.rf_level;
 }
 
 function updateAudioChart(data) {
   charts[data.slot].audioSeries.append(Date.now(), data.audio_level);
+  transmitters[data.slot].audio_level = data.audio_level;
 }
 
 function updateTXOffset(slotSelector, data){
@@ -300,6 +304,7 @@ function updateFrequency(slotSelector, data){
 
 function updateRfChart(data) {
   charts[data.slot].rfSeries.append(Date.now(), data.rf_level);
+  transmitters[data.slot].rf_level = data.rf_level;
 }
 
 function updateName(slotSelector, data) {
@@ -316,7 +321,7 @@ function updateName(slotSelector, data) {
     slotSelector.querySelector('p.name').innerHTML = data.name;
   }
 
-  if($("#micboard").hasClass("bg-gif")){
+  if(document.getElementById("micboard").classList.contains("bg-gif")) {
     updateGIFBackgrounds();
   }
 }
@@ -411,7 +416,11 @@ function dataFilter(data){
 
 
 function initialMap() {
-  $.getJSON( dataURL, function(data) {
+  fetch(dataURL)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
     gif_list = data['gif']
     localURL = data['url']
     config = data['config']
@@ -419,7 +428,8 @@ function initialMap() {
       dataFilter(data)
     }
 
-    $("#micboard").text("");
+    document.getElementById("micboard").innerHTML = ""
+
     var tx = transmitters;
     for(let i in tx) {
       var t = document.getElementById("column-template").content.cloneNode(true);
@@ -429,6 +439,7 @@ function initialMap() {
       updateTXOffset(t,tx[i]);
       updateBattery(t,tx[i]);
       updateFrequency(t,tx[i]);
+      updateDiversity(t,tx[i]);
       updateIP(t,tx[i]);
       charts[tx[i].slot] = initChart(t);
       document.getElementById('micboard').appendChild(t);

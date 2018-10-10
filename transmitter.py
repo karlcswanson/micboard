@@ -1,4 +1,5 @@
 import time
+import datetime
 import queue
 from collections import defaultdict
 
@@ -6,9 +7,7 @@ import config
 
 data_output_queue = queue.Queue()
 
-
-
-DATA_TIMEOUT = 30*60
+BATTERY_TIMEOUT = 30*60
 
 
 # https://github.com/gaetano-guerriero/pypjlink/blob/master/pypjlink/projector.py
@@ -99,7 +98,7 @@ class WirelessTransmitter:
             if len(name) == 1:
                 return 'UNASSIGNED'
 
-        if (time.time() - self.timestamp) < DATA_TIMEOUT:
+        if (time.time() - self.timestamp) < BATTERY_TIMEOUT:
             if 4 <= self.battery <= 5:
                 return 'GOOD'
             elif self.battery == 255 and 4 <= self.prev_battery <= 5:
@@ -117,13 +116,14 @@ class WirelessTransmitter:
 
     def tx_json(self):
         return {'name': self.chan_name, 'channel': self.channel,
-                'antenna':self.antenna,'audio_level': self.audio_level,
-                'rf_level': self.rf_level,'frequency': self.frequency,
-                'battery':self.battery,'tx_offset': self.tx_offset,
+                'antenna':self.antenna, 'audio_level': self.audio_level,
+                'rf_level': self.rf_level, 'frequency': self.frequency,
+                'battery':self.battery, 'tx_offset': self.tx_offset,
                 'status': self.tx_state(), 'slot': self.slot, 'raw': self.raw }
 
     def tx_json_mini(self):
         data = self.tx_json()
+        data['timestamp'] = datetime.datetime.now().isoformat()
 
         del data['raw']
         return data
@@ -135,22 +135,25 @@ class WirelessTransmitter:
         split = data.split()
 
         self.raw[split[2]] = ' '.join(split[3:])
+        try:
+            if split[0] == 'SAMPLE' and split[2] == 'ALL':
+                self.set_antenna(split[3])
+                self.set_rf_level(split[4])
+                self.set_audio_level(split[5])
+                # for index, val in enumerate(data[3:]):
+                    # self.raw[sample[type][index]] = val
 
-        if split[0] == 'SAMPLE' and split[2] == 'ALL':
-            self.set_antenna(split[3])
-            self.set_rf_level(split[4])
-            self.set_audio_level(split[5])
-            # for index, val in enumerate(data[3:]):
-                # self.raw[sample[type][index]] = val
+                self.tx_json_push()
 
-            self.tx_json_push()
-
-        if split[0] in ['REP','REPLY']:
-            if split[2] == rx_strings[type]['battery']:
-                self.set_battery(split[3])
-            elif split[2] == rx_strings[type]['name']:
-                self.set_chan_name(' '.join(split[3:]))
-            elif split[2] == rx_strings[type]['frequency']:
-                self.set_frequency(split[3])
-            elif split[2] == rx_strings[type]['tx_offset']:
-                self.set_tx_offset(split[3])
+            if split[0] in ['REP','REPLY']:
+                if split[2] == rx_strings[type]['battery']:
+                    self.set_battery(split[3])
+                elif split[2] == rx_strings[type]['name']:
+                    self.set_chan_name(' '.join(split[3:]))
+                elif split[2] == rx_strings[type]['frequency']:
+                    self.set_frequency(split[3])
+                elif split[2] == rx_strings[type]['tx_offset']:
+                    self.set_tx_offset(split[3])
+        except:
+            print("Index Error(TX): {}".format(data))
+            exit()
