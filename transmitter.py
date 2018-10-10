@@ -43,9 +43,9 @@ rx_strings['axtd'] = {'battery': 'TX_BATT_BARS',
                       'name': 'CHAN_NAME',
                       'antenna': 'RF_ANTENNA'}
 
-rx_strings_rev = { 'qlxd' : reverse_dict(rx_strings['qlxd']),
-                   'ulxd' : reverse_dict(rx_strings['ulxd']),
-                   'axtd' : reverse_dict(rx_strings['axtd'])}
+rx_strings_rev = { 'qlxd': reverse_dict(rx_strings['qlxd']),
+                   'ulxd': reverse_dict(rx_strings['ulxd']),
+                   'axtd': reverse_dict(rx_strings['axtd'])}
 
 class WirelessTransmitter:
     def __init__(self, channel, slot):

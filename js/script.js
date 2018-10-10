@@ -37,7 +37,10 @@ $(document).ready(function() {
     stop_slot = 12
   }
 
-
+  if (window.location['href'].includes('amazonaws')) {
+    dataURL = './static/data.json'
+    demo = 'true'
+  }
   if (demo == 'true') {
     for(var i = start_slot; i <= stop_slot; i++) {
       transmitters[i] = randomDataGenerator(i);
