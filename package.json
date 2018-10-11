@@ -2,12 +2,14 @@
   "name": "micboard",
   "version": "1.0.0",
   "description": "An intelligent mic tray for ethernet enabled Shure microphones.",
-  "main": "micboard.py",
+  "main": "main.js",
   "scripts": {
     "server": "python micboard.py",
     "binary": "pyinstaller micboard.spec",
     "build": "node node_modules/webpack/bin/webpack.js --progress --hide-modules --config=webpack.config.js",
-    "app": "electron main.js"
+    "app": "electron .",
+    "pack": "electron-builder --dir -c.mac.identity=null",
+    "dist": "electron-builder"
   },
   "private": true,
   "repository": {
@@ -19,7 +21,16 @@
     "url": "https://github.com/karlcswanson/mictray/issues"
   },
   "homepage": "https://github.com/karlcswanson/micboard",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "css-loader": "^1.0.0",
+    "electron": "^2.0.7",
+    "file-loader": "^2.0.0",
+    "style-loader": "^0.23.0",
+    "webpack": "^4.20.2",
     "@ibm/plex": "^1.1.3",
     "babel-cli": "^6.26.0",
     "babel-loader": "^8.0.4",
@@ -34,14 +45,16 @@
     "smoothie": "^1.35.0",
     "webpack-cli": "^3.1.2"
   },
-  "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/preset-react": "^7.0.0",
-    "css-loader": "^1.0.0",
-    "electron": "^2.0.7",
-    "file-loader": "^2.0.0",
-    "style-loader": "^0.23.0",
-    "webpack": "^4.20.2"
+  "build": {
+    "appId": "your.id",
+    "asar": false,
+    "mac": {
+      "category": "your.app.category.type"
+    },
+    "files": [
+      "main.js",
+      "dist/micboard",
+      "build/icon.png"
+    ]
   }
 }

@@ -106,7 +106,8 @@ class WirelessTransmitter:
             elif self.battery == 3:
                 return 'REPLACE'
             elif self.battery == 255 and self.prev_battery == 3:
-                return 'PREV_REPLACE'
+                # return 'PREV_REPLACE'
+                return 'UNASSIGNED'
             elif 0 <= self.battery <= 2:
                 return 'CRITICAL'
             elif self.battery == 255 and 0 <= self.prev_battery <= 2:

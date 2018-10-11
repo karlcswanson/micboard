@@ -21,7 +21,7 @@ function createWindow() {
   // win.loadURL(`file://${__dirname}/static/index.html`,)
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -49,7 +49,10 @@ const createPyProc = () => {
   pyProc = require('child_process').spawn(script)
   if (pyProc != null) {
     console.log('child process success')
-    createWindow()
+    setTimeout(function() {
+        createWindow()
+    },500)
+
 
   }
 }

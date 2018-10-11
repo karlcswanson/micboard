@@ -3,6 +3,7 @@ import json
 import threading
 import time
 import os
+import sys
 import asyncio
 import socket
 
@@ -12,8 +13,18 @@ import config
 cl = []
 
 settings = {
-    'static_path': os.path.join(os.path.dirname(__file__), "static")
+    # 'static_path': os.path.join(currentPath(), "static")
     }
+
+# https://stackoverflow.com/questions/404744/determining-application-path-in-a-python-exe-generated-by-pyinstaller
+def currentPath(folder):
+    if getattr(sys, 'frozen', False):
+        # application_path = os.path.dirname(sys.executable)
+        application_path = sys._MEIPASS
+        print(application_path)
+    elif __file__:
+        application_path = os.path.dirname(__file__)
+    return os.path.join(application_path,folder)
 
 # https://stackoverflow.com/questions/5899497/checking-file-extension
 def fileList(extension):
@@ -46,7 +57,7 @@ def json_rxs(rxs):
 
 class IndexHandler(web.RequestHandler):
     def get(self):
-        self.render("static/index.html")
+        self.render(currentPath("static/index.html"))
 
 class JsonHandler(web.RequestHandler):
     def get(self):
@@ -103,7 +114,7 @@ app = web.Application([
     (r'/data', JsonHandler),
     (r'/upload', UploadHandler),
     (r'/(favicon.ico)', web.StaticFileHandler, {'path': '../'}),
-    (r'/static/(.*)', web.StaticFileHandler, {'path': 'static/'}),
+    (r'/static/(.*)', web.StaticFileHandler, {'path': currentPath('static')}),
     (r'/bg/(.*)', web.StaticFileHandler, {'path': config.get_gif_dir()}),
     # (r'/node_modules/(.*)', web.StaticFileHandler, {'path': 'node_modules/'}),
     (r'/(rest_api_example.png)', web.StaticFileHandler, {'path': './'}),
