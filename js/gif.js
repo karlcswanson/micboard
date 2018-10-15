@@ -3,18 +3,13 @@
 import { gif_list } from "./script.js"
 
 
-$(document).ready(function() {
-  window.addEventListener("resize", showDivSize);
-});
 
 function showDivSize() {
-  if($("#micboard").hasClass("uploadmode")) {
-    let e = document.getElementsByClassName("mic_name")[0]
-    let width = Math.ceil(parseInt(window.getComputedStyle(e)["width"]))
-    let height = window.getComputedStyle(e)["height"]
-    let string = width + " x " + height
-    $(".mic_id").html(string)
-  }
+  let e = document.getElementsByClassName("mic_name")[0]
+  let width = Math.ceil(parseInt(window.getComputedStyle(e)["width"]))
+  let height = window.getComputedStyle(e)["height"]
+  let string = width + " x " + height
+  $(".mic_id").html(string)
 }
 
 export function uploadMode(){
@@ -34,6 +29,7 @@ export function uploadMode(){
       sendFile(upload,filename);
     });
   });
+  window.addEventListener("resize", showDivSize);
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications

@@ -1,6 +1,7 @@
 const {
   app,
-  BrowserWindow
+  BrowserWindow,
+  shell
 } = require('electron')
 const path = require('path')
 
@@ -33,6 +34,11 @@ function createWindow() {
 }
 
 
+function openConfigFolder() {
+  const configFile = path.join(app.getPath('appData'),'micboard','config.json')
+  console.log(configFile)
+  shell.showItemInFolder(configFile)
+}
 
 
 let pyProc = null
@@ -45,13 +51,17 @@ const selectPort = () => {
 
 const createPyProc = () => {
   let port = '' + selectPort()
-  let script = path.join(__dirname, 'dist', 'micboard')
+  let script = path.join(__dirname, 'dist', 'micboard').replace('app.asar', 'app.asar.unpacked')
   pyProc = require('child_process').spawn(script)
   if (pyProc != null) {
     console.log('child process success')
     setTimeout(function() {
         createWindow()
     },500)
+
+    setTimeout(function() {
+        openConfigFolder()
+    },1000)
 
 
   }

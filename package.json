@@ -47,13 +47,14 @@
   },
   "build": {
     "appId": "your.id",
-    "asar": false,
+    "asar": true,
+    "asarUnpack" : ["dist/micboard"],
     "mac": {
       "category": "your.app.category.type"
     },
     "files": [
-      "main.js",
       "dist/micboard",
+      "main.js",
       "build/icon.png"
     ]
   }

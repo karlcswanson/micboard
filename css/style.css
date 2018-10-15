@@ -472,3 +472,12 @@ canvas.rf-graph {
   margin-right: -15px;
   padding: 3em;
 }
+
+.pop {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 5px;
+  height: 100%;
+  background-color: var(--color-yellow);
+}

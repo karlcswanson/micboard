@@ -30,8 +30,18 @@ def default_app_config_dir():
         os.makedirs(path)
     return path
 
-def current_dir():
-    return os.path.dirname(__file__)
+# https://stackoverflow.com/questions/404744/determining-application-path-in-a-python-exe-generated-by-pyinstaller
+def app_dir(folder = None):
+    if getattr(sys, 'frozen', False):
+        # application_path = os.path.dirname(sys.executable)
+        application_path = sys._MEIPASS
+    elif __file__:
+        application_path = os.path.dirname(__file__)
+
+    if folder:
+        return os.path.join(application_path,folder)
+
+    return application_path
 
 def default_gif_dir():
     path = os.path.join(default_app_config_dir(),'backgrounds')
@@ -47,8 +57,8 @@ def get_gif_dir():
         return default_gif_dir()
 
 def config_path():
-    if os.path.exists(os.path.join(current_dir(),CONFIG_FILE_NAME)):
-        return os.path.join(current_dir(),CONFIG_FILE_NAME)
+    if os.path.exists(app_dir(CONFIG_FILE_NAME)):
+        return app_dir(CONFIG_FILE_NAME)
     elif os.path.exists(os.path.join(default_app_config_dir(),CONFIG_FILE_NAME)):
         return os.path.join(default_app_config_dir(),CONFIG_FILE_NAME)
     else:
