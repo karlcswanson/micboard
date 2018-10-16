@@ -4,6 +4,7 @@ const webpack = require('webpack');
 
 
 module.exports = {
+  devtool: 'source-map',
   mode: 'development',
   // entry: ['./js/script.js','./js/gif.js','./js/chart-smoothie.js','./js/demodata.js'],
   entry: ['./js/script.js'],

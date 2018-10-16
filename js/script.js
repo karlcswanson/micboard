@@ -21,19 +21,17 @@ export var gif_list = {};
 var config = {};
 
 var localURL = '';
-let start_slot = parseInt(getUrlParameter('start_slot'));
-let stop_slot = parseInt(getUrlParameter('stop_slot'));
+let start_slot = parseInt(getUrlParameter('start_slot'))
+let stop_slot = parseInt(getUrlParameter('stop_slot'))
+let preset = getUrlParameter('preset')
 let demo = getUrlParameter('demo');
 
-$(document).ready(function() {
-  let start_slot = parseInt(getUrlParameter('start_slot'));
-  let stop_slot = parseInt(getUrlParameter('stop_slot'));
-  let demo = getUrlParameter('demo');
+export let displayList = []
 
-  if(isNaN(start_slot)) {
+$(document).ready(function() {
+
+  if(demo && (isNaN(start_slot) || isNaN(stop_slot))) {
     start_slot = 1
-  }
-  if(isNaN(stop_slot)) {
     stop_slot = 12
   }
 
@@ -86,7 +84,13 @@ $(document).ready(function() {
 
 });
 
-
+function StartStopSlotList(start,stop) {
+  let out = []
+  for(let i = start; i <= stop; i++) {
+    out.push(i)
+  }
+	return out
+}
 
 // enables info-drawer toggle for mobile clients
 function infoToggle() {
@@ -242,12 +246,7 @@ export function updateSlot(data) {
   if (document.getElementById("micboard").classList.contains("uploadmode")) {
     return
   }
-  if (start_slot && stop_slot) {
-    if (start_slot <= data.slot && data.slot <= stop_slot) {
-      updateSelector(data);
-    }
-  }
-  else {
+  if (displayList.includes(data.slot)){
     updateSelector(data);
   }
 }
@@ -417,6 +416,40 @@ function dataFilter(data){
   }
 }
 
+function dataFilterFromList(data){
+  for(var i in data.receivers){
+    for (var j in data.receivers[i].tx){
+      var tx = data.receivers[i].tx[j];
+      tx.ip = data.receivers[i].ip;
+      tx.type = data.receivers[i].type;
+      if (displayList.includes(tx.slot)) {
+        transmitters[tx.slot] = tx;
+      }
+    }
+  }
+}
+
+
+function displayListChooser(data) {
+  if (!isNaN(preset)) {
+    console.log(data['config']['displays'][preset])
+    return data['config']['displays'][preset]['slots']
+  }
+  else if (!isNaN(start_slot) && !isNaN(stop_slot)) {
+    if (start_slot < stop_slot) {
+      return StartStopSlotList(start_slot,stop_slot)
+    }
+  }
+  else {
+    let slot = data['config']['slots']
+    console.log(slot)
+    let out = []
+    for(var i = 0; i < slot.length; i++) {
+      out.push(slot[i]['slot'])
+    }
+    return out
+  }
+}
 
 function initialMap() {
   fetch(dataURL)
@@ -427,24 +460,31 @@ function initialMap() {
     gif_list = data['gif']
     localURL = data['url']
     config = data['config']
+    displayList = displayListChooser(data)
+    console.log(displayList)
+
+
     if (getUrlParameter('demo') !== 'true') {
-      dataFilter(data)
+
+      dataFilterFromList(data)
     }
 
     document.getElementById("micboard").innerHTML = ""
 
     var tx = transmitters;
-    for(let i in tx) {
+    for(let i in displayList) {
+      let j = displayList[i]
       var t = document.getElementById("column-template").content.cloneNode(true);
-      t.querySelector('div.col-sm').id = 'slot-' + tx[i].slot;
-      updateStatus(t,tx[i]);
-      updateName(t,tx[i]);
-      updateTXOffset(t,tx[i]);
-      updateBattery(t,tx[i]);
-      updateFrequency(t,tx[i]);
-      updateDiversity(t,tx[i]);
-      updateIP(t,tx[i]);
-      charts[tx[i].slot] = initChart(t);
+      t.querySelector('div.col-sm').id = 'slot-' + tx[j].slot;
+      updateStatus(t,tx[j]);
+      updateName(t,tx[j]);
+      updateTXOffset(t,tx[j]);
+      updateBattery(t,tx[j]);
+      updateFrequency(t,tx[j]);
+      updateDiversity(t,tx[j]);
+      updateIP(t,tx[j]);
+      charts[tx[j].slot] = initChart(t);
+      console.log(charts)
       document.getElementById('micboard').appendChild(t);
     }
     infoToggle();

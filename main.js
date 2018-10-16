@@ -1,25 +1,128 @@
 const {
   app,
   BrowserWindow,
-  shell
+  shell,
+  ipcMain,
+  Menu
 } = require('electron')
 const path = require('path')
+const stream = require('stream')
+
+var outputready = false
+
+
+const template = [
+    {
+      label: 'Edit',
+      submenu: [
+        {role: 'undo'},
+        {role: 'redo'},
+        {type: 'separator'},
+        {role: 'cut'},
+        {role: 'copy'},
+        {role: 'paste'},
+        {role: 'pasteandmatchstyle'},
+        {role: 'delete'},
+        {role: 'selectall'}
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        {role: 'reload'},
+        {role: 'forcereload'},
+        {role: 'toggledevtools'},
+        {type: 'separator'},
+        {role: 'resetzoom'},
+        {role: 'zoomin'},
+        {role: 'zoomout'},
+        {type: 'separator'},
+        {role: 'togglefullscreen'}
+      ]
+    },
+    {
+      role: 'window',
+      submenu: [
+        {role: 'minimize'},
+        {role: 'close'}
+      ]
+    },
+    {
+      role: 'help',
+      submenu: [
+        {
+          label: 'Learn More',
+          click () { require('electron').shell.openExternal('https://electronjs.org') }
+        }
+      ]
+    }
+  ]
+
+  if (process.platform === 'darwin') {
+    template.unshift({
+      label: app.getName(),
+      submenu: [
+        {role: 'about'},
+        {type: 'separator'},
+        {label: 'Edit Configuration', click() { openConfigFolder('config.json')}},
+        {label: 'Add Backgrounds', click() { openConfigFolder('backgrounds')}},
+        {label: 'Open Demo', click() { createDemoWindow()}},
+        {type: 'separator'},
+        {role: 'services', submenu: []},
+        {type: 'separator'},
+        {role: 'hide'},
+        {role: 'hideothers'},
+        {role: 'unhide'},
+        {type: 'separator'},
+        {role: 'quit'}
+      ]
+    })
+
+    // Edit menu
+    template[1].submenu.push(
+      {type: 'separator'},
+      {
+        label: 'Speech',
+        submenu: [
+          {role: 'startspeaking'},
+          {role: 'stopspeaking'}
+        ]
+      }
+    )
+
+    // Window menu
+    template[3].submenu = [
+      {role: 'close'},
+      {role: 'minimize'},
+      {role: 'zoom'},
+      {type: 'separator'},
+      {role: 'front'}
+    ]
+  }
+
+const menu = Menu.buildFromTemplate(template)
+
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
+let consolewin
+let demowin
 
-function createWindow() {
-  // Create the browser window.
-  win = new BrowserWindow({
-    width: 800,
-    height: 600
+
+ipcMain.on('synchronous-message', (event, arg) => {
+    console.log(arg) // prints "ping"
+    event.returnValue = 'pong'
   })
 
-  // and load the index.html of the app.
-  // win.loadFile('static/index.html')
-  win.loadURL(`http://localhost:8058/`)
-  // win.loadURL(`file://${__dirname}/static/index.html`,)
+
+function createWindow() {
+  win = new BrowserWindow({
+    width: 250,
+    height: 400
+  })
+
+  win.loadURL('http://localhost:8058/')
 
   // Open the DevTools.
   // win.webContents.openDevTools()
@@ -33,44 +136,83 @@ function createWindow() {
   })
 }
 
+function createDemoWindow() {
+  demowin = new BrowserWindow({
+    width: 800,
+    height: 600
+  })
 
-function openConfigFolder() {
-  const configFile = path.join(app.getPath('appData'),'micboard','config.json')
-  console.log(configFile)
+  demowin.loadURL('http://localhost:8058/?demo=true&start_slot=1&stop_slot=8')
+
+  // Open the DevTools.
+  // win.webContents.openDevTools()
+
+  // Emitted when the window is closed.
+  demowin.on('closed', () => {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    demowin = null
+  })
+}
+
+function updateConsole(msg) {
+  if (outputready == true) {
+    consolewin.webContents.send('ping', msg )
+  }
+
+}
+
+
+function createConsoleWindow() {
+  consolewin = new BrowserWindow({
+    width: 800,
+    height: 600
+  })
+  consolewin.loadFile('app/console.html')
+  // consolewin.webContents.openDevTools()
+
+  consolewin.webContents.on('did-finish-load', () => {
+      outputready = true
+  })
+
+
+  consolewin.on('closed', () => {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    consolewin = null
+  })
+}
+
+
+function openConfigFolder(file) {
+  const configFile = path.join(app.getPath('appData'),'micboard',file)
   shell.showItemInFolder(configFile)
 }
 
 
 let pyProc = null
-let pyPort = null
-
-const selectPort = () => {
-  pyPort = 4242
-  return pyPort
-}
 
 const createPyProc = () => {
-  let port = '' + selectPort()
   let script = path.join(__dirname, 'dist', 'micboard').replace('app.asar', 'app.asar.unpacked')
-  pyProc = require('child_process').spawn(script)
+  pyProc = require('child_process').spawn(script, [], {
+    stdio: ['ignore','inherit','inherit']
+  })
+
   if (pyProc != null) {
     console.log('child process success')
     setTimeout(function() {
         createWindow()
     },500)
 
-    setTimeout(function() {
-        openConfigFolder()
-    },1000)
-
-
   }
+  Menu.setApplicationMenu(menu)
 }
 
 const exitPyProc = () => {
   pyProc.kill()
   pyProc = null
-  pyPort = null
 }
 
 app.on('ready', createPyProc)

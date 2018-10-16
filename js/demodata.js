@@ -1,6 +1,6 @@
 "use strict";
 
-import { transmitters, updateSlot } from "./script.js"
+import { transmitters, updateSlot, displayList } from "./script.js"
 import { charts } from './chart-smoothie.js'
 
 
@@ -68,15 +68,15 @@ function randomNameGenerator(){
 
 function current_names() {
   var names = []
-  var slots = Object.keys(transmitters).map(Number);
 
-  for(let i in slots){
-    name = transmitters[slots[i]].name
+  displayList.forEach(function(e) {
+    name = transmitters[e].name
     let prefix = name.substring(0,2)
     let number = name.substring(2,4)
     name = name.substring(5)
     names.push(name)
-  }
+  })
+
   return names
 }
 
@@ -150,8 +150,7 @@ export function randomDataGenerator(slot){
 }
 
 function meteteredRandomDataGenerator(update){
-  var slots = Object.keys(transmitters).map(Number);
-  var slot = slots[getRandomInt(0, slots.length - 1)];
+  var slot = displayList[getRandomInt(0, displayList.length - 1)];
   let data = JSON.parse(JSON.stringify(transmitters[slot]))
 
   var battery = randomBatteryGenerator();
@@ -178,10 +177,9 @@ function meteteredRandomDataGenerator(update){
 
 function randomCharts(){
   const date = Date.now()
-  var slots = Object.keys(transmitters).map(Number);
-  slots.forEach(function(slot){
-    charts[slot].audioSeries.append(date, randomAudioGenerator());
-    charts[slot].rfSeries.append(date, randomRfGenerator());
+  displayList.forEach(function(n){
+    charts[n].audioSeries.append(date, randomAudioGenerator());
+    charts[n].rfSeries.append(date, randomRfGenerator());
   })
 }
 
