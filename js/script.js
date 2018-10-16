@@ -54,8 +54,36 @@ $(document).ready(function() {
   }
 
   document.addEventListener("keydown", function(e) {
+    if (e.keyCode == 49) {
+      window.location.href = demo ? '/?demo=true&preset=1' : '/?&preset=1'
+    }
+    if (e.keyCode == 50) {
+      window.location.href = demo ? '/?demo=true&preset=2' : '/?preset=2';
+    }
+    if (e.keyCode == 51) {
+      window.location.href = demo ? '/?demo=true&preset=3' : '/?preset=3';
+    }
+    if (e.keyCode == 52) {
+      window.location.href = demo ? '/?demo=true&preset=4' : '/?preset=4';
+    }
+    if (e.keyCode == 53) {
+      window.location.href = demo ? '/?demo=true&preset=5' : '/?preset=5';
+    }
+    if (e.keyCode == 54) {
+      window.location.href = demo ? '/?demo=true&preset=6' : '/?preset=6';
+    }
+    if (e.keyCode == 55) {
+      window.location.href = demo ? '/?demo=true&preset=7' : '/?preset=7';
+    }
+    if (e.keyCode == 56) {
+      window.location.href = demo ? '/?demo=true&preset=8' : '/?preset=8';
+    }
+    if (e.keyCode == 57) {
+      window.location.href = demo ? '/?demo=true&preset=9' : '/?preset=9';
+    }
+
     if (e.keyCode == 68) {
-      window.location.href = '/?demo=true&start_slot=1&stop_slot=8';
+      window.location.href = demo ? '/' : '/?demo=true&preset=1'
     }
 
     if (e.keyCode == 70) {
@@ -484,7 +512,6 @@ function initialMap() {
       updateDiversity(t,tx[j]);
       updateIP(t,tx[j]);
       charts[tx[j].slot] = initChart(t);
-      console.log(charts)
       document.getElementById('micboard').appendChild(t);
     }
     infoToggle();
