@@ -2,6 +2,7 @@ import time
 import datetime
 import queue
 from collections import defaultdict
+import os
 
 import config
 
@@ -157,4 +158,4 @@ class WirelessTransmitter:
                     self.set_tx_offset(split[3])
         except:
             print("Index Error(TX): {}".format(data))
-            exit()
+            os._exit(1)

@@ -2,6 +2,7 @@ import time
 import datetime
 import queue
 import socket
+import os
 from collections import defaultdict
 
 from transmitter import WirelessTransmitter
@@ -75,7 +76,7 @@ class WirelessReceiver:
                 self.raw[split[1]] = ' '.join(split[2:])
         except:
             print("Index Error(RX): {}".format(data))
-            exit()
+            os._exit(1)
 
 
     def get_channels(self):

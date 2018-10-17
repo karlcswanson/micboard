@@ -3,6 +3,8 @@ import re
 import os
 import sys
 import json
+from shutil import copyfile
+
 
 APPNAME = 'micboard'
 
@@ -62,9 +64,16 @@ def config_path():
     elif os.path.exists(os.path.join(default_app_config_dir(),CONFIG_FILE_NAME)):
         return os.path.join(default_app_config_dir(),CONFIG_FILE_NAME)
     else:
-        print('No valid config found!')
-        print('Please save config to {}'.format(os.path.join(default_app_config_dir(),CONFIG_FILE_NAME)))
-        exit()
+        config_init()
+        return os.path.join(default_app_config_dir(),CONFIG_FILE_NAME)
+
+
+def config_init():
+    if not os.path.exists(local_app_dir()):
+        os.makedirs(local_app_dir())
+    copyfile(app_dir('democonfig.json'),os.path.join(default_app_config_dir(),CONFIG_FILE_NAME))
+
+
 
 def config():
     return read_json_config(config_path())

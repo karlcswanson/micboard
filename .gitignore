@@ -9,6 +9,7 @@ mictray/dist/*
 dist/*
 mictray/build/*
 build/*
+!build/icon.png
 .eggs/*
 static/gifs/*
 *.mp4
