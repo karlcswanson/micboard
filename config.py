@@ -67,16 +67,8 @@ def config_path():
     elif os.path.exists(default_app_config_dir(CONFIG_FILE_NAME)):
         return default_app_config_dir(CONFIG_FILE_NAME)
     else:
-        # config_init()
         copyfile(app_dir('democonfig.json'),default_app_config_dir(CONFIG_FILE_NAME))
         return default_app_config_dir(CONFIG_FILE_NAME)
-
-
-def config_init():
-    if not os.path.exists(local_app_dir()):
-        os.makedirs(local_app_dir())
-    copyfile(app_dir('democonfig.json'),default_app_config_dir(CONFIG_FILE_NAME))
-
 
 
 def config():
