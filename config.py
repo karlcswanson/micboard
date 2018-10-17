@@ -26,10 +26,13 @@ def local_app_dir():
     return path
 
 
-def default_app_config_dir():
+def default_app_config_dir(folder = None):
     path = os.path.join(local_app_dir(),APPNAME)
     if not os.path.exists(path):
         os.makedirs(path)
+
+    if folder:
+        return os.path.join(path,folder)
     return path
 
 # https://stackoverflow.com/questions/404744/determining-application-path-in-a-python-exe-generated-by-pyinstaller
@@ -46,7 +49,7 @@ def app_dir(folder = None):
     return application_path
 
 def default_gif_dir():
-    path = os.path.join(default_app_config_dir(),'backgrounds')
+    path = default_app_config_dir('backgrounds')
     if not os.path.exists(path):
         os.makedirs(path)
     print("GIFCHECK!")
@@ -61,17 +64,18 @@ def get_gif_dir():
 def config_path():
     if os.path.exists(app_dir(CONFIG_FILE_NAME)):
         return app_dir(CONFIG_FILE_NAME)
-    elif os.path.exists(os.path.join(default_app_config_dir(),CONFIG_FILE_NAME)):
-        return os.path.join(default_app_config_dir(),CONFIG_FILE_NAME)
+    elif os.path.exists(default_app_config_dir(CONFIG_FILE_NAME)):
+        return default_app_config_dir(CONFIG_FILE_NAME)
     else:
-        config_init()
-        return os.path.join(default_app_config_dir(),CONFIG_FILE_NAME)
+        # config_init()
+        copyfile(app_dir('democonfig.json'),default_app_config_dir(CONFIG_FILE_NAME))
+        return default_app_config_dir(CONFIG_FILE_NAME)
 
 
 def config_init():
     if not os.path.exists(local_app_dir()):
         os.makedirs(local_app_dir())
-    copyfile(app_dir('democonfig.json'),os.path.join(default_app_config_dir(),CONFIG_FILE_NAME))
+    copyfile(app_dir('democonfig.json'),default_app_config_dir(CONFIG_FILE_NAME))
 
 
 
