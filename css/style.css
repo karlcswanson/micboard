@@ -3,9 +3,12 @@
 :root {
   --color-black: #262626;
   --color-red: #DC493A;
+  --color-red-dark: #64221B;
   /* --color-yellow: #7E52A0; */
   /* --color-yellow: #EE8434; */
   --color-yellow: #EF9D51 ;
+  --color-yellow-dark: #6D4E30;
+  --color-purple: #845A6D;
   --color-blue: #006494;
   --color-green: #69B578;
   --color-gray: #616161;
@@ -277,7 +280,7 @@ canvas.rf-graph {
   /* electrode and info drawer */
   .elinfo11 .col-sm .mic_name {
     height: calc(100% - 375px);
-    background-color: var(--color-black);
+    background: var(--color-black);
   }
 
   .elinfo11 .col-sm .electrode {
@@ -439,8 +442,17 @@ canvas.rf-graph {
 }
 
 .PREV_REPLACE{
+  /* background: purple; */
   /* background: #a2ab58; */
-  background: var(--color-yellow);
+  /* background: var(-- color-yellow); */
+  background: repeating-linear-gradient(
+  -45deg,
+  var(--color-yellow-dark),
+  var(--color-yellow-dark) 40px,
+  var(--color-black) 40px,
+  var(--color-black) 80px
+);
+  /* background: var(--color-yellow-dark); */
 }
 
 .CRITICAL, .PREV_CRITICAL{
@@ -448,21 +460,35 @@ canvas.rf-graph {
   background: var(--color-red);
 }
 
+.PREV_CRITICAL {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--color-red-dark),
+    var(--color-red-dark) 40px,
+    var(--color-black) 40px,
+    var(--color-black) 80px
+  );
+  /* background: var(--color-red-dark); */
+}
+
 .UNASSIGNED{
   /* background: black; */
   background: var(--color-black);
 }
 
-.TX_COM_ERROR, .RX_COM_ERROR{
+.TX_COM_ERROR {
   /* background: black; */
   background: var(--color-black);
 }
 
+.RX_COM_ERROR {
+  /* background: black; */
+  background: var(--color-purple);
+}
 
 #largelink {
   padding-top: 4em;
 }
-
 
 .server-error {
   display: none;
@@ -473,11 +499,12 @@ canvas.rf-graph {
   padding: 3em;
 }
 
+/* POP */
 .pop {
   position: absolute;
   top: 0px;
   left: 0px;
   width: 5px;
   height: 100%;
-  background-color: var(--color-yellow);
+  /* background-color: var(--color-yellow); */
 }

@@ -76,7 +76,7 @@ class WirelessReceiver:
                 self.raw[split[1]] = ' '.join(split[2:])
         except:
             print("Index Error(RX): {}".format(data))
-            os._exit(1)
+            # os._exit(1)
 
 
     def get_channels(self):

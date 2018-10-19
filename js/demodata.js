@@ -11,11 +11,11 @@ const batterySample = {
     },
   1:{
       battery: 1,
-      status: ['CRITICAL']
+      status: ['CRITICAL','PREV_CRITICAL']
     },
   2:{
       battery: 2,
-      status: ['CRITICAL']
+      status: ['CRITICAL','PREV_CRITICAL']
     },
   3:{
       battery: 3,
@@ -23,11 +23,11 @@ const batterySample = {
     },
   4:{
       battery: 4,
-      status: ['GOOD','PREV_GOOD','UNASSIGNED']
+      status: ['GOOD','GOOD','PREV_GOOD','UNASSIGNED']
     },
   5:{
       battery: 5,
-      status: ['GOOD','PREV_GOOD']
+      status: ['GOOD','GOOD','PREV_GOOD']
     }
 }
 

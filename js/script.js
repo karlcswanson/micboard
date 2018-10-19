@@ -176,16 +176,16 @@ function toggleBackgrounds() {
   let selector = document.getElementById("micboard")
 
   if(selector.classList.contains("bg-std")) {
-    swapClass(selector,"bt-std","bg-gif")
+    swapClass(selector,"bg-std","bg-gif")
     updateGIFBackgrounds()
   }
   else if(selector.classList.contains("bg-gif")) {
-    swapClass(selector,"bt-gif","bg-img")
+    swapClass(selector,"bg-gif","bg-img")
     $("#micboard .mic_name").css('background-image', '');
     $("#micboard .mic_name").css('background-size', '');
   }
   else if(selector.classList.contains("bg-img")){
-    swapClass(selector,"bt-img","bg-std")
+    swapClass(selector,"bg-img","bg-std")
 
     $("#micboard .mic_name").css('background-image', '');
     $("#micboard .mic_name").css('background-size', '');

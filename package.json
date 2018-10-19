@@ -48,7 +48,9 @@
   "build": {
     "appId": "your.id",
     "asar": true,
-    "asarUnpack" : ["dist/micboard"],
+    "asarUnpack": [
+      "dist/micboard"
+    ],
     "mac": {
       "category": "your.app.category.type"
     },
