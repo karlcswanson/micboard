@@ -4,7 +4,7 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import QRCode from 'qrcode'
 import { updateGIFBackgrounds, uploadMode } from './gif.js'
-import { initChart, charts } from './chart-smoothie.js'
+import { updateAudioChart, updateRfChart, initChart, charts } from './chart-smoothie.js'
 import { randomDataGenerator, autoRandom } from './demodata.js'
 
 // import './transmitter.jsx'
@@ -225,7 +225,7 @@ function wsConnect(){
   let socket = new WebSocket(new_uri);
 
   socket.onmessage = function(msg){
-    var mic_data = JSON.parse(msg.data);
+    let mic_data = JSON.parse(msg.data);
     updateSlot(mic_data);
   };
 
@@ -319,10 +319,6 @@ function updateSelector(data) {
   // transmitters[data.slot].rf_level = data.rf_level;
 }
 
-function updateAudioChart(data) {
-  charts[data.slot].audioSeries.append(Date.now(), data.audio_level);
-  transmitters[data.slot].audio_level = data.audio_level;
-}
 
 function updateTXOffset(slotSelector, data){
   slotSelector.querySelector('p.offset').innerHTML = data.tx_offset + " dB";
@@ -332,10 +328,6 @@ function updateFrequency(slotSelector, data){
   slotSelector.querySelector('p.frequency').innerHTML = data.frequency + " Hz";
 }
 
-function updateRfChart(data) {
-  charts[data.slot].rfSeries.append(Date.now(), data.rf_level);
-  transmitters[data.slot].rf_level = data.rf_level;
-}
 
 function updateName(slotSelector, data) {
   var prefix = data.name.substring(0,2);

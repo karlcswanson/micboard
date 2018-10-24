@@ -175,11 +175,13 @@ function meteteredRandomDataGenerator(update){
 }
 
 
+
 function randomCharts(){
-  const date = Date.now()
   displayList.forEach(function(n){
-    charts[n].audioSeries.append(date, randomAudioGenerator());
-    charts[n].rfSeries.append(date, randomRfGenerator());
+    let data = JSON.parse(JSON.stringify(transmitters[n]))
+    data.audio_level = randomAudioGenerator()
+    data.rf_level = randomRfGenerator()
+    updateSlot(data)
   })
 }
 
