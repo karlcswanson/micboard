@@ -45,6 +45,14 @@ def watchdog_monitor():
         if (int(time.perf_counter()) - rx.socket_watchdog) > 20:
             rx.socket_connect()
 
+def memory_summary():
+    # Only import Pympler when we need it. We don't want it to
+    # affect our process if we never call memory_summary.
+    from pympler import summary, muppy
+    mem_summary = summary.summarize(muppy.get_objects())
+    rows = summary.format_(mem_summary)
+    return '\n'.join(rows)
+
 
 def WirelessQueue():
     while True:
@@ -52,6 +60,8 @@ def WirelessQueue():
             strings = rx.get_query_strings()
             for string in strings:
                 rx.writeQueue.put(string)
+        print(memory_summary())
+
         time.sleep(10)
 
 def SocketService():
@@ -60,7 +70,7 @@ def SocketService():
 
     while True:
         watchdog_monitor()
-        readrx = [rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTED']
+        readrx = [rx for rx in WirelessReceivers if rx.rx_com_status in ['CONNECTING','CONNECTED']]
         writerx = [rx for rx in readrx if not rx.writeQueue.empty()]
 
         read_socks,write_socks,error_socks = select.select(readrx, writerx, readrx, .2)
@@ -79,6 +89,7 @@ def SocketService():
                 rx.parse_raw_rx(line)
 
             rx.socket_watchdog = int(time.perf_counter())
+            rx.set_rx_com_status('CONNECTED')
 
         for rx in write_socks:
             string = rx.writeQueue.get()

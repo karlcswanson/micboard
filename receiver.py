@@ -30,7 +30,7 @@ class WirelessReceiver:
                 self.f = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #UDP
             self.f.settimeout(.2)
             self.f.connect((self.ip, PORT))
-            self.set_rx_com_status('CONNECTED')
+            self.set_rx_com_status('CONNECTING')
             self.enable_metering(.1)
 
             for string in self.get_all():
