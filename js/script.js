@@ -4,8 +4,11 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import QRCode from 'qrcode'
 import { updateGIFBackgrounds, uploadMode } from './gif.js'
-import { updateAudioChart, updateRfChart, initChart, charts } from './chart-smoothie.js'
 import { randomDataGenerator, autoRandom } from './demodata.js'
+
+import { updateAudioChart, updateRfChart, initChart, charts } from './chart-smoothie.js'
+// import { updateAudioChart, updateRfChart, initChart, charts } from './chart-chartjs.js'
+
 
 // import './transmitter.jsx'
 

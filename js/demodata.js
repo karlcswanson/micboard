@@ -1,7 +1,7 @@
 "use strict";
 
 import { transmitters, updateSlot, displayList } from "./script.js"
-import { charts } from './chart-smoothie.js'
+// import { charts } from './chart-smoothie.js'
 
 
 const batterySample = {
