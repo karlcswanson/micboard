@@ -6,8 +6,8 @@ An intelligent mic tray for ethernet enabled Shure microphones.
 #### Debian/Raspberian
 ```
 sudo apt-get update
-sudo apt-get install python-pip
-pip install -r requirements.txt
+sudo apt-get install git python3-pip
+pip3 install -r requirements.txt
 
 curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 sudo apt-get install nodejs

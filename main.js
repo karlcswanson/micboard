@@ -118,8 +118,8 @@ ipcMain.on('synchronous-message', (event, arg) => {
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 250,
-    height: 400
+    width: 290,
+    height: 575
   })
 
   win.loadURL('http://localhost:8058/')
