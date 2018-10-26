@@ -60,7 +60,7 @@ def WirelessQueue():
             strings = rx.get_query_strings()
             for string in strings:
                 rx.writeQueue.put(string)
-        print(memory_summary())
+        # print(memory_summary())
 
         time.sleep(10)
 

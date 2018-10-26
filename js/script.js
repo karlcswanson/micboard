@@ -58,7 +58,7 @@ $(document).ready(function() {
 
   document.addEventListener("keydown", function(e) {
     if (e.keyCode == 49) {
-      window.location.href = demo ? '/?demo=true&preset=1' : '/?&preset=1'
+      window.location.href = demo ? '/?demo=true&preset=1' : '/?preset=1'
     }
     if (e.keyCode == 50) {
       window.location.href = demo ? '/?demo=true&preset=2' : '/?preset=2';
@@ -86,7 +86,12 @@ $(document).ready(function() {
     }
 
     if (e.keyCode == 68) {
-      window.location.href = demo ? '/' : '/?demo=true&preset=1'
+      if (preset) {
+        window.location.href = demo ? '/?preset=' + preset : '/?demo=true&preset=' + preset
+      }
+      else {
+        window.location.href = demo ? '/' : '/?demo=true'
+      }
     }
 
     if (e.keyCode == 70) {
