@@ -154,7 +154,7 @@ function meteteredRandomDataGenerator(update){
   let data = JSON.parse(JSON.stringify(transmitters[slot]))
 
   var battery = randomBatteryGenerator();
-
+  data['timestamp'] = unixtimestamp()
   switch(update){
     case "name":        data["name"] = uniqueRandomNameGenerator(slot)
                         break;
@@ -175,12 +175,16 @@ function meteteredRandomDataGenerator(update){
 }
 
 
+function unixtimestamp() {
+  return new Date()/1000
+}
 
 function randomCharts(){
   displayList.forEach(function(n){
     let data = JSON.parse(JSON.stringify(transmitters[n]))
     data.audio_level = randomAudioGenerator()
     data.rf_level = randomRfGenerator()
+    data.timestamp = unixtimestamp()
     updateSlot(data)
   })
 }

@@ -125,7 +125,8 @@ class WirelessTransmitter:
 
     def tx_json_mini(self):
         data = self.tx_json()
-        data['timestamp'] = datetime.datetime.now().isoformat()
+        data['timestamp'] = time.time()
+        # data['timestamp'] = datetime.datetime.now().isoformat()
 
         del data['raw']
         return data

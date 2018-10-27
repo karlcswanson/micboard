@@ -6,12 +6,17 @@ export var charts = {};
 
 
 export function updateAudioChart(data) {
-  charts[data.slot].audioSeries.append(Date.now(), data.audio_level);
+  // charts[data.slot].audioSeries.append(Date.now(), data.audio_level);
+  let timestamp = new Date(data.timestamp * 1000)
+
+  charts[data.slot].audioSeries.append(timestamp, data.audio_level);
   transmitters[data.slot].audio_level = data.audio_level;
 }
 
 export function updateRfChart(data) {
-  charts[data.slot].rfSeries.append(Date.now(), data.rf_level);
+  // charts[data.slot].rfSeries.append(Date.now(), data.rf_level);
+  let timestamp = new Date(data.timestamp * 1000)
+  charts[data.slot].rfSeries.append(timestamp, data.rf_level);
   transmitters[data.slot].rf_level = data.rf_level;
 }
 
