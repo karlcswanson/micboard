@@ -109,7 +109,10 @@ app = web.Application([
 
 def writeWeb(data):
     for c in cl:
-        c.write_message(data)
+        try:
+            c.write_message(data)
+        except:
+            print("WS Error")
 
 def twisted():
     # https://github.com/tornadoweb/tornado/issues/2308
@@ -119,4 +122,13 @@ def twisted():
 
 def socket_send():
     while True:
-        writeWeb(shure.data_output_queue.get())
+        # writeWeb(shure.data_output_queue.get())
+        if shure.data_output_list:
+            out = {
+                    'update': shure.data_output_list
+                  }
+
+            writeWeb(out)
+            del shure.data_output_list[:]
+
+        time.sleep(.05)

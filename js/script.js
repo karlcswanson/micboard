@@ -233,8 +233,11 @@ function wsConnect(){
   let socket = new WebSocket(new_uri);
 
   socket.onmessage = function(msg){
-    let mic_data = JSON.parse(msg.data);
-    updateSlot(mic_data);
+    let mic_data = JSON.parse(msg.data)['update'];
+    for (var i in mic_data) {
+      updateSlot(mic_data[i])
+    }
+    // updateSlot(mic_data);
   };
 
   socket.onclose = function(event){

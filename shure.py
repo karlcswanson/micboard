@@ -4,7 +4,7 @@ import select
 import threading
 
 from receiver import WirelessReceiver
-from transmitter import WirelessTransmitter, data_output_queue
+from transmitter import WirelessTransmitter, data_output_queue,data_output_list
 
 WirelessReceivers = []
 

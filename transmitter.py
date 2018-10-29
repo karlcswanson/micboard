@@ -7,6 +7,7 @@ import os
 import config
 
 data_output_queue = queue.Queue()
+data_output_list = []
 
 BATTERY_TIMEOUT = 30*60
 
@@ -135,7 +136,8 @@ class WirelessTransmitter:
         return data
 
     def tx_json_push(self):
-        data_output_queue.put(self.tx_json_mini())
+        data_output_list.append(self.tx_json_mini())
+        # data_output_queue.put(self.tx_json_mini())
 
     def parse_raw_tx(self,data,type):
         split = data.split()
