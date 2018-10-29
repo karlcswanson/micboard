@@ -26,10 +26,13 @@ class WirelessReceiver:
         try:
             if self.type in ['qlxd','ulxd','axtd']:
                 self.f = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #TCP
+                self.f.settimeout(.2)
+                self.f.connect((self.ip, PORT))
+
+
             elif self.type == 'uhfr':
-                self.f = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #UDP
-            self.f.settimeout(.2)
-            self.f.connect((self.ip, PORT))
+                self. f = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #UDP
+
             self.set_rx_com_status('CONNECTING')
             self.enable_metering(.1)
 
@@ -114,7 +117,7 @@ class WirelessReceiver:
         elif self.type == 'uhfr':
             for i in self.get_channels():
                 ret.append('* GET {} CHAN_NAME *'.format(i))
-                ret.append('* GET {} BATT_BARS *'.format(i))
+                ret.append('* GET {} TX_BAT *'.format(i))
                 ret.append('* GET {} GROUP_CHAN *'.format(i))
 
         return ret

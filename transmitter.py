@@ -20,7 +20,8 @@ rx_strings = {}
 
 rx_strings['uhfr'] = {'battery': 'TX_BAT',
                       'frequency': 'FREQUENCY',
-                      'name': 'CHAN_NAME'}
+                      'name': 'CHAN_NAME',
+                      'tx_offset': 'NOTQWERT'}
 
 rx_strings['qlxd'] = {'battery': 'BATT_BARS',
                       'frequency': 'FREQUENCY',
@@ -35,7 +36,8 @@ rx_strings['ulxd'] = {'battery': 'BATT_BARS',
                       'audio_level': 'AUDIO_LVL',
                       'rf_level': 'RX_RF_LVL',
                       'name': 'CHAN_NAME',
-                      'antenna': 'RF_ANTENNA'}
+                      'antenna': 'RF_ANTENNA',
+                      'tx_offset' : 'TX_OFFSET'}
 
 rx_strings['axtd'] = {'battery': 'TX_BATT_BARS',
                       'frequency': 'FREQUENCY',
@@ -86,6 +88,7 @@ class WirelessTransmitter:
             self.timestamp = time.time()
 
     def set_chan_name(self, chan_name):
+        chan_name = chan_name.replace('_',' ')
         self.chan_name = chan_name
 
     def set_tx_offset(self, tx_offset):
@@ -140,15 +143,10 @@ class WirelessTransmitter:
         self.raw[split[2]] = ' '.join(split[3:])
         try:
             if split[0] == 'SAMPLE' and split[2] == 'ALL':
-                self.set_antenna(split[3])
-                self.set_rf_level(split[4])
-                self.set_audio_level(split[5])
-                # for index, val in enumerate(data[3:]):
-                    # self.raw[sample[type][index]] = val
-
+                self.parse_sample(data,type)
                 self.tx_json_push()
 
-            if split[0] in ['REP','REPLY']:
+            if split[0] in ['REP','REPLY','REPORT']:
                 if split[2] == rx_strings[type]['battery']:
                     self.set_battery(split[3])
                 elif split[2] == rx_strings[type]['name']:
@@ -157,6 +155,20 @@ class WirelessTransmitter:
                     self.set_frequency(split[3])
                 elif split[2] == rx_strings[type]['tx_offset']:
                     self.set_tx_offset(split[3])
-        except:
-            print("Index Error(TX): {}".format(data))
+        except Exception as e:
+            print("Index Error(TX): {}".format(data.split()))
+            print(e)
             # os._exit(1)
+
+    def parse_sample(self,data,type):
+        split = data.split()
+        if type in ['qlxd','ulxd']:
+            self.set_antenna(split[3])
+            self.set_rf_level(split[4])
+            self.set_audio_level(split[5])
+
+        elif type == 'uhfr':
+            self.set_antenna(split[3])
+            self.set_rf_level(23*(100-int(split[4]))/16 )
+            self.set_battery(split[6])
+            self.set_audio_level(50*int(split[7])/255)
