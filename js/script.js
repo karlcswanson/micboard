@@ -30,7 +30,9 @@ var localURL = '';
 let start_slot = parseInt(getUrlParameter('start_slot'))
 let stop_slot = parseInt(getUrlParameter('stop_slot'))
 let preset = getUrlParameter('preset')
-let demo = getUrlParameter('demo');
+let demo = getUrlParameter('demo')
+let settings = getUrlParameter('settings')
+
 
 export let displayList = []
 
@@ -57,6 +59,9 @@ $(document).ready(function() {
     initialMap();
     setInterval(JsonUpdate, 1000);
     wsConnect();
+  }
+  if(settings) {
+    setTimeout(settingsView, 50)
   }
 
   document.addEventListener("keydown", function(e) {
@@ -117,7 +122,7 @@ $(document).ready(function() {
       $('.modal').modal('toggle');
     }
     if (e.keyCode == 83) {
-      settings();
+      settingsView();
     }
 
     if (e.keyCode == 85) {
@@ -129,10 +134,12 @@ $(document).ready(function() {
 
 });
 
-function settings() {
+function settingsView() {
   console.log(config)
   $('#micboard').hide();
   $('.settings').show();
+
+
   var editor = new JSONEditor(document.getElementById('editor_holder'),{
         // Enable fetching schemas via ajax
         ajax: false,
@@ -140,7 +147,7 @@ function settings() {
 
         // The schema for the editor
         schema: {
-          "title": "Micboard Settings",
+          "title": " ",
           "type" : "object",
           // "format": "categories",
           "options" : {
@@ -173,6 +180,7 @@ function settings() {
               "type" : "array",
               "format" : "table",
               "options" : {
+                "collapsed" : true,
                 "disable_array_delete_last_row": true,
                 "disable_array_delete_all_rows": true,
                 "disable_array_reorder": true
@@ -242,6 +250,14 @@ function settings() {
         // Get the value from the editor
         console.log(editor.getValue())
         sendSettings(editor.getValue())
+      });
+
+      document.getElementById('download').addEventListener('click',function() {
+        var a = document.createElement("a")
+        var file = new Blob([JSON.stringify(config)], {type: 'application/json'})
+        a.href = URL.createObjectURL(file)
+        a.download = 'config.json'
+        a.click()
       });
 }
 

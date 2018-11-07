@@ -502,7 +502,7 @@ canvas.rf-graph {
 .settings {
   display: none;
   background-color: var(--color-blue);
-  color: var(--color-white);
+  color: var(--color-black);
   margin-left: -15px;
   margin-right: -15px;
   padding: 3em;

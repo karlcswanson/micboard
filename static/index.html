@@ -63,10 +63,29 @@
         <p>Could not connect to the micboard server. Please refresh the page.</p>
       </div>
       <div class="above-mid settings">
-        <div id='editor_holder' class='medium-12 columns'></div>
-        <div class='medium-12 columns'>
-          <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+        <div class="card card-body bg-light">
+          <h1>Micboard Settings</h1>
         </div>
+        <div id='editor_holder' class='medium-12 columns'></div>
+        <div style="height: 50px;"></div>
+        <div class='medium-12 columns'>
+          <div class="card card-body bg-light">
+            <form>
+              <div class="form-row">
+                <div class="col">
+                  <button id="download" type="button" class="btn btn-info">Backup Configuration</button>
+                  <button id="upload" type="button" class="btn btn-danger">Upload Configuration</button>
+                </div>
+                <div class="col">
+                  <button id="submit" type="submit" class="btn btn-success">Save</button>
+                </div>
+              </div>
+            </form>
+
+
+          </div>
+        </div>
+        <div style="height: 50px;"></div>
       </div>
 
     </div>
