@@ -99,7 +99,8 @@ class WirelessTransmitter:
     def tx_state(self):
         # WCCC Specific State for unassigned microphones
         name = self.chan_name.split()
-        if name[0][:2] in config.config_tree['prefixes']:
+        prefix = ''.join([i for i in name[0] if not i.isdigit()])
+        if prefix in config.config_tree['prefixes']:
             if len(name) == 1:
                 return 'UNASSIGNED'
 

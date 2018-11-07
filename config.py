@@ -85,3 +85,8 @@ def read_json_config(file):
             rec.add_transmitter(tx['channel'],tx['slot'])
 
     gif_dir = get_gif_dir()
+
+
+def write_json_config(data):
+    with open(config_path(),'w') as config_file:
+        json.dump(data,config_file, indent=2, separators=(',',': '), sort_keys=True)

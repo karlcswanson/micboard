@@ -499,6 +499,15 @@ canvas.rf-graph {
   padding: 3em;
 }
 
+.settings {
+  display: none;
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  margin-left: -15px;
+  margin-right: -15px;
+  padding: 3em;
+}
+
 /* POP */
 .pop {
   position: absolute;

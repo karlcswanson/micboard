@@ -3,6 +3,8 @@
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import QRCode from 'qrcode'
+import JSONEditor from '@json-editor/json-editor'
+
 import { updateGIFBackgrounds, uploadMode } from './gif.js'
 import { randomDataGenerator, autoRandom } from './demodata.js'
 
@@ -14,6 +16,7 @@ import { updateAudioChart, updateRfChart, initChart, charts } from './chart-smoo
 
 import '../css/style.css'
 import '../node_modules/@ibm/plex/css/ibm-plex.css'
+import '../node_modules/@json-editor/json-editor/dist/css/jsoneditor.min.css'
 
 var dataURL = '/data';
 // export var transmitters = {};
@@ -57,6 +60,9 @@ $(document).ready(function() {
   }
 
   document.addEventListener("keydown", function(e) {
+    if ( $('.settings').is(":visible")) {
+      return
+    }
     if (e.keyCode == 49) {
       window.location.href = demo ? '/?demo=true&preset=1' : '/?preset=1'
     }
@@ -110,6 +116,9 @@ $(document).ready(function() {
       generateQR();
       $('.modal').modal('toggle');
     }
+    if (e.keyCode == 83) {
+      settings();
+    }
 
     if (e.keyCode == 85) {
       if(!document.getElementById("micboard").classList.contains("uploadmode")) {
@@ -119,6 +128,139 @@ $(document).ready(function() {
   }, false);
 
 });
+
+function settings() {
+  console.log(config)
+  $('#micboard').hide();
+  $('.settings').show();
+  var editor = new JSONEditor(document.getElementById('editor_holder'),{
+        // Enable fetching schemas via ajax
+        ajax: false,
+        theme: 'bootstrap4',
+
+        // The schema for the editor
+        schema: {
+          "title": "Micboard Settings",
+          "type" : "object",
+          // "format": "categories",
+          "options" : {
+            "disable_properties": true,
+            "disable_edit_json" : true,
+            "disable_collapse": true
+          },
+          "properties" : {
+            "port" : {
+              "title": "Server Port",
+              "type" : "integer"
+            },
+            "prefixes": {
+              "type": "array",
+              "title" : "Prefixes",
+              "format" : "table",
+              "items" : {
+                "title" : "prefix",
+                "type" : "string"
+              },
+              "options" : {
+                "collapsed" : true,
+                "disable_array_delete_last_row": true,
+                "disable_array_delete_all_rows": true,
+                "disable_array_reorder": true
+              }
+            },
+            "slots": {
+              "title" : "Receivers",
+              "type" : "array",
+              "format" : "table",
+              "options" : {
+                "disable_array_delete_last_row": true,
+                "disable_array_delete_all_rows": true,
+                "disable_array_reorder": true
+              },
+              "items" : {
+                "title" : "receiver",
+                "type" : "object",
+                "properties" : {
+                  "slot" : {
+                    "type" : "integer"
+                  },
+                  "ip" : {
+                    "type" : "string"
+                  },
+                  "type" : {
+                    "type" : "string",
+                    "enum" : ["uhfr","qlxd","ulxd","axtd"]
+                  },
+                  "channel" : {
+                    "type" : "integer",
+                    "enum" : [1,2,3,4]
+                  }
+                }
+              }
+
+            },
+            "displays" : {
+              "type" : "array",
+              "title": "Display Presets",
+              "format" :"table",
+              "options" : {
+                "collapsed" : true,
+                "disable_array_delete_last_row": true,
+                "disable_array_delete_all_rows": true,
+                "disable_array_reorder": true
+              },
+              "items" : {
+                "type" : "object",
+                "title" : "display preset",
+                "properties": {
+                  "preset" : {
+                    "type" : "integer",
+                    "enum" : [1,2,3,4,5,6,7,8,9]
+                  },
+                  "slots" : {
+                    "type" : "array",
+                    "format" : "table",
+                    "items": {
+                      "title": "slot",
+                      "type" : "integer"
+                    },
+                    "options" : {
+                      "disable_array_delete_last_row": true,
+                      "disable_array_delete_all_rows": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        // Seed the form with a starting value
+        startval: config
+      });
+      document.getElementById('submit').addEventListener('click',function() {
+        // Get the value from the editor
+        console.log(editor.getValue())
+        sendSettings(editor.getValue())
+      });
+}
+
+function sendSettings(settings) {
+  var uri = "/settings";
+  var xhr = new XMLHttpRequest();
+  // var fd = new FormData();
+
+  xhr.open("POST", uri, true);
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      console.log(xhr.responseText); // handle response.
+    }
+  };
+  
+  // Initiate a multipart/form-data upload
+  xhr.send(JSON.stringify(settings));
+}
 
 function StartStopSlotList(start,stop) {
   let out = []
@@ -341,12 +483,13 @@ function updateFrequency(slotSelector, data){
 
 
 function updateName(slotSelector, data) {
-  var prefix = data.name.substring(0,1);
-  var number = data.name.substring(1,3);
-  var name = data.name.substring(4);
+  let split = data.name.split(' ')
+  var prefix = split[0].replace(/\d+/,'')
+  var number = parseInt(split[0].match(/\d+/))
+  var name = split.slice(1,split.length).join(' ')
   if(config['prefixes'].indexOf(prefix) >= 0 && !isNaN(number))
   {
-    slotSelector.querySelector('p.mic_id').innerHTML = prefix + number;
+    slotSelector.querySelector('p.mic_id').innerHTML = split[0];
     slotSelector.querySelector('p.name').innerHTML = name;
   }
   else {
@@ -463,8 +606,12 @@ function dataFilterFromList(data){
 
 function displayListChooser(data) {
   if (!isNaN(preset)) {
-    console.log(data['config']['displays'][preset])
-    return data['config']['displays'][preset]['slots']
+    let plist = []
+    for (var p in data['config']['displays']) {
+      plist[data['config']['displays'][p]['preset']] = data['config']['displays'][p]['slots']
+    }
+
+    return plist[preset]
   }
   else if (!isNaN(start_slot) && !isNaN(stop_slot)) {
     if (start_slot < stop_slot) {

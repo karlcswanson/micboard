@@ -1,4 +1,4 @@
-from tornado import websocket, web, ioloop
+from tornado import websocket, web, ioloop, escape
 import json
 import threading
 import time
@@ -91,6 +91,12 @@ class UploadHandler(web.RequestHandler):
                 f.write(body)
         self.write('OK')
 
+class SettingsHandler(web.RequestHandler):
+    def post(self):
+        settings = escape.json_decode(self.request.body)
+        print(settings)
+        config.write_json_config(settings)
+        self.write('OK')
 
 
 app = web.Application([
@@ -99,6 +105,7 @@ app = web.Application([
     (r'/api', ApiHandler),
     (r'/data', JsonHandler),
     (r'/upload', UploadHandler),
+    (r'/settings', SettingsHandler),
     (r'/(favicon.ico)', web.StaticFileHandler, {'path': '../'}),
     (r'/static/(.*)', web.StaticFileHandler, {'path': config.app_dir('static')}),
     (r'/bg/(.*)', web.StaticFileHandler, {'path': config.get_gif_dir()}),

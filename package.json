@@ -21,7 +21,9 @@
     "url": "https://github.com/karlcswanson/mictray/issues"
   },
   "homepage": "https://github.com/karlcswanson/micboard",
-  "dependencies": {},
+  "dependencies": {
+    
+  },
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
@@ -43,7 +45,8 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "smoothie": "^1.35.0",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "@json-editor/json-editor": "^1.2.1"
   },
   "build": {
     "appId": "your.id",
