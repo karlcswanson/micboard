@@ -94,7 +94,6 @@ class UploadHandler(web.RequestHandler):
 class SettingsHandler(web.RequestHandler):
     def post(self):
         settings = escape.json_decode(self.request.body)
-        print(settings)
         config.write_json_config(settings)
         self.write('OK')
 

@@ -247,19 +247,19 @@ function settings() {
 
 function sendSettings(settings) {
   var uri = "/settings";
-  var xhr = new XMLHttpRequest();
-  // var fd = new FormData();
-
-  xhr.open("POST", uri, true);
-  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  var xhr = new XMLHttpRequest()
+  xhr.open("POST", uri, true)
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
-      console.log(xhr.responseText); // handle response.
+      var eb = document.getElementsByClassName('server-error')[0]
+      eb.querySelector('h1').innerHTML = 'Settings Saved'
+      eb.querySelector('p').innerHTML = 'Restart the micboard server and reload the page'
+      ActivateErrorBoard()
+      console.log(xhr.responseText)
     }
   };
-  
-  // Initiate a multipart/form-data upload
-  xhr.send(JSON.stringify(settings));
+  xhr.send(JSON.stringify(settings))
 }
 
 function StartStopSlotList(start,stop) {
@@ -358,7 +358,8 @@ function generateQR(){
 
 
 function ActivateErrorBoard(){
-  $('#micboard').hide();
+  $('#micboard').hide()
+  $('.settings').hide()
   $('.server-error').show();
 }
 
