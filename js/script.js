@@ -589,23 +589,6 @@ function updateDiversity(slotSelector, data){
   div.innerHTML = newBar
 }
 
-function dataFilter(data){
-  for(var i in data.receivers){
-    for (var j in data.receivers[i].tx){
-      var tx = data.receivers[i].tx[j];
-      tx.ip = data.receivers[i].ip;
-      tx.type = data.receivers[i].type;
-      if (start_slot && stop_slot){
-        if (start_slot <= tx.slot && tx.slot <= stop_slot) {
-          transmitters[tx.slot] = tx;
-        }
-      }
-      else {
-        transmitters[tx.slot] = tx;
-      }
-    }
-  }
-}
 
 function dataFilterFromList(data){
   for(var i in data.receivers){
