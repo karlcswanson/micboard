@@ -128,7 +128,6 @@ def twisted():
 
 def socket_send():
     while True:
-        # writeWeb(shure.data_output_queue.get())
         if shure.data_output_list:
             out = {
                     'update': shure.data_output_list

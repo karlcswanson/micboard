@@ -4,7 +4,7 @@ import select
 import threading
 
 from receiver import WirelessReceiver
-from transmitter import WirelessTransmitter, data_output_queue,data_output_list
+from transmitter import WirelessTransmitter, data_output_list
 
 WirelessReceivers = []
 
@@ -45,13 +45,6 @@ def watchdog_monitor():
         if (int(time.perf_counter()) - rx.socket_watchdog) > 20:
             rx.socket_connect()
 
-def memory_summary():
-    # Only import Pympler when we need it. We don't want it to
-    # affect our process if we never call memory_summary.
-    from pympler import summary, muppy
-    mem_summary = summary.summarize(muppy.get_objects())
-    rows = summary.format_(mem_summary)
-    return '\n'.join(rows)
 
 
 def WirelessQueue():
@@ -60,7 +53,6 @@ def WirelessQueue():
             strings = rx.get_query_strings()
             for string in strings:
                 rx.writeQueue.put(string)
-        # print(memory_summary())
 
         time.sleep(10)
 
