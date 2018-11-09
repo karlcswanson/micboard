@@ -1,3 +1,5 @@
+"use strict"
+
 import JSONEditor from '@json-editor/json-editor'
 
 

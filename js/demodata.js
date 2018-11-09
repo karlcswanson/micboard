@@ -1,6 +1,7 @@
 "use strict";
 
-import { transmitters, updateSlot, displayList } from "./script.js"
+import { transmitters, displayList } from "./script.js"
+import { updateSlot } from "./channelview.js"
 // import { charts } from './chart-smoothie.js'
 
 
