@@ -8,6 +8,7 @@ import socket
 
 import shure
 import config
+import discover
 
 cl = []
 
@@ -35,11 +36,13 @@ def json_rxs(rxs):
     gifs = fileList('.gif')
     jpgs = fileList('.jpg')
     url = localURL()
+    discovered = discover.discovered
 
 
 
     return json.dumps({'receivers': data, 'url': url, 'gif': gifs, 'jpg': jpgs,
-                       'config': config.config_tree }, sort_keys=True, indent=4)
+                       'config': config.config_tree, 'discovered': discovered },
+                       sort_keys=True, indent=4)
 
 class IndexHandler(web.RequestHandler):
     def get(self):

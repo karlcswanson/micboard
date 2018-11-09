@@ -28,7 +28,7 @@ receiver_channel_map = {
 
 deviceList = {}
 
-discovered = {}
+discovered = []
 
 # https://stackoverflow.com/questions/603852/multicast-in-python
 def discover():
@@ -48,11 +48,26 @@ def discover():
         dcid = dcid_find(data)
         if type is not '':
             device = dcid_get(dcid)
-            print('RX: {} at: {} DCID: {} BAND: {} CHANNELS: {}'.format(type,ip,dcid,device['band'],receiver_channel_map[device['model']]))
-            add_rx(ip,type)
+            channels = receiver_channel_map[device['model']]
+            # print('RX: {} at: {} DCID: {} BAND: {} CHANNELS: {}'.format(type,ip,dcid,device['band'],channels))
+            add_rx(ip,type,channels)
 
-def add_rx(ip,rx_type):
-    discovered[ip] = { 'type': rx_type.lower() }
+def add_rx(ip,rx_type,channels):
+
+    rx = next((x for x in discovered if x['ip'] == ip), None)
+
+    if rx:
+        rx['type'] = rx_type.lower()
+        rx['channels'] = channels
+
+    else:
+        discovered.append({
+                'ip' : ip,
+                'type': rx_type.lower(),
+                'channels': channels
+             })
+    discovered.sort(key=lambda x: x['ip'])
+    # print(discovered)
 
 def rx_type(data):
     rx = ''
@@ -75,29 +90,6 @@ def dcid_find(data):
 
 def dcid_get(dcid):
     return deviceList[dcid]
-
-def DCID_Parse_old():
-
-    tree = ET.parse('DCIDMap.xml')
-    root = tree.getroot()
-
-    devices = root.findall('./MapEntry')
-
-    for device in devices:
-        key = device.find('Key').text
-        model = device.find('ModelName').text
-        dcid = []
-        for dccid in device.find('DCIDList').iter('DCID'):
-            try:
-                band = dccid.attrib['band']
-            except:
-                band = ''
-            dcid.append({'DCID': dccid.text, 'BAND': band })
-
-        dev = {'model': model, 'dcid': dcid }
-        deviceList[key] = dev
-
-    print(deviceList)
 
 
 def DCID_Parse(file):
