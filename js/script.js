@@ -21,6 +21,7 @@ export var dataURL = '/data';
 export var transmitters = [];
 
 export var gif_list = {};
+export var discovered = []
 
 export var config = {};
 
@@ -297,6 +298,7 @@ function initialMap() {
     return response.json();
   })
   .then(function(data) {
+    discovered = data['discovered']
     gif_list = data['gif']
     localURL = data['url']
     config = data['config']
