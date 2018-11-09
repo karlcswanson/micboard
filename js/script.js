@@ -8,6 +8,7 @@ import { updateGIFBackgrounds, uploadMode } from './gif.js'
 import { randomDataGenerator, autoRandom } from './demodata.js'
 import { settingsView } from './settings.js'
 import { updateSlot, updateViewOnly } from './channelview.js'
+import { initLiveData } from './data.js'
 
 import { updateAudioChart, updateRfChart, initChart, charts } from './chart-smoothie.js'
 
@@ -15,7 +16,7 @@ import { updateAudioChart, updateRfChart, initChart, charts } from './chart-smoo
 import '../css/style.css'
 import '../node_modules/@ibm/plex/css/ibm-plex.css'
 
-var dataURL = '/data';
+export var dataURL = '/data';
 // export var transmitters = {};
 export var transmitters = [];
 
@@ -48,14 +49,13 @@ $(document).ready(function() {
     for(var i = start_slot; i <= stop_slot; i++) {
       transmitters[i] = randomDataGenerator(i);
     }
-    initialMap();
-    autoRandom();
+    initialMap()
+    autoRandom()
   }
 
   else {
-    initialMap();
-    setInterval(JsonUpdate, 1000);
-    wsConnect();
+    initialMap()
+    initLiveData()
   }
   if(settings) {
     setTimeout(settingsView, 50)
@@ -233,33 +233,7 @@ function ActivateErrorBoard(){
 }
 
 
-function wsConnect(){
-  let loc = window.location, new_uri;
-  if (loc.protocol === "https:") {
-    new_uri = "wss:";
-  } else {
-    new_uri = "ws:";
-  }
-  new_uri += "//" + loc.host;
-  new_uri +=  "/ws";
-  let socket = new WebSocket(new_uri);
 
-  socket.onmessage = function(msg){
-    let mic_data = JSON.parse(msg.data)['update'];
-    for (var i in mic_data) {
-      updateSlot(mic_data[i])
-    }
-    // updateSlot(mic_data);
-  };
-
-  socket.onclose = function(event){
-    ActivateErrorBoard();
-  };
-
-  socket.onerror = function(event){
-    ActivateErrorBoard();
-  };
-}
 
 // https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js
 // var getUrlParameter = function getUrlParameter(sParam) {
@@ -276,23 +250,7 @@ function getUrlParameter(sParam) {
             return sParameterName[1] === undefined ? true : sParameterName[1];
         }
     }
-};
-
-function JsonUpdate(){
-  fetch(dataURL)
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(data) {
-    for(var i in data.receivers) {
-      for (var j in data.receivers[i].tx) {
-        updateSlot(data.receivers[i].tx[j]);
-      }
-    }
-  });
 }
-
-
 
 function dataFilterFromList(data){
   for(var i in data.receivers){
