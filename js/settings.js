@@ -1,6 +1,7 @@
 "use strict"
 
 import JSONEditor from '@json-editor/json-editor'
+import '../node_modules/@json-editor/json-editor/dist/css/jsoneditor.min.css'
 
 
 export function settingsView(config) {

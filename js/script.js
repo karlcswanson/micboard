@@ -14,7 +14,6 @@ import { updateAudioChart, updateRfChart, initChart, charts } from './chart-smoo
 
 import '../css/style.css'
 import '../node_modules/@ibm/plex/css/ibm-plex.css'
-import '../node_modules/@json-editor/json-editor/dist/css/jsoneditor.min.css'
 
 var dataURL = '/data';
 // export var transmitters = {};
@@ -292,8 +291,6 @@ function JsonUpdate(){
     }
   });
 }
-
-
 
 
 
