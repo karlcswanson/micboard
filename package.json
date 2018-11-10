@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/karlcswanson/micboard",
   "dependencies": {
-    
+
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -52,15 +52,23 @@
     "appId": "your.id",
     "asar": true,
     "asarUnpack": [
-      "dist/micboard"
+      "dist/micboard",
+      "build/iconTemplate.png",
+      "build/iconTemplate@2x.png"
     ],
     "mac": {
-      "category": "your.app.category.type"
+      "category": "your.app.category.type",
+
+      "extendInfo" : {
+        "LSBackgroundOnly": 1,
+        "LSUIElement": 1
+      }
     },
     "files": [
       "dist/micboard",
       "main.js",
-      "build/icon.png"
+      "build/iconTemplate.png",
+      "build/iconTemplate@2x.png"
     ]
   }
 }

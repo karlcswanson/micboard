@@ -1,6 +1,6 @@
 "use strict"
 
-import { dataURL } from "./script.js"
+import { dataURL, ActivateErrorBoard } from "./script.js"
 import { updateSlot } from "./channelview.js"
 
 export function initLiveData() {

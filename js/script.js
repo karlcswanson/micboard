@@ -227,7 +227,7 @@ function generateQR(){
 }
 
 
-function ActivateErrorBoard(){
+export function ActivateErrorBoard(){
   $('#micboard').hide()
   $('.settings').hide()
   $('.server-error').show();

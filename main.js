@@ -2,119 +2,15 @@ const {
   app,
   BrowserWindow,
   shell,
-  ipcMain,
-  Menu
+  Menu,
+  Tray
 } = require('electron')
 const path = require('path')
-const stream = require('stream')
 
 var outputready = false
 
-
-const template = [
-    {
-      label: 'Edit',
-      submenu: [
-        {role: 'undo'},
-        {role: 'redo'},
-        {type: 'separator'},
-        {role: 'cut'},
-        {role: 'copy'},
-        {role: 'paste'},
-        {role: 'pasteandmatchstyle'},
-        {role: 'delete'},
-        {role: 'selectall'}
-      ]
-    },
-    {
-      label: 'View',
-      submenu: [
-        {role: 'reload'},
-        {role: 'forcereload'},
-        {role: 'toggledevtools'},
-        {type: 'separator'},
-        {role: 'resetzoom'},
-        {role: 'zoomin'},
-        {role: 'zoomout'},
-        {type: 'separator'},
-        {role: 'togglefullscreen'}
-      ]
-    },
-    {
-      role: 'window',
-      submenu: [
-        {role: 'minimize'},
-        {role: 'close'}
-      ]
-    },
-    {
-      role: 'help',
-      submenu: [
-        {
-          label: 'Learn More',
-          click () { require('electron').shell.openExternal('https://electronjs.org') }
-        }
-      ]
-    }
-  ]
-
-  if (process.platform === 'darwin') {
-    template.unshift({
-      label: app.getName(),
-      submenu: [
-        {role: 'about'},
-        {type: 'separator'},
-        {label: 'Edit Configuration', click() { openConfigFolder('config.json')}},
-        {label: 'Add Backgrounds', click() { openConfigFolder('backgrounds')}},
-        {label: 'Open Demo', click() { createDemoWindow()}},
-        {type: 'separator'},
-        {role: 'services', submenu: []},
-        {type: 'separator'},
-        {role: 'hide'},
-        {role: 'hideothers'},
-        {role: 'unhide'},
-        {type: 'separator'},
-        {role: 'quit'}
-      ]
-    })
-
-    // Edit menu
-    template[1].submenu.push(
-      {type: 'separator'},
-      {
-        label: 'Speech',
-        submenu: [
-          {role: 'startspeaking'},
-          {role: 'stopspeaking'}
-        ]
-      }
-    )
-
-    // Window menu
-    template[3].submenu = [
-      {role: 'close'},
-      {role: 'minimize'},
-      {role: 'zoom'},
-      {type: 'separator'},
-      {role: 'front'}
-    ]
-  }
-
-const menu = Menu.buildFromTemplate(template)
-
-
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let win
-let consolewin
-let demowin
-
-
-ipcMain.on('synchronous-message', (event, arg) => {
-    console.log(arg) // prints "ping"
-    event.returnValue = 'pong'
-  })
-
+let tray
 
 function createWindow() {
   win = new BrowserWindow({
@@ -124,67 +20,10 @@ function createWindow() {
 
   win.loadURL('http://localhost:8058/')
 
-  // Open the DevTools.
-  // win.webContents.openDevTools()
-
-  // Emitted when the window is closed.
   win.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
     win = null
   })
 }
-
-function createDemoWindow() {
-  demowin = new BrowserWindow({
-    width: 800,
-    height: 600
-  })
-
-  demowin.loadURL('http://localhost:8058/?demo=true&start_slot=1&stop_slot=8')
-
-  // Open the DevTools.
-  // win.webContents.openDevTools()
-
-  // Emitted when the window is closed.
-  demowin.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    demowin = null
-  })
-}
-
-function updateConsole(msg) {
-  if (outputready == true) {
-    consolewin.webContents.send('ping', msg )
-  }
-
-}
-
-
-function createConsoleWindow() {
-  consolewin = new BrowserWindow({
-    width: 800,
-    height: 600
-  })
-  consolewin.loadFile('app/console.html')
-  // consolewin.webContents.openDevTools()
-
-  consolewin.webContents.on('did-finish-load', () => {
-      outputready = true
-  })
-
-
-  consolewin.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    consolewin = null
-  })
-}
-
 
 function openConfigFolder(file) {
   const configFile = path.join(app.getPath('appData'),'micboard',file)
@@ -202,18 +41,40 @@ const createPyProc = () => {
 
   if (pyProc != null) {
     console.log('child process success')
-    setTimeout(function() {
-        createWindow()
-    },500)
-
   }
-  Menu.setApplicationMenu(menu)
 }
 
 const exitPyProc = () => {
   pyProc.kill()
   pyProc = null
 }
+
+function restartMicboardServer() {
+  pyProc.kill()
+  pyProc = null
+  setTimeout(createPyProc,250)
+}
+
+
+app.on('ready', () => {
+  let icon = path.join(__dirname, 'build', 'iconTemplate.png').replace('app.asar', 'app.asar.unpacked')
+  tray = new Tray(icon)
+  const contextMenu = Menu.buildFromTemplate([
+    {label: 'About'},
+    {type: 'separator'},
+    {label: 'Launch Micboard', click () { require('electron').shell.openExternal('http://localhost:8058')}},
+    {label: 'Edit Settings', click () { require('electron').shell.openExternal('http://localhost:8058/?settings')}},
+    {label: 'Open Configuration Directory', click() { openConfigFolder('config.json')}},
+    {type: 'separator'},
+    {label: 'Restart Micboard Server', click() {restartMicboardServer()}},
+    {type: 'separator'},
+    {role: 'quit'}
+  ])
+  tray.setToolTip('This is my application.')
+  tray.setContextMenu(contextMenu)
+})
+
+
 
 app.on('ready', createPyProc)
 app.on('will-quit', exitPyProc)
