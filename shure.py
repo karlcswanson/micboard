@@ -3,7 +3,7 @@ import socket
 import select
 import threading
 
-from mem_top import mem_top
+# from mem_top import mem_top
 
 from receiver import WirelessReceiver
 from transmitter import WirelessTransmitter, data_output_list
@@ -55,7 +55,7 @@ def WirelessQueue():
             strings = rx.get_query_strings()
             for string in strings:
                 rx.writeQueue.put(string)
-        print(mem_top())
+        # print(mem_top())
         time.sleep(10)
 
 def SocketService():
