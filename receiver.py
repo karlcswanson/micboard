@@ -146,5 +146,5 @@ class WirelessReceiver:
             if self.rx_com_status == 'DISCONNECTED':
                 data['status'] = 'RX_COM_ERROR'
             tx_data.append(data)
-        data = {'ip': self.ip, 'type': self.type, 'status': self.rx_com_status, 'raw': self.raw, 'tx': tx_data, 'queue':self.writeQueue.qsize() }
+        data = {'ip': self.ip, 'type': self.type, 'status': self.rx_com_status, 'raw': self.raw, 'tx': tx_data }
         return data

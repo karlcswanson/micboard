@@ -2,14 +2,13 @@ import time
 import socket
 import select
 import threading
-
-# from mem_top import mem_top
+import queue
 
 from receiver import WirelessReceiver
 from transmitter import WirelessTransmitter, data_output_list
 
 WirelessReceivers = []
-
+WirelessMessageQueue = queue.Queue()
 
 sample = {}
 sample['uhfr'] = []
@@ -47,16 +46,19 @@ def watchdog_monitor():
         if (int(time.perf_counter()) - rx.socket_watchdog) > 20:
             rx.socket_connect()
 
-
-
-def WirelessQueue():
+def WirelessQueryQueue():
     while True:
         for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTED'):
             strings = rx.get_query_strings()
             for string in strings:
                 rx.writeQueue.put(string)
-        # print(mem_top())
         time.sleep(10)
+
+def ProcessRXMessageQueue():
+    while True:
+        rx, msg = WirelessMessageQueue.get()
+        rx.parse_raw_rx(msg)
+
 
 def SocketService():
     for rx in WirelessReceivers:
@@ -80,7 +82,8 @@ def SocketService():
             data =  [e+d for e in data.split(d) if e]
 
             for line in data:
-                rx.parse_raw_rx(line)
+                # rx.parse_raw_rx(line)
+                WirelessMessageQueue.put((rx,line))
 
             rx.socket_watchdog = int(time.perf_counter())
             rx.set_rx_com_status('CONNECTED')

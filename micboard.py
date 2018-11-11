@@ -12,14 +12,16 @@ def main():
     config.config()
 
     time.sleep(.1)
-    t1 = threading.Thread(target=shure.WirelessQueue)
+    t1 = threading.Thread(target=shure.WirelessQueryQueue)
     t2 = threading.Thread(target=shure.SocketService)
     t3 = threading.Thread(target=tornado_server.twisted)
     t4 = threading.Thread(target=discover.main)
+    t5 = threading.Thread(target=shure.ProcessRXMessageQueue)
     t1.start()
     t2.start()
     t3.start()
     t4.start()
+    t5.start()
     tornado_server.socket_send()
 
 
