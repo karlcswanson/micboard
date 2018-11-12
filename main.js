@@ -57,7 +57,7 @@ function restartMicboardServer() {
 
 
 app.on('ready', () => {
-  let icon = path.join(__dirname, 'build', 'iconTemplate.png').replace('app.asar', 'app.asar.unpacked')
+  let icon = path.join(__dirname, 'build', 'trayTemplate.png').replace('app.asar', 'app.asar.unpacked')
   tray = new Tray(icon)
   const contextMenu = Menu.buildFromTemplate([
     {label: 'About'},

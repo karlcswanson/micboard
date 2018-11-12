@@ -65,21 +65,6 @@ class SocketHandler(websocket.WebSocketHandler):
         if self in cl:
             cl.remove(self)
 
-class ApiHandler(web.RequestHandler):
-    @web.asynchronous
-    def get(self, *args):
-        self.finish()
-        id = self.get_argument("id")
-        value = self.get_argument("value")
-        data = {"id": id, "value" : value}
-        data = json.dumps(data)
-        for c in cl:
-            c.write_message(data)
-
-    @web.asynchronous
-    def post(self):
-        pass
-
 # https://github.com/tornadoweb/tornado/blob/master/demos/file_upload/file_receiver.py
 class UploadHandler(web.RequestHandler):
     def post(self):
@@ -104,15 +89,11 @@ class SettingsHandler(web.RequestHandler):
 app = web.Application([
     (r'/', IndexHandler),
     (r'/ws', SocketHandler),
-    (r'/api', ApiHandler),
     (r'/data', JsonHandler),
     (r'/upload', UploadHandler),
     (r'/settings', SettingsHandler),
-    (r'/(favicon.ico)', web.StaticFileHandler, {'path': '../'}),
     (r'/static/(.*)', web.StaticFileHandler, {'path': config.app_dir('static')}),
-    (r'/bg/(.*)', web.StaticFileHandler, {'path': config.get_gif_dir()}),
-    # (r'/node_modules/(.*)', web.StaticFileHandler, {'path': 'node_modules/'}),
-    (r'/(rest_api_example.png)', web.StaticFileHandler, {'path': './'}),
+    (r'/bg/(.*)', web.StaticFileHandler, {'path': config.get_gif_dir()})
 ])
 
 

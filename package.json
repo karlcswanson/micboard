@@ -53,8 +53,8 @@
     "asar": true,
     "asarUnpack": [
       "dist/micboard",
-      "build/iconTemplate.png",
-      "build/iconTemplate@2x.png"
+      "build/trayTemplate.png",
+      "build/trayTemplate@2x.png"
     ],
     "mac": {
       "category": "your.app.category.type",
@@ -64,11 +64,14 @@
         "LSUIElement": 1
       }
     },
+    "extraResources" : [
+      "build/trayTemplate.png",
+      "build/trayTemplate@2x.png"
+    ],
     "files": [
       "dist/micboard",
-      "main.js",
-      "build/iconTemplate.png",
-      "build/iconTemplate@2x.png"
+      "main.js"
+
     ]
   }
 }

@@ -159,7 +159,6 @@ class WirelessTransmitter:
         except Exception as e:
             print("Index Error(TX): {}".format(data.split()))
             print(e)
-            # os._exit(1)
 
     def parse_sample(self,data,type):
         split = data.split()

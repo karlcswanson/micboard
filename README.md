@@ -1,5 +1,5 @@
-# MicTray
-An intelligent mic tray for ethernet enabled Shure microphones.
+# Micboard
+micboard is a 
 
 ## Installation
 
