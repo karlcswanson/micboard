@@ -64,14 +64,11 @@
         "LSUIElement": 1
       }
     },
-    "extraResources" : [
-      "build/trayTemplate.png",
-      "build/trayTemplate@2x.png"
-    ],
     "files": [
       "dist/micboard",
-      "main.js"
-
+      "main.js",
+      "build/trayTemplate.png",
+      "build/trayTemplate@2x.png"
     ]
   }
 }
