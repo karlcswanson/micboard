@@ -2,9 +2,10 @@ import socket
 import struct
 import json
 
+
 import xml.etree.ElementTree as ET
 
-
+import config
 import shure
 
 MCAST_GRP = '239.255.254.253'
@@ -128,7 +129,7 @@ def updateDCIDmap(inputFile,outputFile):
 
 def main():
     # updateDCIDmap('DCIDmap.xml','dcid.json')
-    dcid_restore_from_file('dcid.json')
+    dcid_restore_from_file(config.app_dir('dcid.json'))
     discover()
 
 
