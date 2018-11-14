@@ -118,13 +118,13 @@ class SettingsHandler(web.RequestHandler):
 
 
 
-
-def writeWeb(data):
-    for c in cl:
-        try:
-            c.write_message(data)
-        except:
-            print("WS Error")
+#
+# def writeWeb(data):
+#     for c in cl:
+#         try:
+#             c.write_message(data)
+#         except:
+#             print("WS Error")
 
 def twisted():
     app = web.Application([
@@ -142,15 +142,15 @@ def twisted():
     ioloop.PeriodicCallback(SocketHandler.ws_dump,100).start()
     ioloop.IOLoop.instance().start()
 
-def socket_send():
-    while True:
-        if shure.data_output_list:
-            out = {}
-            out['update']= shure.data_output_list
-
-            data = json.dumps(out)
-            SocketHandler.broadcast(data)
-            # writeWeb(out)
-            del shure.data_output_list[:]
-
-        time.sleep(.05)
+# def socket_send():
+#     while True:
+#         if shure.data_output_list:
+#             out = {}
+#             out['update']= shure.data_output_list
+#
+#             data = json.dumps(out)
+#             SocketHandler.broadcast(data)
+#             # writeWeb(out)
+#             del shure.data_output_list[:]
+#
+#         time.sleep(.05)

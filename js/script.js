@@ -316,10 +316,18 @@ function initialMap() {
     var tx = transmitters;
     for(let i in displayList) {
       let j = displayList[i]
-      var t = document.getElementById("column-template").content.cloneNode(true);
-      t.querySelector('div.col-sm').id = 'slot-' + tx[j].slot;
-      updateViewOnly(t,tx[j])
-      charts[tx[j].slot] = initChart(t);
+      let t
+      if (j != 0) {
+        t = document.getElementById("column-template").content.cloneNode(true);
+        t.querySelector('div.col-sm').id = 'slot-' + tx[j].slot;
+        updateViewOnly(t,tx[j])
+        charts[tx[j].slot] = initChart(t);
+      }
+      else {
+        t = document.createElement('div')
+        t.className = "col-sm"
+      }
+
       document.getElementById('micboard').appendChild(t);
     }
     infoToggle();

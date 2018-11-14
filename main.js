@@ -34,7 +34,7 @@ function openConfigFolder(file) {
 let pyProc = null
 
 const createPyProc = () => {
-  let script = path.join(__dirname, 'dist', 'micboard').replace('app.asar', 'app.asar.unpacked')
+  let script = path.join(__dirname, 'dist', 'micboard-service').replace('app.asar', 'app.asar.unpacked')
   pyProc = require('child_process').spawn(script, [], {
     stdio: ['ignore','inherit','inherit']
   })
