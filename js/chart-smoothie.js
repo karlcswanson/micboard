@@ -9,14 +9,14 @@ export function updateAudioChart(data) {
   // charts[data.slot].audioSeries.append(Date.now(), data.audio_level);
   let timestamp = new Date(data.timestamp * 1000)
 
-  charts[data.slot].audioSeries.append(timestamp, data.audio_level);
+  charts[data.slot].audioSeries.append(timestamp, data.audio_level * 2 + 100);
   transmitters[data.slot].audio_level = data.audio_level;
 }
 
 export function updateRfChart(data) {
   // charts[data.slot].rfSeries.append(Date.now(), data.rf_level);
   let timestamp = new Date(data.timestamp * 1000)
-  charts[data.slot].rfSeries.append(timestamp, data.rf_level);
+  charts[data.slot].rfSeries.append(timestamp, data.rf_level * (100/115));
   transmitters[data.slot].rf_level = data.rf_level;
 }
 
@@ -39,7 +39,7 @@ export function initChart(slotSelector) {
     labels:{
       disabled:true
     },
-    maxValue:115,
+    maxValue:200,
     minValue:0,
     // scaleSmoothing:.7,
     limitFPS:20
@@ -59,13 +59,13 @@ export function initChart(slotSelector) {
     maxValue:50,
     minValue:0,
     // scaleSmoothing:.7,
-    limitFPS:20
+    limitFPS:0
   };
 
   let audioChart = new SmoothieChart(audioOptions);
   let rfChart = new SmoothieChart(rfOptions);
 
-  audioChart.addTimeSeries(chart.audioSeries, {
+  rfChart.addTimeSeries(chart.audioSeries, {
     strokeStyle: '#69B578',
     fillStyle: '',
     lineWidth: 2
@@ -77,7 +77,7 @@ export function initChart(slotSelector) {
     lineWidth: 2
   });
 
-  audioChart.streamTo(audioCanvas, 100);
+  // audioChart.streamTo(audioCanvas, 100);
   rfChart.streamTo(rfCanvas, 100);
   return chart;
 }

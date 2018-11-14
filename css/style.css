@@ -125,7 +125,7 @@ canvas.rf-graph {
   left: 0px;
   bottom: 25px;
   width:100%;
-  height:100px;
+  height:200px;
   /* background-color: red; */
 }
 
@@ -386,7 +386,7 @@ canvas.rf-graph {
     bottom:65px;
   }
   canvas.rf-graph{
-    height:50px;
+    height:100px;
     bottom:15px;
   }
 
