@@ -2,6 +2,7 @@ from tornado import websocket, web, ioloop, escape
 import json
 import threading
 import time
+import datetime
 import os
 import asyncio
 import socket
@@ -10,8 +11,7 @@ import shure
 import config
 import discover
 
-cl = []
-
+# cl = []
 
 # https://stackoverflow.com/questions/5899497/checking-file-extension
 def fileList(extension):
@@ -54,16 +54,46 @@ class JsonHandler(web.RequestHandler):
         self.write(json_rxs(shure.WirelessReceivers))
 
 class SocketHandler(websocket.WebSocketHandler):
+    clients = set()
+
+    # def initialize(self):
+    #     print("INIRT")
+    #     ioloop.PeriodicCallback(self.ws_dump,100).start()
+
+
     def check_origin(self, origin):
         return True
 
     def open(self):
-        if self not in cl:
-            cl.append(self)
+        self.clients.add(self)
 
     def on_close(self):
-        if self in cl:
-            cl.remove(self)
+        self.clients.remove(self)
+
+    # def open(self):
+    #     if self not in cl:
+    #         cl.append(self)
+    #
+    # def on_close(self):
+    #     if self in cl:
+    #         cl.remove(self)
+
+    @classmethod
+    def broadcast(cls, data):
+        for c in cls.clients:
+            try:
+                c.write_message(data)
+            except:
+                print("WS Error")
+
+    @classmethod
+    def ws_dump(cls):
+        if shure.data_output_list:
+            out = {}
+            out['update'] = shure.data_output_list
+            data = json.dumps(out)
+            cls.broadcast(data)
+            del shure.data_output_list[:]
 
 # https://github.com/tornadoweb/tornado/blob/master/demos/file_upload/file_receiver.py
 class UploadHandler(web.RequestHandler):
@@ -86,15 +116,7 @@ class SettingsHandler(web.RequestHandler):
         self.write('OK')
 
 
-app = web.Application([
-    (r'/', IndexHandler),
-    (r'/ws', SocketHandler),
-    (r'/data', JsonHandler),
-    (r'/upload', UploadHandler),
-    (r'/settings', SettingsHandler),
-    (r'/static/(.*)', web.StaticFileHandler, {'path': config.app_dir('static')}),
-    (r'/bg/(.*)', web.StaticFileHandler, {'path': config.get_gif_dir()})
-])
+
 
 
 def writeWeb(data):
@@ -105,19 +127,30 @@ def writeWeb(data):
             print("WS Error")
 
 def twisted():
+    app = web.Application([
+        (r'/', IndexHandler),
+        (r'/ws', SocketHandler),
+        (r'/data', JsonHandler),
+        (r'/upload', UploadHandler),
+        (r'/settings', SettingsHandler),
+        (r'/static/(.*)', web.StaticFileHandler, {'path': config.app_dir('static')}),
+        (r'/bg/(.*)', web.StaticFileHandler, {'path': config.get_gif_dir()})
+    ])
     # https://github.com/tornadoweb/tornado/issues/2308
     asyncio.set_event_loop(asyncio.new_event_loop())
     app.listen(config.config_tree['port'])
+    ioloop.PeriodicCallback(SocketHandler.ws_dump,100).start()
     ioloop.IOLoop.instance().start()
 
 def socket_send():
     while True:
         if shure.data_output_list:
-            out = {
-                    'update': shure.data_output_list
-                  }
+            out = {}
+            out['update']= shure.data_output_list
 
-            writeWeb(out)
+            data = json.dumps(out)
+            SocketHandler.broadcast(data)
+            # writeWeb(out)
             del shure.data_output_list[:]
 
         time.sleep(.05)
