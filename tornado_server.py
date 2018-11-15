@@ -11,7 +11,6 @@ import shure
 import config
 import discover
 
-# cl = []
 
 # https://stackoverflow.com/questions/5899497/checking-file-extension
 def fileList(extension):
@@ -70,14 +69,6 @@ class SocketHandler(websocket.WebSocketHandler):
     def on_close(self):
         self.clients.remove(self)
 
-    # def open(self):
-    #     if self not in cl:
-    #         cl.append(self)
-    #
-    # def on_close(self):
-    #     if self in cl:
-    #         cl.remove(self)
-
     @classmethod
     def broadcast(cls, data):
         for c in cls.clients:
@@ -88,12 +79,20 @@ class SocketHandler(websocket.WebSocketHandler):
 
     @classmethod
     def ws_dump(cls):
-        if shure.data_output_list:
-            out = {}
-            out['update'] = shure.data_output_list
+        out = {}
+        if shure.chart_update_list:
+            out['chart-update'] = shure.chart_update_list
+
+        if shure.data_update_list:
+            out['data-update'] = []
+            for tx in shure.data_update_list:
+                out['data-update'].append(tx.tx_json_mini())
+
+        if out:
             data = json.dumps(out)
             cls.broadcast(data)
-            del shure.data_output_list[:]
+        del shure.chart_update_list[:]
+        del shure.data_update_list[:]
 
 # https://github.com/tornadoweb/tornado/blob/master/demos/file_upload/file_receiver.py
 class UploadHandler(web.RequestHandler):
@@ -139,7 +138,7 @@ def twisted():
     # https://github.com/tornadoweb/tornado/issues/2308
     asyncio.set_event_loop(asyncio.new_event_loop())
     app.listen(config.config_tree['port'])
-    ioloop.PeriodicCallback(SocketHandler.ws_dump,50).start()
+    ioloop.PeriodicCallback(SocketHandler.ws_dump,500).start()
     ioloop.IOLoop.instance().start()
 
 # def socket_send():

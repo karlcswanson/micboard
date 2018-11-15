@@ -21,9 +21,15 @@ function wsConnect(){
   let socket = new WebSocket(new_uri);
 
   socket.onmessage = function(msg){
-    let mic_data = JSON.parse(msg.data)['update'];
+    let chart_data = JSON.parse(msg.data)['chart-update']
+    let mic_data = JSON.parse(msg.data)['data-update']
+
+    for (var i in chart_data) {
+      updateChart(chart_data[i])
+    }
+
     for (var i in mic_data) {
-      updateChart(mic_data[i])
+      updateSlot(mic_data[i])
     }
   };
 

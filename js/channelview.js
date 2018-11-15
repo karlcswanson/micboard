@@ -44,12 +44,6 @@ function updateSelector(data) {
     updateFrequency(slotSelector, data);
     transmitters[data.slot].frequency = data.frequency;
   }
-
-  // updateAudioChart(data);
-  // transmitters[data.slot].audio_level = data.audio_level;
-
-  // updateRfChart(data);
-  // transmitters[data.slot].rf_level = data.rf_level;
 }
 
 export function updateViewOnly(slotSelector, data) {

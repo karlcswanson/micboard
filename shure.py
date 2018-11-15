@@ -5,16 +5,10 @@ import threading
 import queue
 
 from receiver import WirelessReceiver
-from transmitter import WirelessTransmitter, data_output_list
+from transmitter import WirelessTransmitter, chart_update_list, data_update_list
 
 WirelessReceivers = []
 WirelessMessageQueue = queue.Queue()
-
-sample = {}
-sample['uhfr'] = []
-sample['qlxd'] = ['RF_ANTENNA','RX_RF_LVL','AUDIO_LVL']
-sample['ulxd'] = ['RF_ANTENNA','RX_RF_LVL','AUDIO_LVL']
-sample['axtd'] = []
 
 
 def get_receiver_by_ip(ip):

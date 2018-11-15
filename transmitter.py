@@ -7,7 +7,8 @@ import json
 
 import config
 
-data_output_list = []
+chart_update_list = []
+data_update_list = []
 
 BATTERY_TIMEOUT = 30*60
 
@@ -131,13 +132,21 @@ class WirelessTransmitter:
     def tx_json_mini(self):
         data = self.tx_json()
         data['timestamp'] = time.time()
-        # data['timestamp'] = datetime.datetime.now().isoformat()
-
         del data['raw']
         return data
 
-    def tx_json_push(self):
-        data_output_list.append(self.tx_json_mini())
+    def tx_json_chart(self):
+        audio_level = self.audio_level
+        rf_level = self.rf_level
+        timestamp = time.time()
+
+        return {
+                'audio_level': audio_level,
+                'rf_level': rf_level,
+                'slot': self.slot,
+                'timestamp': timestamp
+                }
+
 
     def parse_raw_tx(self,data,type):
         split = data.split()
@@ -146,7 +155,7 @@ class WirelessTransmitter:
         try:
             if split[0] == 'SAMPLE' and split[2] == 'ALL':
                 self.parse_sample(data,type)
-                self.tx_json_push()
+                chart_update_list.append(self.tx_json_chart())
 
             if split[0] in ['REP','REPLY','REPORT']:
                 if split[2] == rx_strings[type]['battery']:
@@ -157,6 +166,10 @@ class WirelessTransmitter:
                     self.set_frequency(split[3])
                 elif split[2] == rx_strings[type]['tx_offset']:
                     self.set_tx_offset(split[3])
+
+                if self not in data_update_list:
+                    data_update_list.append(self)
+
         except Exception as e:
             print("Index Error(TX): {}".format(data.split()))
             print(e)
@@ -173,3 +186,4 @@ class WirelessTransmitter:
             self.set_rf_level(23*(100-int(split[4]))/16 )
             self.set_battery(split[6])
             self.set_audio_level(50*int(split[7])/255)
+        self.samplestamp = time.time()
