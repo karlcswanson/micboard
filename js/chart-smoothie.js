@@ -4,19 +4,13 @@ import { transmitters } from './script.js'
 
 export var charts = {};
 
-
-export function updateAudioChart(data) {
-  // charts[data.slot].audioSeries.append(Date.now(), data.audio_level);
+export function updateChart(data) {
   let timestamp = new Date(data.timestamp * 1000)
 
   charts[data.slot].audioSeries.append(timestamp, data.audio_level * 2 + 100);
-  transmitters[data.slot].audio_level = data.audio_level;
-}
-
-export function updateRfChart(data) {
-  // charts[data.slot].rfSeries.append(Date.now(), data.rf_level);
-  let timestamp = new Date(data.timestamp * 1000)
   charts[data.slot].rfSeries.append(timestamp, data.rf_level * (100/115));
+
+  transmitters[data.slot].audio_level = data.audio_level;
   transmitters[data.slot].rf_level = data.rf_level;
 }
 
@@ -25,10 +19,9 @@ export function initChart(slotSelector) {
   chart.audioSeries = new TimeSeries();
   chart.rfSeries = new TimeSeries();
 
-  let audioCanvas = slotSelector.querySelector('canvas.audio-graph');
-  let rfCanvas = slotSelector.querySelector('canvas.rf-graph');
+  let slotCanvas = slotSelector.querySelector('canvas.slotgraph');
 
-  const rfOptions = {
+  const chartOptions = {
     responsive:true,
     millisPerPixel: 25,
     grid: {
@@ -42,42 +35,23 @@ export function initChart(slotSelector) {
     maxValue:200,
     minValue:0,
     // scaleSmoothing:.7,
-    limitFPS:20
-  };
-
-  const audioOptions = {
-    responsive:true,
-    millisPerPixel: 25,
-    grid: {
-      verticalSections:0,
-      strokeStyle:'transparent',
-      fillStyle:'transparent'
-    },
-    labels:{
-      disabled:true
-    },
-    maxValue:50,
-    minValue:0,
-    // scaleSmoothing:.7,
     limitFPS:0
   };
 
-  let audioChart = new SmoothieChart(audioOptions);
-  let rfChart = new SmoothieChart(rfOptions);
+  let slotChart = new SmoothieChart(chartOptions);
 
-  rfChart.addTimeSeries(chart.audioSeries, {
+  slotChart.addTimeSeries(chart.audioSeries, {
     strokeStyle: '#69B578',
     fillStyle: '',
     lineWidth: 2
   });
 
-  rfChart.addTimeSeries(chart.rfSeries, {
+  slotChart.addTimeSeries(chart.rfSeries, {
     strokeStyle: '#DC493A',
     fillStyle: '',
     lineWidth: 2
   });
 
-  // audioChart.streamTo(audioCanvas, 100);
-  rfChart.streamTo(rfCanvas, 100);
+  slotChart.streamTo(slotCanvas, 100);
   return chart;
 }

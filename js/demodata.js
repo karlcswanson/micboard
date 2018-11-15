@@ -2,6 +2,7 @@
 
 import { transmitters, displayList } from "./script.js"
 import { updateSlot } from "./channelview.js"
+import { updateChart } from "./chart-smoothie.js"
 // import { charts } from './chart-smoothie.js'
 
 
@@ -186,7 +187,7 @@ function randomCharts(){
     data.audio_level = randomAudioGenerator()
     data.rf_level = randomRfGenerator()
     data.timestamp = unixtimestamp()
-    updateSlot(data)
+    updateChart(data)
   })
 }
 

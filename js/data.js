@@ -2,6 +2,7 @@
 
 import { dataURL, ActivateErrorBoard } from "./script.js"
 import { updateSlot } from "./channelview.js"
+import { updateChart } from "./chart-smoothie.js"
 
 export function initLiveData() {
   setInterval(JsonUpdate, 1000);
@@ -22,7 +23,7 @@ function wsConnect(){
   socket.onmessage = function(msg){
     let mic_data = JSON.parse(msg.data)['update'];
     for (var i in mic_data) {
-      updateSlot(mic_data[i])
+      updateChart(mic_data[i])
     }
   };
 

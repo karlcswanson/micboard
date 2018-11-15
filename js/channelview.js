@@ -1,7 +1,7 @@
 "use strict"
 
 import { transmitters, displayList, config } from "./script.js"
-import { updateAudioChart, updateRfChart } from './chart-smoothie.js'
+// import { updateAudioChart } from './chart-smoothie.js'
 
 export function updateSlot(data) {
   if (document.getElementById("micboard").classList.contains("uploadmode")) {
@@ -45,10 +45,10 @@ function updateSelector(data) {
     transmitters[data.slot].frequency = data.frequency;
   }
 
-  updateAudioChart(data);
+  // updateAudioChart(data);
   // transmitters[data.slot].audio_level = data.audio_level;
 
-  updateRfChart(data);
+  // updateRfChart(data);
   // transmitters[data.slot].rf_level = data.rf_level;
 }
 

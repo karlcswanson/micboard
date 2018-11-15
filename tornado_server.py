@@ -139,7 +139,7 @@ def twisted():
     # https://github.com/tornadoweb/tornado/issues/2308
     asyncio.set_event_loop(asyncio.new_event_loop())
     app.listen(config.config_tree['port'])
-    ioloop.PeriodicCallback(SocketHandler.ws_dump,100).start()
+    ioloop.PeriodicCallback(SocketHandler.ws_dump,50).start()
     ioloop.IOLoop.instance().start()
 
 # def socket_send():

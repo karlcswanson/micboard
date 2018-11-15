@@ -10,7 +10,7 @@ import { settingsView } from './settings.js'
 import { updateSlot, updateViewOnly } from './channelview.js'
 import { initLiveData } from './data.js'
 
-import { updateAudioChart, updateRfChart, initChart, charts } from './chart-smoothie.js'
+import { initChart, charts } from './chart-smoothie.js'
 
 
 import '../css/style.css'

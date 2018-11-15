@@ -120,7 +120,7 @@ canvas.audio-graph{
   /* background-color: green; */
 }
 
-canvas.rf-graph {
+canvas.slotgraph {
   position: absolute;
   left: 0px;
   bottom: 25px;
@@ -385,7 +385,7 @@ canvas.rf-graph {
     height:50px;
     bottom:65px;
   }
-  canvas.rf-graph{
+  canvas.slotgraph{
     height:100px;
     bottom:15px;
   }
