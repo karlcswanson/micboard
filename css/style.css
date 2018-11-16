@@ -308,6 +308,10 @@ canvas.slotgraph {
     bottom: 40px;
     right: 5px;
   }
+
+  .navbar {
+    display: none;
+  }
 }
 
 
@@ -415,6 +419,10 @@ canvas.slotgraph {
     bottom: 35px;
     right: 5px;
   }
+
+  #micboard {
+    padding-top: 40px;
+  }
 }
 
 
@@ -516,4 +524,26 @@ canvas.slotgraph {
   width: 5px;
   height: 100%;
   /* background-color: var(--color-yellow); */
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.navbar-toggler {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.navbar-toggler {
+  outline: none !important;
+}
+
+a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
 }

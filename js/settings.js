@@ -120,11 +120,12 @@ export function settingsView(config) {
       document.getElementById('submit').addEventListener('click',function() {
         // Get the value from the editor
         console.log(editor.getValue())
-        sendSettings(editor.getValue())
+        // sendSettings(editor.getValue())
       });
 
       document.getElementById('download').addEventListener('click',function() {
         var a = document.createElement("a")
+        console.log(config)
         var file = new Blob([JSON.stringify(config)], {type: 'application/json'})
         a.href = URL.createObjectURL(file)
         a.download = 'config.json'

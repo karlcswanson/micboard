@@ -186,4 +186,3 @@ class WirelessTransmitter:
             self.set_rf_level(23*(100-int(split[4]))/16 )
             self.set_battery(split[6])
             self.set_audio_level(50*int(split[7])/255)
-        self.samplestamp = time.time()

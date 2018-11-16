@@ -54,6 +54,17 @@ $(document).ready(function() {
     autoRandom()
   }
 
+  else if(settings) {
+    fetch(dataURL)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      let config = data['config']
+      settingsView(config)
+    });
+  }
+
   else {
     initialMap()
     initLiveData()
@@ -120,7 +131,7 @@ $(document).ready(function() {
       $('.modal').modal('toggle');
     }
     if (e.keyCode == 83) {
-      settingsView(config);
+      window.location.href = '/?settings'
     }
 
     if (e.keyCode == 85) {

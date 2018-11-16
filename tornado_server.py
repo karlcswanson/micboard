@@ -116,15 +116,6 @@ class SettingsHandler(web.RequestHandler):
 
 
 
-
-#
-# def writeWeb(data):
-#     for c in cl:
-#         try:
-#             c.write_message(data)
-#         except:
-#             print("WS Error")
-
 def twisted():
     app = web.Application([
         (r'/', IndexHandler),
@@ -138,18 +129,5 @@ def twisted():
     # https://github.com/tornadoweb/tornado/issues/2308
     asyncio.set_event_loop(asyncio.new_event_loop())
     app.listen(config.config_tree['port'])
-    ioloop.PeriodicCallback(SocketHandler.ws_dump,500).start()
+    ioloop.PeriodicCallback(SocketHandler.ws_dump,50).start()
     ioloop.IOLoop.instance().start()
-
-# def socket_send():
-#     while True:
-#         if shure.data_output_list:
-#             out = {}
-#             out['update']= shure.data_output_list
-#
-#             data = json.dumps(out)
-#             SocketHandler.broadcast(data)
-#             # writeWeb(out)
-#             del shure.data_output_list[:]
-#
-#         time.sleep(.05)
