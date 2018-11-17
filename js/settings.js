@@ -1,17 +1,17 @@
 "use strict"
 
-import { discovered } from './script.js'
+import { discovered, ActivateErrorBoard } from './script.js'
 import JSONEditor from '@json-editor/json-editor'
 import '../node_modules/@json-editor/json-editor/dist/css/jsoneditor.min.css'
 
 
-export function settingsView(config) {
-  console.log(config)
+export function settingsView(configin) {
+  console.log(configin)
   $('#micboard').hide();
   $('.settings').show();
+  let editor_div = document.getElementById('editor_holder')
 
-
-  var editor = new JSONEditor(document.getElementById('editor_holder'),{
+  var editor = new JSONEditor(editor_div,{
         // Enable fetching schemas via ajax
         ajax: false,
         theme: 'bootstrap4',
@@ -78,9 +78,9 @@ export function settingsView(config) {
               }
 
             },
-            "displays" : {
+            "groups" : {
               "type" : "array",
-              "title": "Display Presets",
+              "title": "Display Groups",
               "format" :"table",
               "options" : {
                 "collapsed" : true,
@@ -90,9 +90,12 @@ export function settingsView(config) {
               },
               "items" : {
                 "type" : "object",
-                "title" : "display preset",
+                "title" : "display group",
                 "properties": {
-                  "preset" : {
+                  "title" : {
+                    "type" : "string"
+                  },
+                  "group" : {
                     "type" : "integer",
                     "enum" : [1,2,3,4,5,6,7,8,9]
                   },
@@ -113,24 +116,21 @@ export function settingsView(config) {
             }
           }
         },
-
-        // Seed the form with a starting value
-        startval: config
-      });
-      document.getElementById('submit').addEventListener('click',function() {
-        // Get the value from the editor
-        console.log(editor.getValue())
-        // sendSettings(editor.getValue())
+        startval: configin
       });
 
-      document.getElementById('download').addEventListener('click',function() {
-        var a = document.createElement("a")
-        console.log(config)
-        var file = new Blob([JSON.stringify(config)], {type: 'application/json'})
-        a.href = URL.createObjectURL(file)
-        a.download = 'config.json'
-        a.click()
-      });
+  document.getElementById('save').addEventListener('click',function() {
+    sendSettings(editor.getValue())
+  });
+
+  document.getElementById('download').addEventListener('click',function() {
+    var a = document.createElement("a")
+    console.log(configin)
+    var file = new Blob([JSON.stringify(configin)], {type: 'application/json'})
+    a.href = URL.createObjectURL(file)
+    a.download = 'config.json'
+    a.click()
+  });
 }
 
 

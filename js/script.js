@@ -28,7 +28,7 @@ export var config = {};
 var localURL = '';
 let start_slot = parseInt(getUrlParameter('start_slot'))
 let stop_slot = parseInt(getUrlParameter('stop_slot'))
-let preset = getUrlParameter('preset')
+let group = getUrlParameter('group')
 let demo = getUrlParameter('demo')
 let settings = getUrlParameter('settings')
 
@@ -69,45 +69,43 @@ $(document).ready(function() {
     initialMap()
     initLiveData()
   }
-  if(settings) {
-    setTimeout(settingsView, 50)
-  }
+  
 
   document.addEventListener("keydown", function(e) {
     if ( $('.settings').is(":visible")) {
       return
     }
     if (e.keyCode == 49) {
-      window.location.href = demo ? '/?demo=true&preset=1' : '/?preset=1'
+      window.location.href = demo ? '/?demo=true&group=1' : '/?group=1'
     }
     if (e.keyCode == 50) {
-      window.location.href = demo ? '/?demo=true&preset=2' : '/?preset=2';
+      window.location.href = demo ? '/?demo=true&group=2' : '/?group=2';
     }
     if (e.keyCode == 51) {
-      window.location.href = demo ? '/?demo=true&preset=3' : '/?preset=3';
+      window.location.href = demo ? '/?demo=true&group=3' : '/?group=3';
     }
     if (e.keyCode == 52) {
-      window.location.href = demo ? '/?demo=true&preset=4' : '/?preset=4';
+      window.location.href = demo ? '/?demo=true&group=4' : '/?group=4';
     }
     if (e.keyCode == 53) {
-      window.location.href = demo ? '/?demo=true&preset=5' : '/?preset=5';
+      window.location.href = demo ? '/?demo=true&group=5' : '/?group=5';
     }
     if (e.keyCode == 54) {
-      window.location.href = demo ? '/?demo=true&preset=6' : '/?preset=6';
+      window.location.href = demo ? '/?demo=true&group=6' : '/?group=6';
     }
     if (e.keyCode == 55) {
-      window.location.href = demo ? '/?demo=true&preset=7' : '/?preset=7';
+      window.location.href = demo ? '/?demo=true&group=7' : '/?group=7';
     }
     if (e.keyCode == 56) {
-      window.location.href = demo ? '/?demo=true&preset=8' : '/?preset=8';
+      window.location.href = demo ? '/?demo=true&group=8' : '/?group=8';
     }
     if (e.keyCode == 57) {
-      window.location.href = demo ? '/?demo=true&preset=9' : '/?preset=9';
+      window.location.href = demo ? '/?demo=true&group=9' : '/?group=9';
     }
 
     if (e.keyCode == 68) {
-      if (preset) {
-        window.location.href = demo ? '/?preset=' + preset : '/?demo=true&preset=' + preset
+      if (group) {
+        window.location.href = demo ? '/?group=' + group : '/?demo=true&group=' + group
       }
       else {
         window.location.href = demo ? '/' : '/?demo=true'
@@ -279,13 +277,13 @@ function dataFilterFromList(data){
 
 
 function displayListChooser(data) {
-  if (!isNaN(preset)) {
+  if (!isNaN(group)) {
     let plist = []
-    for (var p in data['config']['displays']) {
-      plist[data['config']['displays'][p]['preset']] = data['config']['displays'][p]['slots']
+    for (var p in data['config']['groups']) {
+      plist[data['config']['groups'][p]['group']] = data['config']['groups'][p]['slots']
     }
 
-    return plist[preset]
+    return plist[group]
   }
   else if (!isNaN(start_slot) && !isNaN(stop_slot)) {
     if (start_slot < stop_slot) {
