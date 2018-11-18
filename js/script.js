@@ -61,13 +61,17 @@ $(document).ready(function() {
     })
     .then(function(data) {
       let config = data['config']
+      mapGroups(data)
       settingsView(config)
     });
   }
 
   else {
     initialMap()
-    initLiveData()
+    setTimeout(function() {
+      initLiveData()
+    },25)
+
   }
 
 
@@ -354,13 +358,9 @@ function mapGroups(data) {
   }
   for(var p in plist) {
     str += '<p class="text-muted"><a class="nav-link" href="/?group=' + p + '">' + plist[p] + '</a></p>'
-    console.log(p + " - " + plist[p])
-
   }
-  console.log(str)
   div.innerHTML += str
 }
-
 
 // https://medium.com/developedbyjohn/equal-width-flex-items-a5ba1bfacb77
 // Shouldn't be fixing this with js, yet here I am.

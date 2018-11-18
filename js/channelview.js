@@ -71,6 +71,9 @@ function updateFrequency(slotSelector, data){
 
 
 function updateName(slotSelector, data) {
+  if (data.name == 'DEFAULT') {
+    data.name = 'SLOT ' + data.slot
+  }
   let split = data.name.split(' ')
   var prefix = split[0].replace(/\d+/,'')
   var number = parseInt(split[0].match(/\d+/))
