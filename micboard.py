@@ -22,7 +22,7 @@ def main():
     t3.start()
     t4.start()
     t5.start()
-    # tornado_server.socket_send()
+
 
 
 if __name__ == '__main__':

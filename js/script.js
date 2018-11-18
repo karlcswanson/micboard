@@ -69,7 +69,7 @@ $(document).ready(function() {
     initialMap()
     initLiveData()
   }
-  
+
 
   document.addEventListener("keydown", function(e) {
     if ( $('.settings').is(":visible")) {
@@ -340,8 +340,25 @@ function initialMap() {
       document.getElementById('micboard').appendChild(t);
     }
     infoToggle();
+    mapGroups(data)
     flexFix();
   });
+}
+
+function mapGroups(data) {
+  let plist = []
+  let div = document.getElementById('grouplist')
+  let str = ''
+  for (var p in data['config']['groups']) {
+    plist[data['config']['groups'][p]['group']] = data['config']['groups'][p]['title']
+  }
+  for(var p in plist) {
+    str += '<p class="text-muted"><a class="nav-link" href="/?group=' + p + '">' + plist[p] + '</a></p>'
+    console.log(p + " - " + plist[p])
+
+  }
+  console.log(str)
+  div.innerHTML += str
 }
 
 

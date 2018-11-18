@@ -53,7 +53,8 @@ rx_strings_rev = { 'qlxd': reverse_dict(rx_strings['qlxd']),
                    'axtd': reverse_dict(rx_strings['axtd'])}
 
 class WirelessTransmitter:
-    def __init__(self, channel, slot):
+    def __init__(self, rx, channel, slot):
+        self.rx = rx
         self.chan_name = 'DEFAULT'
         self.channel = channel
         self.frequency = '000000'
@@ -127,7 +128,8 @@ class WirelessTransmitter:
                 'antenna':self.antenna, 'audio_level': self.audio_level,
                 'rf_level': self.rf_level, 'frequency': self.frequency,
                 'battery':self.battery, 'tx_offset': self.tx_offset,
-                'status': self.tx_state(), 'slot': self.slot, 'raw': self.raw }
+                'status': self.tx_state(), 'slot': self.slot, 'raw': self.raw,
+                'type': self.rx.type }
 
     def tx_json_mini(self):
         data = self.tx_json()

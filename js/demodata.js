@@ -43,7 +43,7 @@ const name_sample = ['Fatai','Marshall','Delwin','Tracy TB','Backup',
 
 const prefix_sample = ['HH','BP'];
 
-const type_sample = ['ULXD','QLXD','ULXD','AXTD']
+const type_sample = ['uhfr','qlxd','ulxd','axtd']
 
 function randomIPGenerator() {
   return "192.168.103." + getRandomInt(50,150)

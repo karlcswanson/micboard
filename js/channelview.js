@@ -57,7 +57,12 @@ export function updateViewOnly(slotSelector, data) {
 }
 
 function updateTXOffset(slotSelector, data){
-  slotSelector.querySelector('p.offset').innerHTML = data.tx_offset + " dB";
+  if (data.type == 'uhfr') {
+    slotSelector.querySelector('p.offset').innerHTML = '';
+  }
+  else {
+    slotSelector.querySelector('p.offset').innerHTML = data.tx_offset + " dB";
+  }
 }
 
 function updateFrequency(slotSelector, data){

@@ -3,6 +3,9 @@ import socket
 import select
 import threading
 import queue
+import atexit
+# import signal
+import sys
 
 from receiver import WirelessReceiver
 from transmitter import WirelessTransmitter, chart_update_list, data_update_list
@@ -93,3 +96,18 @@ def SocketService():
 
         for sock in error_socks:
             rx.set_rx_com_status('DISCONNECTED')
+
+
+
+# @atexit.register
+def on_exit():
+    connected = [rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTED']
+    for rx in connected:
+        rx.disable_metering()
+    time.sleep(50)
+    print("IT DONE!")
+    sys.exit(0)
+
+# atexit.register(on_exit)
+# signal.signal(signal.SIGTERM, on_exit)
+# signal.signal(signal.SIGINT, on_exit)
