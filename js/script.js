@@ -240,10 +240,19 @@ function generateQR(){
 }
 
 
-export function ActivateErrorBoard(){
+export function ActivateMessageBoard(h1, p) {
+  if (!h1) {
+    h1 = 'Connection Error!'
+    p = 'Could not connect to the micboard server. Please refresh the page.'
+  }
+
   $('#micboard').hide()
   $('.settings').hide()
-  $('.server-error').show();
+  var eb = document.getElementsByClassName('message-board')[0]
+  eb.querySelector('h1').innerHTML = h1
+  eb.querySelector('p').innerHTML = p
+
+  $('.message-board').show();
 }
 
 
@@ -286,8 +295,15 @@ function displayListChooser(data) {
     for (var p in data['config']['groups']) {
       plist[data['config']['groups'][p]['group']] = data['config']['groups'][p]['slots']
     }
-
-    return plist[group]
+    let out = plist[group]
+    if (out) {
+      return out
+    }
+    else {
+      const h1 = 'Invalid Group'
+      const p = 'Setup groups in <a href="/?settings">settings</a>'
+      ActivateMessageBoard(h1,p)
+    }
   }
   else if (!isNaN(start_slot) && !isNaN(stop_slot)) {
     if (start_slot < stop_slot) {
@@ -317,7 +333,7 @@ function initialMap() {
     config = data['config']
     displayList = displayListChooser(data)
     console.log(displayList)
-
+    mapGroups(data)
 
     if (getUrlParameter('demo') !== 'true') {
 
@@ -344,7 +360,7 @@ function initialMap() {
       document.getElementById('micboard').appendChild(t);
     }
     infoToggle();
-    mapGroups(data)
+
     flexFix();
   });
 }

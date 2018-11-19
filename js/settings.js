@@ -1,6 +1,6 @@
 "use strict"
 
-import { discovered, ActivateErrorBoard } from './script.js'
+import { discovered, ActivateMessageBoard } from './script.js'
 import JSONEditor from '@json-editor/json-editor'
 import '../node_modules/@json-editor/json-editor/dist/css/jsoneditor.min.css'
 
@@ -142,10 +142,10 @@ function sendSettings(settings) {
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
-      var eb = document.getElementsByClassName('server-error')[0]
-      eb.querySelector('h1').innerHTML = 'Settings Saved'
-      eb.querySelector('p').innerHTML = 'Restart the micboard server and reload the page'
-      ActivateErrorBoard()
+      var eb = document.getElementsByClassName('message-board')[0]
+      const h1 = 'Settings Saved'
+      const p = 'Restart the micboard server and reload the page'
+      ActivateMessageBoard(h1,p)
       console.log(xhr.responseText)
     }
   };

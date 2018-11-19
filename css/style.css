@@ -420,9 +420,10 @@ canvas.slotgraph {
     right: 5px;
   }
 
-  #micboard {
+  .above-mid {
     padding-top: 40px;
   }
+
 }
 
 
@@ -498,13 +499,17 @@ canvas.slotgraph {
   padding-top: 4em;
 }
 
-.server-error {
+.message-board{
   display: none;
   background-color: var(--color-blue);
   color: var(--color-white);
   margin-left: -15px;
   margin-right: -15px;
   padding: 3em;
+}
+
+.message-board a {
+  color: inherit;
 }
 
 .settings {

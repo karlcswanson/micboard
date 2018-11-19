@@ -1,6 +1,6 @@
 "use strict"
 
-import { dataURL, ActivateErrorBoard } from "./script.js"
+import { dataURL, ActivateMessageBoard } from "./script.js"
 import { updateSlot } from "./channelview.js"
 import { updateChart } from "./chart-smoothie.js"
 
@@ -34,11 +34,11 @@ function wsConnect(){
   };
 
   socket.onclose = function(event){
-    ActivateErrorBoard();
+    ActivateMessageBoard();
   };
 
   socket.onerror = function(event){
-    ActivateErrorBoard();
+    ActivateMessageBoard();
   };
 }
 
