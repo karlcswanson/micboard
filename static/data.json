@@ -1,144 +1,307 @@
 {
-  "gif": [
+    "config": {
+        "groups": [
+            {
+                "group": 1,
+                "slots": [
+                    1,
+                    3,
+                    5,
+                    7
+                ],
+                "title": "group 1"
+            },
+            {
+                "group": 2,
+                "slots": [
+                    8,
+                    6,
+                    0,
+                    2
+                ],
+                "title": "group 2"
+            },
+            {
+                "group": 3,
+                "slots": [
+                    8,
+                    0,
+                    6,
+                    4,
+                    1,
+                    0,
+                    2
+                ],
+                "title": "blank test"
+            },
+            {
+                "group": 9,
+                "slots": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8
+                ],
+                "title": "all receivers"
+            },
+            {
+                "group": 6,
+                "slots": [
+                    4,
+                    3,
+                    2,
+                    7
+                ],
+                "title": "random 6s"
+            }
+        ],
+        "port": 8058,
+        "prefixes": [
+            "BP",
+            "HH",
+            "h"
+        ],
+        "slots": [
+            {
+                "channel": 1,
+                "ip": "10.231.1.151",
+                "slot": 1,
+                "type": "qlxd"
+            },
+            {
+                "channel": 1,
+                "ip": "10.231.1.152",
+                "slot": 2,
+                "type": "qlxd"
+            },
+            {
+                "channel": 1,
+                "ip": "10.231.1.153",
+                "slot": 3,
+                "type": "qlxd"
+            },
+            {
+                "channel": 1,
+                "ip": "10.231.1.154",
+                "slot": 4,
+                "type": "qlxd"
+            },
+            {
+                "channel": 1,
+                "ip": "10.231.1.155",
+                "slot": 5,
+                "type": "qlxd"
+            },
+            {
+                "channel": 1,
+                "ip": "10.231.1.156",
+                "slot": 6,
+                "type": "qlxd"
+            },
+            {
+                "channel": 1,
+                "ip": "10.231.1.157",
+                "slot": 7,
+                "type": "qlxd"
+            },
+            {
+                "channel": 1,
+                "ip": "10.231.1.158",
+                "slot": 8,
+                "type": "qlxd"
+            }
+        ]
+    },
+    "discovered": [],
+    "gif": [
         "sharon.gif",
         "marshall.gif",
-        "fatai.mp4",
+        "fatai.gif",
         "nick.gif",
-        "delwin.gif",
-        "hallie.gif"
+        "delwin.gif"
     ],
+    "jpg": [],
     "receivers": [
         {
-            "ip": "10.231.3.50",
+            "ip": "10.231.1.151",
+            "raw": {},
+            "status": "DISCONNECTED",
             "tx": [
                 {
-                    "battery": 1,
+                    "antenna": "XX",
+                    "audio_level": 0,
+                    "battery": 255,
                     "channel": 1,
-                    "frequency": "498.850",
-                    "name": "MD",
+                    "frequency": "000000",
+                    "name": "DEFAULT",
+                    "raw": {},
+                    "rf_level": 0,
                     "slot": 1,
-                    "status": "GOOD"
-                },
+                    "status": "RX_COM_ERROR",
+                    "tx_offset": 0,
+                    "type": "qlxd"
+                }
+            ],
+            "type": "qlxd"
+        },
+        {
+            "ip": "10.231.1.152",
+            "raw": {},
+            "status": "DISCONNECTED",
+            "tx": [
                 {
-                    "battery": 2,
+                    "antenna": "XX",
+                    "audio_level": 0,
+                    "battery": 255,
                     "channel": 1,
-                    "frequency": "498.850",
-                    "name": "James",
+                    "frequency": "000000",
+                    "name": "DEFAULT",
+                    "raw": {},
+                    "rf_level": 0,
                     "slot": 2,
-                    "status": "PREV_GOOD"
+                    "status": "RX_COM_ERROR",
+                    "tx_offset": 0,
+                    "type": "qlxd"
                 }
             ],
-            "type": "uhfr"
+            "type": "qlxd"
         },
         {
-            "ip": "10.231.3.44",
+            "ip": "10.231.1.153",
+            "raw": {},
+            "status": "DISCONNECTED",
             "tx": [
                 {
-                    "battery": 3,
+                    "antenna": "XX",
+                    "audio_level": 0,
+                    "battery": 255,
                     "channel": 1,
-                    "frequency": "531.975",
-                    "name": "Fatai",
+                    "frequency": "000000",
+                    "name": "DEFAULT",
+                    "raw": {},
+                    "rf_level": 0,
                     "slot": 3,
-                    "status": "PREV_REPLACE"
-                },
+                    "status": "RX_COM_ERROR",
+                    "tx_offset": 0,
+                    "type": "qlxd"
+                }
+            ],
+            "type": "qlxd"
+        },
+        {
+            "ip": "10.231.1.154",
+            "raw": {},
+            "status": "DISCONNECTED",
+            "tx": [
                 {
-                    "battery": 4,
+                    "antenna": "XX",
+                    "audio_level": 0,
+                    "battery": 255,
                     "channel": 1,
-                    "frequency": "531.975",
-                    "name": "Matt",
+                    "frequency": "000000",
+                    "name": "DEFAULT",
+                    "raw": {},
+                    "rf_level": 0,
                     "slot": 4,
-                    "status": "GOOD"
+                    "status": "RX_COM_ERROR",
+                    "tx_offset": 0,
+                    "type": "qlxd"
                 }
             ],
-            "type": "uhfr"
+            "type": "qlxd"
         },
         {
-            "ip": "10.231.3.36",
+            "ip": "10.231.1.155",
+            "raw": {},
+            "status": "DISCONNECTED",
             "tx": [
                 {
-                    "battery": 5,
+                    "antenna": "XX",
+                    "audio_level": 0,
+                    "battery": 255,
                     "channel": 1,
-                    "frequency": "532.550",
-                    "name": "Marshall",
+                    "frequency": "000000",
+                    "name": "DEFAULT",
+                    "raw": {},
+                    "rf_level": 0,
                     "slot": 5,
-                    "status": "COM_ERROR"
-                },
+                    "status": "RX_COM_ERROR",
+                    "tx_offset": 0,
+                    "type": "qlxd"
+                }
+            ],
+            "type": "qlxd"
+        },
+        {
+            "ip": "10.231.1.156",
+            "raw": {},
+            "status": "DISCONNECTED",
+            "tx": [
                 {
+                    "antenna": "XX",
+                    "audio_level": 0,
                     "battery": 255,
                     "channel": 1,
-                    "frequency": "532.550",
-                    "name": "Delwin",
+                    "frequency": "000000",
+                    "name": "DEFAULT",
+                    "raw": {},
+                    "rf_level": 0,
                     "slot": 6,
-                    "status": "CRITICAL"
+                    "status": "RX_COM_ERROR",
+                    "tx_offset": 0,
+                    "type": "qlxd"
                 }
             ],
-            "type": "uhfr"
+            "type": "qlxd"
         },
         {
-            "ip": "10.231.3.35",
+            "ip": "10.231.1.157",
+            "raw": {},
+            "status": "DISCONNECTED",
             "tx": [
                 {
+                    "antenna": "XX",
+                    "audio_level": 0,
                     "battery": 255,
                     "channel": 1,
-                    "frequency": "525.400",
-                    "name": "",
+                    "frequency": "000000",
+                    "name": "DEFAULT",
+                    "raw": {},
+                    "rf_level": 0,
                     "slot": 7,
-                    "status": "COM_ERROR"
-                },
+                    "status": "RX_COM_ERROR",
+                    "tx_offset": 0,
+                    "type": "qlxd"
+                }
+            ],
+            "type": "qlxd"
+        },
+        {
+            "ip": "10.231.1.158",
+            "raw": {},
+            "status": "DISCONNECTED",
+            "tx": [
                 {
+                    "antenna": "XX",
+                    "audio_level": 0,
                     "battery": 255,
                     "channel": 1,
-                    "frequency": "525.400",
-                    "name": "Backup",
+                    "frequency": "000000",
+                    "name": "DEFAULT",
+                    "raw": {},
+                    "rf_level": 0,
                     "slot": 8,
-                    "status": "GOOD"
+                    "status": "RX_COM_ERROR",
+                    "tx_offset": 0,
+                    "type": "qlxd"
                 }
             ],
-            "type": "uhfr"
-        },
-        {
-            "ip": "10.231.3.35",
-            "tx": [
-                {
-                    "battery": 255,
-                    "channel": 1,
-                    "frequency": "525.400",
-                    "name": "",
-                    "slot": 9,
-                    "status": "UNASSIGNED"
-                },
-                {
-                    "battery": 255,
-                    "channel": 1,
-                    "frequency": "525.400",
-                    "name": "",
-                    "slot": 10,
-                    "status": "UNASSIGNED"
-                }
-            ],
-            "type": "uhfr"
-        },
-        {
-            "ip": "10.231.3.35",
-            "tx": [
-                {
-                    "battery": 255,
-                    "channel": 1,
-                    "frequency": "525.400",
-                    "name": "Heather",
-                    "slot": 11,
-                    "status": "GOOD"
-                },
-                {
-                    "battery": 255,
-                    "channel": 1,
-                    "frequency": "525.400",
-                    "name": "Steve",
-                    "slot": 12,
-                    "status": "GOOD"
-                }
-            ],
-            "type": "uhfr"
+            "type": "qlxd"
         }
-    ]
+    ],
+    "url": "http://192.168.105.57:8058"
 }

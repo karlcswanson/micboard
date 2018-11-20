@@ -42,10 +42,13 @@ $(document).ready(function() {
     stop_slot = 12
   }
 
-  if (window.location['href'].includes('amazonaws')) {
-    dataURL = './static/data.json'
+  if (!window.location['href'].includes(':8058')) {
+    dataURL = 'data.json'
     demo = 'true'
+    start_slot = 1
+    stop_slot = 12
   }
+
   if (demo == 'true') {
     for(var i = start_slot; i <= stop_slot; i++) {
       transmitters[i] = randomDataGenerator(i);
@@ -335,7 +338,7 @@ function initialMap() {
     console.log(displayList)
     mapGroups(data)
 
-    if (getUrlParameter('demo') !== 'true') {
+    if (demo !== 'true') {
 
       dataFilterFromList(data)
     }
