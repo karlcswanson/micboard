@@ -11,7 +11,14 @@ chart_update_list = []
 data_update_list = []
 
 BATTERY_TIMEOUT = 30*60
+PEAK_TIMEOUT = 10
 
+
+peak_level = {
+                'qlxd': 80,
+                'ulxd': 80,
+                'uhfr': 98
+                }
 
 # https://github.com/gaetano-guerriero/pypjlink/blob/master/pypjlink/projector.py
 reverse_dict = lambda d: dict(zip(d.values(), d.keys()))
@@ -67,6 +74,7 @@ class WirelessTransmitter:
         self.antenna = 'XX'
         self.tx_offset = 0
         self.raw = defaultdict(dict)
+        self.peakstamp = time.time() - 60
 
 
     def set_frequency(self, frequency):
@@ -76,9 +84,28 @@ class WirelessTransmitter:
         self.antenna = antenna
 
     def set_audio_level(self, audio_level):
-        self.audio_level = int(audio_level)
+        audio_level = float(audio_level)
+        if self.rx.type in ['qlxd','ulxd']:
+            audio_level = int(2 * audio_level)
+
+        if self.rx.type == 'uhfr':
+            audio_level = int(100 * (audio_level / 255))
+
+        if audio_level >= peak_level[self.rx.type]:
+            self.peakstamp = time.time()
+            if self not in data_update_list:
+                data_update_list.append(self)
+
+        self.audio_level = audio_level
 
     def set_rf_level(self, rf_level):
+        rf_level = float(rf_level)
+        if self.rx.type in ['qlxd','ulxd']:
+            rf_level = 100 * (rf_level / 115)
+
+        if self.rx.type == 'uhfr':
+            rf_level = 100 * ((100 - rf_level) / 80)
+
         self.rf_level = int(rf_level)
 
     def set_battery(self, level):
@@ -102,6 +129,10 @@ class WirelessTransmitter:
         # WCCC Specific State for unassigned microphones
         name = self.chan_name.split()
         prefix = ''.join([i for i in name[0] if not i.isdigit()])
+
+        if (time.time() - self.peakstamp) < PEAK_TIMEOUT:
+            return 'AUDIO_PEAK'
+
         if prefix in config.config_tree['prefixes']:
             if len(name) == 1:
                 return 'UNASSIGNED'
@@ -185,6 +216,6 @@ class WirelessTransmitter:
 
         elif type == 'uhfr':
             self.set_antenna(split[3])
-            self.set_rf_level(23*(100-int(split[4]))/16 )
+            self.set_rf_level(split[4])
             self.set_battery(split[6])
-            self.set_audio_level(50*int(split[7])/255)
+            self.set_audio_level(split[7])

@@ -7,8 +7,8 @@ export var charts = {};
 export function updateChart(data) {
   let timestamp = new Date(data.timestamp * 1000)
 
-  charts[data.slot].audioSeries.append(timestamp, data.audio_level * 2 + 100);
-  charts[data.slot].rfSeries.append(timestamp, data.rf_level * (100/115));
+  charts[data.slot].audioSeries.append(timestamp, data.audio_level + 100);
+  charts[data.slot].rfSeries.append(timestamp, data.rf_level);
 
   transmitters[data.slot].audio_level = data.audio_level;
   transmitters[data.slot].rf_level = data.rf_level;

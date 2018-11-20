@@ -495,6 +495,23 @@ canvas.slotgraph {
   background: var(--color-purple);
 }
 
+
+@keyframes pulse {
+  0% {
+    background-color: var(--color-red);
+  }
+
+  100% {
+    background-color: var(--color-black);
+  }
+
+}
+
+.AUDIO_PEAK {
+  animation: pulse .5s infinite;
+}
+
+
 #largelink {
   padding-top: 4em;
 }
