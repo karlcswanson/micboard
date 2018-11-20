@@ -424,6 +424,10 @@ canvas.slotgraph {
     padding-top: 40px;
   }
 
+  .AUDIO_PEAK {
+    animation: pulse .5s infinite;
+  }
+
 }
 
 
@@ -498,7 +502,7 @@ canvas.slotgraph {
 
 @keyframes pulse {
   0% {
-    background-color: var(--color-red);
+    background: var(--color-red);
   }
 
   100% {
@@ -507,7 +511,7 @@ canvas.slotgraph {
 
 }
 
-.AUDIO_PEAK {
+.electrode.AUDIO_PEAK, .elinfo00 .AUDIO_PEAK, .elinfo10 .AUDIO_PEAK {
   animation: pulse .5s infinite;
 }
 
