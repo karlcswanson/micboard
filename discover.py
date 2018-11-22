@@ -57,7 +57,9 @@ def discover():
         if type is not '':
             device = dcid_get(dcid)
             channels = receiver_channel_map[device['model']]
-            # print('RX: {} at: {} DCID: {} BAND: {} CHANNELS: {}'.format(type,ip,dcid,device['band'],channels))
+            if __name__ == '__main__':
+                print('RX: {} at: {} DCID: {} BAND: {} CHANNELS: {}'.format(type,ip,dcid,device['band'],channels))
+
             add_rx(ip,type,channels)
 
 def add_rx(ip,rx_type,channels):
