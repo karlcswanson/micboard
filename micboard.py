@@ -15,7 +15,7 @@ def main():
     t1 = threading.Thread(target=shure.WirelessQueryQueue)
     t2 = threading.Thread(target=shure.SocketService)
     t3 = threading.Thread(target=tornado_server.twisted)
-    t4 = threading.Thread(target=discover.main)
+    t4 = threading.Thread(target=discover.discover)
     t5 = threading.Thread(target=shure.ProcessRXMessageQueue)
     t1.start()
     t2.start()

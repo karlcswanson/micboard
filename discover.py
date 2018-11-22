@@ -2,6 +2,11 @@ import socket
 import struct
 import json
 
+import os
+import platform
+from optparse import OptionParser
+import sys
+
 
 import xml.etree.ElementTree as ET
 
@@ -14,6 +19,7 @@ MCAST_PORT = 8427
 
 rx_types = ['UHFR','QLXD','ULXD','AXTD']
 
+DEFAULT_DCID_XML = '/Applications/Shure Update Utility.app/Contents/Resources/DCIDMap.xml'
 
 receiver_channel_map = {
                          'UR4S':        1,
@@ -33,6 +39,7 @@ discovered = []
 
 # https://stackoverflow.com/questions/603852/multicast-in-python
 def discover():
+    dcid_restore_from_file(config.app_dir('dcid.json'))
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
     # sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1) #mac fix
@@ -126,11 +133,51 @@ def updateDCIDmap(inputFile,outputFile):
     DCID_Parse(inputFile);
     dcid_save_to_file(outputFile)
 
+def DCIDMapCheck():
+    if platform.system() == 'Darwin' and os.path.isfile(DEFAULT_DCID_XML):
+        return DEFAULT_DCID_XML
+    return None
 
 def main():
-    # updateDCIDmap('DCIDmap.xml','dcid.json')
-    dcid_restore_from_file(config.app_dir('dcid.json'))
-    discover()
+    usage = "usage: %prog [options] arg"
+    parser = OptionParser(usage)
+
+    parser.add_option("-i", "--input", dest="input_file",
+                      help="DCID input file")
+    parser.add_option("-o", "--output", dest="output_file",
+                      help="output file")
+    parser.add_option("-c", "--convert", default=False,
+                      action="store_true", dest="convert",
+                      help="Generate dcid.json from input DCIDMap.xml file")
+    parser.add_option("-d", "--discover", default=True,
+                      action="store_true", dest="discover",
+                      help="Discover Shure devices on the network")
+
+    (options, args) = parser.parse_args()
+
+    if options.convert:
+        if not options.output_file:
+            print("use -o to specify a DCID output file destination")
+            sys.exit()
+
+        if options.input_file:
+            p = options.input_file
+
+        elif DCIDMapCheck():
+            p = DCIDMapCheck()
+
+        else:
+            print("Specify an input DCIDMap.xml file with -i or install Wireless Workbench")
+            sys.exit()
+
+        if p:
+            updateDCIDmap(p,options.output_file)
+            print("Converting {} to {}".format(p,options.output_file))
+        sys.exit()
+
+    if options.discover:
+        print("lets discover some stuff")
+        discover()
 
 
 if __name__ == '__main__':
