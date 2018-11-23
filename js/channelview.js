@@ -1,6 +1,7 @@
 "use strict"
 
 import { transmitters, displayList, config } from "./script.js"
+import { updateGIFBackgrounds } from "./gif.js"
 // import { updateAudioChart } from './chart-smoothie.js'
 
 export function updateSlot(data) {
