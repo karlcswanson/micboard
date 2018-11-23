@@ -39,6 +39,7 @@ const rfSample = ['AX','XB','XX','BRXX','XRXB','XXBR'];
 const name_sample = ['Fatai','Marshall','Delwin','Tracy TB','Backup',
                      'Steve','JE','Sharon','Bob','Del ACU','Troy',
                      'Matt','Matt ACU','Matt Sax','Karl','Jordan','Josue',
+                     'Ashlee','Shawn','James',
                      'Hallie','Rebekah','Dan','Stephen','Max','Tom','Nick',''];
 
 const prefix_sample = ['HH','BP'];

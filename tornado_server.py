@@ -34,12 +34,14 @@ def json_rxs(rxs):
 
     gifs = fileList('.gif')
     jpgs = fileList('.jpg')
+    mp4s = fileList('.mp4')
+
     url = localURL()
     discovered = discover.discovered
 
 
 
-    return json.dumps({'receivers': data, 'url': url, 'gif': gifs, 'jpg': jpgs,
+    return json.dumps({'receivers': data, 'url': url, 'gif': gifs, 'jpg': jpgs, 'mp4': mp4s,
                        'config': config.config_tree, 'discovered': discovered },
                        sort_keys=True, indent=4)
 

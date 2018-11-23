@@ -20,7 +20,7 @@ export var dataURL = '/data';
 // export var transmitters = {};
 export var transmitters = [];
 
-export var gif_list = {};
+export var mp4_list = {};
 export var discovered = []
 
 export var config = {};
@@ -331,7 +331,7 @@ function initialMap() {
   })
   .then(function(data) {
     discovered = data['discovered']
-    gif_list = data['gif']
+    mp4_list = data['mp4']
     localURL = data['url']
     config = data['config']
     displayList = displayListChooser(data)
