@@ -7,7 +7,7 @@ module.exports = {
   devtool: 'source-map',
   mode: 'development',
   // entry: ['./js/script.js','./js/gif.js','./js/chart-smoothie.js','./js/demodata.js'],
-  entry: ['./js/script.js'],
+  entry: ['whatwg-fetch','./js/script.js'],
   output: {
     path: path.resolve(__dirname, 'static'),
     filename: 'bundle.js'

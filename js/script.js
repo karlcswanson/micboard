@@ -3,6 +3,7 @@
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import QRCode from 'qrcode'
+import 'whatwg-fetch'
 
 import { updateGIFBackgrounds, uploadMode } from './gif.js'
 import { randomDataGenerator, autoRandom } from './demodata.js'
@@ -15,6 +16,7 @@ import { initChart, charts } from './chart-smoothie.js'
 
 import '../css/style.css'
 import '../node_modules/@ibm/plex/css/ibm-plex.css'
+import 'node_modules/dragula/dragula'
 
 export var dataURL = '/data';
 // export var transmitters = {};

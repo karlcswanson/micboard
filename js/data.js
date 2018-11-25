@@ -1,5 +1,6 @@
 "use strict"
 
+import 'whatwg-fetch'
 import { dataURL, ActivateMessageBoard } from "./script.js"
 import { updateSlot } from "./channelview.js"
 import { updateChart } from "./chart-smoothie.js"

@@ -17,12 +17,24 @@ PEAK_TIMEOUT = 10
 peak_level = {
                 'qlxd': 80,
                 'ulxd': 80,
-                'uhfr': 98
+                'uhfr': 100
                 }
 
 # https://github.com/gaetano-guerriero/pypjlink/blob/master/pypjlink/projector.py
 reverse_dict = lambda d: dict(zip(d.values(), d.keys()))
 
+
+uhfr_audio_table = {
+    0: 0,
+    1: 13,
+    3: 25,
+    7: 37,
+    15: 50,
+    31: 63,
+    63: 75,
+    127: 88,
+    255: 100
+}
 
 rx_strings = {}
 
@@ -67,6 +79,7 @@ class WirelessTransmitter:
         self.frequency = '000000'
         self.battery = 255
         self.prev_battery = 255
+        self.prev_battery_uhfr_raw = 255
         self.timestamp = time.time() - 60
         self.slot = slot
         self.audio_level = 0
@@ -89,7 +102,11 @@ class WirelessTransmitter:
             audio_level = int(2 * audio_level)
 
         if self.rx.type == 'uhfr':
-            audio_level = int(100 * (audio_level / 255))
+            try:
+                audio_level = uhfr_audio_table[audio_level]
+            except:
+                print("invalid Lookup UHFR Audio Value: {}".format(audio_level))
+            # audio_level = int(100 * (audio_level / 255))
 
         if audio_level >= peak_level[self.rx.type]:
             self.peakstamp = time.time()
@@ -109,13 +126,24 @@ class WirelessTransmitter:
         self.rf_level = int(rf_level)
 
     def set_battery(self, level):
+        self.prev_battery_uhfr_raw = self.battery
         if level == 'U':
             level = 255
         level = int(level)
         self.battery = level
+        ### UNTESTED
+
+
+        if self.rx.type == 'uhfr' and self.prev_battery_uhfr_raw != self.battery:
+            if self not in data_update_list:
+                print("UHFR Battery Change Slot: {}".format(self.slot))
+                data_update_list.append(self)
+
         if 1 <= level <= 5:
             self.prev_battery = level
             self.timestamp = time.time()
+
+
 
     def set_chan_name(self, chan_name):
         chan_name = chan_name.replace('_',' ')
@@ -219,3 +247,5 @@ class WirelessTransmitter:
             self.set_rf_level(split[4])
             self.set_battery(split[6])
             self.set_audio_level(split[7])
+        # if self.slot == 6:
+        #     print(data)
