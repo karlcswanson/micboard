@@ -1,17 +1,19 @@
 "use strict";
 import { TimeSeries, SmoothieChart } from 'smoothie'
-import { transmitters } from './script.js'
+import { transmitters, displayList } from './script.js'
 
 export var charts = {};
 
 export function updateChart(data) {
-  let timestamp = new Date(data.timestamp * 1000)
+  if (displayList.includes(data.slot)){
+    let timestamp = new Date(data.timestamp * 1000)
 
-  charts[data.slot].audioSeries.append(timestamp, data.audio_level + 100);
-  charts[data.slot].rfSeries.append(timestamp, data.rf_level);
+    charts[data.slot].audioSeries.append(timestamp, data.audio_level + 100);
+    charts[data.slot].rfSeries.append(timestamp, data.rf_level);
 
-  transmitters[data.slot].audio_level = data.audio_level;
-  transmitters[data.slot].rf_level = data.rf_level;
+    transmitters[data.slot].audio_level = data.audio_level;
+    transmitters[data.slot].rf_level = data.rf_level;
+  }
 }
 
 export function initChart(slotSelector) {

@@ -59,25 +59,31 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function randomNameGenerator(){
-  var prefix = prefix_sample[getRandomInt(0,1)];
-  var channel = getRandomInt(1,16).toString().padStart(2,'0');
+// function randomNameGenerator(){
+//   var prefix = prefix_sample[getRandomInt(0,1)];
+//   var channel = getRandomInt(1,16).toString().padStart(2,'0');
+//
+//   var len = name_sample.length;
+//   var index = getRandomInt(0,len-1);
+//   var name = name_sample[index]
+//   return prefix + channel + ' ' + name;
+// }
 
-  var len = name_sample.length;
-  var index = getRandomInt(0,len-1);
-  var name = name_sample[index]
-  return prefix + channel + ' ' + name;
+function randomNameGenerator() {
+  return name_sample[getRandomInt(0,name_sample.length)]
 }
 
 function current_names() {
   var names = []
 
   displayList.forEach(function(e) {
-    name = transmitters[e].name
-    let prefix = name.substring(0,2)
-    let number = name.substring(2,4)
-    name = name.substring(5)
-    names.push(name)
+    if (e != 0) {
+      name = transmitters[e].name
+      let prefix = name.substring(0,2)
+      let number = name.substring(2,4)
+      name = name.substring(5)
+      names.push(name)
+    }
   })
 
   return names
@@ -131,17 +137,16 @@ function randomBatteryGenerator() {
   return res;
 }
 
-export function randomDataGenerator(slot){
+export function randomDataGenerator(){
   var battery = randomBatteryGenerator();
 
   var res = {
-    "name": uniqueRandomNameGenerator(slot),
+    "name": randomNameGenerator(),
     "antenna": randomRfSampleGenerator(),
     "audio_level": randomAudioGenerator(),
     "rf_level": randomRfGenerator(),
     "tx_offset": randomTXOffsetGenerator(),
     "frequency": randomFrequencyGenerator(),
-    "slot": slot,
     "battery": battery.battery,
     "status": battery.status,
     "ip": randomIPGenerator(),
@@ -152,8 +157,44 @@ export function randomDataGenerator(slot){
 
 }
 
+
+
+export function seedTransmitters(dl) {
+  let len = dl.length
+  let names = randomNameListGenerator(len)
+  for (let i = 0; i < len; i++) {
+    let slot = dl[i]
+    if (slot != 0) {
+      let r = randomDataGenerator()
+      r['slot'] = slot
+      let n = "HH" + slot.toString().padStart(2,'0') + " " + names[i]
+      r['name'] = n
+      transmitters[slot] = r
+    }
+  }
+}
+
+
+export function randomNameListGenerator(length) {
+  let indexList = []
+  let outputList = []
+  while (indexList.length < length) {
+    let r = getRandomInt(0, name_sample.length)
+    if (indexList.indexOf(r) < 0) {
+      indexList.push(r)
+    }
+  }
+  for (let i = 0;i < length; i++) {
+    outputList[i] = name_sample[indexList[i]]
+  }
+  return outputList
+}
+
 function meteteredRandomDataGenerator(update){
-  var slot = displayList[getRandomInt(0, displayList.length - 1)];
+  var slot = 0
+  while (slot == 0) {
+    slot = displayList[getRandomInt(0, displayList.length - 1)];
+  }
   let data = JSON.parse(JSON.stringify(transmitters[slot]))
 
   var battery = randomBatteryGenerator();
@@ -184,16 +225,19 @@ function unixtimestamp() {
 
 function randomCharts(){
   displayList.forEach(function(n){
-    let data = JSON.parse(JSON.stringify(transmitters[n]))
-    data.audio_level = randomAudioGenerator()
-    data.rf_level = randomRfGenerator()
-    data.timestamp = unixtimestamp()
-    updateChart(data)
+    if (n != 0) {
+      let data = JSON.parse(JSON.stringify(transmitters[n]))
+      data.audio_level = randomAudioGenerator()
+      data.rf_level = randomRfGenerator()
+      data.timestamp = unixtimestamp()
+      updateChart(data)
+    }
   })
 }
 
 
 export function autoRandom(){
+
   setInterval(function(){
     updateSlot(meteteredRandomDataGenerator("name"));
   },1250)

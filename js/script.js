@@ -4,22 +4,23 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import QRCode from 'qrcode'
 import 'whatwg-fetch'
+import { Sortable, Plugins } from '@shopify/draggable';
+
 
 import { updateGIFBackgrounds, uploadMode } from './gif.js'
-import { randomDataGenerator, autoRandom } from './demodata.js'
+import { autoRandom, seedTransmitters } from './demodata.js'
 import { settingsView } from './settings.js'
-import { updateSlot, updateViewOnly } from './channelview.js'
+import { renderDisplayList, updateSlot } from './channelview.js'
 import { initLiveData } from './data.js'
 
-import { initChart, charts } from './chart-smoothie.js'
 
 
 import '../css/style.css'
 import '../node_modules/@ibm/plex/css/ibm-plex.css'
-import 'node_modules/dragula/dragula'
+
 
 export var dataURL = '/data';
-// export var transmitters = {};
+
 export var transmitters = [];
 
 export var mp4_list = {};
@@ -38,7 +39,6 @@ let settings = getUrlParameter('settings')
 export let displayList = []
 
 $(document).ready(function() {
-
   if(demo && (isNaN(start_slot) || isNaN(stop_slot))) {
     start_slot = 1
     stop_slot = 12
@@ -52,11 +52,7 @@ $(document).ready(function() {
   }
 
   if (demo == 'true') {
-    for(var i = start_slot; i <= stop_slot; i++) {
-      transmitters[i] = randomDataGenerator(i);
-    }
-    initialMap()
-    autoRandom()
+    initialMap(autoRandom)
   }
 
   else if(settings) {
@@ -72,11 +68,7 @@ $(document).ready(function() {
   }
 
   else {
-    initialMap()
-    setTimeout(function() {
-      initLiveData()
-    },25)
-
+    initialMap(initLiveData)
   }
 
 
@@ -158,14 +150,6 @@ function StartStopSlotList(start,stop) {
 	return out
 }
 
-// enables info-drawer toggle for mobile clients
-function infoToggle() {
-  $('.col-sm').click(function() {
-    if($(window).width() <= 980) {
-      $(this).find(".info-drawer").toggle();
-    }
-  });
-}
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
 function toggleFullScreen() {
@@ -308,6 +292,7 @@ function displayListChooser(data) {
       const h1 = 'Invalid Group'
       const p = 'Setup groups in <a href="/?settings">settings</a>'
       ActivateMessageBoard(h1,p)
+      return []
     }
   }
   else if (!isNaN(start_slot) && !isNaN(stop_slot)) {
@@ -326,7 +311,7 @@ function displayListChooser(data) {
   }
 }
 
-function initialMap() {
+function initialMap(callback) {
   fetch(dataURL)
   .then(function(response) {
     return response.json();
@@ -337,38 +322,26 @@ function initialMap() {
     localURL = data['url']
     config = data['config']
     displayList = displayListChooser(data)
-    console.log(displayList)
+
     mapGroups(data)
 
     if (demo !== 'true') {
-
       dataFilterFromList(data)
     }
 
-    document.getElementById("micboard").innerHTML = ""
-
-    var tx = transmitters;
-    for(let i in displayList) {
-      let j = displayList[i]
-      let t
-      if (j != 0) {
-        t = document.getElementById("column-template").content.cloneNode(true);
-        t.querySelector('div.col-sm').id = 'slot-' + tx[j].slot;
-        updateViewOnly(t,tx[j])
-        charts[tx[j].slot] = initChart(t);
-      }
-      else {
-        t = document.createElement('div')
-        t.className = "col-sm"
-      }
-
-      document.getElementById('micboard').appendChild(t);
+    if (demo) {
+      seedTransmitters(displayList)
     }
-    infoToggle();
 
-    flexFix();
+    if (displayList.length > 0) {
+      renderDisplayList(displayList);
+      if (callback) {
+        callback()
+      }
+    }
   });
 }
+
 
 function mapGroups(data) {
   let plist = []
@@ -383,12 +356,23 @@ function mapGroups(data) {
   div.innerHTML += str
 }
 
-// https://medium.com/developedbyjohn/equal-width-flex-items-a5ba1bfacb77
-// Shouldn't be fixing this with js, yet here I am.
-function flexFix () {
-  var flexFixHTML =   `<div class="col-sm flexfix"></div>
-                       <div class="col-sm flexfix"></div>
-                       <div class="col-sm flexfix"></div>
-                       <div class="col-sm flexfix"></div>`;
-  $("#micboard").append(flexFixHTML);
+
+export function GridLayout() {
+  const containerSelector = '#micboard';
+  const containers = document.querySelectorAll(containerSelector);
+
+  if (containers.length === 0) {
+    return false;
+  }
+
+  const swappable = new Sortable(containers, {
+    draggable: '.col-sm',
+    mirror: {
+      appendTo: containerSelector,
+      constrainDimensions: true,
+    },
+    plugins: [Plugins.ResizeMirror],
+  });
+
+  return swappable;
 }

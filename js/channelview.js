@@ -1,8 +1,49 @@
 "use strict"
 
-import { transmitters, displayList, config } from "./script.js"
+import { transmitters, displayList, config, GridLayout } from "./script.js"
 import { updateGIFBackgrounds } from "./gif.js"
+import { initChart, charts } from './chart-smoothie.js'
 // import { updateAudioChart } from './chart-smoothie.js'
+
+
+
+export function renderDisplayList(dl) {
+  console.log("DL :")
+  console.log(dl)
+  document.getElementById("micboard").innerHTML = ""
+
+  var tx = transmitters;
+  for(let i in dl) {
+    let j = dl[i]
+    let t
+    if (j != 0) {
+      t = document.getElementById("column-template").content.cloneNode(true);
+      t.querySelector('div.col-sm').id = 'slot-' + tx[j].slot;
+      updateViewOnly(t,tx[j])
+      charts[tx[j].slot] = initChart(t);
+    }
+    else {
+      t = document.createElement('div')
+      t.className = "col-sm"
+    }
+
+    document.getElementById('micboard').appendChild(t);
+  }
+
+  infoToggle();
+  flexFix();
+  // GridLayout();
+}
+
+// enables info-drawer toggle for mobile clients
+function infoToggle() {
+  $('.col-sm').click(function() {
+    if($(window).width() <= 980) {
+      $(this).find(".info-drawer").toggle();
+    }
+  });
+}
+
 
 export function updateSlot(data) {
   if (document.getElementById("micboard").classList.contains("uploadmode")) {
@@ -162,4 +203,14 @@ function updateDiversity(slotSelector, data){
     }
   }
   div.innerHTML = newBar
+}
+
+// https://medium.com/developedbyjohn/equal-width-flex-items-a5ba1bfacb77
+// Shouldn't be fixing this with js, yet here I am.
+function flexFix () {
+  var flexFixHTML =   `<div class="col-sm flexfix"></div>
+                       <div class="col-sm flexfix"></div>
+                       <div class="col-sm flexfix"></div>
+                       <div class="col-sm flexfix"></div>`;
+  $("#micboard").append(flexFixHTML);
 }
