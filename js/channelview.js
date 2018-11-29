@@ -6,18 +6,10 @@ import { initChart, charts } from './chart-smoothie.js'
 import { seedTransmitters } from './demodata.js'
 
 
-
 export function renderGroup(group) {
-  let dlist = []
-
-  for (var p in config['groups']) {
-    dlist[config['groups'][p]['group']] = config['groups'][p]['slots']
-  }
-
-  let out = dlist[group]
-
+  let out = micboard.groups[group]
   if (out) {
-    setdisplayList(dlist[group])
+    setdisplayList(out['slots'])
     if (micboard.url.demo) {
       seedTransmitters(micboard.displayList)
     }

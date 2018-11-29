@@ -331,7 +331,11 @@ function initialMap(callback) {
     micboard.discovered = data['discovered']
     micboard.mp4_list = data['mp4']
     micboard.localURL = data['url']
+    micboard.groups = groupTableBuilder(data)
     config = data['config']
+
+    console.log("plist: ")
+
 
     micboard.displayList = displayListChooser(data)
 
@@ -358,17 +362,30 @@ function initialMap(callback) {
   });
 }
 
+function groupTableBuilder(data) {
+  let plist = {}
+
+  for (var p in data['config']['groups']) {
+    let group = data['config']['groups'][p]['group']
+    let entry = {}
+    entry['slots'] = data['config']['groups'][p]['slots']
+    entry['title'] = data['config']['groups'][p]['title']
+    plist[group] = entry
+  }
+  return plist
+}
+
 
 function mapGroups(data) {
-  let plist = []
+  // let plist = []
   let div = document.getElementById('grouplist')
   let str = ''
-  for (var p in data['config']['groups']) {
-    plist[data['config']['groups'][p]['group']] = data['config']['groups'][p]['title']
-  }
-  for(var p in plist) {
+  // for (var p in data['config']['groups']) {
+  //   plist[data['config']['groups'][p]['group']] = data['config']['groups'][p]['title']
+  // }
+  for(var p in micboard.groups) {
     // str += '<p class="text-muted"><a class="nav-link" href="/?group=' + p + '">' + plist[p] + '</a></p>'
-    str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'" href="#">' + plist[p] + '</a></p>'
+    str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'" href="#">' + micboard.groups[p]['title'] + '</a></p>'
 
   }
   div.innerHTML += str
@@ -377,18 +394,15 @@ function mapGroups(data) {
     $('.collapse').collapse("hide")
   })
 
-  setTimeout(function(){
-    $('a.preset-link').each(function(index){
-      let id = parseInt($(this).attr('id')[9])
+  $('a.preset-link').each(function(index){
+    let id = parseInt($(this).attr('id')[9])
 
-      $(this).click(function(){
-        DeactivateMessageBoard()
-        renderGroup(id)
-        $('.collapse').collapse("hide")
-      })
+    $(this).click(function(){
+      DeactivateMessageBoard()
+      renderGroup(id)
+      $('.collapse').collapse("hide")
     })
-  },25)
-
+  })
 }
 
 export function setdisplayList(list) {
