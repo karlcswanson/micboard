@@ -21,16 +21,10 @@ import '../node_modules/@ibm/plex/css/ibm-plex.css'
 
 export var dataURL = '/data';
 
-export var transmitters = [];
-
-export var mp4_list = {};
-export var discovered = []
+// export var transmitters = [];
 
 export var config = {};
 
-
-
-var localURL = ''
 
 export var micboard = []
 
@@ -41,6 +35,7 @@ micboard.url.group = getUrlParameter('group')
 micboard.url.demo = getUrlParameter('demo')
 micboard.url.settings = getUrlParameter('settings')
 
+micboard.transmitters = []
 
 micboard.displayList = []
 
@@ -235,7 +230,7 @@ function generateQR(){
     width: 600
   };
 
-  let url = localURL + location.pathname + location.search;
+  let url = micboard.localURL + location.pathname + location.search;
   document.getElementById('largelink').href = url;
   document.getElementById('largelink').innerHTML = url;
   QRCode.toCanvas(document.getElementById('qrcode'), url, qrOptions, function (error) {
@@ -292,7 +287,7 @@ function dataFilterFromList(data){
       var tx = data.receivers[i].tx[j];
       tx.ip = data.receivers[i].ip;
       tx.type = data.receivers[i].type;
-      transmitters[tx.slot] = tx;
+      micboard.transmitters[tx.slot] = tx;
     }
   }
 }
@@ -338,10 +333,11 @@ function initialMap(callback) {
     return response.json();
   })
   .then(function(data) {
-    discovered = data['discovered']
-    mp4_list = data['mp4']
-    localURL = data['url']
+    micboard.discovered = data['discovered']
+    micboard.mp4_list = data['mp4']
+    micboard.localURL = data['url']
     config = data['config']
+
     micboard.displayList = displayListChooser(data)
 
     mapGroups(data)

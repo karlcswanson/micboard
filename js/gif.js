@@ -1,6 +1,6 @@
 "use strict";
 
-import { mp4_list } from "./script.js"
+import { micboard } from "./script.js"
 
 
 
@@ -55,7 +55,7 @@ export function updateGIFBackgrounds() {
   $(".mic_name").each(function(key, value){
 
     name = $(this).children(".name").html().toLowerCase() + ".mp4";
-    if(mp4_list.indexOf(name) > -1){
+    if(micboard.mp4_list.indexOf(name) > -1){
       $(this).css('background-image', 'url("bg/' + name + '")');
       $(this).css('background-size', 'cover');
       console.log(name);

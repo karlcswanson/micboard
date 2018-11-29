@@ -1,6 +1,6 @@
 "use strict";
 
-import { transmitters, micboard } from "./script.js"
+import { micboard } from "./script.js"
 import { updateSlot } from "./channelview.js"
 import { updateChart } from "./chart-smoothie.js"
 // import { charts } from './chart-smoothie.js'
@@ -78,7 +78,7 @@ function current_names() {
 
   micboard.displayList.forEach(function(e) {
     if (e != 0) {
-      name = transmitters[e].name
+      name = micboard.transmitters[e].name
       let prefix = name.substring(0,2)
       let number = name.substring(2,4)
       name = name.substring(5)
@@ -169,7 +169,7 @@ export function seedTransmitters(dl) {
       r['slot'] = slot
       let n = "HH" + slot.toString().padStart(2,'0') + " " + names[i]
       r['name'] = n
-      transmitters[slot] = r
+      micboard.transmitters[slot] = r
     }
   }
 }
@@ -195,7 +195,7 @@ function meteteredRandomDataGenerator(update){
   while (slot == 0) {
     slot = micboard.displayList[getRandomInt(0, micboard.displayList.length - 1)];
   }
-  let data = JSON.parse(JSON.stringify(transmitters[slot]))
+  let data = JSON.parse(JSON.stringify(micboard.transmitters[slot]))
 
   var battery = randomBatteryGenerator();
   data['timestamp'] = unixtimestamp()
@@ -226,7 +226,7 @@ function unixtimestamp() {
 function randomCharts(){
   micboard.displayList.forEach(function(n){
     if (n != 0) {
-      let data = JSON.parse(JSON.stringify(transmitters[n]))
+      let data = JSON.parse(JSON.stringify(micboard.transmitters[n]))
       data.audio_level = randomAudioGenerator()
       data.rf_level = randomRfGenerator()
       data.timestamp = unixtimestamp()

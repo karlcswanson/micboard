@@ -1,6 +1,6 @@
 "use strict"
 
-import { transmitters, setdisplayList, config, GridLayout, micboard, ActivateMessageBoard } from "./script.js"
+import { setdisplayList, config, GridLayout, micboard, ActivateMessageBoard } from "./script.js"
 import { updateGIFBackgrounds } from "./gif.js"
 import { initChart, charts } from './chart-smoothie.js'
 import { seedTransmitters } from './demodata.js'
@@ -37,7 +37,7 @@ export function renderDisplayList(dl) {
   console.log(dl)
   document.getElementById("micboard").innerHTML = ""
 
-  var tx = transmitters;
+  var tx = micboard.transmitters;
   for(let i in dl) {
     let j = dl[i]
     let t
@@ -83,33 +83,33 @@ function updateSelector(data) {
   var slot = "slot-" + data.slot;
   var slotSelector = document.getElementById(slot);
 
-  if (transmitters[data.slot].name != data.name) {
+  if (micboard.transmitters[data.slot].name != data.name) {
     updateName(slotSelector, data);
-    transmitters[data.slot].name = data.name;
+    micboard.transmitters[data.slot].name = data.name;
   }
 
-  if (transmitters[data.slot].status != data.status) {
+  if (micboard.transmitters[data.slot].status != data.status) {
     updateStatus(slotSelector, data);
-    transmitters[data.slot].status = data.status;
+    micboard.transmitters[data.slot].status = data.status;
   }
 
-  if (transmitters[data.slot].battery != data.battery) {
+  if (micboard.transmitters[data.slot].battery != data.battery) {
     updateBattery(slotSelector, data);
-    transmitters[data.slot].battery = data.battery;
+    micboard.transmitters[data.slot].battery = data.battery;
   }
 
-  if (transmitters[data.slot].antenna != data.antenna) {
+  if (micboard.transmitters[data.slot].antenna != data.antenna) {
     updateDiversity(slotSelector, data);
-    transmitters[data.slot].antenna = data.antenna;
+    micboard.transmitters[data.slot].antenna = data.antenna;
   }
 
-  if (transmitters[data.slot].tx_offset != data.tx_offset) {
+  if (micboard.transmitters[data.slot].tx_offset != data.tx_offset) {
     updateTXOffset(slotSelector, data);
-    transmitters[data.slot].tx_offset = data.tx_offset;
+    micboard.transmitters[data.slot].tx_offset = data.tx_offset;
   }
-  if (transmitters[data.slot].frequency != data.frequency) {
+  if (micboard.transmitters[data.slot].frequency != data.frequency) {
     updateFrequency(slotSelector, data);
-    transmitters[data.slot].frequency = data.frequency;
+    micboard.transmitters[data.slot].frequency = data.frequency;
   }
 }
 

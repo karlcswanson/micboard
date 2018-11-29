@@ -1,6 +1,6 @@
 "use strict";
 import { TimeSeries, SmoothieChart } from 'smoothie'
-import { transmitters, micboard } from './script.js'
+import { micboard } from './script.js'
 
 export var charts = {};
 
@@ -11,8 +11,8 @@ export function updateChart(data) {
     charts[data.slot].audioSeries.append(timestamp, data.audio_level + 100);
     charts[data.slot].rfSeries.append(timestamp, data.rf_level);
 
-    transmitters[data.slot].audio_level = data.audio_level;
-    transmitters[data.slot].rf_level = data.rf_level;
+    micboard.transmitters[data.slot].audio_level = data.audio_level;
+    micboard.transmitters[data.slot].rf_level = data.rf_level;
   }
 }
 

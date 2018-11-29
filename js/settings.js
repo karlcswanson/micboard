@@ -1,6 +1,6 @@
 "use strict"
 
-import { discovered, ActivateMessageBoard } from './script.js'
+import { ActivateMessageBoard } from './script.js'
 import JSONEditor from '@json-editor/json-editor'
 import '../node_modules/@json-editor/json-editor/dist/css/jsoneditor.min.css'
 
