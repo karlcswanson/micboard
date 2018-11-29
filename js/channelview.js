@@ -1,6 +1,6 @@
 "use strict"
 
-import { transmitters, displayList, setdisplayList, config, GridLayout, demo, ActivateMessageBoard } from "./script.js"
+import { transmitters, setdisplayList, config, GridLayout, micboard, ActivateMessageBoard } from "./script.js"
 import { updateGIFBackgrounds } from "./gif.js"
 import { initChart, charts } from './chart-smoothie.js'
 import { seedTransmitters } from './demodata.js'
@@ -18,10 +18,10 @@ export function renderGroup(group) {
 
   if (out) {
     setdisplayList(dlist[group])
-    if (demo) {
-      seedTransmitters(displayList)
+    if (micboard.url.demo) {
+      seedTransmitters(micboard.displayList)
     }
-    renderDisplayList(displayList)
+    renderDisplayList(micboard.displayList)
   }
   else {
     const h1 = 'Invalid Group'
@@ -74,7 +74,7 @@ export function updateSlot(data) {
   if (document.getElementById("micboard").classList.contains("uploadmode")) {
     return
   }
-  if (displayList.includes(data.slot)){
+  if (micboard.displayList.includes(data.slot)){
     updateSelector(data);
   }
 }

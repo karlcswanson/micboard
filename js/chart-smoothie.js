@@ -1,11 +1,11 @@
 "use strict";
 import { TimeSeries, SmoothieChart } from 'smoothie'
-import { transmitters, displayList } from './script.js'
+import { transmitters, micboard } from './script.js'
 
 export var charts = {};
 
 export function updateChart(data) {
-  if (displayList.includes(data.slot)){
+  if (micboard.displayList.includes(data.slot)){
     let timestamp = new Date(data.timestamp * 1000)
 
     charts[data.slot].audioSeries.append(timestamp, data.audio_level + 100);

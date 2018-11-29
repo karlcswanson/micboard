@@ -28,44 +28,50 @@ export var discovered = []
 
 export var config = {};
 
-var localURL = '';
-let start_slot = parseInt(getUrlParameter('start_slot'))
-let stop_slot = parseInt(getUrlParameter('stop_slot'))
-let group = getUrlParameter('group')
-export let demo = getUrlParameter('demo')
-let settings = getUrlParameter('settings')
 
 
-export var displayList = []
+var localURL = ''
+
+export var micboard = []
+
+micboard.url = []
+micboard.url.start_slot = parseInt(getUrlParameter('start_slot'))
+micboard.url.stop_slot = parseInt(getUrlParameter('stop_slot'))
+micboard.url.group = getUrlParameter('group')
+micboard.url.demo = getUrlParameter('demo')
+micboard.url.settings = getUrlParameter('settings')
+
+
+micboard.displayList = []
 
 $(document).ready(function() {
-  if(demo && (isNaN(start_slot) || isNaN(stop_slot))) {
-    start_slot = 1
-    stop_slot = 12
+  if(micboard.url.demo && (isNaN(micboard.url.start_slot) || isNaN(micboard.url.stop_slot))) {
+    micboard.url.start_slot = 1
+    micboard.url.stop_slot = 12
   }
 
   if (!window.location['href'].includes(':8058')) {
     dataURL = 'data.json'
-    demo = 'true'
-    start_slot = 1
-    stop_slot = 12
+    micboard.url.demo = 'true'
+    micboard.url.start_slot = 1
+    micboard.url.stop_slot = 12
   }
 
-  if (demo == 'true') {
+  if (micboard.url.demo == 'true') {
     initialMap(autoRandom)
   }
 
-  else if(settings) {
-    fetch(dataURL)
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(data) {
-      let config = data['config']
-      mapGroups(data)
-      settingsView(config)
-    });
-  }
+  // else if(settings) {
+  //   fetch(dataURL)
+  //   .then(function(response) {
+  //     return response.json();
+  //   })
+  //   .then(function(data) {
+  //     let config = data['config']
+  //     mapGroups(data)
+  //     settingsView(config)
+  //   });
+  // }
 
   else {
     initialMap(initLiveData)
@@ -114,11 +120,11 @@ $(document).ready(function() {
     }
 
     if (e.keyCode == 68) {
-      if (group) {
-        window.location.href = demo ? '/?group=' + group : '/?demo=true&group=' + group
+      if (micboard.url.group) {
+        window.location.href = micboard.url.demo ? '/?group=' + micboard.url.group : '/?demo=true&group=' + group
       }
       else {
-        window.location.href = demo ? '/' : '/?demo=true'
+        window.location.href = micboard.url.demo ? '/' : '/?demo=true'
       }
     }
 
@@ -139,7 +145,8 @@ $(document).ready(function() {
       $('.modal').modal('toggle');
     }
     if (e.keyCode == 83) {
-      window.location.href = '/?settings'
+      DeactivateMessageBoard()
+      settingsView(config)
     }
 
     if (e.keyCode == 85) {
@@ -293,12 +300,12 @@ function dataFilterFromList(data){
 
 
 function displayListChooser(data) {
-  if (!isNaN(group)) {
+  if (!isNaN(micboard.url.group)) {
     let plist = []
     for (var p in data['config']['groups']) {
       plist[data['config']['groups'][p]['group']] = data['config']['groups'][p]['slots']
     }
-    let out = plist[group]
+    let out = plist[micboard.url.group]
     if (out) {
       return out
     }
@@ -309,9 +316,9 @@ function displayListChooser(data) {
       return []
     }
   }
-  else if (!isNaN(start_slot) && !isNaN(stop_slot)) {
-    if (start_slot < stop_slot) {
-      return StartStopSlotList(start_slot,stop_slot)
+  else if (!isNaN(micboard.url.start_slot) && !isNaN(micboard.url.stop_slot)) {
+    if (micboard.url.start_slot < micboard.url.stop_slot) {
+      return StartStopSlotList(micboard.url.start_slot,micboard.url.stop_slot)
     }
   }
   else {
@@ -335,20 +342,24 @@ function initialMap(callback) {
     mp4_list = data['mp4']
     localURL = data['url']
     config = data['config']
-    displayList = displayListChooser(data)
+    micboard.displayList = displayListChooser(data)
 
     mapGroups(data)
 
-    if (demo !== 'true') {
+    if (micboard.url.settings) {
+      settingsView(config)
+    }
+
+    if (micboard.url.demo !== 'true') {
       dataFilterFromList(data)
     }
 
-    if (demo) {
-      seedTransmitters(displayList)
+    if (micboard.url.demo) {
+      seedTransmitters(micboard.displayList)
     }
 
-    if (displayList.length > 0) {
-      renderDisplayList(displayList);
+    if (micboard.displayList.length > 0) {
+      renderDisplayList(micboard.displayList);
       if (callback) {
         callback()
       }
@@ -370,11 +381,16 @@ function mapGroups(data) {
 
   }
   div.innerHTML += str
+  $('a#go-settings').click(function(){
+    settingsView(config)
+  })
+
   setTimeout(function(){
     $('a.preset-link').each(function(index){
       let id = parseInt($(this).attr('id')[9])
 
       $(this).click(function(){
+        DeactivateMessageBoard()
         renderGroup(id)
         $('.collapse').collapse("hide")
       })
@@ -384,7 +400,7 @@ function mapGroups(data) {
 }
 
 export function setdisplayList(list) {
-  displayList = list
+  micboard.displayList = list
 }
 
 export function GridLayout() {

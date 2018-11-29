@@ -1,6 +1,6 @@
 "use strict";
 
-import { transmitters, displayList } from "./script.js"
+import { transmitters, micboard } from "./script.js"
 import { updateSlot } from "./channelview.js"
 import { updateChart } from "./chart-smoothie.js"
 // import { charts } from './chart-smoothie.js'
@@ -76,7 +76,7 @@ function randomNameGenerator() {
 function current_names() {
   var names = []
 
-  displayList.forEach(function(e) {
+  micboard.displayList.forEach(function(e) {
     if (e != 0) {
       name = transmitters[e].name
       let prefix = name.substring(0,2)
@@ -193,7 +193,7 @@ function randomNameListGenerator(length) {
 function meteteredRandomDataGenerator(update){
   var slot = 0
   while (slot == 0) {
-    slot = displayList[getRandomInt(0, displayList.length - 1)];
+    slot = micboard.displayList[getRandomInt(0, micboard.displayList.length - 1)];
   }
   let data = JSON.parse(JSON.stringify(transmitters[slot]))
 
@@ -224,7 +224,7 @@ function unixtimestamp() {
 }
 
 function randomCharts(){
-  displayList.forEach(function(n){
+  micboard.displayList.forEach(function(n){
     if (n != 0) {
       let data = JSON.parse(JSON.stringify(transmitters[n]))
       data.audio_level = randomAudioGenerator()
