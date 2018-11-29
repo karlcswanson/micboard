@@ -137,7 +137,7 @@ function randomBatteryGenerator() {
   return res;
 }
 
-export function randomDataGenerator(){
+function randomDataGenerator(){
   var battery = randomBatteryGenerator();
 
   var res = {
@@ -175,7 +175,7 @@ export function seedTransmitters(dl) {
 }
 
 
-export function randomNameListGenerator(length) {
+function randomNameListGenerator(length) {
   let indexList = []
   let outputList = []
   while (indexList.length < length) {
@@ -242,7 +242,7 @@ export function autoRandom(){
     updateSlot(meteteredRandomDataGenerator("name"));
   },1250)
 
-  setInterval( function () {
+  setInterval( function (){
     updateSlot(meteteredRandomDataGenerator("antenna"))
   },90)
 

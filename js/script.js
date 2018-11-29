@@ -10,7 +10,7 @@ import { Sortable, Plugins } from '@shopify/draggable';
 import { updateGIFBackgrounds, uploadMode } from './gif.js'
 import { autoRandom, seedTransmitters } from './demodata.js'
 import { settingsView } from './settings.js'
-import { renderDisplayList, updateSlot } from './channelview.js'
+import { renderGroup, renderDisplayList, updateSlot } from './channelview.js'
 import { initLiveData } from './data.js'
 
 
@@ -32,11 +32,11 @@ var localURL = '';
 let start_slot = parseInt(getUrlParameter('start_slot'))
 let stop_slot = parseInt(getUrlParameter('stop_slot'))
 let group = getUrlParameter('group')
-let demo = getUrlParameter('demo')
+export let demo = getUrlParameter('demo')
 let settings = getUrlParameter('settings')
 
 
-export let displayList = []
+export var displayList = []
 
 $(document).ready(function() {
   if(demo && (isNaN(start_slot) || isNaN(stop_slot))) {
@@ -77,31 +77,40 @@ $(document).ready(function() {
       return
     }
     if (e.keyCode == 49) {
-      window.location.href = demo ? '/?demo=true&group=1' : '/?group=1'
+      DeactivateMessageBoard()
+      renderGroup(1)
     }
     if (e.keyCode == 50) {
-      window.location.href = demo ? '/?demo=true&group=2' : '/?group=2';
+      DeactivateMessageBoard()
+      renderGroup(2)
     }
     if (e.keyCode == 51) {
-      window.location.href = demo ? '/?demo=true&group=3' : '/?group=3';
+      DeactivateMessageBoard()
+      renderGroup(3)
     }
     if (e.keyCode == 52) {
-      window.location.href = demo ? '/?demo=true&group=4' : '/?group=4';
+      DeactivateMessageBoard()
+      renderGroup(4)
     }
     if (e.keyCode == 53) {
-      window.location.href = demo ? '/?demo=true&group=5' : '/?group=5';
+      DeactivateMessageBoard()
+      renderGroup(5)
     }
     if (e.keyCode == 54) {
-      window.location.href = demo ? '/?demo=true&group=6' : '/?group=6';
+      DeactivateMessageBoard()
+      renderGroup(6)
     }
     if (e.keyCode == 55) {
-      window.location.href = demo ? '/?demo=true&group=7' : '/?group=7';
+      DeactivateMessageBoard()
+      renderGroup(7)
     }
     if (e.keyCode == 56) {
-      window.location.href = demo ? '/?demo=true&group=8' : '/?group=8';
+      DeactivateMessageBoard()
+      renderGroup(8)
     }
     if (e.keyCode == 57) {
-      window.location.href = demo ? '/?demo=true&group=9' : '/?group=9';
+      DeactivateMessageBoard()
+      renderGroup(9)
     }
 
     if (e.keyCode == 68) {
@@ -244,6 +253,12 @@ export function ActivateMessageBoard(h1, p) {
   $('.message-board').show();
 }
 
+export function DeactivateMessageBoard() {
+  $('#micboard').show()
+  $('.settings').hide()
+  $('.message-board').hide();
+}
+
 
 
 
@@ -270,12 +285,11 @@ function dataFilterFromList(data){
       var tx = data.receivers[i].tx[j];
       tx.ip = data.receivers[i].ip;
       tx.type = data.receivers[i].type;
-      if (displayList.includes(tx.slot)) {
-        transmitters[tx.slot] = tx;
-      }
+      transmitters[tx.slot] = tx;
     }
   }
 }
+
 
 
 function displayListChooser(data) {
@@ -351,11 +365,27 @@ function mapGroups(data) {
     plist[data['config']['groups'][p]['group']] = data['config']['groups'][p]['title']
   }
   for(var p in plist) {
-    str += '<p class="text-muted"><a class="nav-link" href="/?group=' + p + '">' + plist[p] + '</a></p>'
+    // str += '<p class="text-muted"><a class="nav-link" href="/?group=' + p + '">' + plist[p] + '</a></p>'
+    str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'" href="#">' + plist[p] + '</a></p>'
+
   }
   div.innerHTML += str
+  setTimeout(function(){
+    $('a.preset-link').each(function(index){
+      let id = parseInt($(this).attr('id')[9])
+
+      $(this).click(function(){
+        renderGroup(id)
+        $('.collapse').collapse("hide")
+      })
+    })
+  },25)
+
 }
 
+export function setdisplayList(list) {
+  displayList = list
+}
 
 export function GridLayout() {
   const containerSelector = '#micboard';

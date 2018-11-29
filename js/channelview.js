@@ -1,9 +1,34 @@
 "use strict"
 
-import { transmitters, displayList, config, GridLayout } from "./script.js"
+import { transmitters, displayList, setdisplayList, config, GridLayout, demo, ActivateMessageBoard } from "./script.js"
 import { updateGIFBackgrounds } from "./gif.js"
 import { initChart, charts } from './chart-smoothie.js'
-// import { updateAudioChart } from './chart-smoothie.js'
+import { seedTransmitters } from './demodata.js'
+
+
+
+export function renderGroup(group) {
+  let dlist = []
+
+  for (var p in config['groups']) {
+    dlist[config['groups'][p]['group']] = config['groups'][p]['slots']
+  }
+
+  let out = dlist[group]
+
+  if (out) {
+    setdisplayList(dlist[group])
+    if (demo) {
+      seedTransmitters(displayList)
+    }
+    renderDisplayList(displayList)
+  }
+  else {
+    const h1 = 'Invalid Group'
+    const p = 'Setup groups in <a href="/?settings">settings</a>'
+    ActivateMessageBoard(h1,p)
+  }
+}
 
 
 
