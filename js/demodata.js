@@ -59,15 +59,6 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-// function randomNameGenerator(){
-//   var prefix = prefix_sample[getRandomInt(0,1)];
-//   var channel = getRandomInt(1,16).toString().padStart(2,'0');
-//
-//   var len = name_sample.length;
-//   var index = getRandomInt(0,len-1);
-//   var name = name_sample[index]
-//   return prefix + channel + ' ' + name;
-// }
 
 function randomNameGenerator() {
   return name_sample[getRandomInt(0,name_sample.length)]

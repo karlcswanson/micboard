@@ -57,7 +57,7 @@ export function renderDisplayList(dl) {
 
   infoToggle();
   flexFix();
-  // GridLayout();
+  GridLayout();
 }
 
 // enables info-drawer toggle for mobile clients

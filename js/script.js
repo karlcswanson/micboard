@@ -13,18 +13,13 @@ import { settingsView } from './settings.js'
 import { renderGroup, renderDisplayList, updateSlot } from './channelview.js'
 import { initLiveData } from './data.js'
 
-
-
 import '../css/style.css'
 import '../node_modules/@ibm/plex/css/ibm-plex.css'
 
 
 export var dataURL = '/data';
 
-// export var transmitters = [];
-
 export var config = {};
-
 
 export var micboard = []
 
@@ -379,6 +374,7 @@ function mapGroups(data) {
   div.innerHTML += str
   $('a#go-settings').click(function(){
     settingsView(config)
+    $('.collapse').collapse("hide")
   })
 
   setTimeout(function(){

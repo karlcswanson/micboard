@@ -10,6 +10,7 @@ export function settingsView(configin) {
   $('#micboard').hide();
   $('.settings').show();
   let editor_div = document.getElementById('editor_holder')
+  editor_div.innerHTML = ''
 
   var editor = new JSONEditor(editor_div,{
         // Enable fetching schemas via ajax
