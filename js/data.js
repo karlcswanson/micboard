@@ -1,7 +1,7 @@
 "use strict"
 
 import 'whatwg-fetch'
-import { dataURL, ActivateMessageBoard } from "./script.js"
+import { dataURL, ActivateMessageBoard, micboard } from "./script.js"
 import { updateSlot } from "./channelview.js"
 import { updateChart } from "./chart-smoothie.js"
 
@@ -19,9 +19,9 @@ function wsConnect(){
   }
   new_uri += "//" + loc.host;
   new_uri +=  "/ws";
-  let socket = new WebSocket(new_uri);
+  micboard.socket = new WebSocket(new_uri);
 
-  socket.onmessage = function(msg){
+  micboard.socket.onmessage = function(msg){
     let chart_data = JSON.parse(msg.data)['chart-update']
     let mic_data = JSON.parse(msg.data)['data-update']
 
@@ -34,11 +34,11 @@ function wsConnect(){
     }
   };
 
-  socket.onclose = function(event){
+  micboard.socket.onclose = function(event){
     ActivateMessageBoard();
   };
 
-  socket.onerror = function(event){
+  micboard.socket.onerror = function(event){
     ActivateMessageBoard();
   };
 }

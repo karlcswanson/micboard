@@ -110,7 +110,7 @@ class UploadHandler(web.RequestHandler):
                 f.write(body)
         self.write('OK')
 
-class SettingsHandler(web.RequestHandler):
+class SettingsBulkUploadHandler(web.RequestHandler):
     def post(self):
         settings = escape.json_decode(self.request.body)
         config.write_json_config(settings)
@@ -124,7 +124,7 @@ def twisted():
         (r'/ws', SocketHandler),
         (r'/data', JsonHandler),
         (r'/upload', UploadHandler),
-        (r'/settings', SettingsHandler),
+        (r'/api/settings/bulkuploader', SettingsBulkUploadHandler),
         (r'/static/(.*)', web.StaticFileHandler, {'path': config.app_dir('static')}),
         (r'/bg/(.*)', web.StaticFileHandler, {'path': config.get_gif_dir()})
     ])

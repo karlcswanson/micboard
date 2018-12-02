@@ -137,7 +137,7 @@ export function settingsView(configin) {
 
 
 function sendSettings(settings) {
-  var uri = "/settings";
+  var uri = "/api/settings/bulkuploader";
   var xhr = new XMLHttpRequest()
   xhr.open("POST", uri, true)
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')

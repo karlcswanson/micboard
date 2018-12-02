@@ -388,10 +388,29 @@ function mapGroups(data) {
     str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'" href="#">' + micboard.groups[p]['title'] + '</a></p>'
 
   }
+  str += '<p class="text-muted"><a class="nav-link" id="test-button" href="#">test button</a></p>'
   div.innerHTML += str
   $('a#go-settings').click(function(){
     settingsView(config)
     $('.collapse').collapse("hide")
+  })
+
+
+  $('a#test-button').click(function(){
+    let groupUpdate = {
+      'group': 1,
+      'title': "test",
+      'slots': [1,4,3,2,5]
+    }
+
+    let groupUpdates = []
+
+    groupUpdates.push(groupUpdate)
+
+    let msg  = {}
+    msg['group-update'] = groupUpdates
+    console.log(msg)
+    micboard.socket.send(JSON.stringify(msg))
   })
 
   $('a.preset-link').each(function(index){
