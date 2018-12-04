@@ -29,6 +29,7 @@ html,body {
 
 .fullHeight {
   height: 100%;
+  padding: 0px !important;
 }
 
 .col-sm {
@@ -197,7 +198,7 @@ canvas.slotgraph {
 
 
 
-@media (min-width: 1281px) {
+@media (min-width: 61281px) {
   .above-mid {
     height: 100%;
   }
@@ -315,7 +316,7 @@ canvas.slotgraph {
 }
 
 
-@media (max-width: 1280px) {
+@media (max-width: 61280px) {
   .electrode {
     display: none;
   }
@@ -421,7 +422,7 @@ canvas.slotgraph {
   }
 
   .above-mid {
-    padding-top: 40px;
+    padding-top: 38px;
   }
 
   .AUDIO_PEAK {
@@ -572,4 +573,50 @@ canvas.slotgraph {
 
 a:link, a:visited, a:hover, a:active {
     text-decoration: none;
+}
+
+
+
+.sidebar-nav {
+  display: none;
+  position: relative;
+  width: 400px;
+  height: 100%;
+  padding-top: 38px;
+  background-color: var(--color-blue);
+}
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+#micboard {
+  top: 0px;
+  position: absolute;
+  left: 0px;
+  min-height: 100px;
+}
+
+.sidebar-open #micboard {
+  left: 400px
+}
+
+.sidebar-open .sidebar-nav {
+  display: block;
+}
+
+.slot-prototype-list .col-sm .info-drawer {
+  display: none;
+}
+
+#eslotlist {
+  background-color: var(--color-black);
+  height:200px;
+  overflow: scroll;
+}
+
+#eslotlist .col-sm {
+  padding-left: 0px;
+  padding-right: 0px;
 }

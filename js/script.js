@@ -12,6 +12,7 @@ import { autoRandom, seedTransmitters } from './demodata.js'
 import { settingsView } from './settings.js'
 import { renderGroup, renderDisplayList, updateSlot } from './channelview.js'
 import { initLiveData } from './data.js'
+import { slotOrder, renderEditSlots } from './dnd.js'
 
 import '../css/style.css'
 import '../node_modules/@ibm/plex/css/ibm-plex.css'
@@ -397,20 +398,9 @@ function mapGroups(data) {
 
 
   $('a#test-button').click(function(){
-    let groupUpdate = {
-      'group': 1,
-      'title': "test",
-      'slots': [1,4,3,2,5]
-    }
-
-    let groupUpdates = []
-
-    groupUpdates.push(groupUpdate)
-
-    let msg  = {}
-    msg['group-update'] = groupUpdates
-    console.log(msg)
-    micboard.socket.send(JSON.stringify(msg))
+    $(".fullHeight").addClass("sidebar-open")
+    $('.collapse').collapse("hide")
+    GridLayout()
   })
 
   $('a.preset-link').each(function(index){
@@ -424,12 +414,32 @@ function mapGroups(data) {
   })
 }
 
+
+function testHI() {
+  let groupUpdate = {
+    'group': 1,
+    'title': "test",
+    'slots': [1,4,3,2,5]
+  }
+
+  let groupUpdates = []
+
+  groupUpdates.push(groupUpdate)
+
+  let msg  = {}
+  msg['group-update'] = groupUpdates
+  console.log(msg)
+  micboard.socket.send(JSON.stringify(msg))
+}
+
+
+
 export function setdisplayList(list) {
   micboard.displayList = list
 }
 
 export function GridLayout() {
-  const containerSelector = '#micboard';
+  const containerSelector = '.drag-container';
   const containers = document.querySelectorAll(containerSelector);
 
   if (containers.length === 0) {
@@ -442,8 +452,40 @@ export function GridLayout() {
       appendTo: containerSelector,
       constrainDimensions: true,
     },
-    plugins: [Plugins.ResizeMirror],
+
+    plugins: [Plugins.ResizeMirror]
+  });
+  renderEditSlots(calcEditSlots())
+  swappable.on('sortable:stop', (evt) => {
+    console.log("DROP")
+    // console.log(evt.dragEvent.source)
+
+    setTimeout(dropDrop,125)
   });
 
   return swappable;
+}
+
+function dropDrop() {
+  const dl = slotOrder()
+  setdisplayList(dl)
+  renderDisplayList(dl)
+
+  const eslots = calcEditSlots()
+  renderEditSlots(eslots)
+  // console.log("MapEdit: " + mapEditSlots([1,3,2]))
+}
+
+function calcEditSlots() {
+  const slots = config['slots']
+  console.log(slots)
+  let output = []
+  slots.forEach(function(slot) {
+    console.log(slot.slot)
+    if (micboard.displayList.indexOf(slot.slot) == -1 ){
+      output.push(slot.slot)
+    }
+  })
+
+  return output;
 }

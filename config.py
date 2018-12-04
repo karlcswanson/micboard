@@ -90,3 +90,21 @@ def read_json_config(file):
 def write_json_config(data):
     with open(config_path(),'w') as config_file:
         json.dump(data,config_file, indent=2, separators=(',',': '), sort_keys=True)
+
+
+
+def get_group_by_number(group_number):
+    for group in config_tree['groups']:
+        if group['group'] == int(group_number):
+            return group
+    return None
+
+def update_group(data):
+    group = get_group_by_number(data['group'])
+    if not group:
+        group = {}
+        group['group'] = data['group']
+        config_tree['groups'].append(group)
+
+    group['slots'] = data['slots']
+    group['title'] = data['title']
