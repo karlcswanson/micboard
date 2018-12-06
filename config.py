@@ -15,6 +15,9 @@ config_tree = {}
 gif_dir = ''
 
 
+group_update_list = []
+
+
 def local_app_dir():
     path = os.getcwd()
     if sys.platform.startswith('linux'):
@@ -91,7 +94,8 @@ def write_json_config(data):
     with open(config_path(),'w') as config_file:
         json.dump(data,config_file, indent=2, separators=(',',': '), sort_keys=True)
 
-
+def save_current_config():
+    return write_json_config(config_tree)
 
 def get_group_by_number(group_number):
     for group in config_tree['groups']:
@@ -100,6 +104,7 @@ def get_group_by_number(group_number):
     return None
 
 def update_group(data):
+    group_update_list.append(data)
     group = get_group_by_number(data['group'])
     if not group:
         group = {}
@@ -108,3 +113,5 @@ def update_group(data):
 
     group['slots'] = data['slots']
     group['title'] = data['title']
+
+    save_current_config()

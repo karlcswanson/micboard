@@ -1,19 +1,23 @@
 "use strict"
 
-import { setdisplayList, config, GridLayout, micboard, ActivateMessageBoard } from "./script.js"
+import { config, micboard, ActivateMessageBoard } from "./script.js"
 import { updateGIFBackgrounds } from "./gif.js"
 import { initChart, charts } from './chart-smoothie.js'
 import { seedTransmitters } from './demodata.js'
+import { updateEditor } from './dnd.js'
 
 
 export function renderGroup(group) {
+  micboard.group = group
+  console.log("group: " + micboard.group)
   let out = micboard.groups[group]
   if (out) {
-    setdisplayList(out['slots'])
+    micboard.displayList = out['slots']
     if (micboard.url.demo) {
       seedTransmitters(micboard.displayList)
     }
     renderDisplayList(micboard.displayList)
+    updateEditor(group)
   }
   else {
     const h1 = 'Invalid Group'
@@ -49,7 +53,6 @@ export function renderDisplayList(dl) {
 
   infoToggle();
   flexFix();
-  // GridLayout();
 }
 
 // enables info-drawer toggle for mobile clients

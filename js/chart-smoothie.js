@@ -22,7 +22,7 @@ export function initChart(slotSelector) {
   chart.rfSeries = new TimeSeries();
 
   let slotCanvas = slotSelector.querySelector('canvas.slotgraph');
-
+  console.log(slotCanvas)
   const chartOptions = {
     responsive:true,
     millisPerPixel: 25,
@@ -40,20 +40,20 @@ export function initChart(slotSelector) {
     limitFPS:0
   };
 
-  let slotChart = new SmoothieChart(chartOptions);
+  chart.slotChart = new SmoothieChart(chartOptions);
 
-  slotChart.addTimeSeries(chart.audioSeries, {
+  chart.slotChart.addTimeSeries(chart.audioSeries, {
     strokeStyle: '#69B578',
     fillStyle: '',
     lineWidth: 2
   });
 
-  slotChart.addTimeSeries(chart.rfSeries, {
+  chart.slotChart.addTimeSeries(chart.rfSeries, {
     strokeStyle: '#DC493A',
     fillStyle: '',
     lineWidth: 2
   });
 
-  slotChart.streamTo(slotCanvas, 100);
+  chart.slotChart.streamTo(slotCanvas, 100);
   return chart;
 }

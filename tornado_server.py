@@ -90,11 +90,15 @@ class SocketHandler(websocket.WebSocketHandler):
             for tx in shure.data_update_list:
                 out['data-update'].append(tx.tx_json_mini())
 
+        if config.group_update_list:
+            out['group-update'] = config.group_update_list
+
         if out:
             data = json.dumps(out)
             cls.broadcast(data)
         del shure.chart_update_list[:]
         del shure.data_update_list[:]
+        del config.group_update_list[:]
 
 # https://github.com/tornadoweb/tornado/blob/master/demos/file_upload/file_receiver.py
 class UploadHandler(web.RequestHandler):
@@ -129,8 +133,7 @@ class GroupUpdateHandler(web.RequestHandler):
     def post(self):
         data = json.loads(self.request.body)
         config.update_group(data)
-        print(config.config_tree['groups'])
-
+        print(data)
         self.write(data)
 
 

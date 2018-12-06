@@ -2,7 +2,7 @@
 
 import 'whatwg-fetch'
 import { dataURL, ActivateMessageBoard, micboard } from "./script.js"
-import { updateSlot } from "./channelview.js"
+import { renderGroup, dateSlot } from "./channelview.js"
 import { updateChart } from "./chart-smoothie.js"
 
 export function initLiveData() {
@@ -24,6 +24,7 @@ function wsConnect(){
   micboard.socket.onmessage = function(msg){
     let chart_data = JSON.parse(msg.data)['chart-update']
     let mic_data = JSON.parse(msg.data)['data-update']
+    let group_update = JSON.parse(msg.data)['group-update']
 
     for (var i in chart_data) {
       updateChart(chart_data[i])
@@ -31,6 +32,10 @@ function wsConnect(){
 
     for (var i in mic_data) {
       updateSlot(mic_data[i])
+    }
+
+    for (var i in group_update) {
+      updateGroup(group_update[i])
     }
   };
 
@@ -56,4 +61,14 @@ function JsonUpdate(){
       }
     }
   });
+}
+
+
+function updateGroup(data) {
+  console.log("dgroup: " + data.group + " mgroup: " + micboard.group)
+  micboard.groups[data.group]['title'] = data['title']
+  micboard.groups[data.group]['slots'] = data['slots']
+  if (micboard.group == data.group) {
+    renderGroup(data.group)
+  }
 }

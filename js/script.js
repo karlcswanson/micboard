@@ -4,7 +4,6 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import QRCode from 'qrcode'
 import 'whatwg-fetch'
-import { Sortable, Plugins } from '@shopify/draggable';
 
 
 import { updateGIFBackgrounds, uploadMode } from './gif.js'
@@ -12,7 +11,7 @@ import { autoRandom, seedTransmitters } from './demodata.js'
 import { settingsView } from './settings.js'
 import { renderGroup, renderDisplayList, updateSlot } from './channelview.js'
 import { initLiveData } from './data.js'
-import { slotOrder, renderEditSlots } from './dnd.js'
+import { groupEditToggle, initEditor } from './dnd.js'
 
 import '../css/style.css'
 import '../node_modules/@ibm/plex/css/ibm-plex.css'
@@ -70,7 +69,7 @@ $(document).ready(function() {
 
 
   document.addEventListener("keydown", function(e) {
-    if ( $('.settings').is(":visible")) {
+    if ( $('.settings').is(":visible") || $('.sidebar-nav').is(":visible")) {
       return
     }
     if (e.keyCode == 49) {
@@ -117,6 +116,10 @@ $(document).ready(function() {
       else {
         window.location.href = micboard.url.demo ? '/' : '/?demo=true'
       }
+    }
+
+    if (e.keyCode == 69) {
+      groupEditToggle()
     }
 
     if (e.keyCode == 70) {
@@ -360,6 +363,8 @@ function initialMap(callback) {
         callback()
       }
     }
+
+    initEditor()
   });
 }
 
@@ -398,9 +403,7 @@ function mapGroups(data) {
 
 
   $('a#test-button').click(function(){
-    $(".fullHeight").addClass("sidebar-open")
-    $('.collapse').collapse("hide")
-    GridLayout()
+
   })
 
   $('a.preset-link').each(function(index){
@@ -430,62 +433,4 @@ function testHI() {
   msg['group-update'] = groupUpdates
   console.log(msg)
   micboard.socket.send(JSON.stringify(msg))
-}
-
-
-
-export function setdisplayList(list) {
-  micboard.displayList = list
-}
-
-export function GridLayout() {
-  const containerSelector = '.drag-container';
-  const containers = document.querySelectorAll(containerSelector);
-
-  if (containers.length === 0) {
-    return false;
-  }
-
-  const swappable = new Sortable(containers, {
-    draggable: '.col-sm',
-    mirror: {
-      appendTo: containerSelector,
-      constrainDimensions: true,
-    },
-
-    plugins: [Plugins.ResizeMirror]
-  });
-  renderEditSlots(calcEditSlots())
-  swappable.on('sortable:stop', (evt) => {
-    console.log("DROP")
-    // console.log(evt.dragEvent.source)
-
-    setTimeout(dropDrop,125)
-  });
-
-  return swappable;
-}
-
-function dropDrop() {
-  const dl = slotOrder()
-  setdisplayList(dl)
-  renderDisplayList(dl)
-
-  const eslots = calcEditSlots()
-  renderEditSlots(eslots)
-  // console.log("MapEdit: " + mapEditSlots([1,3,2]))
-}
-
-function calcEditSlots() {
-  const slots = config['slots']
-  console.log(slots)
-  let output = []
-  slots.forEach(function(slot) {
-    console.log(slot.slot)
-    if (micboard.displayList.indexOf(slot.slot) == -1 ){
-      output.push(slot.slot)
-    }
-  })
-
-  return output;
 }

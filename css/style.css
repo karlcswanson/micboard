@@ -580,10 +580,10 @@ a:link, a:visited, a:hover, a:active {
 .sidebar-nav {
   display: none;
   position: relative;
-  width: 400px;
+  width: 300px;
   height: 100%;
   padding-top: 38px;
-  background-color: var(--color-blue);
+  background-color: var(--color-gray);
 }
 
 .row {
@@ -599,7 +599,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .sidebar-open #micboard {
-  left: 400px
+  left: 300px
 }
 
 .sidebar-open .sidebar-nav {
@@ -611,12 +611,29 @@ a:link, a:visited, a:hover, a:active {
 }
 
 #eslotlist {
-  background-color: var(--color-black);
-  height:200px;
+  /* background-color: var(--color-black); */
+  height: 400px;
   overflow: scroll;
 }
 
 #eslotlist .col-sm {
   padding-left: 0px;
   padding-right: 0px;
+}
+
+.sidebar-nav h1 {
+  font-family: 'IBM Plex Sans';
+  text-align: center;
+  color: var(--color-white);
+  padding-top: .35em;
+  padding-bottom: .35em;
+}
+
+.sidebar-nav .form-group {
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+}
+
+.sidebar-nav .form-group button {
+  margin-top: .5em;
 }
