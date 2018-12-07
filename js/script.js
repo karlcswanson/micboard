@@ -194,7 +194,7 @@ function toggleInfoDrawer() {
 
 
 function toggleBackgrounds() {
-  let selector = document.getElementById("micboard")
+  const selector = document.getElementById("micboard");
 
   if(selector.classList.contains("bg-std")) {
     swapClass(selector, "bg-std", "bg-gif");

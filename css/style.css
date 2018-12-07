@@ -4,21 +4,15 @@
   --color-black: #262626;
   --color-red: #DC493A;
   --color-red-dark: #64221B;
-  /* --color-yellow: #7E52A0; */
-  /* --color-yellow: #EE8434; */
   --color-yellow: #EF9D51 ;
   --color-yellow-dark: #6D4E30;
   --color-purple: #845A6D;
   --color-blue: #006494;
   --color-green: #69B578;
   --color-gray: #616161;
-  --color-white: #D7D7D7; /* good?
-  /* --color-white: #D7D7D7; */
-  /* --color-white:#888888; */
+  --color-white: #D7D7D7;
   --color-shadow: #616161;
 }
-
-
 
 html,body {
   background-color: var(--color-black);
@@ -41,7 +35,6 @@ html,body {
   font-family: 'IBM Plex Sans';
   font-weight: 300;
   font-style: italic;
-  /* text-shadow:1px 1px 1px var(--color-shadow); */
 }
 
 .uploadmode .mic_name .mic_id {
@@ -51,7 +44,6 @@ html,body {
 
 
 .above-mid .col-sm {
-  /* border: .5px solid; */
   border-color: var(--color-black);
   padding: 0px;
 }
@@ -62,7 +54,6 @@ html,body {
   font-family: 'IBM Plex Sans';
   font-weight: 400;
   font-style: bold;
-  /* text-shadow:2px 2px 0px #333333 */
 }
 
 
@@ -73,8 +64,6 @@ html,body {
   bottom: 250px;
   height: 125px;
   width: 100%;
-  /* background-color: purple; */
-  /* display: none; */
 }
 
 .battery-bars {
@@ -111,23 +100,12 @@ html,body {
   background-color: var(--color-green);
 }
 
-
-canvas.audio-graph{
-  position: absolute;
-  left: 0px;
-  bottom:125px;
-  width:100%;
-  height:100px;
-  /* background-color: green; */
-}
-
 canvas.slotgraph {
   position: absolute;
   left: 0px;
   bottom: 25px;
   width:100%;
   height:200px;
-  /* background-color: red; */
 }
 
 .offset {
@@ -140,7 +118,7 @@ canvas.slotgraph {
   color: var(--color-green);
 }
 
-.frequency{
+.frequency {
   position: absolute;
   bottom: 80px;
   right: 5px;
@@ -183,12 +161,8 @@ canvas.slotgraph {
   background-color: var(--color-black);
 }
 
-.chartzone  {
-  /* display: none; */
-}
 
 .errorzone {
-  /* display: block; */
   font-family: IBM Plex Mono;
   font-weight: 100;
   font-style: italic;
@@ -196,9 +170,8 @@ canvas.slotgraph {
 }
 
 
-
-
-@media (min-width: 61281px) {
+/* mic storage mode */
+@media (min-width: 1281px) {
   .above-mid {
     height: 100%;
   }
@@ -213,14 +186,10 @@ canvas.slotgraph {
 
   }
   .mic_name {
-    /* height: calc(100% - 250px); */
-    /* height: 100%; */
     display: flex;
     justify-content:center;
     align-items:center;
   }
-
-
 
   .info-drawer {
     /* height: 250px; */
@@ -229,7 +198,6 @@ canvas.slotgraph {
   .flexfix {
     display: none;
   }
-
 
   /* electrode & info drawer switch */
   /* no electrode or info-drawer */
@@ -315,22 +283,21 @@ canvas.slotgraph {
   }
 }
 
-
-@media (max-width: 61280px) {
+/* browser mode */
+@media (max-width: 1280px) {
   .electrode {
     display: none;
   }
   .info-drawer {
-    /* display: none; */
     height: 130px;
   }
 
-
-  .header{
+  .header {
     display:none;
 
   }
-  .col-sm{
+
+  .col-sm {
     vertical-align: middle;
     min-width: 256px;
     /* flex-grow: 0; */
@@ -338,13 +305,12 @@ canvas.slotgraph {
   }
 
 
-  .mic_id{
+  .mic_id {
     display: inline;
     font-weight: 400;
     font-size: 18pt;
     text-align: left;
     padding-left: 1em;
-    /* float:left; */
   }
 
   .name {
@@ -362,35 +328,22 @@ canvas.slotgraph {
     height: 15px;
     bottom: 115px;
   }
+
   .battery-bar {
     border-width:1px;
   }
 
-  .offset{
-    /* position: absolute; */
+  .offset {
     bottom: 75px;
     right: 5px;
-    /* font-family: 'Roboto Mono', monospace; */
-    /* font-weight: 100; */
-    /* font-style: italic; */
-    /* color: red; */
   }
 
-  .frequency{
-    /* position: absolute; */
+  .frequency {
     bottom: 25px;
     right: 5px;
-    /* font-family: 'Roboto Mono', monospace; */
-    /* font-weight: 100; */
-    /* font-style: italic; */
-    /* color: red; */
   }
 
-  canvas.audio-graph{
-    height:50px;
-    bottom:65px;
-  }
-  canvas.slotgraph{
+  canvas.slotgraph {
     height:100px;
     bottom:15px;
   }
@@ -401,7 +354,6 @@ canvas.slotgraph {
   .diversity-bar {
     border-width: 1px;
   }
-
 
   .errortype{
     position: absolute;
@@ -441,24 +393,18 @@ canvas.slotgraph {
 
 /* Background Colors */
 .GOOD{
-  /* background: #155724; */
   background: var(--color-green);
 }
 
 .PREV_GOOD{
-  /* background: #155724; */
   background: var(--color-blue);
 }
 
 .REPLACE {
-  /* background: #a2ab58; */
   background: var(--color-yellow);
 }
 
-.PREV_REPLACE{
-  /* background: purple; */
-  /* background: #a2ab58; */
-  /* background: var(-- color-yellow); */
+.PREV_REPLACE {
   background: repeating-linear-gradient(
   -45deg,
   var(--color-yellow-dark),
@@ -466,11 +412,9 @@ canvas.slotgraph {
   var(--color-black) 40px,
   var(--color-black) 80px
 );
-  /* background: var(--color-yellow-dark); */
 }
 
-.CRITICAL, .PREV_CRITICAL{
-  /* background: #a73737; */
+.CRITICAL, .PREV_CRITICAL {
   background: var(--color-red);
 }
 
@@ -482,21 +426,17 @@ canvas.slotgraph {
     var(--color-black) 40px,
     var(--color-black) 80px
   );
-  /* background: var(--color-red-dark); */
 }
 
-.UNASSIGNED{
-  /* background: black; */
+.UNASSIGNED {
   background: var(--color-black);
 }
 
 .TX_COM_ERROR {
-  /* background: black; */
   background: var(--color-black);
 }
 
 .RX_COM_ERROR {
-  /* background: black; */
   background: var(--color-purple);
 }
 
@@ -543,16 +483,6 @@ canvas.slotgraph {
   padding: 3em;
 }
 
-/* POP */
-.pop {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 5px;
-  height: 100%;
-  /* background-color: var(--color-yellow); */
-}
-
 .navbar-toggler {
   border: none;
 }
@@ -591,7 +521,7 @@ a:link, a:visited, a:hover, a:active {
   margin-right: 0px;
 }
 
-#micboard {
+.sidebar-open #micboard {
   top: 0px;
   position: absolute;
   left: 0px;
@@ -611,7 +541,6 @@ a:link, a:visited, a:hover, a:active {
 }
 
 #eslotlist {
-  /* background-color: var(--color-black); */
   height: 400px;
   overflow: scroll;
 }
