@@ -124,8 +124,14 @@ export function groupEditToggle() {
 }
 
 export function updateEditor(group) {
-  document.getElementById('sidebarTitle').innerHTML = "Group " + group
-  document.getElementById('groupTitle').value = micboard.groups[group]['title']
+  let title = '';
+
+  if (micboard.groups[group]) {
+    title = micboard.groups[group]['title'];
+  }
+
+  document.getElementById('sidebarTitle').innerHTML = 'Group ' + group;
+  document.getElementById('groupTitle').value = title;
 }
 
 

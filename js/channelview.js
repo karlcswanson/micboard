@@ -11,17 +11,20 @@ export function renderGroup(group) {
   micboard.group = group;
   console.log("group: " + micboard.group);
   let out = micboard.groups[group];
+
+  if (micboard.url.demo) {
+    seedTransmitters(micboard.displayList);
+  }
+
   if (out) {
     micboard.displayList = out.slots;
-    if (micboard.url.demo) {
-      seedTransmitters(micboard.displayList);
-    }
+
     renderDisplayList(micboard.displayList);
     updateEditor(group);
   } else {
-    const h1 = 'Invalid Group';
-    const p = 'Setup groups in <a href="/?settings">settings</a>';
-    ActivateMessageBoard(h1, p);
+    micboard.displayList = []
+    renderDisplayList(micboard.displayList)
+    updateEditor(group)
   }
 }
 

@@ -147,7 +147,7 @@ $(document).ready(function() {
 
 });
 
-function StartStopSlotList(start,stop) {
+function StartStopSlotList(start, stop) {
   let out = []
   for(let i = start; i <= stop; i++) {
     out.push(i)

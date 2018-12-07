@@ -23,7 +23,7 @@ export function initChart(slotSelector) {
   chart.rfSeries = new TimeSeries();
 
   const slotCanvas = slotSelector.querySelector('canvas.slotgraph');
-  console.log(slotCanvas)
+
   const chartOptions = {
     responsive: true,
     millisPerPixel: 25,
