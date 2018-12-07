@@ -13,7 +13,7 @@ import { renderGroup, renderDisplayList, updateSlot } from './channelview.js'
 import { initLiveData } from './data.js'
 import { groupEditToggle, initEditor } from './dnd.js'
 
-import '../css/style.css'
+import '../css/style.scss'
 import '../node_modules/@ibm/plex/css/ibm-plex.css'
 
 
@@ -29,6 +29,8 @@ micboard.url.stop_slot = parseInt(getUrlParameter('stop_slot'));
 micboard.url.group = getUrlParameter('group');
 micboard.url.demo = getUrlParameter('demo');
 micboard.url.settings = getUrlParameter('settings');
+micboard.displayMode = 'DESKTOP';
+micboard.infoDrawerMode = 'elinfo00'
 
 micboard.transmitters = [];
 
@@ -132,6 +134,10 @@ $(document).ready(function() {
       settingsView(config)
     }
 
+    if (e.keyCode == 84) {
+      toggleDisplayMode()
+    }
+
     if (e.keyCode == 85) {
       if(!document.getElementById("micboard").classList.contains("uploadmode")) {
         uploadMode();
@@ -171,24 +177,37 @@ function swapClass(selector, currentClass, newClass) {
 function toggleInfoDrawer() {
   let selector = document.getElementById("micboard")
 
-  if(selector.classList.contains("elinfo00")) {
-    swapClass(selector,"elinfo00","elinfo01")
-  }
-
-  else if(selector.classList.contains("elinfo01")) {
-    swapClass(selector,"elinfo01","elinfo10")
-  }
-
-  else if(selector.classList.contains("elinfo10")) {
-    swapClass(selector,"elinfo10","elinfo11")
-  }
-
-  else if(selector.classList.contains("elinfo11")) {
-    swapClass(selector,"elinfo11","elinfo00")
+  switch (micboard.infoDrawerMode) {
+    case 'elinfo00': swapClass(selector, 'elinfo00', 'elinfo01');
+      micboard.infoDrawerMode = 'elinfo01';
+      break;
+    case 'elinfo01': swapClass(selector, 'elinfo01', 'elinfo10');
+      micboard.infoDrawerMode = 'elinfo10';
+      break;
+    case 'elinfo10': swapClass(selector, 'elinfo10', 'elinfo11');
+      micboard.infoDrawerMode = 'elinfo11';
+      break;
+    case 'elinfo11': swapClass(selector, 'elinfo11', 'elinfo00');
+      micboard.infoDrawerMode = 'elinfo00';
+      break;
   }
 
   if (selector.classList.contains("uploadmode")) {
     showDivSize();
+  }
+}
+
+export function toggleDisplayMode() {
+  let selector = document.getElementById('container');
+  switch (micboard.displayMode) {
+    case 'DESKTOP': swapClass(selector, 'deskmode', 'tvmode');
+      micboard.displayMode = 'TV';
+      break;
+    case 'TV': swapClass(selector,'tvmode', 'deskmode');
+      micboard.displayMode = 'DESKTOP';
+      break;
+    default:
+      break;
   }
 }
 
@@ -369,16 +388,11 @@ function groupTableBuilder(data) {
 
 
 function mapGroups(data) {
-  // let plist = []
   let div = document.getElementById('grouplist')
   let str = ''
-  // for (var p in data['config']['groups']) {
-  //   plist[data['config']['groups'][p]['group']] = data['config']['groups'][p]['title']
-  // }
-  for(var p in micboard.groups) {
-    // str += '<p class="text-muted"><a class="nav-link" href="/?group=' + p + '">' + plist[p] + '</a></p>'
-    str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'" href="#">' + micboard.groups[p]['title'] + '</a></p>'
 
+  for(var p in micboard.groups) {
+    str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'" href="#">' + micboard.groups[p]['title'] + '</a></p>'
   }
   str += '<p class="text-muted"><a class="nav-link" id="test-button" href="#">test button</a></p>'
   div.innerHTML += str
@@ -401,22 +415,4 @@ function mapGroups(data) {
       $('.collapse').collapse("hide")
     })
   })
-}
-
-
-function testHI() {
-  let groupUpdate = {
-    'group': 1,
-    'title': "test",
-    'slots': [1,4,3,2,5]
-  }
-
-  let groupUpdates = []
-
-  groupUpdates.push(groupUpdate)
-
-  let msg  = {}
-  msg['group-update'] = groupUpdates
-  console.log(msg)
-  micboard.socket.send(JSON.stringify(msg))
 }

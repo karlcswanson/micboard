@@ -3,7 +3,7 @@
 import { Sortable, Plugins } from '@shopify/draggable';
 
 
-import { micboard, config } from "./script.js"
+import { micboard, config, toggleDisplayMode } from "./script.js"
 import { initChart, charts } from './chart-smoothie.js'
 import { renderDisplayList, updateViewOnly } from "./channelview.js"
 
@@ -115,6 +115,9 @@ export function groupEditToggle() {
     swappable.destroy()
   }
   else {
+    if (micboard.displayMode == 'TV') {
+      toggleDisplayMode()
+    }
     container.classList.add('sidebar-open')
     GridLayout()
   }

@@ -171,7 +171,7 @@ canvas.slotgraph {
 
 
 /* mic storage mode */
-@media (min-width: 1281px) {
+.tvmode {
   .above-mid {
     height: 100%;
   }
@@ -229,9 +229,6 @@ canvas.slotgraph {
     display: none;
   }
 
-  .elinfo01 .col-sm .mic_name {
-    /* background-color: black; */
-  }
 
   /* info drawer */
   .elinfo10 .col-sm .mic_name {
@@ -284,7 +281,7 @@ canvas.slotgraph {
 }
 
 /* browser mode */
-@media (max-width: 1280px) {
+.deskmode {
   .electrode {
     display: none;
   }
