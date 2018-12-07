@@ -11,26 +11,26 @@ import sys
 import xml.etree.ElementTree as ET
 
 import config
-import shure
+
 
 MCAST_GRP = '239.255.254.253'
 MCAST_PORT = 8427
 
 
-rx_types = ['UHFR','QLXD','ULXD','AXTD']
+rx_types = ['UHFR', 'QLXD', 'ULXD', 'AXTD']
 
 DEFAULT_DCID_XML = '/Applications/Shure Update Utility.app/Contents/Resources/DCIDMap.xml'
 
-receiver_channel_map = {
-                         'UR4S':        1,
-                         'QLX-DSingle': 1,
-                         'ULX-DSingle': 1,
-                         'UR4D':        2,
-                         'ULX-DDual':   2,
-                         'AD4D':        2,
-                         'ULX-DQuad':   4,
-                         'AD4Q':        4
-                       }
+RX_CHANNEL_MAP = {
+    'UR4S': 1,
+    'QLX-DSingle': 1,
+    'ULX-DSingle': 1,
+    'UR4D': 2,
+    'ULX-DDual': 2,
+    'AD4D': 2,
+    'ULX-DQuad': 4,
+    'AD4Q': 4
+}
 
 
 deviceList = {}
@@ -56,7 +56,7 @@ def discover():
         dcid = dcid_find(data)
         if type is not '':
             device = dcid_get(dcid)
-            channels = receiver_channel_map[device['model']]
+            channels = RX_CHANNEL_MAP[device['model']]
             if __name__ == '__main__':
                 print('RX: {} at: {} DCID: {} BAND: {} CHANNELS: {}'.format(type,ip,dcid,device['band'],channels))
 

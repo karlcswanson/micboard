@@ -1,8 +1,6 @@
 import time
-import datetime
 import queue
 import socket
-import os
 from collections import defaultdict
 
 from transmitter import WirelessTransmitter
@@ -24,7 +22,7 @@ class WirelessReceiver:
 
     def socket_connect(self):
         try:
-            if self.type in ['qlxd','ulxd','axtd']:
+            if self.type in ['qlxd', 'ulxd', 'axtd']:
                 self.f = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #TCP
                 self.f.settimeout(.2)
                 self.f.connect((self.ip, PORT))
@@ -68,14 +66,14 @@ class WirelessReceiver:
 
     def parse_raw_rx(self, data):
         data = data.strip('< >').strip('* ')
-        data = data.replace('{','').replace('}','')
+        data = data.replace('{', '').replace('}', '')
         split = data.split()
         try:
-            if split[0] in ['REP','REPORT','SAMPLE'] and split[1] in ['1','2','3','4']:
+            if split[0] in ['REP', 'REPORT', 'SAMPLE'] and split[1] in ['1', '2', '3', '4']:
                 tx = self.get_transmitter_by_channel(int(split[1]))
-                tx.parse_raw_tx(data,self.type)
+                tx.parse_raw_tx(data, self.type)
 
-            elif split[0] in ['REP','REPORT']:
+            elif split[0] in ['REP', 'REPORT']:
                 self.raw[split[1]] = ' '.join(split[2:])
         except:
             print("Index Error(RX): {}".format(data))
@@ -89,7 +87,7 @@ class WirelessReceiver:
 
     def get_all(self):
         ret = []
-        if self.type in ['qlxd','ulxd','axtd']:
+        if self.type in ['qlxd', 'ulxd', 'axtd']:
             for i in self.get_channels():
                 ret.append('< GET {} ALL >'.format(i))
 
@@ -103,7 +101,7 @@ class WirelessReceiver:
 
     def get_query_strings(self):
         ret = []
-        if self.type in ['qlxd','ulxd']:
+        if self.type in ['qlxd', 'ulxd']:
             for i in self.get_channels():
                 ret.append('< GET {} CHAN_NAME >'.format(i))
                 ret.append('< GET {} BATT_BARS >'.format(i))
@@ -123,15 +121,15 @@ class WirelessReceiver:
 
 
     def enable_metering(self, interval):
-        if self.type in ['qlxd','ulxd','axtd']:
+        if self.type in ['qlxd', 'ulxd', 'axtd']:
             for i in self.get_channels():
-                self.writeQueue.put('< SET {} METER_RATE {:05d} >'.format(i,int(interval * 1000)))
+                self.writeQueue.put('< SET {} METER_RATE {:05d} >'.format(i, int(interval * 1000)))
         elif self.type == 'uhfr':
             for i in self.get_channels():
-                self.writeQueue.put('* METER {} ALL {:03d} *'.format(i,int(interval/30 * 1000)))
+                self.writeQueue.put('* METER {} ALL {:03d} *'.format(i, int(interval/30 * 1000)))
 
     def disable_metering(self):
-        if self.type in ['qlxd','ulxd','axtd']:
+        if self.type in ['qlxd', 'ulxd', 'axtd']:
             for i in self.get_channels():
                 self.writeQueue.put('< SET {} METER_RATE 0 >'.format(i))
         elif self.type == 'uhfr':
@@ -145,5 +143,8 @@ class WirelessReceiver:
             if self.rx_com_status == 'DISCONNECTED':
                 data['status'] = 'RX_COM_ERROR'
             tx_data.append(data)
-        data = {'ip': self.ip, 'type': self.type, 'status': self.rx_com_status, 'raw': self.raw, 'tx': tx_data }
+        data = {
+            'ip': self.ip, 'type': self.type, 'status': self.rx_com_status,
+            'raw': self.raw, 'tx': tx_data
+        }
         return data

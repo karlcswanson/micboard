@@ -1,11 +1,9 @@
-from tornado import websocket, web, ioloop, escape
 import json
-import threading
-import time
-import datetime
 import os
 import asyncio
 import socket
+
+from tornado import websocket, web, ioloop, escape
 
 import shure
 import config
@@ -15,9 +13,9 @@ import discover
 # https://stackoverflow.com/questions/5899497/checking-file-extension
 def fileList(extension):
     files = []
-    fileList = os.listdir(config.gif_dir)
+    dir_list = os.listdir(config.gif_dir)
     # print(fileList)
-    for file in fileList:
+    for file in dir_list:
         if file.lower().endswith(extension):
             files.append(file)
     return files
@@ -25,7 +23,7 @@ def fileList(extension):
 # Its not efficecent to get the IP each time, but for now we'll assume server might have dynamic IP
 def localURL():
     ip = socket.gethostbyname(socket.gethostname())
-    return 'http://{}:{}'.format(ip,config.config_tree['port'])
+    return 'http://{}:{}'.format(ip, config.config_tree['port'])
 
 def json_rxs(rxs):
     data = []
@@ -41,9 +39,10 @@ def json_rxs(rxs):
 
 
 
-    return json.dumps({'receivers': data, 'url': url, 'gif': gifs, 'jpg': jpgs, 'mp4': mp4s,
-                       'config': config.config_tree, 'discovered': discovered },
-                       sort_keys=True, indent=4)
+    return json.dumps({
+        'receivers': data, 'url': url, 'gif': gifs, 'jpg': jpgs, 'mp4': mp4s,
+        'config': config.config_tree, 'discovered': discovered
+    }, sort_keys=True, indent=4)
 
 class IndexHandler(web.RequestHandler):
     def get(self):
@@ -51,7 +50,7 @@ class IndexHandler(web.RequestHandler):
 
 class JsonHandler(web.RequestHandler):
     def get(self):
-        self.set_header('Content-Type','application/json')
+        self.set_header('Content-Type', 'application/json')
         self.write(json_rxs(shure.WirelessReceivers))
 
 class SocketHandler(websocket.WebSocketHandler):
@@ -156,5 +155,5 @@ def twisted():
     # https://github.com/tornadoweb/tornado/issues/2308
     asyncio.set_event_loop(asyncio.new_event_loop())
     app.listen(config.config_tree['port'])
-    ioloop.PeriodicCallback(SocketHandler.ws_dump,50).start()
+    ioloop.PeriodicCallback(SocketHandler.ws_dump, 50).start()
     ioloop.IOLoop.instance().start()

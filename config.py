@@ -1,10 +1,9 @@
-import shure
-import re
 import os
 import sys
 import json
 from shutil import copyfile
 
+import shure
 
 APPNAME = 'micboard'
 
@@ -30,16 +29,16 @@ def local_app_dir():
 
 
 def default_app_config_dir(folder = None):
-    path = os.path.join(local_app_dir(),APPNAME)
+    path = os.path.join(local_app_dir(), APPNAME)
     if not os.path.exists(path):
         os.makedirs(path)
 
     if folder:
-        return os.path.join(path,folder)
+        return os.path.join(path, folder)
     return path
 
 # https://stackoverflow.com/questions/404744/determining-application-path-in-a-python-exe-generated-by-pyinstaller
-def app_dir(folder = None):
+def app_dir(folder=None):
     if getattr(sys, 'frozen', False):
         # application_path = os.path.dirname(sys.executable)
         application_path = sys._MEIPASS
@@ -47,7 +46,7 @@ def app_dir(folder = None):
         application_path = os.path.dirname(__file__)
 
     if folder:
-        return os.path.join(application_path,folder)
+        return os.path.join(application_path, folder)
 
     return application_path
 
@@ -61,8 +60,7 @@ def default_gif_dir():
 def get_gif_dir():
     if config_tree.get('background-folder'):
         return os.path.expanduser(config_tree.get('background-folder'))
-    else:
-        return default_gif_dir()
+    return default_gif_dir()
 
 def config_path():
     if os.path.exists(app_dir(CONFIG_FILE_NAME)):
@@ -91,8 +89,8 @@ def read_json_config(file):
 
 
 def write_json_config(data):
-    with open(config_path(),'w') as config_file:
-        json.dump(data,config_file, indent=2, separators=(',',': '), sort_keys=True)
+    with open(config_path(), 'w') as config_file:
+        json.dump(data, config_file, indent=2, separators=(',', ': '), sort_keys=True)
 
 def save_current_config():
     return write_json_config(config_tree)

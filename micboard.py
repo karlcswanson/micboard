@@ -1,5 +1,4 @@
 import threading
-import os
 import time
 
 
@@ -12,16 +11,16 @@ def main():
     config.config()
 
     time.sleep(.1)
-    t1 = threading.Thread(target=shure.WirelessQueryQueue)
-    t2 = threading.Thread(target=shure.SocketService)
-    t3 = threading.Thread(target=tornado_server.twisted)
-    t4 = threading.Thread(target=discover.discover)
-    t5 = threading.Thread(target=shure.ProcessRXMessageQueue)
-    t1.start()
-    t2.start()
-    t3.start()
-    t4.start()
-    t5.start()
+    rxquery_t = threading.Thread(target=shure.WirelessQueryQueue)
+    rxcom_t = threading.Thread(target=shure.SocketService)
+    web_t = threading.Thread(target=tornado_server.twisted)
+    discover_t = threading.Thread(target=discover.discover)
+    rxparse_t = threading.Thread(target=shure.ProcessRXMessageQueue)
+    rxquery_t.start()
+    rxcom_t.start()
+    web_t.start()
+    discover_t.start()
+    rxparse_t.start()
 
 
 

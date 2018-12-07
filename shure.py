@@ -1,7 +1,5 @@
 import time
-import socket
 import select
-import threading
 import queue
 import atexit
 # import signal
@@ -21,10 +19,10 @@ def check_add_receiver(ip, type):
     rec = get_receiver_by_ip(ip)
     if rec:
         return rec
-    else:
-        rec = WirelessReceiver(ip,type)
-        WirelessReceivers.append(rec)
-        return rec
+
+    rec = WirelessReceiver(ip, type)
+    WirelessReceivers.append(rec)
+    return rec
 
 
 def print_ALL():
@@ -63,10 +61,10 @@ def SocketService():
 
     while True:
         watchdog_monitor()
-        readrx = [rx for rx in WirelessReceivers if rx.rx_com_status in ['CONNECTING','CONNECTED']]
+        readrx = [rx for rx in WirelessReceivers if rx.rx_com_status in ['CONNECTING', 'CONNECTED']]
         writerx = [rx for rx in readrx if not rx.writeQueue.empty()]
 
-        read_socks,write_socks,error_socks = select.select(readrx, writerx, readrx, .2)
+        read_socks, write_socks, error_socks = select.select(readrx, writerx, readrx, .2)
 
         for rx in read_socks:
             data = rx.f.recv(1024).decode('UTF-8')
@@ -76,22 +74,22 @@ def SocketService():
             d = '>'
             if rx.type == 'uhfr':
                 d = '*'
-            data =  [e+d for e in data.split(d) if e]
+            data = [e+d for e in data.split(d) if e]
 
             for line in data:
                 # rx.parse_raw_rx(line)
-                WirelessMessageQueue.put((rx,line))
+                WirelessMessageQueue.put((rx, line))
 
             rx.socket_watchdog = int(time.perf_counter())
             rx.set_rx_com_status('CONNECTED')
 
         for rx in write_socks:
             string = rx.writeQueue.get()
-            print("write: {} data: {}".format(rx.ip,string))
-            if rx.type in ['qlxd','ulxd','axtd']:
-                rx.f.sendall(bytearray(string,'UTF-8'))
+            print("write: {} data: {}".format(rx.ip, string))
+            if rx.type in ['qlxd', 'ulxd', 'axtd']:
+                rx.f.sendall(bytearray(string, 'UTF-8'))
             elif rx.type == 'uhfr':
-                rx.f.sendto(bytearray(string,'UTF-8'),(rx.ip,2202))
+                rx.f.sendto(bytearray(string, 'UTF-8'), (rx.ip, 2202))
 
 
         for sock in error_socks:

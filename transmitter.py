@@ -1,9 +1,5 @@
 import time
-import datetime
-import queue
 from collections import defaultdict
-import os
-import json
 
 import config
 
@@ -14,17 +10,17 @@ BATTERY_TIMEOUT = 30*60
 PEAK_TIMEOUT = 10
 
 
-peak_level = {
-                'qlxd': 80,
-                'ulxd': 80,
-                'uhfr': 100
-                }
+PEAK_LEVEL = {
+    'qlxd': 80,
+    'ulxd': 80,
+    'uhfr': 100
+}
 
 # https://github.com/gaetano-guerriero/pypjlink/blob/master/pypjlink/projector.py
 reverse_dict = lambda d: dict(zip(d.values(), d.keys()))
 
 
-uhfr_audio_table = {
+UHFR_AUDIO_TABLE = {
     0: 0,
     1: 13,
     3: 25,
@@ -67,9 +63,11 @@ rx_strings['axtd'] = {'battery': 'TX_BATT_BARS',
                       'name': 'CHAN_NAME',
                       'antenna': 'RF_ANTENNA'}
 
-rx_strings_rev = { 'qlxd': reverse_dict(rx_strings['qlxd']),
-                   'ulxd': reverse_dict(rx_strings['ulxd']),
-                   'axtd': reverse_dict(rx_strings['axtd'])}
+rx_strings_rev = {
+    'qlxd': reverse_dict(rx_strings['qlxd']),
+    'ulxd': reverse_dict(rx_strings['ulxd']),
+    'axtd': reverse_dict(rx_strings['axtd'])
+}
 
 class WirelessTransmitter:
     def __init__(self, rx, channel, slot):
@@ -98,17 +96,17 @@ class WirelessTransmitter:
 
     def set_audio_level(self, audio_level):
         audio_level = float(audio_level)
-        if self.rx.type in ['qlxd','ulxd']:
+        if self.rx.type in ['qlxd', 'ulxd']:
             audio_level = int(2 * audio_level)
 
         if self.rx.type == 'uhfr':
             try:
-                audio_level = uhfr_audio_table[audio_level]
+                audio_level = UHFR_AUDIO_TABLE[audio_level]
             except:
                 print("invalid Lookup UHFR Audio Value: {}".format(audio_level))
             # audio_level = int(100 * (audio_level / 255))
 
-        if audio_level >= peak_level[self.rx.type]:
+        if audio_level >= PEAK_LEVEL[self.rx.type]:
             self.peakstamp = time.time()
             if self not in data_update_list:
                 data_update_list.append(self)
@@ -117,7 +115,7 @@ class WirelessTransmitter:
 
     def set_rf_level(self, rf_level):
         rf_level = float(rf_level)
-        if self.rx.type in ['qlxd','ulxd']:
+        if self.rx.type in ['qlxd', 'ulxd']:
             rf_level = 100 * (rf_level / 115)
 
         if self.rx.type == 'uhfr':
@@ -146,7 +144,7 @@ class WirelessTransmitter:
 
 
     def set_chan_name(self, chan_name):
-        chan_name = chan_name.replace('_',' ')
+        chan_name = chan_name.replace('_', ' ')
         self.chan_name = chan_name
 
     def set_tx_offset(self, tx_offset):
@@ -183,12 +181,14 @@ class WirelessTransmitter:
         return 'TX_COM_ERROR'
 
     def tx_json(self):
-        return {'name': self.chan_name, 'channel': self.channel,
-                'antenna':self.antenna, 'audio_level': self.audio_level,
-                'rf_level': self.rf_level, 'frequency': self.frequency,
-                'battery':self.battery, 'tx_offset': self.tx_offset,
-                'status': self.tx_state(), 'slot': self.slot, 'raw': self.raw,
-                'type': self.rx.type }
+        return {
+            'name': self.chan_name, 'channel': self.channel,
+            'antenna':self.antenna, 'audio_level': self.audio_level,
+            'rf_level': self.rf_level, 'frequency': self.frequency,
+            'battery':self.battery, 'tx_offset': self.tx_offset,
+            'status': self.tx_state(), 'slot': self.slot, 'raw': self.raw,
+            'type': self.rx.type
+        }
 
     def tx_json_mini(self):
         data = self.tx_json()
@@ -202,23 +202,23 @@ class WirelessTransmitter:
         timestamp = time.time()
 
         return {
-                'audio_level': audio_level,
-                'rf_level': rf_level,
-                'slot': self.slot,
-                'timestamp': timestamp
-                }
+            'audio_level': audio_level,
+            'rf_level': rf_level,
+            'slot': self.slot,
+            'timestamp': timestamp
+        }
 
 
-    def parse_raw_tx(self,data,type):
+    def parse_raw_tx(self, data, type):
         split = data.split()
 
         self.raw[split[2]] = ' '.join(split[3:])
         try:
             if split[0] == 'SAMPLE' and split[2] == 'ALL':
-                self.parse_sample(data,type)
+                self.parse_sample(data, type)
                 chart_update_list.append(self.tx_json_chart())
 
-            if split[0] in ['REP','REPLY','REPORT']:
+            if split[0] in ['REP', 'REPLY', 'REPORT']:
                 if split[2] == rx_strings[type]['battery']:
                     self.set_battery(split[3])
                 elif split[2] == rx_strings[type]['name']:
@@ -235,9 +235,9 @@ class WirelessTransmitter:
             print("Index Error(TX): {}".format(data.split()))
             print(e)
 
-    def parse_sample(self,data,type):
+    def parse_sample(self, data, type):
         split = data.split()
-        if type in ['qlxd','ulxd']:
+        if type in ['qlxd', 'ulxd']:
             self.set_antenna(split[3])
             self.set_rf_level(split[4])
             self.set_audio_level(split[5])

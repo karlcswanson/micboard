@@ -1,24 +1,23 @@
-"use strict";
+'use strict';
 
 import { micboard } from "./script.js"
 
 
-
 function showDivSize() {
-  let e = document.getElementsByClassName("mic_name")[0]
-  let width = Math.ceil(parseInt(window.getComputedStyle(e)["width"]))
-  let height = window.getComputedStyle(e)["height"]
-  let string = width + " x " + height
-  $(".mic_id").html(string)
+  let e = document.getElementsByClassName('mic_name')[0]
+  const width = Math.ceil(parseInt(window.getComputedStyle(e)['width']));
+  const height = window.getComputedStyle(e)['height'];
+  const string = width + ' x ' + height;
+  $('.mic_id').html(string);
 }
 
-export function uploadMode(){
-  document.getElementById("micboard").classList.add("uploadmode")
+export function uploadMode() {
+  document.getElementById('micboard').classList.add('uploadmode')
   showDivSize()
 
-  $(".mic_name").each(function(){
-    $(this).on('dragover',false);
-    $(this).on('drop',function(e){
+  $('.mic_name').each(function() {
+    $(this).on('dragover', false);
+    $(this).on('drop',function(e) {
       let slot_name = $(this).children(".name").html().toLowerCase();
       e.preventDefault();
       let upload = e.originalEvent.dataTransfer.files[0];
@@ -26,10 +25,10 @@ export function uploadMode(){
       let filename = slot_name + "." + extension;
       console.log("bin:  " + slot_name + " FileName: " + upload.name + " newName:  " + filename);
 
-      sendFile(upload,filename);
+      sendFile(upload, filename);
     });
   });
-  window.addEventListener("resize", showDivSize);
+  window.addEventListener('resize', showDivSize);
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications
@@ -38,7 +37,7 @@ function sendFile(file, filename) {
   var xhr = new XMLHttpRequest();
   var fd = new FormData();
 
-  xhr.open("POST", uri, true);
+  xhr.open('POST', uri, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
       console.log(xhr.responseText); // handle response.
@@ -52,10 +51,10 @@ function sendFile(file, filename) {
 
 
 export function updateGIFBackgrounds() {
-  $(".mic_name").each(function(key, value){
+  $('.mic_name').each(function(key, value) {
 
     name = $(this).children(".name").html().toLowerCase() + ".mp4";
-    if(micboard.mp4_list.indexOf(name) > -1){
+    if(micboard.mp4_list.indexOf(name) > -1) {
       $(this).css('background-image', 'url("bg/' + name + '")');
       $(this).css('background-size', 'cover');
       console.log(name);

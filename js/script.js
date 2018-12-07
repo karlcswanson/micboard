@@ -21,50 +21,39 @@ export var dataURL = '/data';
 
 export var config = {};
 
-export var micboard = []
+export var micboard = [];
 
-micboard.url = []
-micboard.url.start_slot = parseInt(getUrlParameter('start_slot'))
-micboard.url.stop_slot = parseInt(getUrlParameter('stop_slot'))
-micboard.url.group = getUrlParameter('group')
-micboard.url.demo = getUrlParameter('demo')
-micboard.url.settings = getUrlParameter('settings')
+micboard.url = [];
+micboard.url.start_slot = parseInt(getUrlParameter('start_slot'));
+micboard.url.stop_slot = parseInt(getUrlParameter('stop_slot'));
+micboard.url.group = getUrlParameter('group');
+micboard.url.demo = getUrlParameter('demo');
+micboard.url.settings = getUrlParameter('settings');
 
-micboard.transmitters = []
+micboard.transmitters = [];
 
-micboard.displayList = []
+micboard.displayList = [];
 
 $(document).ready(function() {
   if(micboard.url.demo && (isNaN(micboard.url.start_slot) || isNaN(micboard.url.stop_slot))) {
-    micboard.url.start_slot = 1
-    micboard.url.stop_slot = 12
+    micboard.url.start_slot = 1;
+    micboard.url.stop_slot = 12;
   }
 
   if (!window.location['href'].includes(':8058')) {
-    dataURL = 'data.json'
-    micboard.url.demo = 'true'
-    micboard.url.start_slot = 1
-    micboard.url.stop_slot = 12
+    dataURL = 'data.json';
+    micboard.url.demo = 'true';
+    micboard.url.start_slot = 1;
+    micboard.url.stop_slot = 12;
   }
 
   if (micboard.url.demo == 'true') {
-    initialMap(autoRandom)
+    initialMap(autoRandom);
   }
 
-  // else if(settings) {
-  //   fetch(dataURL)
-  //   .then(function(response) {
-  //     return response.json();
-  //   })
-  //   .then(function(data) {
-  //     let config = data['config']
-  //     mapGroups(data)
-  //     settingsView(config)
-  //   });
-  // }
 
   else {
-    initialMap(initLiveData)
+    initialMap(initLiveData);
   }
 
 
@@ -111,10 +100,10 @@ $(document).ready(function() {
 
     if (e.keyCode == 68) {
       if (micboard.url.group) {
-        window.location.href = micboard.url.demo ? '/?group=' + micboard.url.group : '/?demo=true&group=' + group
+        window.location.href = micboard.url.demo ? '/?group=' + micboard.url.group : '/?demo=true&group=' + group;
       }
       else {
-        window.location.href = micboard.url.demo ? '/' : '/?demo=true'
+        window.location.href = micboard.url.demo ? '/' : '/?demo=true';
       }
     }
 
@@ -208,59 +197,56 @@ function toggleBackgrounds() {
   let selector = document.getElementById("micboard")
 
   if(selector.classList.contains("bg-std")) {
-    swapClass(selector,"bg-std","bg-gif")
-    updateGIFBackgrounds()
+    swapClass(selector, "bg-std", "bg-gif");
+    updateGIFBackgrounds();
   }
   else if(selector.classList.contains("bg-gif")) {
-    swapClass(selector,"bg-gif","bg-img")
+    swapClass(selector, "bg-gif", "bg-img");
     $("#micboard .mic_name").css('background-image', '');
     $("#micboard .mic_name").css('background-size', '');
   }
   else if(selector.classList.contains("bg-img")){
-    swapClass(selector,"bg-img","bg-std")
-
+    swapClass(selector, "bg-img", "bg-std");
     $("#micboard .mic_name").css('background-image', '');
     $("#micboard .mic_name").css('background-size', '');
   }
 }
 
-function generateQR(){
+function generateQR() {
   const qrOptions = {
     width: 600
   };
 
-  let url = micboard.localURL + location.pathname + location.search;
+  const url = micboard.localURL + location.pathname + location.search;
   document.getElementById('largelink').href = url;
   document.getElementById('largelink').innerHTML = url;
   QRCode.toCanvas(document.getElementById('qrcode'), url, qrOptions, function (error) {
     if (error) console.error(error)
     console.log('success!');
-  })
+  });
 }
 
 
 export function ActivateMessageBoard(h1, p) {
   if (!h1) {
-    h1 = 'Connection Error!'
-    p = 'Could not connect to the micboard server. Please refresh the page.'
+    h1 = 'Connection Error!';
+    p = 'Could not connect to the micboard server. Please refresh the page.';
   }
 
-  $('#micboard').hide()
-  $('.settings').hide()
-  var eb = document.getElementsByClassName('message-board')[0]
-  eb.querySelector('h1').innerHTML = h1
-  eb.querySelector('p').innerHTML = p
+  $('#micboard').hide();
+  $('.settings').hide();
+  const eb = document.getElementsByClassName('message-board')[0];
+  eb.querySelector('h1').innerHTML = h1;
+  eb.querySelector('p').innerHTML = p;
 
   $('.message-board').show();
 }
 
 export function DeactivateMessageBoard() {
-  $('#micboard').show()
-  $('.settings').hide()
+  $('#micboard').show();
+  $('.settings').hide();
   $('.message-board').hide();
 }
-
-
 
 
 // https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js

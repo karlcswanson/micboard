@@ -8,44 +8,41 @@ import { updateEditor } from './dnd.js'
 
 
 export function renderGroup(group) {
-  micboard.group = group
-  console.log("group: " + micboard.group)
-  let out = micboard.groups[group]
+  micboard.group = group;
+  console.log("group: " + micboard.group);
+  let out = micboard.groups[group];
   if (out) {
-    micboard.displayList = out['slots']
+    micboard.displayList = out.slots;
     if (micboard.url.demo) {
-      seedTransmitters(micboard.displayList)
+      seedTransmitters(micboard.displayList);
     }
-    renderDisplayList(micboard.displayList)
-    updateEditor(group)
-  }
-  else {
-    const h1 = 'Invalid Group'
-    const p = 'Setup groups in <a href="/?settings">settings</a>'
-    ActivateMessageBoard(h1,p)
+    renderDisplayList(micboard.displayList);
+    updateEditor(group);
+  } else {
+    const h1 = 'Invalid Group';
+    const p = 'Setup groups in <a href="/?settings">settings</a>';
+    ActivateMessageBoard(h1, p);
   }
 }
 
 
-
 export function renderDisplayList(dl) {
-  console.log("DL :")
-  console.log(dl)
-  document.getElementById("micboard").innerHTML = ""
+  console.log('DL :');
+  console.log(dl);
+  document.getElementById('micboard').innerHTML = '';
 
-  var tx = micboard.transmitters;
+  let tx = micboard.transmitters;
   for(let i in dl) {
-    let j = dl[i]
-    let t
+    let j = dl[i];
+    let t;
     if (j != 0) {
-      t = document.getElementById("column-template").content.cloneNode(true);
+      t = document.getElementById('column-template').content.cloneNode(true);
       t.querySelector('div.col-sm').id = 'slot-' + tx[j].slot;
-      updateViewOnly(t,tx[j])
+      updateViewOnly(t,tx[j]);
       charts[tx[j].slot] = initChart(t);
-    }
-    else {
-      t = document.createElement('div')
-      t.className = "col-sm"
+    } else {
+      t = document.createElement('div');
+      t.className = "col-sm";
     }
 
     document.getElementById('micboard').appendChild(t);
@@ -59,24 +56,24 @@ export function renderDisplayList(dl) {
 function infoToggle() {
   $('.col-sm').click(function() {
     if($(window).width() <= 980) {
-      $(this).find(".info-drawer").toggle();
+      $(this).find('.info-drawer').toggle();
     }
   });
 }
 
 
 export function updateSlot(data) {
-  if (document.getElementById("micboard").classList.contains("uploadmode")) {
-    return
+  if (document.getElementById('micboard').classList.contains('uploadmode')) {
+    return;
   }
-  if (micboard.displayList.includes(data.slot)){
+  if (micboard.displayList.includes(data.slot)) {
     updateSelector(data);
   }
 }
 
 function updateSelector(data) {
-  var slot = "slot-" + data.slot;
-  var slotSelector = document.getElementById(slot);
+  const slot = 'slot-' + data.slot;
+  const slotSelector = document.getElementById(slot);
 
   if (micboard.transmitters[data.slot].name != data.name) {
     updateName(slotSelector, data);
@@ -150,7 +147,7 @@ function updateName(slotSelector, data) {
     slotSelector.querySelector('p.name').innerHTML = data.name;
   }
 
-  if(document.getElementById("micboard").classList.contains("bg-gif")) {
+  if(document.getElementById('micboard').classList.contains('bg-gif')) {
     updateGIFBackgrounds();
   }
 }
@@ -181,19 +178,19 @@ function updateIP(slotSelector, data) {
   slotSelector.querySelector('p.rxinfo').innerHTML = data.type + " CH " + data.channel;
 }
 
-var BatteryTable = {
-  '0':  ['batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off'],
-  '1':  ['batt_led_danger', 'batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off'],
-  '2':  ['batt_led_danger', 'batt_led_danger', 'batt_led_off', 'batt_led_off', 'batt_led_off'],
-  '3':  ['batt_led_warning', 'batt_led_warning', 'batt_led_warning', 'batt_led_off', 'batt_led_off'],
-  '4':  ['batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_off'],
-  '5':  ['batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_good'],
-  '255':['batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off'],
-  'led':[]
-}
+const BatteryTable = {
+  0: ['batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off'],
+  1: ['batt_led_danger', 'batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off'],
+  2: ['batt_led_danger', 'batt_led_danger', 'batt_led_off', 'batt_led_off', 'batt_led_off'],
+  3: ['batt_led_warning', 'batt_led_warning', 'batt_led_warning', 'batt_led_off', 'batt_led_off'],
+  4: ['batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_off'],
+  5: ['batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_good', 'batt_led_good'],
+  255: ['batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off', 'batt_led_off'],
+  led: [],
+};
 
-function updateBattery(slotSelector, data){
-  var outputBars = BatteryTable[data.battery];
+function updateBattery(slotSelector, data) {
+  const outputBars = BatteryTable[data.battery];
 
   slotSelector.querySelectorAll('.battery-bar').forEach(function (data) {
     data.classList.remove('batt_led_off', 'batt_led_danger','batt_led_warning','batt_led_good');
@@ -207,30 +204,32 @@ function updateBattery(slotSelector, data){
 }
 
 
-function updateDiversity(slotSelector, data){
+function updateDiversity(slotSelector, data) {
   let div = slotSelector.querySelector('.diversity')
-  var newBar = ""
+  let newBar = '';
   for(var i = 0; i < data.antenna.length; i++) {
-    let char = data.antenna.charAt(i)
+    let char = data.antenna.charAt(i);
     switch (char) {
       case 'A':
-      case 'B': newBar += '<div class="diversity-bar diversity-bar-blue"></div>'
-                break;
-      case 'R': newBar += '<div class="diversity-bar diversity-bar-red"></div>'
-                break;
-      case 'X': newBar += '<div class="diversity-bar diversity-bar-off"></div>'
-                break;
+      case 'B': newBar += '<div class="diversity-bar diversity-bar-blue"></div>';
+        break;
+      case 'R': newBar += '<div class="diversity-bar diversity-bar-red"></div>';
+        break;
+      case 'X': newBar += '<div class="diversity-bar diversity-bar-off"></div>';
+        break;
+      default:
+        break;
     }
   }
-  div.innerHTML = newBar
+  div.innerHTML = newBar;
 }
 
 // https://medium.com/developedbyjohn/equal-width-flex-items-a5ba1bfacb77
 // Shouldn't be fixing this with js, yet here I am.
 function flexFix () {
-  var flexFixHTML =   `<div class="col-sm flexfix"></div>
+  const flexFixHTML = `<div class="col-sm flexfix"></div>
                        <div class="col-sm flexfix"></div>
                        <div class="col-sm flexfix"></div>
                        <div class="col-sm flexfix"></div>`;
-  $("#micboard").append(flexFixHTML);
+  $('#micboard').append(flexFixHTML);
 }

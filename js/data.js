@@ -1,8 +1,8 @@
-"use strict"
+'use strict'
 
 import 'whatwg-fetch'
 import { dataURL, ActivateMessageBoard, micboard } from "./script.js"
-import { renderGroup, dateSlot } from "./channelview.js"
+import { renderGroup, updateSlot } from "./channelview.js"
 import { updateChart } from "./chart-smoothie.js"
 
 export function initLiveData() {
@@ -10,13 +10,16 @@ export function initLiveData() {
   wsConnect();
 }
 
-function wsConnect(){
-  let loc = window.location, new_uri;
+function wsConnect() {
+  let loc = window.location;
+  let new_uri;
+
   if (loc.protocol === "https:") {
     new_uri = "wss:";
   } else {
     new_uri = "ws:";
   }
+
   new_uri += "//" + loc.host;
   new_uri +=  "/ws";
   micboard.socket = new WebSocket(new_uri);
@@ -49,7 +52,7 @@ function wsConnect(){
 }
 
 
-function JsonUpdate(){
+function JsonUpdate() {
   fetch(dataURL)
   .then(function(response) {
     return response.json();
@@ -66,8 +69,8 @@ function JsonUpdate(){
 
 function updateGroup(data) {
   console.log("dgroup: " + data.group + " mgroup: " + micboard.group)
-  micboard.groups[data.group]['title'] = data['title']
-  micboard.groups[data.group]['slots'] = data['slots']
+  micboard.groups[data.group].title = data.title;
+  micboard.groups[data.group].slots = data.slots;
   if (micboard.group == data.group) {
     renderGroup(data.group)
   }
