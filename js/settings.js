@@ -32,21 +32,6 @@ export function settingsView(configin) {
               "title": "Server Port",
               "type" : "integer"
             },
-            "prefixes": {
-              "type": "array",
-              "title" : "Prefixes",
-              "format" : "table",
-              "items" : {
-                "title" : "prefix",
-                "type" : "string"
-              },
-              "options" : {
-                "collapsed" : true,
-                "disable_array_delete_last_row": true,
-                "disable_array_delete_all_rows": true,
-                "disable_array_reorder": true
-              }
-            },
             "slots": {
               "title" : "Receivers",
               "type" : "array",
