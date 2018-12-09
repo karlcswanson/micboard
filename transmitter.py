@@ -1,4 +1,5 @@
 import time
+import re
 from collections import defaultdict
 
 import config
@@ -154,12 +155,13 @@ class WirelessTransmitter:
     def tx_state(self):
         # WCCC Specific State for unassigned microphones
         name = self.chan_name.split()
-        prefix = ''.join([i for i in name[0] if not i.isdigit()])
+        pattern = re.compile("/([A-Za-z]+)([0-9])+/g")
+        prefix = pattern.match(name[0])
 
         if (time.time() - self.peakstamp) < PEAK_TIMEOUT:
             return 'AUDIO_PEAK'
 
-        if prefix in config.config_tree['prefixes']:
+        if prefix:
             if len(name) == 1:
                 return 'UNASSIGNED'
 

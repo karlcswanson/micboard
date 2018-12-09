@@ -136,11 +136,13 @@ function updateName(slotSelector, data) {
   if (data.name == 'DEFAULT') {
     data.name = 'SLOT ' + data.slot
   }
+  let prefix = /([A-Za-z]+)([0-9])+/g
+  let reg = new RegExp(prefix)
   let split = data.name.split(' ')
-  var prefix = split[0].replace(/\d+/,'')
-  var number = parseInt(split[0].match(/\d+/))
-  var name = split.slice(1,split.length).join(' ')
-  if(config['prefixes'].indexOf(prefix) >= 0 && !isNaN(number))
+
+  var name = split.slice(1, split.length).join(' ')
+
+  if(reg.test(split[0]))
   {
     slotSelector.querySelector('p.mic_id').innerHTML = split[0];
     slotSelector.querySelector('p.name').innerHTML = name;
