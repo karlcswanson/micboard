@@ -155,8 +155,7 @@ class WirelessTransmitter:
     def tx_state(self):
         # WCCC Specific State for unassigned microphones
         name = self.chan_name.split()
-        pattern = re.compile("/([A-Za-z]+)([0-9])+/g")
-        prefix = pattern.match(name[0])
+        prefix = re.match("([A-Za-z]+)([0-9])+", name[0])
 
         if (time.time() - self.peakstamp) < PEAK_TIMEOUT:
             return 'AUDIO_PEAK'
