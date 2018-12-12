@@ -1,9 +1,9 @@
 'use strict';
 
-import { TimeSeries, SmoothieChart } from 'smoothie'
-import { micboard } from './script.js'
+import { TimeSeries, SmoothieChart } from 'smoothie';
+import { micboard } from './script.js';
 
-export let charts = {};
+export const charts = {};
 
 export function updateChart(data) {
   if (micboard.displayList.includes(data.slot)) {

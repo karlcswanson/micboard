@@ -1,15 +1,15 @@
-"use strict"
+'use strict';
 
-import { config, micboard, ActivateMessageBoard } from "./script.js"
-import { updateGIFBackgrounds } from "./gif.js"
-import { initChart, charts } from './chart-smoothie.js'
-import { seedTransmitters } from './demodata.js'
-import { updateEditor } from './dnd.js'
+import { config, micboard, ActivateMessageBoard } from './script.js';
+import { updateGIFBackgrounds } from './gif.js';
+import { initChart, charts } from './chart-smoothie.js';
+import { seedTransmitters } from './demodata.js';
+import { updateEditor } from './dnd.js';
 
 
 export function renderGroup(group) {
   micboard.group = group;
-  console.log("group: " + micboard.group);
+  console.log('group: ' + micboard.group);
   let out = micboard.groups[group];
 
   if (micboard.url.demo) {
@@ -22,9 +22,9 @@ export function renderGroup(group) {
     renderDisplayList(micboard.displayList);
     updateEditor(group);
   } else {
-    micboard.displayList = []
-    renderDisplayList(micboard.displayList)
-    updateEditor(group)
+    micboard.displayList = [];
+    renderDisplayList(micboard.displayList);
+    updateEditor(group);
   }
 }
 
@@ -41,11 +41,11 @@ export function renderDisplayList(dl) {
     if (j != 0) {
       t = document.getElementById('column-template').content.cloneNode(true);
       t.querySelector('div.col-sm').id = 'slot-' + tx[j].slot;
-      updateViewOnly(t,tx[j]);
+      updateViewOnly(t, tx[j]);
       charts[tx[j].slot] = initChart(t);
     } else {
       t = document.createElement('div');
-      t.className = "col-sm";
+      t.className = 'col-sm';
     }
 
     document.getElementById('micboard').appendChild(t);
@@ -58,7 +58,7 @@ export function renderDisplayList(dl) {
 // enables info-drawer toggle for mobile clients
 function infoToggle() {
   $('.col-sm').click(function() {
-    if($(window).width() <= 980) {
+    if ($(window).width() <= 980) {
       $(this).find('.info-drawer').toggle();
     }
   });
@@ -109,38 +109,38 @@ function updateSelector(data) {
 }
 
 export function updateViewOnly(slotSelector, data) {
-  updateStatus(slotSelector, data)
-  updateName(slotSelector, data)
-  updateTXOffset(slotSelector, data)
-  updateBattery(slotSelector, data)
-  updateFrequency(slotSelector, data)
-  updateDiversity(slotSelector, data)
-  updateIP(slotSelector, data)
+  updateStatus(slotSelector, data);
+  updateName(slotSelector, data);
+  updateTXOffset(slotSelector, data);
+  updateBattery(slotSelector, data);
+  updateFrequency(slotSelector, data);
+  updateDiversity(slotSelector, data);
+  updateIP(slotSelector, data);
 }
 
-function updateTXOffset(slotSelector, data){
+function updateTXOffset(slotSelector, data) {
   if (data.type == 'uhfr') {
     slotSelector.querySelector('p.offset').innerHTML = '';
   }
   else {
-    slotSelector.querySelector('p.offset').innerHTML = data.tx_offset + " dB";
+    slotSelector.querySelector('p.offset').innerHTML = data.tx_offset + ' dB';
   }
 }
 
-function updateFrequency(slotSelector, data){
-  slotSelector.querySelector('p.frequency').innerHTML = data.frequency + " Hz";
+function updateFrequency(slotSelector, data) {
+  slotSelector.querySelector('p.frequency').innerHTML = data.frequency + ' Hz';
 }
 
 
 function updateName(slotSelector, data) {
   if (data.name == 'DEFAULT') {
-    data.name = 'SLOT ' + data.slot
+    data.name = 'SLOT ' + data.slot;
   }
-  let prefix = /([A-Za-z]+)([0-9])+/g
-  let reg = new RegExp(prefix)
+  let prefix = /([A-Za-z]+)([0-9])+/g;
+  let reg = new RegExp(prefix);
   let split = data.name.split(' ')
 
-  var name = split.slice(1, split.length).join(' ')
+  var name = split.slice(1, split.length).join(' ');
 
   if(reg.test(split[0]))
   {
@@ -180,7 +180,7 @@ function updateStatus(slotSelector, data) {
 
 function updateIP(slotSelector, data) {
   slotSelector.querySelector('p.ip').innerHTML = data.ip;
-  slotSelector.querySelector('p.rxinfo').innerHTML = data.type + " CH " + data.channel;
+  slotSelector.querySelector('p.rxinfo').innerHTML = data.type + ' CH ' + data.channel;
 }
 
 const BatteryTable = {
@@ -197,8 +197,8 @@ const BatteryTable = {
 function updateBattery(slotSelector, data) {
   const outputBars = BatteryTable[data.battery];
 
-  slotSelector.querySelectorAll('.battery-bar').forEach(function (data) {
-    data.classList.remove('batt_led_off', 'batt_led_danger','batt_led_warning','batt_led_good');
+  slotSelector.querySelectorAll('.battery-bar').forEach((data) => {
+    data.classList.remove('batt_led_off', 'batt_led_danger', 'batt_led_warning', 'batt_led_good');
   });
 
   slotSelector.querySelector('.battery-bar-1').classList.add(outputBars[0]);
@@ -210,10 +210,10 @@ function updateBattery(slotSelector, data) {
 
 
 function updateDiversity(slotSelector, data) {
-  let div = slotSelector.querySelector('.diversity')
+  const div = slotSelector.querySelector('.diversity')
   let newBar = '';
-  for(var i = 0; i < data.antenna.length; i++) {
-    let char = data.antenna.charAt(i);
+  for (let i = 0; i < data.antenna.length; i += 1) {
+    const char = data.antenna.charAt(i);
     switch (char) {
       case 'A':
       case 'B': newBar += '<div class="diversity-bar diversity-bar-blue"></div>';
@@ -231,7 +231,7 @@ function updateDiversity(slotSelector, data) {
 
 // https://medium.com/developedbyjohn/equal-width-flex-items-a5ba1bfacb77
 // Shouldn't be fixing this with js, yet here I am.
-function flexFix () {
+function flexFix() {
   const flexFixHTML = `<div class="col-sm flexfix"></div>
                        <div class="col-sm flexfix"></div>
                        <div class="col-sm flexfix"></div>

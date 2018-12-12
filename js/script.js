@@ -1,20 +1,20 @@
 "use strict";
 
-import 'bootstrap'
+import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import QRCode from 'qrcode'
-import 'whatwg-fetch'
+import QRCode from 'qrcode';
+import 'whatwg-fetch';
 
 
-import { updateGIFBackgrounds, uploadMode } from './gif.js'
-import { autoRandom, seedTransmitters } from './demodata.js'
-import { settingsView } from './settings.js'
-import { renderGroup, renderDisplayList, updateSlot } from './channelview.js'
-import { initLiveData } from './data.js'
-import { groupEditToggle, initEditor } from './dnd.js'
+import { updateGIFBackgrounds, uploadMode } from './gif.js';
+import { autoRandom, seedTransmitters } from './demodata.js';
+import { settingsView } from './settings.js';
+import { renderGroup, renderDisplayList, updateSlot } from './channelview.js';
+import { initLiveData } from './data.js';
+import { groupEditToggle, initEditor } from './dnd.js';
 
-import '../css/style.scss'
-import '../node_modules/@ibm/plex/css/ibm-plex.css'
+import '../css/style.scss';
+import '../node_modules/@ibm/plex/css/ibm-plex.css';
 
 
 export var dataURL = '/data';
@@ -213,21 +213,19 @@ export function toggleDisplayMode() {
 
 
 function toggleBackgrounds() {
-  const selector = document.getElementById("micboard");
+  const selector = document.getElementById('micboard');
 
-  if(selector.classList.contains("bg-std")) {
-    swapClass(selector, "bg-std", "bg-gif");
+  if(selector.classList.contains('bg-std')) {
+    swapClass(selector, 'bg-std', 'bg-gif');
     updateGIFBackgrounds();
-  }
-  else if(selector.classList.contains("bg-gif")) {
-    swapClass(selector, "bg-gif", "bg-img");
-    $("#micboard .mic_name").css('background-image', '');
-    $("#micboard .mic_name").css('background-size', '');
-  }
-  else if(selector.classList.contains("bg-img")){
-    swapClass(selector, "bg-img", "bg-std");
-    $("#micboard .mic_name").css('background-image', '');
-    $("#micboard .mic_name").css('background-size', '');
+  } else if (selector.classList.contains('bg-gif')) {
+    swapClass(selector, 'bg-gif', 'bg-img');
+    $('#micboard .mic_name').css('background-image', '');
+    $('#micboard .mic_name').css('background-size', '');
+  } else if(selector.classList.contains('bg-img')) {
+    swapClass(selector, 'bg-img', 'bg-std');
+    $('#m icboard .mic_name').css('background-image', '');
+    $('#micboard .mic_name').css('background-size', '');
   }
 }
 
@@ -271,23 +269,23 @@ export function DeactivateMessageBoard() {
 // https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js
 // var getUrlParameter = function getUrlParameter(sParam) {
 function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
+  var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+    sURLVariables = sPageURL.split('&'),
+    sParameterName,
+    i;
 
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
+  for (i = 0; i < sURLVariables.length; i++) {
+    sParameterName = sURLVariables[i].split('=');
 
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
+    if (sParameterName[0] === sParam) {
+      return sParameterName[1] === undefined ? true : sParameterName[1];
     }
+  }
 }
 
-function dataFilterFromList(data){
-  for(var i in data.receivers){
-    for (var j in data.receivers[i].tx){
+function dataFilterFromList(data) {
+  for (var i in data.receivers) {
+    for (var j in data.receivers[i].tx) {
       var tx = data.receivers[i].tx[j];
       tx.ip = data.receivers[i].ip;
       tx.type = data.receivers[i].type;
@@ -296,15 +294,9 @@ function dataFilterFromList(data){
   }
 }
 
-
-
 function displayListChooser(data) {
-  if (!isNaN(micboard.url.group)) {
-    let plist = []
-    for (var p in data['config']['groups']) {
-      plist[data['config']['groups'][p]['group']] = data['config']['groups'][p]['slots']
-    }
-    let out = plist[micboard.url.group]
+  if (micboard.url.group) {
+    let out = micboard.groups[micboard.url.group]
     if (out) {
       return out
     }
@@ -315,7 +307,7 @@ function displayListChooser(data) {
       return []
     }
   }
-  else if (!isNaN(micboard.url.start_slot) && !isNaN(micboard.url.stop_slot)) {
+  else if (micboard.url.start_slot && micboard.url.stop_slot) {
     if (micboard.url.start_slot < micboard.url.stop_slot) {
       return StartStopSlotList(micboard.url.start_slot,micboard.url.stop_slot)
     }
@@ -374,31 +366,31 @@ function initialMap(callback) {
 }
 
 function groupTableBuilder(data) {
-  let plist = {}
+  let plist = {};
 
   for (var p in data['config']['groups']) {
-    let group = data['config']['groups'][p]['group']
-    let entry = {}
-    entry['slots'] = data['config']['groups'][p]['slots']
-    entry['title'] = data['config']['groups'][p]['title']
-    plist[group] = entry
+    let group = data['config']['groups'][p]['group'];
+    let entry = {};
+    entry['slots'] = data['config']['groups'][p]['slots'];
+    entry['title'] = data['config']['groups'][p]['title'];
+    plist[group] = entry;
   }
-  return plist
+  return plist;
 }
 
 
 function mapGroups(data) {
-  let div = document.getElementById('grouplist')
-  let str = ''
+  const div = document.getElementById('grouplist');
+  let str = '';
 
-  for(var p in micboard.groups) {
+  for (var p in micboard.groups) {
     str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'" href="#">' + micboard.groups[p]['title'] + '</a></p>'
   }
   str += '<p class="text-muted"><a class="nav-link" id="test-button" href="#">test button</a></p>'
-  div.innerHTML += str
+  div.innerHTML += str;
   $('a#go-settings').click(function(){
-    settingsView(config)
-    $('.collapse').collapse("hide")
+    settingsView(config);
+    $('.collapse').collapse('hide');
   })
 
 
@@ -407,12 +399,12 @@ function mapGroups(data) {
   })
 
   $('a.preset-link').each(function(index){
-    let id = parseInt($(this).attr('id')[9])
+    let id = parseInt($(this).attr('id')[9]);
 
     $(this).click(function(){
-      DeactivateMessageBoard()
-      renderGroup(id)
-      $('.collapse').collapse("hide")
+      DeactivateMessageBoard();
+      renderGroup(id);
+      $('.collapse').collapse('hide');
     })
   })
 }

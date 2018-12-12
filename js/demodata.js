@@ -214,8 +214,8 @@ function unixtimestamp() {
   return new Date() / 1000;
 }
 
-function randomCharts(){
-  micboard.displayList.forEach(function(n) {
+function randomCharts() {
+  micboard.displayList.forEach((n) => {
     if (n != 0) {
       let data = JSON.parse(JSON.stringify(micboard.transmitters[n]));
       data.audio_level = randomAudioGenerator();
@@ -228,23 +228,23 @@ function randomCharts(){
 
 
 export function autoRandom() {
-  setInterval(function() {
+  setInterval(() => {
     updateSlot(meteteredRandomDataGenerator('name'));
   }, 1250);
 
-  setInterval( function () {
+  setInterval(() => {
     updateSlot(meteteredRandomDataGenerator('antenna'))
   }, 90);
 
-  setInterval(function() {
+  setInterval(() => {
     updateSlot(meteteredRandomDataGenerator('battery'))
   }, 1250);
 
-  setInterval(function() {
+  setInterval(() => {
     updateSlot(meteteredRandomDataGenerator('tx_offset'))
   }, 750);
 
-  setInterval(function() {
+  setInterval(() => {
     updateSlot(meteteredRandomDataGenerator('frequency'))
   }, 750);
   setInterval(randomCharts, 300);
