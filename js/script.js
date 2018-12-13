@@ -63,6 +63,10 @@ $(document).ready(function() {
     if ( $('.settings').is(":visible") || $('.sidebar-nav').is(":visible")) {
       return
     }
+    if (e.keyCode == 48) {
+      DeactivateMessageBoard()
+      renderGroup(0)
+    }
     if (e.keyCode == 49) {
       DeactivateMessageBoard()
       renderGroup(1)
@@ -102,9 +106,8 @@ $(document).ready(function() {
 
     if (e.keyCode == 68) {
       if (micboard.url.group) {
-        window.location.href = micboard.url.demo ? '/?group=' + micboard.url.group : '/?demo=true&group=' + group;
-      }
-      else {
+        window.location.href = micboard.url.demo ? '/?group=' + micboard.url.group : '/?demo=true&group=' + micboard.group;
+      } else {
         window.location.href = micboard.url.demo ? '/' : '/?demo=true';
       }
     }
@@ -296,30 +299,15 @@ function dataFilterFromList(data) {
 
 function displayListChooser(data) {
   if (micboard.url.group) {
-    let out = micboard.groups[micboard.url.group]
-    if (out) {
-      return out
-    }
-    else {
-      const h1 = 'Invalid Group'
-      const p = 'Setup groups in <a href="/?settings">settings</a>'
-      ActivateMessageBoard(h1,p)
-      return []
-    }
+    renderGroup(micboard.url.group);
   }
   else if (micboard.url.start_slot && micboard.url.stop_slot) {
     if (micboard.url.start_slot < micboard.url.stop_slot) {
-      return StartStopSlotList(micboard.url.start_slot,micboard.url.stop_slot)
+      micboard.displayList = StartStopSlotList(micboard.url.start_slot, micboard.url.stop_slot);
+      renderDisplayList(micboard.displayList);
     }
-  }
-  else {
-    let slot = data['config']['slots']
-    console.log(slot)
-    let out = []
-    for(var i = 0; i < slot.length; i++) {
-      out.push(slot[i]['slot'])
-    }
-    return out
+  } else {
+    renderGroup(0);
   }
 }
 
@@ -334,12 +322,6 @@ function initialMap(callback) {
     micboard.localURL = data['url']
     micboard.groups = groupTableBuilder(data)
     config = data['config']
-
-    console.log("plist: ")
-
-
-    micboard.displayList = displayListChooser(data)
-
     mapGroups(data)
 
     if (micboard.url.settings) {
@@ -349,19 +331,12 @@ function initialMap(callback) {
     if (micboard.url.demo !== 'true') {
       dataFilterFromList(data)
     }
+    displayListChooser(data)
 
-    if (micboard.url.demo) {
-      seedTransmitters(micboard.displayList)
+    if (callback) {
+      callback();
     }
-
-    if (micboard.displayList.length > 0) {
-      renderDisplayList(micboard.displayList);
-      if (callback) {
-        callback()
-      }
-    }
-
-    initEditor()
+    initEditor();
   });
 }
 
@@ -378,30 +353,27 @@ function groupTableBuilder(data) {
   return plist;
 }
 
-
 function mapGroups(data) {
   const div = document.getElementById('grouplist');
   let str = '';
 
   for (var p in micboard.groups) {
-    str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'" href="#">' + micboard.groups[p]['title'] + '</a></p>'
+    str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'" href="#">' + p + ': ' + micboard.groups[p]['title'] + '</a></p>'
   }
   str += '<p class="text-muted"><a class="nav-link" id="test-button" href="#">test button</a></p>'
   div.innerHTML += str;
-  $('a#go-settings').click(function(){
+  $('a#go-settings').click(function() {
     settingsView(config);
     $('.collapse').collapse('hide');
   })
 
-
-  $('a#test-button').click(function(){
-
+  $('a#test-button').click(function() {
   })
 
-  $('a.preset-link').each(function(index){
+  $('a.preset-link').each(function(index) {
     let id = parseInt($(this).attr('id')[9]);
 
-    $(this).click(function(){
+    $(this).click(function() {
       DeactivateMessageBoard();
       renderGroup(id);
       $('.collapse').collapse('hide');

@@ -132,11 +132,11 @@ export function updateEditor(group) {
 
 
 export function initEditor() {
-  $('#editorClose').on('click', function() {
+  $('#editorClose').on('click', () => {
     groupEditToggle();
   });
 
-  $('#editorSave').on('click', function() {
+  $('#editorSave').on('click', () => {
     submitSlotUpdate();
   });
 }

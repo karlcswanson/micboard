@@ -2,7 +2,6 @@ import time
 import re
 from collections import defaultdict
 
-import config
 
 chart_update_list = []
 data_update_list = []
@@ -210,23 +209,23 @@ class WirelessTransmitter:
         }
 
 
-    def parse_raw_tx(self, data, type):
+    def parse_raw_tx(self, data, rx_type):
         split = data.split()
 
         self.raw[split[2]] = ' '.join(split[3:])
         try:
             if split[0] == 'SAMPLE' and split[2] == 'ALL':
-                self.parse_sample(data, type)
+                self.parse_sample(data, rx_type)
                 chart_update_list.append(self.tx_json_chart())
 
             if split[0] in ['REP', 'REPLY', 'REPORT']:
-                if split[2] == rx_strings[type]['battery']:
+                if split[2] == rx_strings[rx_type]['battery']:
                     self.set_battery(split[3])
-                elif split[2] == rx_strings[type]['name']:
+                elif split[2] == rx_strings[rx_type]['name']:
                     self.set_chan_name(' '.join(split[3:]))
-                elif split[2] == rx_strings[type]['frequency']:
+                elif split[2] == rx_strings[rx_type]['frequency']:
                     self.set_frequency(split[3])
-                elif split[2] == rx_strings[type]['tx_offset']:
+                elif split[2] == rx_strings[rx_type]['tx_offset']:
                     self.set_tx_offset(split[3])
 
                 if self not in data_update_list:
@@ -236,14 +235,14 @@ class WirelessTransmitter:
             print("Index Error(TX): {}".format(data.split()))
             print(e)
 
-    def parse_sample(self, data, type):
+    def parse_sample(self, data, rx_type):
         split = data.split()
-        if type in ['qlxd', 'ulxd']:
+        if rx_type in ['qlxd', 'ulxd']:
             self.set_antenna(split[3])
             self.set_rf_level(split[4])
             self.set_audio_level(split[5])
 
-        elif type == 'uhfr':
+        elif rx_type == 'uhfr':
             self.set_antenna(split[3])
             self.set_rf_level(split[4])
             self.set_battery(split[6])

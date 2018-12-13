@@ -6,19 +6,26 @@ import { initChart, charts } from './chart-smoothie.js';
 import { seedTransmitters } from './demodata.js';
 import { updateEditor } from './dnd.js';
 
+function allSlots() {
+  let slot = config['slots'];
+  let out = [];
+  for (var i = 0; i < slot.length; i++) {
+    out.push(slot[i]['slot']);
+  }
+  return out;
+}
+
 
 export function renderGroup(group) {
-  micboard.group = group;
-  console.log('group: ' + micboard.group);
-  let out = micboard.groups[group];
-
-  if (micboard.url.demo) {
-    seedTransmitters(micboard.displayList);
+  if (group === 0) {
+    micboard.displayList = allSlots();
+    renderDisplayList(micboard.displayList);
+    return;
   }
-
+  micboard.group = group;
+  let out = micboard.groups[group];
   if (out) {
     micboard.displayList = out.slots;
-
     renderDisplayList(micboard.displayList);
     updateEditor(group);
   } else {
@@ -33,6 +40,10 @@ export function renderDisplayList(dl) {
   console.log('DL :');
   console.log(dl);
   document.getElementById('micboard').innerHTML = '';
+
+  if (micboard.url.demo) {
+    seedTransmitters(dl);
+  }
 
   let tx = micboard.transmitters;
   for(let i in dl) {
@@ -69,15 +80,14 @@ export function updateSlot(data) {
   if (document.getElementById('micboard').classList.contains('uploadmode')) {
     return;
   }
-  if (micboard.displayList.includes(data.slot)) {
-    updateSelector(data);
+  const slot = 'slot-' + data.slot;
+  const slotSelector = document.getElementById(slot);
+  if (slotSelector) {
+    updateSelector(slotSelector, data);
   }
 }
 
-function updateSelector(data) {
-  const slot = 'slot-' + data.slot;
-  const slotSelector = document.getElementById(slot);
-
+function updateSelector(slotSelector, data) {
   if (micboard.transmitters[data.slot].name != data.name) {
     updateName(slotSelector, data);
     micboard.transmitters[data.slot].name = data.name;
