@@ -3,7 +3,6 @@
 import { micboard } from "./script.js"
 import { updateSlot } from "./channelview.js"
 import { updateChart } from "./chart-smoothie.js"
-// import { charts } from './chart-smoothie.js'
 
 
 const batterySample = {
@@ -71,8 +70,8 @@ function current_names() {
   micboard.displayList.forEach(function(e) {
     if (e != 0) {
       name = micboard.transmitters[e].name;
-      let prefix = name.substring(0,2);
-      let number = name.substring(2,4);
+      let prefix = name.substring(0, 2);
+      let number = name.substring(2, 4);
       name = name.substring(5);
       names.push(name);
     }

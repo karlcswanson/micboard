@@ -113,7 +113,9 @@ $(document).ready(function() {
     }
 
     if (e.keyCode == 69) {
-      groupEditToggle()
+      if (micboard.group !== 0) {
+        groupEditToggle();
+      }
     }
 
     if (e.keyCode == 70) {

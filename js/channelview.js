@@ -17,12 +17,13 @@ function allSlots() {
 
 
 export function renderGroup(group) {
+  micboard.group = group;
   if (group === 0) {
     micboard.displayList = allSlots();
     renderDisplayList(micboard.displayList);
+    updateEditor(group);
     return;
   }
-  micboard.group = group;
   let out = micboard.groups[group];
   if (out) {
     micboard.displayList = out.slots;
