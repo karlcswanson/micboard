@@ -11,9 +11,9 @@ let swappable;
 
 function slotOrder() {
   const slotList = [];
-  $('#micboard > div').each(function() {
-    const slot = parseInt(this.id.replace ( /[^\d.]/g, '' ))
-    if (slot && (slotList.indexOf(slot) == -1)) {
+  $('#micboard > div').each(() => {
+    const slot = parseInt(this.id.replace(/[^\d.]/g, ''), 10);
+    if (slot && (slotList.indexOf(slot) === -1)) {
       slotList.push(slot);
     }
   });
@@ -41,33 +41,18 @@ function renderEditSlots(dl) {
   });
 }
 
-function GridLayout() {
-  const containerSelector = '.drag-container';
-  const containers = document.querySelectorAll(containerSelector);
 
-  if (containers.length === 0) {
-    return false;
-  }
-
-  swappable = new Sortable(containers, {
-    draggable: '.col-sm',
-    mirror: {
-      appendTo: containerSelector,
-      constrainDimensions: true,
-    },
-
-    plugins: [Plugins.ResizeMirror],
-  });
-  renderEditSlots(calcEditSlots());
-  swappable.on('sortable:stop', (evt) => {
-    console.log("DROP");
-    console.log(evt.dragEvent);
-
-    setTimeout(onDrop, 125, evt.dragEvent.source, evt.oldContainer.id, evt.newContainer.id)
+function calcEditSlots() {
+  const output = [];
+  config.slots.forEach((slot) => {
+    if (micboard.displayList.indexOf(slot.slot) === -1) {
+      output.push(slot.slot);
+    }
   });
 
-  return swappable;
+  return output;
 }
+
 
 function onDrop(id, src, dst) {
   const slot = parseInt(id.id.replace(/[^\d.]/g, ''), 10);
@@ -88,18 +73,56 @@ function onDrop(id, src, dst) {
   }
 }
 
-function calcEditSlots() {
-  const slots = config.slots;
-  const output = [];
-  slots.forEach((slot) => {
-    if (micboard.displayList.indexOf(slot.slot) === -1) {
-      output.push(slot.slot);
-    }
-  });
+export function updateEditor(group) {
+  let title = '';
 
-  return output;
+  if (micboard.groups[group]) {
+    title = micboard.groups[group]['title'];
+  }
+
+  document.getElementById('sidebarTitle').innerHTML = 'Group ' + group;
+  document.getElementById('groupTitle').value = title;
 }
 
+function postJSON(url, data) {
+  fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(res => res.json())
+    .then(response => console.log('Success:', JSON.stringify(response)))
+    .catch(error => console.error('Error:', error));
+}
+
+function GridLayout() {
+  const containerSelector = '.drag-container';
+  const containers = document.querySelectorAll(containerSelector);
+
+  if (containers.length === 0) {
+    return false;
+  }
+
+  swappable = new Sortable(containers, {
+    draggable: '.col-sm',
+    mirror: {
+      appendTo: containerSelector,
+      constrainDimensions: true,
+    },
+
+    plugins: [Plugins.ResizeMirror],
+  });
+  renderEditSlots(calcEditSlots());
+  swappable.on('sortable:stop', (evt) => {
+    console.log('DROP');
+    console.log(evt.dragEvent);
+
+    setTimeout(onDrop, 125, evt.dragEvent.source, evt.oldContainer.id, evt.newContainer.id)
+  });
+
+  return swappable;
+}
 
 export function groupEditToggle() {
   const container = document.getElementsByClassName('container-fluid')[0];
@@ -113,28 +136,6 @@ export function groupEditToggle() {
     container.classList.add('sidebar-open');
     GridLayout();
   }
-}
-
-export function updateEditor(group) {
-  let title = '';
-
-  if (micboard.groups[group]) {
-    title = micboard.groups[group]['title'];
-  }
-
-  document.getElementById('sidebarTitle').innerHTML = 'Group ' + group;
-  document.getElementById('groupTitle').value = title;
-}
-
-
-export function initEditor() {
-  $('#editorClose').on('click', () => {
-    groupEditToggle();
-  });
-
-  $('#editorSave').on('click', () => {
-    submitSlotUpdate();
-  });
 }
 
 function submitSlotUpdate() {
@@ -152,15 +153,12 @@ function submitSlotUpdate() {
   groupEditToggle();
 }
 
+export function initEditor() {
+  $('#editorClose').on('click', () => {
+    groupEditToggle();
+  });
 
-function postJSON(url, data) {
-  fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then(res => res.json())
-    .then(response => console.log('Success:', JSON.stringify(response)))
-    .catch(error => console.error('Error:', error));
+  $('#editorSave').on('click', () => {
+    submitSlotUpdate();
+  });
 }

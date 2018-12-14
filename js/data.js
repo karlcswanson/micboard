@@ -5,45 +5,6 @@ import { dataURL, ActivateMessageBoard, micboard } from './script.js';
 import { renderGroup, updateSlot } from './channelview.js';
 import { updateChart } from './chart-smoothie.js';
 
-function wsConnect() {
-  let loc = window.location;
-  let new_uri;
-
-  if (loc.protocol === 'https:') {
-    new_uri = 'wss:';
-  } else {
-    new_uri = 'ws:';
-  }
-
-  new_uri += '//' + loc.host + '/ws';
-
-  micboard.socket = new WebSocket(new_uri);
-
-  micboard.socket.onmessage = (msg) => {
-    const data = JSON.parse(msg.data);
-
-    if (data['chart-update']) {
-      data['chart-update'].forEach(updateChart);
-    }
-    if (data['data-update']) {
-      data['data-update'].forEach(updateSlot);
-    }
-
-    if (data['group-update']) {
-      data['group-update'].forEach(updateGroup);
-    }
-  };
-
-  micboard.socket.onclose = () => {
-    ActivateMessageBoard();
-  };
-
-  micboard.socket.onerror = () => {
-    ActivateMessageBoard();
-  };
-}
-
-
 function JsonUpdate() {
   fetch(dataURL)
     .then(response => response.json())
@@ -67,4 +28,42 @@ function updateGroup(data) {
 export function initLiveData() {
   setInterval(JsonUpdate, 1000);
   wsConnect();
+}
+
+function wsConnect() {
+  const loc = window.location;
+  let newUri;
+
+  if (loc.protocol === 'https:') {
+    newUri = 'wss:';
+  } else {
+    newUri = 'ws:';
+  }
+
+  newUri += '//' + loc.host + '/ws';
+
+  micboard.socket = new WebSocket(newUri);
+
+  micboard.socket.onmessage = (msg) => {
+    const data = JSON.parse(msg.data);
+
+    if (data['chart-update']) {
+      data['chart-update'].forEach(updateChart);
+    }
+    if (data['data-update']) {
+      data['data-update'].forEach(updateSlot);
+    }
+
+    if (data['group-update']) {
+      data['group-update'].forEach(updateGroup);
+    }
+  };
+
+  micboard.socket.onclose = () => {
+    ActivateMessageBoard();
+  };
+
+  micboard.socket.onerror = () => {
+    ActivateMessageBoard();
+  };
 }
