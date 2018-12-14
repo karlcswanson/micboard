@@ -15,37 +15,30 @@ function wsConnect() {
     new_uri = 'ws:';
   }
 
-  new_uri += '//' + loc.host;
-  new_uri += '/ws';
+  new_uri += '//' + loc.host + '/ws';
+
   micboard.socket = new WebSocket(new_uri);
 
-  micboard.socket.onmessage = function (msg) {
-    const chart_data = JSON.parse(msg.data)['chart-update'];
-    const mic_data = JSON.parse(msg.data)['data-update'];
-    const group_update = JSON.parse(msg.data)['group-update'];
+  micboard.socket.onmessage = (msg) => {
+    const data = JSON.parse(msg.data);
 
-    // for (var i in chart_data) {
-    //   updateChart(chart_data[i]);
-    // }
-
-    chart_data.forEach((data) => {
-      updateChart(data);
-    });
-
-    for (var i in mic_data) {
-      updateSlot(mic_data[i]);
+    if (data['chart-update']) {
+      data['chart-update'].forEach(updateChart);
+    }
+    if (data['data-update']) {
+      data['data-update'].forEach(updateSlot);
     }
 
-    for (var i in group_update) {
-      updateGroup(group_update[i]);
+    if (data['group-update']) {
+      data['group-update'].forEach(updateGroup);
     }
   };
 
-  micboard.socket.onclose = function(event) {
+  micboard.socket.onclose = () => {
     ActivateMessageBoard();
   };
 
-  micboard.socket.onerror = function(event) {
+  micboard.socket.onerror = () => {
     ActivateMessageBoard();
   };
 }
@@ -55,11 +48,9 @@ function JsonUpdate() {
   fetch(dataURL)
     .then(response => response.json())
     .then((data) => {
-      for (let i in data.receivers) {
-        for (var j in data.receivers[i].tx) {
-          updateSlot(data.receivers[i].tx[j]);
-        }
-      }
+      data.receivers.forEach((rx) => {
+        rx.tx.forEach(updateSlot);
+      });
     });
 }
 

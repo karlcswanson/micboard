@@ -201,21 +201,20 @@ export function renderDisplayList(dl) {
   }
 
   const tx = micboard.transmitters;
-  for(let i in dl) {
-    let j = dl[i];
+  dl.forEach((e) => {
     let t;
-    if (j != 0) {
+    if (e !== 0) {
       t = document.getElementById('column-template').content.cloneNode(true);
-      t.querySelector('div.col-sm').id = 'slot-' + tx[j].slot;
-      updateViewOnly(t, tx[j]);
-      charts[tx[j].slot] = initChart(t);
+      t.querySelector('div.col-sm').id = 'slot-' + tx[e].slot;
+      updateViewOnly(t, tx[e]);
+      charts[tx[e].slot] = initChart(t);
     } else {
       t = document.createElement('div');
       t.className = 'col-sm';
     }
 
     document.getElementById('micboard').appendChild(t);
-  }
+  });
 
   infoToggle();
   flexFix();

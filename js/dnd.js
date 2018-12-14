@@ -18,7 +18,7 @@ function slotOrder() {
     }
   });
   console.log('slotlist:' + slotList);
-  return slotList
+  return slotList;
 }
 
 
@@ -26,20 +26,19 @@ function renderEditSlots(dl) {
   document.getElementById('eslotlist').innerHTML = '';
 
   const tx = micboard.transmitters;
-  for(let i in dl) {
-    let j = dl[i];
+  dl.forEach((e) => {
     let t;
-    if (j != 0) {
+    if (e !== 0) {
       t = document.getElementById('column-template').content.cloneNode(true);
-      t.querySelector('div.col-sm').id = 'slot-' + tx[j].slot;
-      updateViewOnly(t, tx[j]);
+      t.querySelector('div.col-sm').id = 'slot-' + tx[e].slot;
+      updateViewOnly(t, tx[e]);
     } else {
       t = document.createElement('div');
       t.className = 'col-sm';
     }
 
     document.getElementById('eslotlist').appendChild(t);
-  }
+  });
 }
 
 function GridLayout() {
@@ -71,7 +70,7 @@ function GridLayout() {
 }
 
 function onDrop(id, src, dst) {
-  let slot = parseInt(id.id.replace( /[^\d.]/g, '' ));
+  const slot = parseInt(id.id.replace(/[^\d.]/g, ''), 10);
   console.log('DSLOT: ' + slot);
   micboard.displayList = slotOrder();
 
@@ -79,39 +78,36 @@ function onDrop(id, src, dst) {
   renderEditSlots(eslots);
 
 
-  if (src == 'micboard' && dst == 'micboard') {
-  }
-
-  else if (src == 'eslotlist' && dst == 'micboard') {
+  // if (src === 'micboard' && dst === 'micboard') {
+  // }
+  if (src === 'eslotlist' && dst === 'micboard') {
     charts[slot] = initChart(document.getElementById(id.id));
   }
-
-  else if (src == 'micboard' && dst == 'eslotlist') {
+  if (src === 'micboard' && dst === 'eslotlist') {
     charts[slot].slotChart.stop();
   }
 }
 
 function calcEditSlots() {
   const slots = config.slots;
-  let output = [];
+  const output = [];
   slots.forEach((slot) => {
-    if (micboard.displayList.indexOf(slot.slot) == -1 ) {
+    if (micboard.displayList.indexOf(slot.slot) === -1) {
       output.push(slot.slot);
     }
-  })
+  });
 
   return output;
 }
 
 
 export function groupEditToggle() {
-  const container = document.getElementsByClassName('container-fluid')[0]
-  if(container.classList.contains('sidebar-open')) {
+  const container = document.getElementsByClassName('container-fluid')[0];
+  if (container.classList.contains('sidebar-open')) {
     container.classList.remove('sidebar-open');
     swappable.destroy();
-  }
-  else {
-    if (micboard.displayMode == 'TV') {
+  } else {
+    if (micboard.displayMode === 'TV') {
       toggleDisplayMode();
     }
     container.classList.add('sidebar-open');

@@ -52,7 +52,6 @@ function sendFile(file, filename) {
 
 export function updateGIFBackgrounds() {
   $('.mic_name').each((key, value) => {
-
     name = $(this).children('.name').html().toLowerCase() + '.mp4';
     if (micboard.mp4_list.indexOf(name) > -1) {
       $(this).css('background-image', 'url("bg/' + name + '")');

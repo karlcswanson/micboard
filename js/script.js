@@ -24,8 +24,8 @@ export var config = {};
 export var micboard = [];
 
 micboard.url = [];
-micboard.url.start_slot = parseInt(getUrlParameter('start_slot'));
-micboard.url.stop_slot = parseInt(getUrlParameter('stop_slot'));
+micboard.url.start_slot = parseInt(getUrlParameter('start_slot'), 10);
+micboard.url.stop_slot = parseInt(getUrlParameter('stop_slot'), 10);
 micboard.url.group = getUrlParameter('group');
 micboard.url.demo = getUrlParameter('demo');
 micboard.url.settings = getUrlParameter('settings');
@@ -156,15 +156,15 @@ function generateQR() {
 }
 
 function groupTableBuilder(data) {
-  let plist = {};
+  const plist = {};
 
-  for (var p in data['config']['groups']) {
-    let group = data['config']['groups'][p]['group'];
-    let entry = {};
-    entry['slots'] = data['config']['groups'][p]['slots'];
-    entry['title'] = data['config']['groups'][p]['title'];
-    plist[group] = entry;
-  }
+  data.config.groups.forEach((e) => {
+    const entry = {
+      slots: e.slots,
+      title: e.title,
+    };
+    plist[e.group] = entry;
+  });
   return plist;
 }
 
@@ -211,17 +211,18 @@ function getUrlParameter(sParam) {
       return sParameterName[1] === undefined ? true : sParameterName[1];
     }
   }
+  return undefined;
 }
 
 function dataFilterFromList(data) {
-  for (var i in data.receivers) {
-    for (var j in data.receivers[i].tx) {
-      const tx = data.receivers[i].tx[j];
-      tx.ip = data.receivers[i].ip;
-      tx.type = data.receivers[i].type;
+  data.receivers.forEach((rx) => {
+    rx.tx.forEach((t) => {
+      const tx = t;
+      tx.ip = rx.ip;
+      tx.type = rx.type;
       micboard.transmitters[tx.slot] = tx;
-    }
-  }
+    });
+  });
 }
 
 function displayListChooser() {
