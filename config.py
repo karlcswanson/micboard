@@ -28,7 +28,7 @@ def local_app_dir():
     return path
 
 
-def default_app_config_dir(folder = None):
+def default_app_config_dir(folder=None):
     path = os.path.join(local_app_dir(), APPNAME)
     if not os.path.exists(path):
         os.makedirs(path)
@@ -82,8 +82,8 @@ def read_json_config(file):
         config_tree = json.load(config_file)
 
         for tx in config_tree['slots']:
-            rec = shure.check_add_receiver(tx['ip'],tx['type'])
-            rec.add_transmitter(tx['channel'],tx['slot'])
+            rec = shure.check_add_receiver(tx['ip'], tx['type'])
+            rec.add_transmitter(tx['channel'], tx['slot'])
 
     gif_dir = get_gif_dir()
 

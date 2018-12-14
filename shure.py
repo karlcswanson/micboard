@@ -29,7 +29,8 @@ def print_ALL():
     for rx in WirelessReceivers:
         print("RX Type: {} IP: {} Status: {}".format(rx.type, rx.ip, rx.rx_com_status))
         for tx in rx.transmitters:
-            print("Channel Name: {} Frequency: {} Slot: {} TX: {} TX State: {}".format(tx.chan_name, tx.frequency, tx.slot, tx.channel, tx.tx_state()))
+            print("Channel Name: {} Frequency: {} Slot: {} TX: {} TX State: {}"
+                  .format(tx.chan_name, tx.frequency, tx.slot, tx.channel, tx.tx_state()))
 
 def watchdog_monitor():
     for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTED'):

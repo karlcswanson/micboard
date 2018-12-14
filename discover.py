@@ -72,10 +72,10 @@ def add_rx(ip,rx_type,channels):
 
     else:
         discovered.append({
-                'ip' : ip,
-                'type': rx_type.lower(),
-                'channels': channels
-             })
+            'ip' : ip,
+            'type': rx_type.lower(),
+            'channels': channels
+        })
     discovered.sort(key=lambda x: x['ip'])
     # print(discovered)
 
@@ -122,8 +122,8 @@ def DCID_Parse(file):
             deviceList[dccid.text] = dev
 
 def dcid_save_to_file(file):
-    with open(file,'w') as f:
-        json.dump(deviceList,f, indent=2, separators=(',',': '), sort_keys=True)
+    with open(file, 'w') as f:
+        json.dump(deviceList, f, indent=2, separators=(',', ': '), sort_keys=True)
         f.write('\n')
 
 def dcid_restore_from_file(file):
@@ -131,8 +131,8 @@ def dcid_restore_from_file(file):
     with open(file,'r') as f:
         deviceList = json.load(f)
 
-def updateDCIDmap(inputFile,outputFile):
-    DCID_Parse(inputFile);
+def updateDCIDmap(inputFile, outputFile):
+    DCID_Parse(inputFile)
     dcid_save_to_file(outputFile)
 
 def DCIDMapCheck():
@@ -173,8 +173,8 @@ def main():
             sys.exit()
 
         if p:
-            updateDCIDmap(p,options.output_file)
-            print("Converting {} to {}".format(p,options.output_file))
+            updateDCIDmap(p, options.output_file)
+            print("Converting {} to {}".format(p, options.output_file))
         sys.exit()
 
     if options.discover:
