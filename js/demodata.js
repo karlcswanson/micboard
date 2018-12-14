@@ -1,8 +1,8 @@
 'use strict';
 
-import { micboard } from "./script.js"
-import { updateSlot } from "./channelview.js"
-import { updateChart } from "./chart-smoothie.js"
+import { micboard } from './script.js';
+import { updateSlot } from './channelview.js';
+import { updateChart } from './chart-smoothie.js';
 
 
 const batterySample = {
@@ -44,54 +44,53 @@ const name_sample = [
 
 const prefix_sample = ['HH', 'BP'];
 
-const type_sample = ['uhfr', 'qlxd', 'ulxd', 'axtd']
-
-function randomIPGenerator() {
-  return '192.168.103.' + getRandomInt(50, 150)
-}
-
-function randomTypeGenerator() {
-  return type_sample[getRandomInt(0, type_sample.length - 1)];
-}
+const type_sample = ['uhfr', 'qlxd', 'ulxd', 'axtd'];
 
 // https://gist.github.com/kerimdzhanov/7529623
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+function randomTypeGenerator() {
+  return type_sample[getRandomInt(0, type_sample.length - 1)];
+}
 
 function randomNameGenerator() {
   return name_sample[getRandomInt(0, name_sample.length)];
 }
 
-function current_names() {
-  var names = []
+function randomIPGenerator() {
+  return '192.168.103.' + getRandomInt(50, 150);
+}
 
-  micboard.displayList.forEach(function(e) {
-    if (e != 0) {
+function current_names() {
+  const names = [];
+
+  micboard.displayList.forEach((e) => {
+    if (e !== 0) {
       name = micboard.transmitters[e].name;
-      let prefix = name.substring(0, 2);
-      let number = name.substring(2, 4);
+      const prefix = name.substring(0, 2);
+      const number = name.substring(2, 4);
       name = name.substring(5);
       names.push(name);
     }
-  })
+  });
 
-  return names
+  return names;
 }
 
 function uniqueRandomNameGenerator(slot) {
-  let used_names = current_names();
-  let namebank = name_sample.filter(el => !used_names.includes(el));
+  const used_names = current_names();
+  const namebank = name_sample.filter(el => !used_names.includes(el));
 
-  let len = namebank.length;
-  let index = getRandomInt(0, len - 1);
-  let name = namebank[index];
+  const len = namebank.length;
+  const index = getRandomInt(0, len - 1);
+  const name = namebank[index];
 
 
-  let channel = slot.toString().padStart(2, '0');
-  let output = 'HH' + channel + ' ' + name;
-  return output
+  const channel = slot.toString().padStart(2, '0');
+  const output = 'HH' + channel + ' ' + name;
+  return output;
 }
 
 function randomRfSampleGenerator() {
@@ -107,7 +106,7 @@ function randomTXOffsetGenerator() {
 }
 
 function randomFrequencyGenerator() {
-  const frequency =  getRandomInt(474, 597) + (getRandomInt(0, 40) * .025);
+  const frequency = getRandomInt(474, 597) + (getRandomInt(0, 40) * 0.025);
   return frequency.toFixed(3);
 }
 
@@ -116,7 +115,7 @@ function randomRfGenerator() {
 }
 
 function randomBatteryGenerator() {
-  const batt_index = getRandomInt(0,5);
+  const batt_index = getRandomInt(0, 5);
   const battery = batterySample[batt_index];
   const len = battery.status.length;
   const status_index = getRandomInt(0, len - 1);
@@ -148,15 +147,34 @@ function randomDataGenerator() {
 }
 
 
+function unixtimestamp() {
+  return new Date() / 1000;
+}
+
+function randomNameListGenerator(length) {
+  const indexList = [];
+  const outputList = [];
+  while (indexList.length < length) {
+    const r = getRandomInt(0, name_sample.length);
+    if (indexList.indexOf(r) < 0) {
+      indexList.push(r);
+    }
+  }
+  for (let i = 0; i < length; i += 1) {
+    outputList[i] = name_sample[indexList[i]];
+  }
+  return outputList;
+}
+
 export function seedTransmitters(dl) {
   const len = dl.length;
   const names = randomNameListGenerator(len);
-  for (let i = 0; i < len; i++) {
-    let slot = dl[i];
-    if (slot != 0) {
-      let r = randomDataGenerator();
+  for (let i = 0; i < len; i += 1) {
+    const slot = dl[i];
+    if (slot !== 0) {
+      const r = randomDataGenerator();
       r.slot = slot;
-      let n = 'HH' + slot.toString().padStart(2, '0') + ' ' + names[i];
+      const n = 'HH' + slot.toString().padStart(2, '0') + ' ' + names[i];
       r.name = n;
       micboard.transmitters[slot] = r;
     }
@@ -164,25 +182,10 @@ export function seedTransmitters(dl) {
 }
 
 
-function randomNameListGenerator(length) {
-  const indexList = [];
-  const outputList = [];
-  while (indexList.length < length) {
-    let r = getRandomInt(0, name_sample.length)
-    if (indexList.indexOf(r) < 0) {
-      indexList.push(r)
-    }
-  }
-  for (let i = 0;i < length; i++) {
-    outputList[i] = name_sample[indexList[i]]
-  }
-  return outputList
-}
-
 function meteteredRandomDataGenerator(update) {
   const battery = randomBatteryGenerator();
   let slot = 0;
-  while (slot == 0) {
+  while (slot === 0) {
     slot = micboard.displayList[getRandomInt(0, micboard.displayList.length - 1)];
   }
   const data = JSON.parse(JSON.stringify(micboard.transmitters[slot]));
@@ -209,20 +212,16 @@ function meteteredRandomDataGenerator(update) {
 }
 
 
-function unixtimestamp() {
-  return new Date() / 1000;
-}
-
 function randomCharts() {
   micboard.displayList.forEach((n) => {
-    if (n != 0) {
-      let data = JSON.parse(JSON.stringify(micboard.transmitters[n]));
+    if (n !== 0) {
+      const data = JSON.parse(JSON.stringify(micboard.transmitters[n]));
       data.audio_level = randomAudioGenerator();
       data.rf_level = randomRfGenerator();
       data.timestamp = unixtimestamp();
       updateChart(data);
     }
-  })
+  });
 }
 
 
@@ -232,19 +231,19 @@ export function autoRandom() {
   }, 1250);
 
   setInterval(() => {
-    updateSlot(meteteredRandomDataGenerator('antenna'))
+    updateSlot(meteteredRandomDataGenerator('antenna'));
   }, 90);
 
   setInterval(() => {
-    updateSlot(meteteredRandomDataGenerator('battery'))
+    updateSlot(meteteredRandomDataGenerator('battery'));
   }, 1250);
 
   setInterval(() => {
-    updateSlot(meteteredRandomDataGenerator('tx_offset'))
+    updateSlot(meteteredRandomDataGenerator('tx_offset'));
   }, 750);
 
   setInterval(() => {
-    updateSlot(meteteredRandomDataGenerator('frequency'))
+    updateSlot(meteteredRandomDataGenerator('frequency'));
   }, 750);
   setInterval(randomCharts, 300);
 }

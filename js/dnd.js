@@ -10,7 +10,7 @@ import { renderDisplayList, updateViewOnly } from './channelview.js';
 let swappable;
 
 function slotOrder() {
-  const slotList = []
+  const slotList = [];
   $('#micboard > div').each(function() {
     const slot = parseInt(this.id.replace ( /[^\d.]/g, '' ))
     if (slot && (slotList.indexOf(slot) == -1)) {
