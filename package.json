@@ -14,11 +14,11 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/karlcswanson/mictray.git"
+    "url": "git+https://github.com/karlcswanson/micboard.git"
   },
   "author": "karlcswanson@gmail.com",
   "bugs": {
-    "url": "https://github.com/karlcswanson/mictray/issues"
+    "url": "https://github.com/karlcswanson/micboard/issues"
   },
   "homepage": "https://github.com/karlcswanson/micboard",
   "dependencies": {

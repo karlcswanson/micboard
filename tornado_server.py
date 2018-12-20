@@ -11,7 +11,7 @@ import discover
 
 
 # https://stackoverflow.com/questions/5899497/checking-file-extension
-def fileList(extension):
+def file_list(extension):
     files = []
     dir_list = os.listdir(config.gif_dir)
     # print(fileList)
@@ -30,9 +30,9 @@ def json_rxs(rxs):
     for rx in rxs:
         data.append(rx.rx_json())
 
-    gifs = fileList('.gif')
-    jpgs = fileList('.jpg')
-    mp4s = fileList('.mp4')
+    gifs = file_list('.gif')
+    jpgs = file_list('.jpg')
+    mp4s = file_list('.mp4')
 
     url = localURL()
     discovered = discover.discovered

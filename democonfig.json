@@ -1,6 +1,5 @@
 {
   "port" : 8058,
-  "prefixes": ["BP","HH"],
   "displays": [
 	  {
       "preset": 1,

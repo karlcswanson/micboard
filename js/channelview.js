@@ -18,9 +18,9 @@ function allSlots() {
 
 // enables info-drawer toggle for mobile clients
 function infoToggle() {
-  $('.col-sm').click(() => {
+  $('.col-sm').click((e) => {
     if ($(window).width() <= 980) {
-      $(this).find('.info-drawer').toggle();
+      $(e.currentTarget).find('.info-drawer').toggle();
     }
   });
 }

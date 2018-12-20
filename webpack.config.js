@@ -1,63 +1,64 @@
-var path = require('path');
+const path = require('path');
 const webpack = require('webpack');
-
 
 
 module.exports = {
   devtool: 'source-map',
   mode: 'development',
   // entry: ['./js/script.js','./js/gif.js','./js/chart-smoothie.js','./js/demodata.js'],
-  entry: ['whatwg-fetch','./js/script.js'],
+  entry: ['whatwg-fetch', './js/script.js'],
   output: {
     path: path.resolve(__dirname, 'static'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   plugins: [
     new webpack.ProvidePlugin({
       $: 'jquery',
-      jQuery: 'jquery'
-    })
+      jQuery: 'jquery',
+    }),
   ],
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.scss$/,
         use: [{
-            loader: "style-loader"
+          loader: 'style-loader',
         }, {
-            loader: "css-loader", options: {
-                sourceMap: true
-            }
+          loader: 'css-loader',
+          options: {
+            sourceMap: true,
+          },
         }, {
-            loader: "sass-loader", options: {
-                sourceMap: true
-            }
-        }]
+          loader: 'sass-loader',
+          options: {
+            sourceMap: true,
+          },
+        }],
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         use: [{
           loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts/',
-              publicPath: 'static/fonts/'
-            }
-        }]
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'fonts/',
+            publicPath: 'static/fonts/',
+          },
+        }],
       },
       {
         test: /.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-          presets: ["@babel/preset-env","@babel/preset-react"]
+          presets: ['@babel/preset-env', '@babel/preset-react'],
           // presets: ['env', 'react']
-        }
-      }
-    ]
-  }
+        },
+      },
+    ],
+  },
 };
