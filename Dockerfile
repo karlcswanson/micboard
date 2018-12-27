@@ -11,7 +11,8 @@ COPY . .
 
 RUN pip3 install -r requirements.txt
 RUN npm install
+RUN npm run build
 
 EXPOSE 8058
 
-CMD ["python3", "tornado_server.py"]
+CMD ["python3", "micboard.py"]
