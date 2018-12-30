@@ -50,16 +50,21 @@ export function uploadMode() {
 }
 
 
+export function updateBackground(slotSelector) {
+  const s = slotSelector;
+  const name = s.getElementsByClassName('name')[0].innerHTML.toLowerCase() + '.mp4';
+
+  if (micboard.mp4_list.indexOf(name) > -1) {
+    const style = 'background-image: url("bg/' + name + '"); background-size: cover;';
+    s.setAttribute('style', style);
+  } else {
+    s.setAttribute('style', "background-image: ; background-size: ''");
+  }
+}
+
 export function updateGIFBackgrounds() {
-  $('.mic_name').each((key, value) => {
-    name = $(this).children('.name').html().toLowerCase() + '.mp4';
-    if (micboard.mp4_list.indexOf(name) > -1) {
-      $(this).css('background-image', 'url("bg/' + name + '")');
-      $(this).css('background-size', 'cover');
-      console.log(name);
-    } else {
-      $(this).css('background-image', '');
-      $(this).css('background-size', '');
-    }
-  });
+  const slots = document.getElementsByClassName('mic_name');
+  for (let i = 0; i < slots.length; i += 1) {
+    updateBackground(slots[i]);
+  }
 }

@@ -1,7 +1,7 @@
 'use strict';
 
 import { config, micboard, ActivateMessageBoard } from './script.js';
-import { updateGIFBackgrounds } from './gif.js';
+import { updateBackground } from './gif.js';
 import { initChart, charts } from './chart-smoothie.js';
 import { seedTransmitters } from './demodata.js';
 import { updateEditor } from './dnd.js';
@@ -57,7 +57,7 @@ function updateName(slotSelector, data) {
   }
 
   if (document.getElementById('micboard').classList.contains('bg-gif')) {
-    updateGIFBackgrounds();
+    updateBackground(slotSelector.querySelector('.mic_name'));
   }
 }
 

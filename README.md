@@ -1,5 +1,5 @@
 # Micboard
-micboard is a 
+micboard is a
 
 ## Installation
 
@@ -19,7 +19,7 @@ python tornado_server.py
 #### Docker
 ```
 docker build -t mictray .
-docker run -d -p 8058:8058 mictray
+docker run -d -p 8058:8058 -v "$(pwd)"/micboardcfgdir:/root/.local/share/micboard mictray
 ```
 
 
