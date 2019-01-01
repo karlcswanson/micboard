@@ -4,11 +4,11 @@ block_cipher = None
 
 
 a = Analysis(['micboard.py'],
-             pathex=['/Users/karl/Dropbox/brainstorm/Projects/Current Projects/micbox/dev/micboard'],
+             pathex=['/Users/karl/Dropbox/brainstorm/Projects/Current Projects/micbox/dev/micboard/py'],
              binaries=[],
-             datas=[('static/','static/'),
-                    ('democonfig.json','.'),
-                    ('dcid.json','.')],
+             datas=[('../static/','static/'),
+                    ('../democonfig.json','.'),
+                    ('../dcid.json','.')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],

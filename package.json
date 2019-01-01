@@ -4,8 +4,8 @@
   "description": "An intelligent mic tray for ethernet enabled Shure microphones.",
   "main": "main.js",
   "scripts": {
-    "server": "python micboard.py",
-    "binary": "pyinstaller micboard.spec",
+    "server": "python py/micboard.py",
+    "binary": "pyinstaller py/micboard.spec",
     "build": "node node_modules/webpack/bin/webpack.js --progress --hide-modules --config=webpack.config.js",
     "app": "electron .",
     "pack": "electron-builder --dir -c.mac.identity=null",

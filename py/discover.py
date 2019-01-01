@@ -49,7 +49,7 @@ def discover():
 
     sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
     while True:
-        data, (ip,_) = sock.recvfrom(1024)
+        data, (ip, _) = sock.recvfrom(1024)
         data = data.decode('UTF-8',errors="ignore")
         # print(data)
         type = rx_type(data)

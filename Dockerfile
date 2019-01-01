@@ -9,10 +9,10 @@ RUN apt-get install nodejs
 
 COPY . .
 
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r py/requirements.txt
 RUN npm install
 RUN npm run build
 
 EXPOSE 8058
 
-CMD ["python3", "micboard.py"]
+CMD ["python3", "py/micboard.py"]
