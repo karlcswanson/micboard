@@ -41,18 +41,12 @@ def default_app_config_dir(folder=None):
 def app_dir(folder=None):
     if getattr(sys, 'frozen', False):
         application_path = sys._MEIPASS
-        if folder:
-            return os.path.join(application_path, folder)
-        return application_path
+        return os.path.join(application_path, folder)
 
     if __file__:
         application_path = os.path.dirname(__file__)
 
-    if folder:
-        return os.path.join(os.path.dirname(application_path), folder)
-
-    # return application_path
-    return os.path.dirname(application_path)
+    return os.path.join(os.path.dirname(application_path), folder)
 
 
 def default_gif_dir():
