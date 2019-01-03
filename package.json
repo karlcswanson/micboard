@@ -56,7 +56,7 @@
     "webpack-cli": "^3.1.2"
   },
   "build": {
-    "appId": "your.id",
+    "appId": "com.micboard.app",
     "asar": true,
     "asarUnpack": [
       "dist/micboard-service",
@@ -64,7 +64,7 @@
       "build/trayTemplate@2x.png"
     ],
     "mac": {
-      "category": "your.app.category.type",
+      "category": "public.app-category.utilities",
       "extendInfo": {
         "LSBackgroundOnly": 1,
         "LSUIElement": 1

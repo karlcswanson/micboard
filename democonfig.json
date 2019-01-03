@@ -1,17 +1,20 @@
 {
   "port" : 8058,
-  "displays": [
+  "groups": [
 	  {
-      "preset": 1,
-		  "slots" : [1,3,5,7]
+      "group": 1,
+		  "slots" : [1,3,2,4],
+      "title": "Group 1 Title"
 	  },
 	  {
-      "preset": 2,
-		  "slots" : [8,6,4,2]
+      "group": 2,
+		  "slots" : [4,3,2,1],
+      "title": "Group 2 Title"
 	  },
     {
-      "preset" : 9,
-		  "slots" : [1,2,3,4,5,6,7,8]
+      "group" : 9,
+		  "slots" : [1,2,3,4],
+      "title": "Group 9 Title"
 	  }
   ],
   "slots": [
