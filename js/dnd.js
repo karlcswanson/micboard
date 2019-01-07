@@ -11,12 +11,15 @@ let swappable;
 
 function slotOrder() {
   const slotList = [];
-  $('#micboard > div').each(() => {
-    const slot = parseInt(this.id.replace(/[^\d.]/g, ''), 10);
+  const currentBoard = document.getElementById('micboard').getElementsByClassName('col-sm');
+
+  for (let i = 0; i < currentBoard.length; i += 1) {
+    const slot = parseInt(currentBoard[i].id.replace(/[^\d.]/g, ''), 10);
     if (slot && (slotList.indexOf(slot) === -1)) {
       slotList.push(slot);
     }
-  });
+  }
+
   console.log('slotlist:' + slotList);
   return slotList;
 }

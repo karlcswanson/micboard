@@ -183,6 +183,9 @@ export function seedTransmitters(dl) {
 
 
 function meteteredRandomDataGenerator(update) {
+  if (micboard.displayList.length === 0) {
+    return { slot: 0 };
+  }
   const battery = randomBatteryGenerator();
   let slot = 0;
   while (slot === 0) {

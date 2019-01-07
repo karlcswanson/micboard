@@ -184,6 +184,10 @@ export function updateSlot(data) {
   if (document.getElementById('micboard').classList.contains('uploadmode')) {
     return;
   }
+
+  if (data.slot === 0) {
+    return;
+  }
   const slot = 'slot-' + data.slot;
   const slotSelector = document.getElementById(slot);
   if (slotSelector) {
