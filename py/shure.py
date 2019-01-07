@@ -38,6 +38,11 @@ def watchdog_monitor():
             print('disconnected from: {}'.format(rx.ip))
             rx.socket_disconnect()
 
+    for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTING'):
+        if (int(time.perf_counter()) - rx.socket_watchdog) > 2:
+            rx.socket_disconnect()
+
+
     for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'DISCONNECTED'):
         if (int(time.perf_counter()) - rx.socket_watchdog) > 20:
             rx.socket_connect()
@@ -83,6 +88,7 @@ def SocketService():
 
             rx.socket_watchdog = int(time.perf_counter())
             rx.set_rx_com_status('CONNECTED')
+            
 
         for rx in write_socks:
             string = rx.writeQueue.get()
@@ -93,7 +99,7 @@ def SocketService():
                 rx.f.sendto(bytearray(string, 'UTF-8'), (rx.ip, 2202))
 
 
-        for sock in error_socks:
+        for rx in error_socks:
             rx.set_rx_com_status('DISCONNECTED')
 
 

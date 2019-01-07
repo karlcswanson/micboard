@@ -156,6 +156,9 @@ class WirelessTransmitter:
         name = self.chan_name.split()
         prefix = re.match("([A-Za-z]+)([0-9])+", name[0])
 
+        if self.rx.rx_com_status in ['DISCONNECTED', 'CONNECTING']:
+            return 'RX_COM_ERROR'
+
         if (time.time() - self.peakstamp) < PEAK_TIMEOUT:
             return 'AUDIO_PEAK'
 
