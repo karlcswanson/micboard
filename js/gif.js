@@ -52,13 +52,22 @@ export function uploadMode() {
 
 export function updateBackground(slotSelector) {
   const s = slotSelector;
-  const name = s.getElementsByClassName('name')[0].innerHTML.toLowerCase() + '.mp4';
 
-  if (micboard.mp4_list.indexOf(name) > -1) {
-    const style = 'background-image: url("bg/' + name + '"); background-size: cover;';
+  const extensions = {
+    IMG: '.jpg',
+    MP4: '.mp4',
+  };
+
+  const name = s.getElementsByClassName('name')[0].innerHTML.toLowerCase() + extensions[micboard.backgroundMode];
+
+  if (micboard.backgroundMode === 'MP4' && micboard.mp4_list.indexOf(name) > -1) {
+    const style = 'background: url("bg/' + name + '") center; background-size: cover;';
+    s.setAttribute('style', style);
+  } else if (micboard.backgroundMode === 'IMG' && micboard.img_list.indexOf(name) > -1) {
+    const style = 'background: url("bg/' + name + '") center; background-size: cover;';
     s.setAttribute('style', style);
   } else {
-    s.setAttribute('style', "background-image: ; background-size: ''");
+    s.setAttribute('style', "background-image: ''; background-size: ''");
   }
 }
 

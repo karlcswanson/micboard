@@ -31,6 +31,7 @@ micboard.url.demo = getUrlParameter('demo');
 micboard.url.settings = getUrlParameter('settings');
 micboard.displayMode = 'DESKTOP';
 micboard.infoDrawerMode = 'elinfo00';
+micboard.backgroundMode = 'NONE';
 
 micboard.transmitters = [];
 
@@ -126,19 +127,22 @@ export function toggleDisplayMode() {
 
 function toggleBackgrounds() {
   const selector = document.getElementById('micboard');
-
-  if (selector.classList.contains('bg-std')) {
-    swapClass(selector, 'bg-std', 'bg-gif');
-    updateGIFBackgrounds();
-  } else if (selector.classList.contains('bg-gif')) {
-    swapClass(selector, 'bg-gif', 'bg-img');
-    $('#micboard .mic_name').css('background-image', '');
-    $('#micboard .mic_name').css('background-size', '');
-  } else if (selector.classList.contains('bg-img')) {
-    swapClass(selector, 'bg-img', 'bg-std');
-    $('#m icboard .mic_name').css('background-image', '');
-    $('#micboard .mic_name').css('background-size', '');
+  switch (micboard.backgroundMode) {
+    case 'NONE': micboard.backgroundMode = 'MP4';
+      $('#micboard .mic_name').css('background-image', '');
+      $('#micboard .mic_name').css('background-size', '');
+      break;
+    case 'MP4': micboard.backgroundMode = 'IMG';
+      $('#micboard .mic_name').css('background-image', '');
+      $('#micboard .mic_name').css('background-size', '');
+      break;
+    case 'IMG': micboard.backgroundMode = 'NONE';
+      $('#micboard .mic_name').css('background-image', '');
+      $('#micboard .mic_name').css('background-size', '');
+      break;
+    default: break;
   }
+  updateGIFBackgrounds();
 }
 
 function generateQR() {
@@ -244,6 +248,7 @@ function initialMap(callback) {
     .then((data) => {
       micboard.discovered = data.discovered;
       micboard.mp4_list = data.mp4;
+      micboard.img_list = data.jpg;
       micboard.localURL = data.url;
       micboard.groups = groupTableBuilder(data);
       config = data.config;

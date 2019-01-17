@@ -55,10 +55,7 @@ function updateName(slotSelector, data) {
     slotSelector.querySelector('p.mic_id').innerHTML = '';
     slotSelector.querySelector('p.name').innerHTML = data.name;
   }
-
-  if (document.getElementById('micboard').classList.contains('bg-gif')) {
-    updateBackground(slotSelector.querySelector('.mic_name'));
-  }
+  updateBackground(slotSelector.querySelector('.mic_name'));
 }
 
 function updateStatus(slotSelector, data) {
