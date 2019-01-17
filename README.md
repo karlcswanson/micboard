@@ -7,13 +7,13 @@ micboard is a
 ```
 sudo apt-get update
 sudo apt-get install git python3-pip
-pip3 install -r requirements.txt
+pip3 install -r py/requirements.txt
 
 curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 sudo apt-get install nodejs
 npm install
 
-python tornado_server.py
+python py/micboard.py
 ```
 
 #### Docker
