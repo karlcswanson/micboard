@@ -96,7 +96,10 @@ def SocketService():
             if rx.type in ['qlxd', 'ulxd', 'axtd']:
                 rx.f.sendall(bytearray(string, 'UTF-8'))
             elif rx.type == 'uhfr':
-                rx.f.sendto(bytearray(string, 'UTF-8'), (rx.ip, 2202))
+                try:
+                    rx.f.sendto(bytearray(string, 'UTF-8'), (rx.ip, 2202))
+                except:
+                    print("UDP TX ERROR IP: {} String: {}".format(rx.ip,string))
 
 
         for rx in error_socks:

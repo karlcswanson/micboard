@@ -29,7 +29,7 @@ class WirelessReceiver:
 
 
             elif self.type == 'uhfr':
-                self. f = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #UDP
+                self.f = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #UDP
 
             self.set_rx_com_status('CONNECTING')
             self.enable_metering(.1)
