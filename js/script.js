@@ -276,12 +276,12 @@ $(document).ready(() => {
     micboard.url.stop_slot = 12;
   }
 
-  if (!window.location.href.includes(':8058')) {
-    dataURL = 'data.json';
-    micboard.url.demo = 'true';
-    micboard.url.start_slot = 1;
-    micboard.url.stop_slot = 12;
-  }
+  // if (!window.location.href.includes(':8058')) {
+  //   dataURL = 'data.json';
+  //   micboard.url.demo = 'true';
+  //   micboard.url.start_slot = 1;
+  //   micboard.url.stop_slot = 12;
+  // }
 
   if (micboard.url.demo === 'true') {
     initialMap(autoRandom);
