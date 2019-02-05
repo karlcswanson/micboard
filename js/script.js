@@ -181,12 +181,17 @@ function mapGroups() {
   }
   str += '<p class="text-muted"><a class="nav-link" id="test-button" href="#">test button</a></p>';
   div.innerHTML += str;
+  
   $('a#go-settings').click(() => {
     settingsView(config);
     $('.collapse').collapse('hide');
   });
 
-  $('a#test-button').click(() => {
+  $('a#go-groupedit').click(() => {
+    if (micboard.group !== 0) {
+      groupEditToggle();
+      $('.collapse').collapse('hide');
+    }
   });
 
   $('a.preset-link').each(function(index) {
