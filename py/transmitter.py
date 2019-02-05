@@ -104,7 +104,7 @@ class WirelessTransmitter:
             try:
                 audio_level = UHFR_AUDIO_TABLE[audio_level]
             except:
-                logging.warning("invalid Lookup UHFR Audio Value: {}".format(audio_level))
+                logging.warning("invalid Lookup UHFR Audio Value: %s", audio_level)
             # audio_level = int(100 * (audio_level / 255))
 
         if audio_level >= PEAK_LEVEL[self.rx.type]:
@@ -135,13 +135,12 @@ class WirelessTransmitter:
 
         if self.rx.type == 'uhfr' and self.prev_battery_uhfr_raw != self.battery:
             if self not in data_update_list:
-                logging.debug("UHFR Battery Change Slot: {}".format(self.slot))
+                logging.debug("UHFR Battery Change Slot: %s", self.slot)
                 data_update_list.append(self)
 
         if 1 <= level <= 5:
             self.prev_battery = level
             self.timestamp = time.time()
-
 
 
     def set_chan_name(self, chan_name):

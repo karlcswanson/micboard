@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import logging
 from shutil import copyfile
 
 import shure
@@ -9,13 +10,27 @@ APPNAME = 'micboard'
 
 CONFIG_FILE_NAME = 'config.json'
 
+FORMAT = '%(asctime)s %(levelname)s:%(message)s'
+
 config_tree = {}
 
 gif_dir = ''
 
-
 group_update_list = []
 
+def logging_init():
+    # clear log file
+    with open(log_file(), 'w'):
+        pass
+
+    logging.basicConfig(filename=log_file(),
+                        level=logging.INFO,
+                        format=FORMAT)
+    log = logging.getLogger()
+    log.setLevel("DEBUG")
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setLevel(logging.DEBUG)
+    log.addHandler(handler)
 
 def local_app_dir():
     path = os.getcwd()
@@ -75,6 +90,7 @@ def config_path():
 
 
 def config():
+    logging_init()
     return read_json_config(config_path())
 
 def read_json_config(file):

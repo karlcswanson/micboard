@@ -36,7 +36,7 @@ def print_ALL():
 def watchdog_monitor():
     for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTED'):
         if (int(time.perf_counter()) - rx.socket_watchdog) > 5:
-            logging.debug('disconnected from: {}'.format(rx.ip))
+            logging.debug('disconnected from: %s', rx.ip)
             rx.socket_disconnect()
 
     for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTING'):
@@ -93,14 +93,14 @@ def SocketService():
 
         for rx in write_socks:
             string = rx.writeQueue.get()
-            logging.debug("write: {} data: {}".format(rx.ip, string))
+            logging.debug("write: %s data: %s", rx.ip, string)
             if rx.type in ['qlxd', 'ulxd', 'axtd']:
                 rx.f.sendall(bytearray(string, 'UTF-8'))
             elif rx.type == 'uhfr':
                 try:
                     rx.f.sendto(bytearray(string, 'UTF-8'), (rx.ip, 2202))
                 except:
-                    logging.warning("UDP TX ERROR IP: {} String: {}".format(rx.ip, string))
+                    logging.warning("UDP TX ERROR IP: %s String: %s", rx.ip, string)
 
 
         for rx in error_socks:

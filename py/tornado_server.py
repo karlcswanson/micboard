@@ -109,7 +109,7 @@ class UploadHandler(web.RequestHandler):
                 # filename = info['filename']
                 content_type = info['content_type']
                 body = info['body']
-                logging.debug('POST {} {} {} bytes'.format(filename, content_type, len(body)))
+                logging.debug('POST %s %s %s bytes', filename, content_type, len(body))
                 f = open(os.path.join(config.gif_dir, filename), 'wb')
                 f.write(body)
         self.write('OK')

@@ -1,6 +1,5 @@
 import threading
 import time
-import logging
 
 
 import config
@@ -8,10 +7,9 @@ import tornado_server
 import shure
 import discover
 
+
 def main():
     config.config()
-    logging.basicConfig(filename=config.log_file(), level=logging.INFO)
-    logging.getLogger().setLevel("DEBUG")
 
     time.sleep(.1)
     rxquery_t = threading.Thread(target=shure.WirelessQueryQueue)
@@ -24,7 +22,6 @@ def main():
     web_t.start()
     discover_t.start()
     rxparse_t.start()
-
 
 
 if __name__ == '__main__':

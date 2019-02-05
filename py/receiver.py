@@ -77,7 +77,7 @@ class WirelessReceiver:
             elif split[0] in ['REP', 'REPORT']:
                 self.raw[split[1]] = ' '.join(split[2:])
         except:
-            logging.warning("Index Error(RX): {}".format(data))
+            logging.warning("Index Error(RX): %s", data)
 
 
     def get_channels(self):
