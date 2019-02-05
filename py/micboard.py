@@ -1,5 +1,6 @@
 import threading
 import time
+import logging
 
 
 import config
@@ -9,6 +10,8 @@ import discover
 
 def main():
     config.config()
+    logging.basicConfig(filename=config.log_file(), level=logging.INFO)
+    logging.getLogger().setLevel("DEBUG")
 
     time.sleep(.1)
     rxquery_t = threading.Thread(target=shure.WirelessQueryQueue)

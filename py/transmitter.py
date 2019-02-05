@@ -1,6 +1,7 @@
 import time
 import re
 from collections import defaultdict
+import logging
 
 
 chart_update_list = []
@@ -103,7 +104,7 @@ class WirelessTransmitter:
             try:
                 audio_level = UHFR_AUDIO_TABLE[audio_level]
             except:
-                print("invalid Lookup UHFR Audio Value: {}".format(audio_level))
+                logging.warning("invalid Lookup UHFR Audio Value: {}".format(audio_level))
             # audio_level = int(100 * (audio_level / 255))
 
         if audio_level >= PEAK_LEVEL[self.rx.type]:
@@ -134,7 +135,7 @@ class WirelessTransmitter:
 
         if self.rx.type == 'uhfr' and self.prev_battery_uhfr_raw != self.battery:
             if self not in data_update_list:
-                print("UHFR Battery Change Slot: {}".format(self.slot))
+                logging.debug("UHFR Battery Change Slot: {}".format(self.slot))
                 data_update_list.append(self)
 
         if 1 <= level <= 5:

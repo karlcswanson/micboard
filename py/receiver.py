@@ -2,6 +2,7 @@ import time
 import queue
 import socket
 from collections import defaultdict
+import logging
 
 from transmitter import WirelessTransmitter
 
@@ -76,7 +77,7 @@ class WirelessReceiver:
             elif split[0] in ['REP', 'REPORT']:
                 self.raw[split[1]] = ' '.join(split[2:])
         except:
-            print("Index Error(RX): {}".format(data))
+            logging.warning("Index Error(RX): {}".format(data))
 
 
     def get_channels(self):

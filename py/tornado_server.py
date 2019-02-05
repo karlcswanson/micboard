@@ -2,6 +2,7 @@ import json
 import os
 import asyncio
 import socket
+import logging
 
 from tornado import websocket, web, ioloop, escape
 
@@ -76,7 +77,7 @@ class SocketHandler(websocket.WebSocketHandler):
             try:
                 c.write_message(data)
             except:
-                print("WS Error")
+                logging.warning("WS Error")
 
     @classmethod
     def ws_dump(cls):
@@ -108,7 +109,7 @@ class UploadHandler(web.RequestHandler):
                 # filename = info['filename']
                 content_type = info['content_type']
                 body = info['body']
-                print('POST {} {} {} bytes'.format(filename, content_type, len(body)))
+                logging.debug('POST {} {} {} bytes'.format(filename, content_type, len(body)))
                 f = open(os.path.join(config.gif_dir, filename), 'wb')
                 f.write(body)
         self.write('OK')

@@ -37,6 +37,9 @@ def default_app_config_dir(folder=None):
         return os.path.join(path, folder)
     return path
 
+def log_file():
+    return default_app_config_dir('micboard.log')
+
 # https://stackoverflow.com/questions/404744/determining-application-path-in-a-python-exe-generated-by-pyinstaller
 def app_dir(folder=None):
     if getattr(sys, 'frozen', False):
