@@ -29,7 +29,8 @@ micboard.url.stop_slot = parseInt(getUrlParameter('stop_slot'), 10);
 micboard.url.group = getUrlParameter('group');
 micboard.url.demo = getUrlParameter('demo');
 micboard.url.settings = getUrlParameter('settings');
-micboard.displayMode = 'DESKTOP';
+micboard.url.tvmode = getUrlParameter('tvmode');
+micboard.displayMode = 'deskmode';
 micboard.infoDrawerMode = 'elinfo00';
 micboard.backgroundMode = 'NONE';
 
@@ -85,39 +86,17 @@ function swapClass(selector, currentClass, newClass) {
 }
 
 
-function toggleInfoDrawer() {
-  const selector = document.getElementById('micboard');
-
-  switch (micboard.infoDrawerMode) {
-    case 'elinfo00': swapClass(selector, 'elinfo00', 'elinfo01');
-      micboard.infoDrawerMode = 'elinfo01';
-      break;
-    case 'elinfo01': swapClass(selector, 'elinfo01', 'elinfo10');
-      micboard.infoDrawerMode = 'elinfo10';
-      break;
-    case 'elinfo10': swapClass(selector, 'elinfo10', 'elinfo11');
-      micboard.infoDrawerMode = 'elinfo11';
-      break;
-    case 'elinfo11': swapClass(selector, 'elinfo11', 'elinfo00');
-      micboard.infoDrawerMode = 'elinfo00';
-      break;
-    default:
-      break;
-  }
-
-  if (selector.classList.contains('uploadmode')) {
-    showDivSize();
-  }
+function setDisplayMode(mode) {
+  const selector = document.getElementById('container');
+  swapClass(selector, micboard.displayMode, mode);
+  micboard.displayMode = mode;
 }
 
 export function toggleDisplayMode() {
-  const selector = document.getElementById('container');
   switch (micboard.displayMode) {
-    case 'DESKTOP': swapClass(selector, 'deskmode', 'tvmode');
-      micboard.displayMode = 'TV';
+    case 'deskmode': setDisplayMode('tvmode');
       break;
-    case 'TV': swapClass(selector, 'tvmode', 'deskmode');
-      micboard.displayMode = 'DESKTOP';
+    case 'tvmode': setDisplayMode('deskmode');
       break;
     default:
       break;
@@ -143,6 +122,34 @@ function toggleBackgrounds() {
     default: break;
   }
   updateGIFBackgrounds();
+}
+
+function setInfoDrawer(mode) {
+  const selector = document.getElementById('micboard');
+  swapClass(selector, micboard.infoDrawerMode, mode);
+  micboard.infoDrawerMode = mode;
+  setDisplayMode('tvmode');
+}
+
+function toggleInfoDrawer() {
+  const selector = document.getElementById('micboard');
+
+  switch (micboard.infoDrawerMode) {
+    case 'elinfo00': setInfoDrawer('elinfo01');
+      break;
+    case 'elinfo01': setInfoDrawer('elinfo10');
+      break;
+    case 'elinfo10': setInfoDrawer('elinfo11');
+      break;
+    case 'elinfo11': setInfoDrawer('elinfo00');
+      break;
+    default:
+      break;
+  }
+
+  if (selector.classList.contains('uploadmode')) {
+    showDivSize();
+  }
 }
 
 function generateQR() {
@@ -181,7 +188,7 @@ function mapGroups() {
   }
   str += '<p class="text-muted"><a class="nav-link" id="test-button" href="#">test button</a></p>';
   div.innerHTML += str;
-  
+
   $('a#go-settings').click(() => {
     settingsView(config);
     $('.collapse').collapse('hide');
@@ -209,6 +216,7 @@ function mapGroups() {
 // var getUrlParameter = function getUrlParameter(sParam) {
 function getUrlParameter(sParam) {
   const sPageURL = decodeURIComponent(window.location.search.substring(1));
+  // const sPageURL = decodeURIComponent(window.location.hash.substring(1));
   const sURLVariables = sPageURL.split('&');
   let sParameterName;
   let i;
@@ -271,6 +279,9 @@ function initialMap(callback) {
       if (callback) {
         callback();
       }
+      if (['elinfo00', 'elinfo01', 'elinfo10', 'elinfo11'].indexOf(micboard.url.tvmode) >= 0) {
+        setInfoDrawer(micboard.url.tvmode);
+      }
       initEditor();
     });
 }
@@ -280,13 +291,6 @@ $(document).ready(() => {
     micboard.url.start_slot = 1;
     micboard.url.stop_slot = 12;
   }
-
-  // if (!window.location.href.includes(':8058')) {
-  //   dataURL = 'data.json';
-  //   micboard.url.demo = 'true';
-  //   micboard.url.start_slot = 1;
-  //   micboard.url.stop_slot = 12;
-  // }
 
   if (micboard.url.demo === 'true') {
     initialMap(autoRandom);
