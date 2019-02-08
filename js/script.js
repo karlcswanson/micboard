@@ -299,9 +299,18 @@ $(document).ready(() => {
   }
 
   document.addEventListener('keydown', (e) => {
-    if ($('.settings').is(':visible') || $('.sidebar-nav').is(':visible')) {
+
+    if ($('.settings').is(':visible')) {
       return;
     }
+
+    if ($('.sidebar-nav').is(':visible')) {
+      if (e.keyCode === 27) {
+        groupEditToggle();
+      }
+      return;
+    }
+
     if (e.keyCode === 48) {
       DeactivateMessageBoard();
       renderGroup(0);
