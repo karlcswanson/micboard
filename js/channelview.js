@@ -1,13 +1,13 @@
 'use strict';
 
-import { config, micboard, ActivateMessageBoard } from './script.js';
+import { micboard, ActivateMessageBoard } from './script.js';
 import { updateBackground } from './gif.js';
 import { initChart, charts } from './chart-smoothie.js';
 import { seedTransmitters } from './demodata.js';
 import { updateEditor } from './dnd.js';
 
 function allSlots() {
-  const slot = config.slots;
+  const slot = micboard.config.slots;
   const out = [];
   for (let i = 0; i < slot.length; i += 1) {
     out.push(slot[i].slot);

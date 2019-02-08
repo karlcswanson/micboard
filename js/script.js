@@ -19,7 +19,7 @@ import '../node_modules/@ibm/plex/css/ibm-plex.css';
 
 export var dataURL = '/data';
 
-export var config = {};
+// export var config = {};
 
 export var micboard = [];
 
@@ -190,7 +190,7 @@ function mapGroups() {
   div.innerHTML += str;
 
   $('a#go-settings').click(() => {
-    settingsView(config);
+    settingsView(micboard.config);
     $('.collapse').collapse('hide');
   });
 
@@ -264,11 +264,11 @@ function initialMap(callback) {
       micboard.img_list = data.jpg;
       micboard.localURL = data.url;
       micboard.groups = groupTableBuilder(data);
-      config = data.config;
+      micboard.config = data.config;
       mapGroups();
 
       if (micboard.url.settings) {
-        settingsView(config);
+        settingsView(micboard.config);
       }
 
       if (micboard.url.demo !== 'true') {
@@ -375,7 +375,7 @@ $(document).ready(() => {
     }
     if (e.keyCode === 83) {
       DeactivateMessageBoard();
-      settingsView(config);
+      settingsView(micboard.config);
     }
 
     if (e.keyCode === 84) {
