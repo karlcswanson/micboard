@@ -261,6 +261,7 @@ This capability lets you do a few fun things with the data
 * Log mic metrics into a database with InfluxDB and Grafana
 
 <details><summary>Example Data</summary>
+
 ```javascript
 {
   "antenna": "AX",
