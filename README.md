@@ -1,5 +1,4 @@
 # Micboard
-micboard is a
 
 ## Installation
 
@@ -32,7 +31,7 @@ https://github.com/pyenv/pyenv/issues/443
 `env PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install -v 3.4.3`
 
 ### Git Notes
-`git pull origin master
+git pull origin master
 
 
 ### Grafana & Influx DB notes
@@ -54,13 +53,16 @@ docker run \
   influxdb  
 
 
-# micboard - Wireless microphone monitoring tool
+# micboard
 Micboard is a monitoring tool for network enabled Shure wireless microphones.  It is compatible with UHF-R, QLX-D, and ULX-D microphones.
 
 
-### Additional Hardware Support
-Axient, Axient Digital, and PSM1000 support will be added once hardware is available for testing.
+### Hardware Notes
+Axient Digital and PSM1000 support will be added once hardware is available for testing.
 
+##### QLX-D Firmware Bug Version 2.2.11
+
+A bug causes receivers running `2.2.11` to crash. The network stack of the QLX-D locks when the TCP protocol is used. Micboard works well with receivers rolled back to `2.1.5`.
 
 ## Interface
 ### Backgrounds
@@ -83,22 +85,17 @@ Video and image backgrounds can be used with Micboard. Images in the `background
 * <kbd>u</kbd> - Upload mode
 
 
-
-#### QLX-D Firmware Bug Version 2.2.11
-A bug causes receivers running `2.2.11` to crash. The network stack of the QLX-D locks when the TCP protocol is used. Micboard works well with receivers rolled back to `2.1.5`.
-
 ## Installation
 ### Mac OS
 ### Linux (Debian, Raspberry Pi)
 ### Docker
 
 
-
 ## Configuration
 Configuration is stored in a json file.  On Mac OS X, `config.json` can be found in `~/Library/Application Support/micboard/`.  On Linux, its located in `~/.local/share/micboard/`.  Settings can be edited manually or using settings page.
 
 
-**Slots**
+### Slots
 Each wireless channel is stored in unique slot. A single channel QLXD receiver would use 1 slot while a ULXD4Q receiver takes 4.
 
 Each slot needs 4 parameters:
@@ -107,7 +104,7 @@ Each slot needs 4 parameters:
 * **channel** - the channel of the receiver
 * **type** - the type of the receiver
 
-
+<details><summary>Configuration Example</summary>
 ```javascript
 "slots": [
     {
@@ -160,8 +157,9 @@ Each slot needs 4 parameters:
     }
   ]
 ```
+</details>
 
-**Groups**
+### Groups
 Microphones can be grouped into custom views. These groups are accessible from the menu and keyboard shortcuts.
 
 
@@ -170,6 +168,7 @@ Groups need 3 parameters:
 * **title** - The name of the group
 * **slots** - The microphones in the group
 
+<details><summary>Configuration Example</summary>
 ```javascript
 "groups": [
     {
@@ -209,6 +208,7 @@ Groups need 3 parameters:
     }
 ],
 ```
+</details>
 
 ## Developer Information
 ### Building Micboard
@@ -221,15 +221,15 @@ The Shure communications part of micboard is written in python. [pyinstaller](ht
 
 Electron-builder wraps this executable into a macOS menu bar app.
 
-
-`git clone https://github.com/karlcswanson/micboard`
-`cd micboard/`
-`pip3 install py/requirements.txt`
-`npm install`
-`npm run build`
-`npm run binary`
-`npm run pack`
-
+```
+git clone https://github.com/karlcswanson/micboard
+cd micboard/
+pip3 install py/requirements.txt
+npm install
+npm run build
+npm run binary
+npm run pack
+```
 
 
 ### Shure UDP/TCP Protocol
@@ -306,5 +306,4 @@ This capability lets you do a few fun things with the data
   "type": "qlxd"
 }
 ```
-
 </details>
