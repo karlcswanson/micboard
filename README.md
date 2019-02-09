@@ -105,6 +105,7 @@ Each slot needs 4 parameters:
 * **type** - the type of the receiver
 
 <details><summary>Configuration Example</summary>
+
 ```javascript
 "slots": [
     {
@@ -169,6 +170,7 @@ Groups need 3 parameters:
 * **slots** - The microphones in the group
 
 <details><summary>Configuration Example</summary>
+
 ```javascript
 "groups": [
     {
