@@ -35,6 +35,13 @@ def logging_init():
     log.addHandler(fhandler)
 
 
+def web_port():
+    if 'MICBOARD_PORT' in os.environ:
+        return int(os.environ['MICBOARD_PORT'])
+
+    return config_tree['port']
+
+
 def local_app_dir():
     path = os.getcwd()
     if sys.platform.startswith('linux'):
