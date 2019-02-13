@@ -74,8 +74,11 @@ def SocketService():
         read_socks, write_socks, error_socks = select.select(readrx, writerx, readrx, .2)
 
         for rx in read_socks:
-            data = rx.f.recv(1024).decode('UTF-8')
-
+            try:
+                data = rx.f.recv(1024).decode('UTF-8')
+            except:
+                rx.socket_disconnect()
+                break
             # print("read: {} data: {}".format(rx.ip,data))
 
             d = '>'
@@ -94,13 +97,13 @@ def SocketService():
         for rx in write_socks:
             string = rx.writeQueue.get()
             logging.debug("write: %s data: %s", rx.ip, string)
-            if rx.type in ['qlxd', 'ulxd', 'axtd']:
-                rx.f.sendall(bytearray(string, 'UTF-8'))
-            elif rx.type == 'uhfr':
-                try:
+            try:
+                if rx.type in ['qlxd', 'ulxd', 'axtd']:
+                    rx.f.sendall(bytearray(string, 'UTF-8'))
+                elif rx.type == 'uhfr':
                     rx.f.sendto(bytearray(string, 'UTF-8'), (rx.ip, 2202))
-                except:
-                    logging.warning("UDP TX ERROR IP: %s String: %s", rx.ip, string)
+            except:
+                logging.warning("TX ERROR IP: %s String: %s", rx.ip, string)
 
 
         for rx in error_socks:
