@@ -19,18 +19,21 @@ gif_dir = ''
 group_update_list = []
 
 def logging_init():
-    # clear log file
-    with open(log_file(), 'w'):
-        pass
-
-    logging.basicConfig(filename=log_file(),
-                        level=logging.INFO,
-                        format=FORMAT)
+    formatter = logging.Formatter(FORMAT)
     log = logging.getLogger()
-    log.setLevel("DEBUG")
-    handler = logging.StreamHandler(sys.stdout)
-    handler.setLevel(logging.DEBUG)
-    log.addHandler(handler)
+    log.setLevel(logging.DEBUG)
+
+    sthandler = logging.StreamHandler(sys.stdout)
+    fhandler = logging.handlers.RotatingFileHandler(log_file(),
+                                                    maxBytes=10*1024*1024,
+                                                    backupCount=5)
+
+    sthandler.setFormatter(formatter)
+    fhandler.setFormatter(formatter)
+
+    log.addHandler(sthandler)
+    log.addHandler(fhandler)
+
 
 def local_app_dir():
     path = os.getcwd()
