@@ -1,0 +1,16 @@
+[Unit]
+Description=Micboard Service
+After=network.target
+
+[Service]
+Environment=MICBOARD_PORT=80
+ExecStart=/usr/bin/python3 -u py/micboard.py
+WorkingDirectory=/home/micboard/micboard
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=micboard
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target
