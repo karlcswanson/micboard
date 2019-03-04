@@ -28,7 +28,13 @@ html,body {
 
 .col-sm {
   color: var(--color-white);
+}
 
+.deskmode .col-sm {
+  /* remove for borderless */
+  border-color: var(--color-black);
+  border-style: solid;
+  border-width: 0 2px;
 }
 
 .mic_id {
@@ -435,6 +441,22 @@ canvas.slotgraph {
 
 .RX_COM_ERROR {
   background: var(--color-purple);
+}
+
+.blank {
+  background: var(--color-black);
+}
+
+.blank .mic_name {
+  display: none;
+}
+
+.blank .electrode, .blank .info-drawer {
+  display: none;
+}
+
+.sidebar-open .blank .mic_name {
+  display: unset;
 }
 
 

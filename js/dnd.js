@@ -17,6 +17,8 @@ function slotOrder() {
     const slot = parseInt(currentBoard[i].id.replace(/[^\d.]/g, ''), 10);
     if (slot && (slotList.indexOf(slot) === -1)) {
       slotList.push(slot);
+    } else if (currentBoard[i].classList.contains('blank')) {
+      slotList.push(0);
     }
   }
 
@@ -39,9 +41,13 @@ function renderEditSlots(dl) {
       t = document.createElement('div');
       t.className = 'col-sm';
     }
-
     document.getElementById('eslotlist').appendChild(t);
   });
+
+  const b = document.getElementById('column-template').content.cloneNode(true);
+  b.querySelector('p.name').innerHTML = 'BLANK';
+  b.querySelector('.col-sm').classList.add('blank');
+  document.getElementById('eslotlist').appendChild(b);
 }
 
 
@@ -68,10 +74,10 @@ function onDrop(id, src, dst) {
 
   // if (src === 'micboard' && dst === 'micboard') {
   // }
-  if (src === 'eslotlist' && dst === 'micboard') {
+  if (src === 'eslotlist' && dst === 'micboard' && slot) {
     charts[slot] = initChart(document.getElementById(id.id));
   }
-  if (src === 'micboard' && dst === 'eslotlist') {
+  if (src === 'micboard' && dst === 'eslotlist' && slot) {
     charts[slot].slotChart.stop();
   }
 }
@@ -133,7 +139,7 @@ export function groupEditToggle() {
     container.classList.remove('sidebar-open');
     swappable.destroy();
   } else {
-    if (micboard.displayMode === 'TV') {
+    if (micboard.displayMode === 'tvmode') {
       toggleDisplayMode();
     }
     container.classList.add('sidebar-open');

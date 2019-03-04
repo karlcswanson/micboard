@@ -210,10 +210,10 @@ export function renderDisplayList(dl) {
       updateViewOnly(t, tx[e]);
       charts[tx[e].slot] = initChart(t);
     } else {
-      t = document.createElement('div');
-      t.className = 'col-sm';
+      t = document.getElementById('column-template').content.cloneNode(true);
+      t.querySelector('p.name').innerHTML = 'BLANK';
+      t.querySelector('.col-sm').classList.add('blank');
     }
-
     document.getElementById('micboard').appendChild(t);
   });
 
