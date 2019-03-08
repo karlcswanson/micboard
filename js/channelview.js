@@ -1,6 +1,6 @@
 'use strict';
 
-import { micboard, ActivateMessageBoard } from './script.js';
+import { micboard, ActivateMessageBoard, updateHash } from './script.js';
 import { updateBackground } from './gif.js';
 import { initChart, charts } from './chart-smoothie.js';
 import { seedTransmitters } from './demodata.js';
@@ -239,4 +239,5 @@ export function renderGroup(group) {
     renderDisplayList(micboard.displayList);
     updateEditor(group);
   }
+  updateHash();
 }

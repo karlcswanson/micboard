@@ -30,8 +30,9 @@ micboard.url.group = getUrlParameter('group');
 micboard.url.demo = getUrlParameter('demo');
 micboard.url.settings = getUrlParameter('settings');
 micboard.url.tvmode = getUrlParameter('tvmode');
+micboard.url.bgmode = getUrlParameter('bgmode');
 micboard.displayMode = 'deskmode';
-micboard.infoDrawerMode = 'elinfo00';
+micboard.infoDrawerMode = 'elinfo11';
 micboard.backgroundMode = 'NONE';
 
 micboard.transmitters = [];
@@ -101,27 +102,27 @@ export function toggleDisplayMode() {
     default:
       break;
   }
+  updateHash();
 }
 
+function setBackground(mode) {
+  micboard.backgroundMode = mode;
+  $('#micboard .mic_name').css('background-image', '');
+  $('#micboard .mic_name').css('background-size', '');
+  updateGIFBackgrounds();
+  updateHash();
+}
 
 function toggleBackgrounds() {
-  const selector = document.getElementById('micboard');
   switch (micboard.backgroundMode) {
-    case 'NONE': micboard.backgroundMode = 'MP4';
-      $('#micboard .mic_name').css('background-image', '');
-      $('#micboard .mic_name').css('background-size', '');
+    case 'NONE': setBackground('MP4');
       break;
-    case 'MP4': micboard.backgroundMode = 'IMG';
-      $('#micboard .mic_name').css('background-image', '');
-      $('#micboard .mic_name').css('background-size', '');
+    case 'MP4': setBackground('IMG');
       break;
-    case 'IMG': micboard.backgroundMode = 'NONE';
-      $('#micboard .mic_name').css('background-image', '');
-      $('#micboard .mic_name').css('background-size', '');
+    case 'IMG': setBackground('NONE');
       break;
     default: break;
   }
-  updateGIFBackgrounds();
 }
 
 function setInfoDrawer(mode) {
@@ -129,6 +130,7 @@ function setInfoDrawer(mode) {
   swapClass(selector, micboard.infoDrawerMode, mode);
   micboard.infoDrawerMode = mode;
   setDisplayMode('tvmode');
+  updateHash();
 }
 
 function toggleInfoDrawer() {
@@ -215,8 +217,8 @@ function mapGroups() {
 // https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js
 // var getUrlParameter = function getUrlParameter(sParam) {
 function getUrlParameter(sParam) {
-  const sPageURL = decodeURIComponent(window.location.search.substring(1));
-  // const sPageURL = decodeURIComponent(window.location.hash.substring(1));
+  // const sPageURL = decodeURIComponent(window.location.search.substring(1));
+  const sPageURL = decodeURIComponent(window.location.hash.substring(1));
   const sURLVariables = sPageURL.split('&');
   let sParameterName;
   let i;
@@ -229,6 +231,25 @@ function getUrlParameter(sParam) {
     }
   }
   return undefined;
+}
+
+export function updateHash() {
+  let hash = '';
+  if (micboard.url.demo) {
+    hash += '&demo=true';
+  }
+  if (micboard.group) {
+    hash += '&group=' + micboard.group;
+  }
+  if (micboard.displayMode === 'tvmode') {
+    hash += '&tvmode=' + micboard.infoDrawerMode;
+  }
+  if (micboard.backgroundMode !== 'NONE') {
+    hash += '&bgmode=' + micboard.backgroundMode;
+  }
+
+  hash = hash.replace('&', '#');
+  history.replaceState(undefined, undefined, hash);
 }
 
 function dataFilterFromList(data) {
@@ -278,6 +299,9 @@ function initialMap(callback) {
 
       if (callback) {
         callback();
+      }
+      if (['MP4', 'IMG'].indexOf(micboard.url.bgmode) >= 0) {
+        setBackground(micboard.url.bgmode);
       }
       if (['elinfo00', 'elinfo01', 'elinfo10', 'elinfo11'].indexOf(micboard.url.tvmode) >= 0) {
         setInfoDrawer(micboard.url.tvmode);
@@ -354,10 +378,11 @@ $(document).ready(() => {
 
     if (e.keyCode === 68) {
       if (micboard.url.group) {
-        window.location.href = micboard.url.demo ? '/?group=' + micboard.url.group : '/?demo=true&group=' + micboard.group;
+        window.location.href = micboard.url.demo ? '/#group=' + micboard.url.group : '/#demo=true&group=' + micboard.group;
       } else {
-        window.location.href = micboard.url.demo ? '/' : '/?demo=true';
+        window.location.href = micboard.url.demo ? '/' : '/#demo=true';
       }
+      window.location.reload();
     }
 
     if (e.keyCode === 69) {

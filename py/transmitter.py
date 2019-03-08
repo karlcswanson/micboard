@@ -14,6 +14,7 @@ PEAK_TIMEOUT = 10
 PEAK_LEVEL = {
     'qlxd': 80,
     'ulxd': 80,
+    'axtd': 80,
     'uhfr': 100
 }
 
@@ -59,10 +60,11 @@ rx_strings['ulxd'] = {'battery': 'BATT_BARS',
 
 rx_strings['axtd'] = {'battery': 'TX_BATT_BARS',
                       'frequency': 'FREQUENCY',
-                      'audio_level': 'AUDIO_LVL',
-                      'rf_level': 'RX_RF_LVL',
+                      'audio_level': 'AUDIO_LEVEL_RMS',
+                      'rf_level': 'RSSI',
                       'name': 'CHAN_NAME',
-                      'antenna': 'RF_ANTENNA'}
+                      'antenna': 'ANTENNA_STATUS',
+                      'tx_offset': 'TX_OFFSET'}
 
 rx_strings_rev = {
     'qlxd': reverse_dict(rx_strings['qlxd']),
