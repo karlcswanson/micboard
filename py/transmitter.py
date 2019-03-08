@@ -102,6 +102,9 @@ class WirelessTransmitter:
         if self.rx.type in ['qlxd', 'ulxd']:
             audio_level = int(2 * audio_level)
 
+        if self.rx.type == 'axtd':
+            audio_level = int(audio_level - 20)
+
         if self.rx.type == 'uhfr':
             try:
                 audio_level = UHFR_AUDIO_TABLE[audio_level]
@@ -119,6 +122,9 @@ class WirelessTransmitter:
     def set_rf_level(self, rf_level):
         rf_level = float(rf_level)
         if self.rx.type in ['qlxd', 'ulxd']:
+            rf_level = 100 * (rf_level / 115)
+
+        if self.rx.type == 'axtd':
             rf_level = 100 * (rf_level / 115)
 
         if self.rx.type == 'uhfr':
@@ -151,7 +157,11 @@ class WirelessTransmitter:
 
     def set_tx_offset(self, tx_offset):
         if tx_offset != '255':
-            self.tx_offset = int(tx_offset)
+            if self.rx.type in ['qlxd', 'ulxd']:
+                self.tx_offset = int(tx_offset)
+
+            if self.rx.type == 'axtd':
+                self.tx_offset = int(tx_offset - 12)
 
     def tx_state(self):
         # WCCC Specific State for unassigned microphones
@@ -252,5 +262,10 @@ class WirelessTransmitter:
             self.set_rf_level(split[4])
             self.set_battery(split[6])
             self.set_audio_level(split[7])
+
+        elif rx_type == 'axtd':
+            self.set_antenna(split[7])
+            self.set_rf_level(split[9])
+            self.set_audio_level(split[6])
         # if self.slot == 6:
         #     print(data)
