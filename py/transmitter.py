@@ -92,6 +92,8 @@ class WirelessTransmitter:
 
 
     def set_frequency(self, frequency):
+        if self.rx.type == 'axtd':
+            frequency = frequency.lstrip('0')
         self.frequency = frequency[:3] + '.' + frequency[3:]
 
     def set_antenna(self, antenna):
@@ -161,7 +163,7 @@ class WirelessTransmitter:
                 self.tx_offset = int(tx_offset)
 
             if self.rx.type == 'axtd':
-                self.tx_offset = int(tx_offset - 12)
+                self.tx_offset = int(tx_offset) - 12
 
     def tx_state(self):
         # WCCC Specific State for unassigned microphones
