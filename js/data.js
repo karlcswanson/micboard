@@ -9,9 +9,16 @@ function JsonUpdate() {
   fetch(dataURL)
     .then(response => response.json())
     .then((data) => {
+      if (micboard.connectionStatus === 'DISCONNECTED') {
+        window.location.reload();
+      }
       data.receivers.forEach((rx) => {
         rx.tx.forEach(updateSlot);
       });
+      micboard.connectionStatus = 'CONNECTED';
+    }).catch((error) => {
+      console.log(error);
+      micboard.connectionStatus = 'DISCONNECTED';
     });
 }
 

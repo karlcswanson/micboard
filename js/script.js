@@ -35,6 +35,8 @@ micboard.displayMode = 'deskmode';
 micboard.infoDrawerMode = 'elinfo11';
 micboard.backgroundMode = 'NONE';
 
+micboard.connectionStatus = 'CONNECTING';
+
 micboard.transmitters = [];
 
 micboard.displayList = [];
@@ -43,7 +45,7 @@ micboard.displayList = [];
 export function ActivateMessageBoard(h1, p) {
   if (!h1) {
     h1 = 'Connection Error!';
-    p = 'Could not connect to the micboard server. Please refresh the page.';
+    p = 'Could not connect to the micboard server. Please <a href=".">refresh</a> the page.';
   }
 
   $('#micboard').hide();
@@ -53,6 +55,8 @@ export function ActivateMessageBoard(h1, p) {
   eb.querySelector('p').innerHTML = p;
 
   $('.message-board').show();
+
+  micboard.connectionStatus = 'DISCONNECTED';
 }
 
 export function DeactivateMessageBoard() {
