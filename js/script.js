@@ -35,6 +35,7 @@ micboard.displayMode = 'deskmode';
 micboard.infoDrawerMode = 'elinfo11';
 micboard.backgroundMode = 'NONE';
 
+micboard.group = 0;
 micboard.connectionStatus = 'CONNECTING';
 
 micboard.transmitters = [];
@@ -238,11 +239,11 @@ function getUrlParameter(sParam) {
 }
 
 export function updateHash() {
-  let hash = '';
+  let hash = '#';
   if (micboard.url.demo) {
     hash += '&demo=true';
   }
-  if (micboard.group) {
+  if (micboard.group !== 0) {
     hash += '&group=' + micboard.group;
   }
   if (micboard.displayMode === 'tvmode') {
@@ -251,8 +252,7 @@ export function updateHash() {
   if (micboard.backgroundMode !== 'NONE') {
     hash += '&bgmode=' + micboard.backgroundMode;
   }
-
-  hash = hash.replace('&', '#');
+  hash = hash.replace('&', '');
   history.replaceState(undefined, undefined, hash);
 }
 
@@ -381,11 +381,8 @@ $(document).ready(() => {
     }
 
     if (e.keyCode === 68) {
-      if (micboard.url.group) {
-        window.location.href = micboard.url.demo ? '/#group=' + micboard.url.group : '/#demo=true&group=' + micboard.group;
-      } else {
-        window.location.href = micboard.url.demo ? '/' : '/#demo=true';
-      }
+      micboard.url.demo = !micboard.url.demo;
+      updateHash();
       window.location.reload();
     }
 

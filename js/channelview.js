@@ -223,6 +223,7 @@ export function renderDisplayList(dl) {
 
 export function renderGroup(group) {
   micboard.group = group;
+  updateHash();
   if (group === 0) {
     micboard.displayList = allSlots();
     renderDisplayList(micboard.displayList);
@@ -239,5 +240,4 @@ export function renderGroup(group) {
     renderDisplayList(micboard.displayList);
     updateEditor(group);
   }
-  updateHash();
 }
