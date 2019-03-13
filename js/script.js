@@ -191,7 +191,7 @@ function mapGroups() {
   let str = '';
 
   for (var p in micboard.groups) {
-    str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'" href="#">' + p + ': ' + micboard.groups[p]['title'] + '</a></p>';
+    str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'">' + p + ': ' + micboard.groups[p]['title'] + '</a></p>';
   }
   str += '<p class="text-muted"><a class="nav-link" id="test-button" href="#">test button</a></p>';
   div.innerHTML += str;
