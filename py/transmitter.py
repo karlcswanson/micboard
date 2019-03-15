@@ -75,6 +75,7 @@ rx_strings_rev = {
 class WirelessTransmitter:
     def __init__(self, rx, channel, slot):
         self.rx = rx
+        self.chan_id = ''
         self.chan_name = 'DEFAULT'
         self.channel = channel
         self.frequency = '000000'
@@ -155,7 +156,15 @@ class WirelessTransmitter:
 
     def set_chan_name(self, chan_name):
         chan_name = chan_name.replace('_', ' ')
-        self.chan_name = chan_name
+        name = chan_name.split()
+        prefix = re.match("([A-Za-z]+)([0-9])+", name[0])
+        if prefix:
+            self.chan_id = name[0]
+            self.chan_name = ' '.join(name[1:])
+        else:
+            self.chan_id = ''
+            self.chan_name = chan_name
+
 
     def set_tx_offset(self, tx_offset):
         if tx_offset != '255':
@@ -167,8 +176,8 @@ class WirelessTransmitter:
 
     def tx_state(self):
         # WCCC Specific State for unassigned microphones
-        name = self.chan_name.split()
-        prefix = re.match("([A-Za-z]+)([0-9])+", name[0])
+        # name = self.chan_name.split()
+        # prefix = re.match("([A-Za-z]+)([0-9])+", name[0])
 
         if self.rx.rx_com_status in ['DISCONNECTED', 'CONNECTING']:
             return 'RX_COM_ERROR'
@@ -176,9 +185,8 @@ class WirelessTransmitter:
         if (time.time() - self.peakstamp) < PEAK_TIMEOUT:
             return 'AUDIO_PEAK'
 
-        if prefix:
-            if len(name) == 1:
-                return 'UNASSIGNED'
+        if not self.chan_name:
+            return 'UNASSIGNED'
 
         if (time.time() - self.timestamp) < BATTERY_TIMEOUT:
             if 4 <= self.battery <= 5:
@@ -199,7 +207,7 @@ class WirelessTransmitter:
 
     def tx_json(self):
         return {
-            'name': self.chan_name, 'channel': self.channel,
+            'id': self.chan_id, 'name': self.chan_name, 'channel': self.channel,
             'antenna':self.antenna, 'audio_level': self.audio_level,
             'rf_level': self.rf_level, 'frequency': self.frequency,
             'battery':self.battery, 'tx_offset': self.tx_offset,

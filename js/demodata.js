@@ -86,11 +86,11 @@ function uniqueRandomNameGenerator(slot) {
   const len = namebank.length;
   const index = getRandomInt(0, len - 1);
   const name = namebank[index];
+  return name;
 
-
-  const channel = slot.toString().padStart(2, '0');
-  const output = 'HH' + channel + ' ' + name;
-  return output;
+  // const channel = slot.toString().padStart(2, '0');
+  // const output = 'HH' + channel + ' ' + name;
+  // return output;
 }
 
 function randomRfSampleGenerator() {
@@ -174,8 +174,10 @@ export function seedTransmitters(dl) {
     if (slot !== 0) {
       const r = randomDataGenerator();
       r.slot = slot;
-      const n = 'HH' + slot.toString().padStart(2, '0') + ' ' + names[i];
+      // const n = 'HH' + slot.toString().padStart(2, '0') + ' ' + names[i];
+      const n = names[i];
       r.name = n;
+      r.id = 'HH' + slot.toString().padStart(2, '0');
       micboard.transmitters[slot] = r;
     }
   }
@@ -193,6 +195,7 @@ function meteteredRandomDataGenerator(update) {
   }
   const data = JSON.parse(JSON.stringify(micboard.transmitters[slot]));
 
+  data.id = 'HH' + slot.toString().padStart(2, '0');
 
   data.timestamp = unixtimestamp();
   switch (update) {
