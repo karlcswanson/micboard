@@ -128,9 +128,10 @@ class SlotHandler(web.RequestHandler):
 
     def post(self):
         data = json.loads(self.request.body)
-        config.update_slot(data)
-        print(data)
-        self.write(data)
+        for slot_update in data:
+            config.update_slot(slot_update)
+            print(slot_update)
+            self.write(slot_update)
 
 class GroupUpdateHandler(web.RequestHandler):
     def get(self):
