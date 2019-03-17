@@ -111,7 +111,7 @@ def read_json_config(file):
 
         for tx in config_tree['slots']:
             rec = shure.check_add_receiver(tx['ip'], tx['type'])
-            rec.add_transmitter(tx['channel'], tx['slot'])
+            rec.add_transmitter(tx)
 
     gif_dir = get_gif_dir()
 
@@ -139,5 +139,26 @@ def update_group(data):
 
     group['slots'] = data['slots']
     group['title'] = data['title']
+
+    save_current_config()
+
+def get_slot_by_number(slot_number):
+    for slot in config_tree['slots']:
+        if slot['slot'] == slot_number:
+            return slot
+    return None
+
+def update_slot(data):
+    slot = get_slot_by_number(data['slot'])
+
+    if 'extended_id' in data:
+        slot['extended_id'] = data['extended_id']
+    elif 'extended_id' in slot:
+        slot.pop('extended_id')
+
+    if 'extended_name' in data:
+        slot['extended_name'] = data['extended_name']
+    elif 'extended_name' in slot:
+        slot.pop('extended_name')
 
     save_current_config()

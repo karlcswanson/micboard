@@ -126,6 +126,12 @@ class SlotHandler(web.RequestHandler):
     def get(self):
         self.write("hi - slot")
 
+    def post(self):
+        data = json.loads(self.request.body)
+        config.update_slot(data)
+        print(data)
+        self.write(data)
+
 class GroupUpdateHandler(web.RequestHandler):
     def get(self):
         self.write("hi - group")
@@ -147,9 +153,8 @@ def twisted():
         (r'/data', JsonHandler),
         (r'/upload', UploadHandler),
         (r'/api/settings/bulkuploader', SettingsBulkUploadHandler),
-        # (r'/api/group/([0-9]+)', GroupHandler),
         (r'/api/group', GroupUpdateHandler),
-        (r'/api/slot/([0-9]+)', SlotHandler),
+        (r'/api/slot', SlotHandler),
         (r'/static/(.*)', web.StaticFileHandler, {'path': config.app_dir('static')}),
         (r'/bg/(.*)', web.StaticFileHandler, {'path': config.get_gif_dir()})
     ])

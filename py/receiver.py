@@ -59,8 +59,8 @@ class WirelessReceiver:
         # elif status == 'DISCONNECTED':
         #     print("Disconnected from {} at {}".format(self.ip,datetime.datetime.now()))
 
-    def add_transmitter(self, tx, slot):
-        self.transmitters.append(WirelessTransmitter(self, tx, slot))
+    def add_transmitter(self, cfg):
+        self.transmitters.append(WirelessTransmitter(self, cfg))
 
     def get_transmitter_by_channel(self, channel):
         return next((x for x in self.transmitters if x.channel == int(channel)), None)

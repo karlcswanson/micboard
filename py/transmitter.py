@@ -73,17 +73,18 @@ rx_strings_rev = {
 }
 
 class WirelessTransmitter:
-    def __init__(self, rx, channel, slot):
+    def __init__(self, rx, cfg):
         self.rx = rx
+        self.cfg = cfg
         self.chan_id = ''
-        self.chan_name = 'DEFAULT'
-        self.channel = channel
+        self.chan_name = 'SLOT' + str(cfg['slot'])
+        self.channel = cfg['channel']
         self.frequency = '000000'
         self.battery = 255
         self.prev_battery = 255
         self.prev_battery_uhfr_raw = 255
         self.timestamp = time.time() - 60
-        self.slot = slot
+        self.slot = cfg['slot']
         self.audio_level = 0
         self.rf_level = 0
         self.antenna = 'XX'
@@ -158,12 +159,19 @@ class WirelessTransmitter:
         chan_name = chan_name.replace('_', ' ')
         name = chan_name.split()
         prefix = re.match("([A-Za-z]+)([0-9])+", name[0])
+
         if prefix:
             self.chan_id = name[0]
             self.chan_name = ' '.join(name[1:])
         else:
             self.chan_id = ''
             self.chan_name = chan_name
+
+        if 'extended_id' in self.cfg:
+            self.chan_id = self.cfg['extended_id']
+
+        if 'extended_name' in self.cfg:
+            self.chan_name = self.cfg['extended_name']
 
 
     def set_tx_offset(self, tx_offset):
