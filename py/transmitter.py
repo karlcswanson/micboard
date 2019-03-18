@@ -77,7 +77,7 @@ class WirelessTransmitter:
         self.rx = rx
         self.cfg = cfg
         self.chan_id = ''
-        self.chan_name = 'SLOT' + str(cfg['slot'])
+        self.chan_name = 'SLOT ' + str(cfg['slot'])
         self.channel = cfg['channel']
         self.frequency = '000000'
         self.battery = 255

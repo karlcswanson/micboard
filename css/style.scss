@@ -175,6 +175,22 @@ canvas.slotgraph {
   color: var(--color-yellow);
 }
 
+.editzone {
+  font-family: IBM Plex Mono;
+  font-weight: 100;
+  font-style: italic;
+  color: var(--color-yellow);
+  height:100px;
+  bottom:15px;
+  padding-top: 30px;
+}
+
+.editzone .input-group span{
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-color: var(--color-black);
+}
+
 
 /* mic storage mode */
 .tvmode {

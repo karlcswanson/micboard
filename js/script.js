@@ -12,6 +12,7 @@ import { settingsView } from './settings.js';
 import { renderGroup, renderDisplayList, updateSlot } from './channelview.js';
 import { initLiveData } from './data.js';
 import { groupEditToggle, initEditor } from './dnd.js';
+import { slotEditToggle } from './extended.js';
 
 import '../css/style.scss';
 import '../node_modules/@ibm/plex/css/ibm-plex.css';
@@ -92,7 +93,7 @@ function swapClass(selector, currentClass, newClass) {
 }
 
 
-function setDisplayMode(mode) {
+export function setDisplayMode(mode) {
   const selector = document.getElementById('container');
   swapClass(selector, micboard.displayMode, mode);
   micboard.displayMode = mode;
@@ -204,6 +205,9 @@ function mapGroups() {
   $('a#go-groupedit').click(() => {
     if (micboard.group !== 0) {
       groupEditToggle();
+      $('.collapse').collapse('hide');
+    } else if (micboard.group === 0) {
+      slotEditToggle();
       $('.collapse').collapse('hide');
     }
   });
@@ -331,6 +335,9 @@ $(document).ready(() => {
     if ($('.settings').is(':visible')) {
       return;
     }
+    if ($('.editzone').is(':visible')) {
+      return;
+    }
 
     if ($('.sidebar-nav').is(':visible')) {
       if (e.keyCode === 27) {
@@ -389,6 +396,8 @@ $(document).ready(() => {
     if (e.keyCode === 69) {
       if (micboard.group !== 0) {
         groupEditToggle();
+      } else if (micboard.group === 0) {
+        slotEditToggle();
       }
     }
 

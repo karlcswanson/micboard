@@ -19,7 +19,7 @@ function allSlots() {
 // enables info-drawer toggle for mobile clients
 function infoToggle() {
   $('.col-sm').click((e) => {
-    if ($(window).width() <= 980) {
+    if ($(window).width() <= 980 && !document.querySelector('.editzone')) {
       $(e.currentTarget).find('.info-drawer').toggle();
     }
   });
@@ -60,6 +60,7 @@ function updateStatus(slotSelector, data) {
     slotSelector.querySelector('.chartzone').style.display = 'block';
     slotSelector.querySelector('.errorzone').style.display = 'none';
   }
+  slotSelector.querySelector('.editzone').style.display = 'none';
 }
 
 

@@ -93,7 +93,7 @@ export function updateEditor(group) {
   document.getElementById('groupTitle').value = title;
 }
 
-function postJSON(url, data) {
+export function postJSON(url, data) {
   fetch(url, {
     method: 'POST',
     body: JSON.stringify(data),
