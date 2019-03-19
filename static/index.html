@@ -146,26 +146,41 @@
           </div>
 
           <div class="editzone">
-
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">Extended ID</span>
+            <p class="rx-name">HH01 CHAN_NAME</p>
+            <div class="form-row">
+              <div class="col">
+                <input type="text" class="form-control ext-id" aria-label="Default" aria-describedby="inputGroup-sizing-default" autocomplete="off" placeholder="ID">
               </div>
-              <input type="text" class="form-control ext-id" aria-label="Default" aria-describedby="inputGroup-sizing-default" autocomplete="off">
-            </div>
-
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">Extended Name</span>
+              <div class="col">
+                <input type="text" class="form-control ext-name" aria-label="Default" aria-describedby="inputGroup-sizing-default" autocomplete="off" placeholder="Name">
               </div>
-              <input type="text" class="form-control ext-name" aria-label="Default" aria-describedby="inputGroup-sizing-default" autocomplete="off">
             </div>
-
           </div>
 
           <div class="diversity">
             <div class="diversity-bar"></div>
             <div class="diversity-bar"></div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="save-template">
+      <div class="col-sm">
+        <div id="save-box">
+          <div class="form-row">
+            <div class="col">
+              <button type="button" class="btn btn-success btn-block" id="slotSave">Save</button>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col">
+              <button type="button" class="btn btn-secondary btn-warning btn-block" id="clear-id">Clear IDs</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-secondary btn-warning btn-block" id="clear-name">Clear Names</button>
+            </div>
           </div>
         </div>
       </div>

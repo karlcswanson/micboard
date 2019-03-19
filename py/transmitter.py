@@ -168,10 +168,12 @@ class WirelessTransmitter:
             self.chan_name = chan_name
 
         if 'extended_id' in self.cfg:
-            self.chan_id = self.cfg['extended_id']
+            if self.cfg['extended_id']:
+                self.chan_id = self.cfg['extended_id']
 
         if 'extended_name' in self.cfg:
-            self.chan_name = self.cfg['extended_name']
+            if self.cfg['extended_name']:
+                self.chan_name = self.cfg['extended_name']
 
 
     def set_tx_offset(self, tx_offset):

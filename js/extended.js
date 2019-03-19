@@ -1,7 +1,7 @@
 'use strict';
 
 import { micboard, setDisplayMode } from './script.js';
-import { postJSON } from './dnd.js';
+import { postJSON } from './data.js';
 
 function configArrayGenerator() {
   const slots = [];
@@ -20,32 +20,21 @@ function slotValues() {
     if (slot && (slotList.indexOf(slot) === -1)) {
       const output = {};
 
-      const extendedId = currentBoard[i].querySelector('.ext-id').value;
-      const extendedName = currentBoard[i].querySelector('.ext-name').value;
+      output.slot = slot;
+      output.extended_id = currentBoard[i].querySelector('.ext-id').value;
+      output.extended_name = currentBoard[i].querySelector('.ext-name').value;
 
-      if (extendedId) {
-        output.slot = slot;
-        output.extended_id = extendedId;
-      }
-
-      if (extendedName) {
-        output.slot = slot;
-        output.extended_name = extendedName;
-      }
-
-      if (output.slot) {
-        slotList.push(output);
-      }
+      slotList.push(output);
     }
   }
+  console.log(slotList);
   return slotList;
 }
 
 
 function submitUpdate(data) {
   const url = 'api/slot';
-  postJSON(url, data);
-  // window.location.reload();
+  postJSON(url, data, window.location.reload());
 }
 
 function initSlotEdit() {
@@ -57,7 +46,9 @@ function initSlotEdit() {
 
     slotSelector.querySelector('.chartzone').style.display = 'none';
     slotSelector.querySelector('.errorzone').style.display = 'none';
+    slotSelector.querySelector('.diversity').style.display = 'none';
     slotSelector.querySelector('.editzone').style.display = 'block';
+
     if (slots[t.slot].extended_id) {
       slotSelector.querySelector('.ext-id').value = slots[t.slot].extended_id;
     }
@@ -66,17 +57,23 @@ function initSlotEdit() {
     }
   });
 
-  let div = document.createElement('div');
-  div.classList.add('col-sm');
+  let t = document.getElementById('save-template').content.cloneNode(true);
+
   let b = document.getElementsByClassName('flexfix')[0];
 
-  div.innerHTML = '<button type="button" class="btn btn-success btn-block" id="slotSave">Save</button>';
-  document.getElementById('micboard').insertBefore(div, b);
+
+  document.getElementById('micboard').insertBefore(t, b);
   $('.info-drawer').css('display', 'block');
 
   $('#slotSave').on('click', () => {
     submitUpdate(slotValues());
     // console.log(slotValues());
+  });
+  $('#clear-id').on('click', () => {
+    $('.ext-id:input').val('');
+  });
+  $('#clear-name').on('click', () => {
+    $('.ext-name:input').val('');
   });
 }
 
@@ -84,5 +81,6 @@ export function slotEditToggle() {
   if (micboard.displayMode === 'tvmode') {
     setDisplayMode('deskmode');
   }
+  micboard.settingsMode = 'EXTENDED';
   initSlotEdit();
 }

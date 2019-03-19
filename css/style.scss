@@ -183,12 +183,52 @@ canvas.slotgraph {
   height:100px;
   bottom:15px;
   padding-top: 30px;
+  display: none;
 }
 
 .editzone .input-group span{
   background-color: var(--color-black);
   color: var(--color-white);
   border-color: var(--color-black);
+}
+
+.editzone input {
+  background-color: var(--color-black);
+  color: var(--color-yellow);
+  border-color: var(--color-gray);
+  text-align: right;
+}
+
+.editzone input:focus {
+  border-color: var(--color-gray);
+  background-color: var(--color-black);
+  color: var(--color-yellow);
+}
+
+.editzone .ext-id {
+  text-align: left;
+}
+
+.editzone .ext-name {
+  text-align: right;
+}
+
+.editzone p.rx-name {
+  padding-left: 5px;
+  color: var(--color-white);
+  font-weight: 300;
+}
+
+#save-box {
+  // height: 130px;
+  width: 100%;
+  // position: absolute;
+  // bottom: 15px;
+  display: block;
+}
+
+#save-box .form-row {
+  padding-top: 15px;
 }
 
 

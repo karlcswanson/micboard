@@ -6,6 +6,7 @@ import { Sortable, Plugins } from '@shopify/draggable';
 import { micboard, toggleDisplayMode } from './script.js';
 import { initChart, charts } from './chart-smoothie.js';
 import { renderDisplayList, updateViewOnly } from './channelview.js';
+import { postJSON } from './data.js';
 
 let swappable;
 
@@ -91,18 +92,6 @@ export function updateEditor(group) {
 
   document.getElementById('sidebarTitle').innerHTML = 'Group ' + group;
   document.getElementById('groupTitle').value = title;
-}
-
-export function postJSON(url, data) {
-  fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then(res => res.json())
-    .then(response => console.log('Success:', JSON.stringify(response)))
-    .catch(error => console.error('Error:', error));
 }
 
 function GridLayout() {

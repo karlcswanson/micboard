@@ -5,6 +5,24 @@ import { dataURL, ActivateMessageBoard, micboard } from './script.js';
 import { renderGroup, updateSlot } from './channelview.js';
 import { updateChart } from './chart-smoothie.js';
 
+
+export function postJSON(url, data, callback) {
+  fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(res => res.json())
+    .then((response) => {
+      console.log('Success:', JSON.stringify(response))
+      if (callback) {
+        callback();
+      }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
 function JsonUpdate() {
   fetch(dataURL)
     .then(response => response.json())
@@ -16,6 +34,7 @@ function JsonUpdate() {
         rx.tx.forEach(updateSlot);
       });
       micboard.connectionStatus = 'CONNECTED';
+      micboard.config = data.config;
     }).catch((error) => {
       console.log(error);
       micboard.connectionStatus = 'DISCONNECTED';

@@ -19,10 +19,16 @@ function allSlots() {
 // enables info-drawer toggle for mobile clients
 function infoToggle() {
   $('.col-sm').click((e) => {
-    if ($(window).width() <= 980 && !document.querySelector('.editzone')) {
+    if ($(window).width() <= 980 && micboard.settingsMode!== 'EXTENDED') {
       $(e.currentTarget).find('.info-drawer').toggle();
     }
   });
+
+  if (micboard.group === 0) {
+    $('#go-groupedit').text('edit extended names');
+  } else if (micboard.group !== 0) {
+    $('#go-groupedit').text('edit group');
+  }
 }
 
 function updateTXOffset(slotSelector, data) {
@@ -53,14 +59,15 @@ function updateStatus(slotSelector, data) {
   slotSelector.querySelector('div.electrode').className = 'electrode';
   slotSelector.querySelector('div.electrode').classList.add(data.status);
 
-  if (data.status === 'RX_COM_ERROR') {
-    slotSelector.querySelector('.chartzone').style.display = 'none';
-    slotSelector.querySelector('.errorzone').style.display = 'block';
-  } else {
-    slotSelector.querySelector('.chartzone').style.display = 'block';
-    slotSelector.querySelector('.errorzone').style.display = 'none';
+  if (micboard.settingsMode !== 'EXTENDED') {
+    if (data.status === 'RX_COM_ERROR') {
+      slotSelector.querySelector('.chartzone').style.display = 'none';
+      slotSelector.querySelector('.errorzone').style.display = 'block';
+    } else {
+      slotSelector.querySelector('.chartzone').style.display = 'block';
+      slotSelector.querySelector('.errorzone').style.display = 'none';
+    }
   }
-  slotSelector.querySelector('.editzone').style.display = 'none';
 }
 
 

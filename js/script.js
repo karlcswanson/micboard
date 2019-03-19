@@ -35,6 +35,7 @@ micboard.url.bgmode = getUrlParameter('bgmode');
 micboard.displayMode = 'deskmode';
 micboard.infoDrawerMode = 'elinfo11';
 micboard.backgroundMode = 'NONE';
+micboard.settingsMode = 'NONE';
 
 micboard.group = 0;
 micboard.connectionStatus = 'CONNECTING';
@@ -331,7 +332,9 @@ $(document).ready(() => {
   }
 
   document.addEventListener('keydown', (e) => {
-
+    if (e.keyCode === 27) {
+      window.location.reload();
+    }
     if ($('.settings').is(':visible')) {
       return;
     }
@@ -339,12 +342,12 @@ $(document).ready(() => {
       return;
     }
 
-    if ($('.sidebar-nav').is(':visible')) {
-      if (e.keyCode === 27) {
-        groupEditToggle();
-      }
-      return;
-    }
+    // if ($('.sidebar-nav').is(':visible')) {
+    //   if (e.keyCode === 27) {
+    //     groupEditToggle();
+    //   }
+    //   return;
+    // }
 
     if (e.keyCode === 48) {
       DeactivateMessageBoard();
