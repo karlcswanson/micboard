@@ -76,8 +76,9 @@ class WirelessTransmitter:
     def __init__(self, rx, cfg):
         self.rx = rx
         self.cfg = cfg
-        self.chan_id = ''
-        self.chan_name = 'SLOT ' + str(cfg['slot'])
+        # self.chan_id = ''
+        # self.chan_name = 'SLOT {}'.format(cfg['slot'])
+        self.chan_name_raw = 'SLOT {}'.format(cfg['slot'])
         self.channel = cfg['channel']
         self.frequency = '000000'
         self.battery = 255
@@ -155,25 +156,34 @@ class WirelessTransmitter:
             self.timestamp = time.time()
 
 
-    def set_chan_name(self, chan_name):
+    def set_chan_name_raw(self, chan_name):
         chan_name = chan_name.replace('_', ' ')
-        name = chan_name.split()
+
+        self.chan_name_raw = chan_name
+
+
+    def get_chan_name(self):
+        name = self.chan_name_raw.split()
         prefix = re.match("([A-Za-z]+)([0-9])+", name[0])
 
+        chan_id = ''
+        chan_name = ''
+
         if prefix:
-            self.chan_id = name[0]
-            self.chan_name = ' '.join(name[1:])
+            chan_id = name[0]
+            chan_name = ' '.join(name[1:])
         else:
-            self.chan_id = ''
-            self.chan_name = chan_name
+            chan_name = self.chan_name_raw
 
         if 'extended_id' in self.cfg:
             if self.cfg['extended_id']:
-                self.chan_id = self.cfg['extended_id']
+                chan_id = self.cfg['extended_id']
 
         if 'extended_name' in self.cfg:
             if self.cfg['extended_name']:
-                self.chan_name = self.cfg['extended_name']
+                chan_name = self.cfg['extended_name']
+
+        return (chan_id, chan_name)
 
 
     def set_tx_offset(self, tx_offset):
@@ -195,7 +205,7 @@ class WirelessTransmitter:
         if (time.time() - self.peakstamp) < PEAK_TIMEOUT:
             return 'AUDIO_PEAK'
 
-        if not self.chan_name:
+        if not self.get_chan_name()[1]:
             return 'UNASSIGNED'
 
         if (time.time() - self.timestamp) < BATTERY_TIMEOUT:
@@ -216,13 +226,14 @@ class WirelessTransmitter:
         return 'TX_COM_ERROR'
 
     def tx_json(self):
+        name = self.get_chan_name()
         return {
-            'id': self.chan_id, 'name': self.chan_name, 'channel': self.channel,
+            'id': name[0], 'name': name[1], 'channel': self.channel,
             'antenna':self.antenna, 'audio_level': self.audio_level,
             'rf_level': self.rf_level, 'frequency': self.frequency,
             'battery':self.battery, 'tx_offset': self.tx_offset,
             'status': self.tx_state(), 'slot': self.slot, 'raw': self.raw,
-            'type': self.rx.type
+            'type': self.rx.type, 'name_raw' : self.chan_name_raw
         }
 
     def tx_json_mini(self):
@@ -257,7 +268,7 @@ class WirelessTransmitter:
                 if split[2] == rx_strings[rx_type]['battery']:
                     self.set_battery(split[3])
                 elif split[2] == rx_strings[rx_type]['name']:
-                    self.set_chan_name(' '.join(split[3:]))
+                    self.set_chan_name_raw(' '.join(split[3:]))
                 elif split[2] == rx_strings[rx_type]['frequency']:
                     self.set_frequency(split[3])
                 elif split[2] == rx_strings[rx_type]['tx_offset']:

@@ -141,6 +141,9 @@ function updateSelector(slotSelector, data) {
     updateName(slotSelector, data);
     micboard.transmitters[data.slot].name = data.name;
   }
+  if (micboard.transmitters[data.slot].name_raw !== data.name_raw) {
+    micboard.transmitters[data.slot].name_raw = data.name_raw;
+  }
 
   if (micboard.transmitters[data.slot].status !== data.status) {
     updateStatus(slotSelector, data);

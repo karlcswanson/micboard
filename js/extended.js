@@ -45,9 +45,14 @@ function initSlotEdit() {
     const slotSelector = document.getElementById("slot-" + t.slot);
 
     slotSelector.querySelector('.chartzone').style.display = 'none';
-    slotSelector.querySelector('.errorzone').style.display = 'none';
+    slotSelector.querySelector('.errorzone').style.display = 'block';
     slotSelector.querySelector('.diversity').style.display = 'none';
     slotSelector.querySelector('.editzone').style.display = 'block';
+
+    slotSelector.querySelector('.errortype').innerHTML = 'Slot ' + t.slot + ' CH ' + t.channel;
+    slotSelector.querySelector('.ip').innerHTML = t.ip;
+    slotSelector.querySelector('.rxinfo').innerHTML = t.name_raw;
+    console.log(t);
 
     if (slots[t.slot].extended_id) {
       slotSelector.querySelector('.ext-id').value = slots[t.slot].extended_id;
@@ -78,9 +83,11 @@ function initSlotEdit() {
 }
 
 export function slotEditToggle() {
-  if (micboard.displayMode === 'tvmode') {
-    setDisplayMode('deskmode');
+  if (micboard.settingsMode !== 'EXTENDED') {
+    if (micboard.displayMode === 'tvmode') {
+      setDisplayMode('deskmode');
+    }
+    micboard.settingsMode = 'EXTENDED';
+    initSlotEdit();
   }
-  micboard.settingsMode = 'EXTENDED';
-  initSlotEdit();
 }
