@@ -27,7 +27,6 @@ function slotValues() {
       slotList.push(output);
     }
   }
-  console.log(slotList);
   return slotList;
 }
 
@@ -42,17 +41,17 @@ function initSlotEdit() {
   const slots = configArrayGenerator();
 
   tx.forEach((t) => {
-    const slotSelector = document.getElementById("slot-" + t.slot);
+    const slotSelector = document.getElementById('slot-' + t.slot);
 
     slotSelector.querySelector('.chartzone').style.display = 'none';
     slotSelector.querySelector('.errorzone').style.display = 'block';
     slotSelector.querySelector('.diversity').style.display = 'none';
     slotSelector.querySelector('.editzone').style.display = 'block';
+    slotSelector.querySelector('.info-drawer').style.display = 'block';
 
     slotSelector.querySelector('.errortype').innerHTML = 'Slot ' + t.slot + ' CH ' + t.channel;
     slotSelector.querySelector('.ip').innerHTML = t.ip;
     slotSelector.querySelector('.rxinfo').innerHTML = t.name_raw;
-    console.log(t);
 
     if (slots[t.slot].extended_id) {
       slotSelector.querySelector('.ext-id').value = slots[t.slot].extended_id;
@@ -62,21 +61,18 @@ function initSlotEdit() {
     }
   });
 
-  let t = document.getElementById('save-template').content.cloneNode(true);
-
-  let b = document.getElementsByClassName('flexfix')[0];
-
-
+  const t = document.getElementById('save-template').content.cloneNode(true);
+  const b = document.getElementsByClassName('flexfix')[0];
   document.getElementById('micboard').insertBefore(t, b);
-  $('.info-drawer').css('display', 'block');
 
   $('#slotSave').on('click', () => {
     submitUpdate(slotValues());
-    // console.log(slotValues());
   });
+
   $('#clear-id').on('click', () => {
     $('.ext-id:input').val('');
   });
+
   $('#clear-name').on('click', () => {
     $('.ext-name:input').val('');
   });

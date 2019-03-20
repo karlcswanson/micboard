@@ -76,8 +76,6 @@ class WirelessTransmitter:
     def __init__(self, rx, cfg):
         self.rx = rx
         self.cfg = cfg
-        # self.chan_id = ''
-        # self.chan_name = 'SLOT {}'.format(cfg['slot'])
         self.chan_name_raw = 'SLOT {}'.format(cfg['slot'])
         self.channel = cfg['channel']
         self.frequency = '000000'
@@ -196,9 +194,6 @@ class WirelessTransmitter:
 
     def tx_state(self):
         # WCCC Specific State for unassigned microphones
-        # name = self.chan_name.split()
-        # prefix = re.match("([A-Za-z]+)([0-9])+", name[0])
-
         if self.rx.rx_com_status in ['DISCONNECTED', 'CONNECTING']:
             return 'RX_COM_ERROR'
 
