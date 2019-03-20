@@ -20,13 +20,9 @@ import '../node_modules/@ibm/plex/css/ibm-plex.css';
 
 export var dataURL = '/data';
 
-// export var config = {};
-
 export var micboard = [];
 
 micboard.url = [];
-micboard.url.start_slot = parseInt(getUrlParameter('start_slot'), 10);
-micboard.url.stop_slot = parseInt(getUrlParameter('stop_slot'), 10);
 micboard.url.group = getUrlParameter('group');
 micboard.url.demo = getUrlParameter('demo');
 micboard.url.settings = getUrlParameter('settings');
@@ -66,15 +62,6 @@ export function DeactivateMessageBoard() {
   $('#micboard').show();
   $('.settings').hide();
   $('.message-board').hide();
-}
-
-
-function StartStopSlotList(start, stop) {
-  const out = [];
-  for (let i = start; i <= stop; i += 1) {
-    out.push(i);
-  }
-  return out;
 }
 
 
@@ -275,11 +262,6 @@ function dataFilterFromList(data) {
 function displayListChooser() {
   if (micboard.url.group) {
     renderGroup(micboard.url.group);
-  } else if (micboard.url.start_slot && micboard.url.stop_slot) {
-    if (micboard.url.start_slot < micboard.url.stop_slot) {
-      micboard.displayList = StartStopSlotList(micboard.url.start_slot, micboard.url.stop_slot);
-      renderDisplayList(micboard.displayList);
-    }
   } else {
     renderGroup(0);
   }
@@ -320,11 +302,6 @@ function initialMap(callback) {
 }
 
 $(document).ready(() => {
-  if (micboard.url.demo && (isNaN(micboard.url.start_slot) || isNaN(micboard.url.stop_slot))) {
-    micboard.url.start_slot = 1;
-    micboard.url.stop_slot = 12;
-  }
-
   if (micboard.url.demo === 'true') {
     initialMap(autoRandom);
   } else {
@@ -341,13 +318,6 @@ $(document).ready(() => {
     if ($('.editzone').is(':visible')) {
       return;
     }
-
-    // if ($('.sidebar-nav').is(':visible')) {
-    //   if (e.keyCode === 27) {
-    //     groupEditToggle();
-    //   }
-    //   return;
-    // }
 
     if (e.keyCode === 48) {
       DeactivateMessageBoard();

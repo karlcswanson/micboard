@@ -9,6 +9,11 @@ import { updateEditor } from './dnd.js';
 function allSlots() {
   const slot = micboard.config.slots;
   const out = [];
+
+  if (micboard.url.demo) {
+    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  }
+
   for (let i = 0; i < slot.length; i += 1) {
     out.push(slot[i].slot);
   }
@@ -19,7 +24,7 @@ function allSlots() {
 // enables info-drawer toggle for mobile clients
 function infoToggle() {
   $('.col-sm').click((e) => {
-    if ($(window).width() <= 980 && micboard.settingsMode!== 'EXTENDED') {
+    if ($(window).width() <= 980 && micboard.settingsMode !== 'EXTENDED') {
       $(e.currentTarget).find('.info-drawer').toggle();
     }
   });
