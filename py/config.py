@@ -151,14 +151,14 @@ def get_slot_by_number(slot_number):
 def update_slot(data):
     slot = get_slot_by_number(data['slot'])
 
-    if 'extended_id' in data:
+    if data.get('extended_id'):
         slot['extended_id'] = data['extended_id']
     elif 'extended_id' in slot:
-        slot.pop('extended_id')
+        slot.pop('extended_id', None)
 
-    if 'extended_name' in data:
+    if data.get('extended_name'):
         slot['extended_name'] = data['extended_name']
     elif 'extended_name' in slot:
-        slot.pop('extended_name')
+        slot.pop('extended_name', None)
 
     save_current_config()
