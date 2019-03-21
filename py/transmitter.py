@@ -18,10 +18,6 @@ PEAK_LEVEL = {
     'uhfr': 100
 }
 
-# https://github.com/gaetano-guerriero/pypjlink/blob/master/pypjlink/projector.py
-reverse_dict = lambda d: dict(zip(d.values(), d.keys()))
-
-
 UHFR_AUDIO_TABLE = {
     0: 0,
     1: 13,
@@ -34,68 +30,165 @@ UHFR_AUDIO_TABLE = {
     255: 100
 }
 
-rx_strings = {}
+BASE_CONST = {}
 
 
-rx_strings['uhfr'] = {'battery': 'TX_BAT',
-                      'frequency': 'FREQUENCY',
-                      'name': 'CHAN_NAME',
-                      'tx_offset': 'NOTQWERT'}
-
-rx_strings['qlxd'] = {'battery': 'BATT_BARS',
-                      'frequency': 'FREQUENCY',
-                      'audio_level': 'AUDIO_LVL',
-                      'rf_level': 'RX_RF_LVL',
-                      'name': 'CHAN_NAME',
-                      'antenna': 'RF_ANTENNA',
-                      'tx_offset' : 'TX_OFFSET'}
-
-rx_strings['ulxd'] = {'battery': 'BATT_BARS',
-                      'frequency': 'FREQUENCY',
-                      'audio_level': 'AUDIO_LVL',
-                      'rf_level': 'RX_RF_LVL',
-                      'name': 'CHAN_NAME',
-                      'antenna': 'RF_ANTENNA',
-                      'tx_offset' : 'TX_OFFSET'}
-
-rx_strings['axtd'] = {'battery': 'TX_BATT_BARS',
-                      'frequency': 'FREQUENCY',
-                      'audio_level': 'AUDIO_LEVEL_RMS',
-                      'rf_level': 'RSSI',
-                      'name': 'CHAN_NAME',
-                      'antenna': 'ANTENNA_STATUS',
-                      'tx_offset': 'TX_OFFSET'}
-
-rx_strings_rev = {
-    'qlxd': reverse_dict(rx_strings['qlxd']),
-    'ulxd': reverse_dict(rx_strings['ulxd']),
-    'axtd': reverse_dict(rx_strings['axtd'])
+BASE_CONST['uhfr'] = {
+    'ch_const' : {
+        'battery': 'TX_BAT',
+        'frequency': 'FREQUENCY',
+        'name': 'CHAN_NAME',
+        'tx_offset': 'NOTQWERT',
+    },
+    'base_const': {
+        'getAll' : [
+            '* GET {} CHAN_NAME *',
+            '* GET {} BATT_BARS *',
+            '* GET {} GROUP_CHAN *'
+        ],
+        'query' : [
+            '* GET {} CHAN_NAME *',
+            '* GET {} TX_BAT *',
+            '* GET {} GROUP_CHAN *'
+        ],
+        'meter_stop' : '* METER {} ALL STOP *'
+    }
 }
 
-class WirelessTransmitter:
+BASE_CONST['qlxd'] = {
+    'ch_const' : {
+        'battery': 'BATT_BARS',
+        'frequency': 'FREQUENCY',
+        'audio_level': 'AUDIO_LVL',
+        'rf_level': 'RX_RF_LVL',
+        'name': 'CHAN_NAME',
+        'antenna': 'RF_ANTENNA',
+        'tx_offset' : 'TX_OFFSET'
+        },
+    'base_const' : {
+        'getAll' : ['< GET {} ALL >'],
+        'query' : [
+            '< GET {} CHAN_NAME >',
+            '< GET {} BATT_BARS >'
+        ],
+        'meter_stop' : '< SET {} METER_RATE 0 >'
+    }
+}
+
+BASE_CONST['ulxd'] = {
+    'ch_const' : {
+        'battery': 'BATT_BARS',
+        'frequency': 'FREQUENCY',
+        'audio_level': 'AUDIO_LVL',
+        'rf_level': 'RX_RF_LVL',
+        'name': 'CHAN_NAME',
+        'antenna': 'RF_ANTENNA',
+        'tx_offset' : 'TX_OFFSET'
+    },
+    'base_const': {
+        'getAll' : ['< GET {} ALL >'],
+        'query' : [
+            '< GET {} CHAN_NAME >',
+            '< GET {} BATT_BARS >'
+        ],
+        'meter_stop' : '< SET {} METER_RATE 0 >'
+    }
+}
+
+BASE_CONST['axtd'] = {
+    'ch_const' : {
+        'battery': 'TX_BATT_BARS',
+        'frequency': 'FREQUENCY',
+        'audio_level': 'AUDIO_LEVEL_RMS',
+        'rf_level': 'RSSI',
+        'name': 'CHAN_NAME',
+        'antenna': 'ANTENNA_STATUS',
+        'tx_offset': 'TX_OFFSET'
+    },
+    'base_const' : {
+        'getAll' : ['< GET {} ALL >'],
+        'query' : [
+            '< GET {} CHAN_NAME >',
+            '< GET {} TX_BATT_BARS >'
+        ],
+        'meter_stop' : '< SET {} METER_RATE 0 >'
+    }
+}
+
+
+class ChannelDevice:
     def __init__(self, rx, cfg):
         self.rx = rx
         self.cfg = cfg
         self.chan_name_raw = 'SLOT {}'.format(cfg['slot'])
         self.channel = cfg['channel']
-        self.frequency = '000000'
-        self.battery = 255
-        self.prev_battery = 255
-        self.prev_battery_uhfr_raw = 255
         self.timestamp = time.time() - 60
+        self.frequency = '000000'
         self.slot = cfg['slot']
-        self.audio_level = 0
-        self.rf_level = 0
-        self.antenna = 'XX'
-        self.tx_offset = 0
         self.raw = defaultdict(dict)
-        self.peakstamp = time.time() - 60
+        self.CHCONST = BASE_CONST[self.rx.type]['ch_const']
 
 
     def set_frequency(self, frequency):
         if self.rx.type == 'axtd':
             frequency = frequency.lstrip('0')
         self.frequency = frequency[:3] + '.' + frequency[3:]
+
+    def set_chan_name_raw(self, chan_name):
+        chan_name = chan_name.replace('_', ' ')
+        self.chan_name_raw = chan_name
+
+    def get_chan_name(self):
+        name = self.chan_name_raw.split()
+        prefix = re.match("([A-Za-z]+)([0-9])+", name[0])
+
+        chan_id = ''
+        chan_name = ''
+
+        if prefix:
+            chan_id = name[0]
+            chan_name = ' '.join(name[1:])
+        else:
+            chan_name = self.chan_name_raw
+
+        if 'extended_id' in self.cfg:
+            if self.cfg['extended_id']:
+                chan_id = self.cfg['extended_id']
+
+        if 'extended_name' in self.cfg:
+            if self.cfg['extended_name']:
+                chan_name = self.cfg['extended_name']
+
+        return (chan_id, chan_name)
+
+
+class IEM(ChannelDevice):
+    def __init__(self, rx, cfg):
+        super().__init__(rx, cfg)
+        self.audio_level_l = 0
+        self.audio_level_r = 0
+
+    def tx_json(self):
+        name = self.get_chan_name()
+        return {
+            'id': name[0], 'name': name[1], 'channel': self.channel,
+            'frequency': self.frequency, 'slot': self.slot, 'raw': self.raw,
+            'type': self.rx.type, 'name_raw' : self.chan_name_raw
+        }
+
+class WirelessMic(ChannelDevice):
+    def __init__(self, rx, cfg):
+        super().__init__(rx, cfg)
+        self.battery = 255
+        self.prev_battery = 255
+        self.prev_battery_uhfr_raw = 255
+        self.audio_level = 0
+        self.rf_level = 0
+        self.antenna = 'XX'
+        self.tx_offset = 0
+        self.peakstamp = time.time() - 60
+
+
 
     def set_antenna(self, antenna):
         self.antenna = antenna
@@ -113,7 +206,6 @@ class WirelessTransmitter:
                 audio_level = UHFR_AUDIO_TABLE[audio_level]
             except:
                 logging.warning("invalid Lookup UHFR Audio Value: %s", audio_level)
-            # audio_level = int(100 * (audio_level / 255))
 
         if audio_level >= PEAK_LEVEL[self.rx.type]:
             self.peakstamp = time.time()
@@ -152,36 +244,6 @@ class WirelessTransmitter:
         if 1 <= level <= 5:
             self.prev_battery = level
             self.timestamp = time.time()
-
-
-    def set_chan_name_raw(self, chan_name):
-        chan_name = chan_name.replace('_', ' ')
-
-        self.chan_name_raw = chan_name
-
-
-    def get_chan_name(self):
-        name = self.chan_name_raw.split()
-        prefix = re.match("([A-Za-z]+)([0-9])+", name[0])
-
-        chan_id = ''
-        chan_name = ''
-
-        if prefix:
-            chan_id = name[0]
-            chan_name = ' '.join(name[1:])
-        else:
-            chan_name = self.chan_name_raw
-
-        if 'extended_id' in self.cfg:
-            if self.cfg['extended_id']:
-                chan_id = self.cfg['extended_id']
-
-        if 'extended_name' in self.cfg:
-            if self.cfg['extended_name']:
-                chan_name = self.cfg['extended_name']
-
-        return (chan_id, chan_name)
 
 
     def set_tx_offset(self, tx_offset):
@@ -250,23 +312,23 @@ class WirelessTransmitter:
         }
 
 
-    def parse_raw_tx(self, data, rx_type):
+    def parse_raw_tx(self, data):
         split = data.split()
-
         self.raw[split[2]] = ' '.join(split[3:])
+
         try:
             if split[0] == 'SAMPLE' and split[2] == 'ALL':
-                self.parse_sample(data, rx_type)
+                self.parse_sample(data)
                 chart_update_list.append(self.tx_json_chart())
 
             if split[0] in ['REP', 'REPLY', 'REPORT']:
-                if split[2] == rx_strings[rx_type]['battery']:
+                if split[2] == self.CHCONST['battery']:
                     self.set_battery(split[3])
-                elif split[2] == rx_strings[rx_type]['name']:
+                elif split[2] == self.CHCONST['name']:
                     self.set_chan_name_raw(' '.join(split[3:]))
-                elif split[2] == rx_strings[rx_type]['frequency']:
+                elif split[2] == self.CHCONST['frequency']:
                     self.set_frequency(split[3])
-                elif split[2] == rx_strings[rx_type]['tx_offset']:
+                elif split[2] == self.CHCONST['tx_offset']:
                     self.set_tx_offset(split[3])
 
                 if self not in data_update_list:
@@ -276,22 +338,20 @@ class WirelessTransmitter:
             print("Index Error(TX): {}".format(data.split()))
             print(e)
 
-    def parse_sample(self, data, rx_type):
+    def parse_sample(self, data):
         split = data.split()
-        if rx_type in ['qlxd', 'ulxd']:
+        if self.rx.type in ['qlxd', 'ulxd']:
             self.set_antenna(split[3])
             self.set_rf_level(split[4])
             self.set_audio_level(split[5])
 
-        elif rx_type == 'uhfr':
+        elif self.rx.type == 'uhfr':
             self.set_antenna(split[3])
             self.set_rf_level(split[4])
             self.set_battery(split[6])
             self.set_audio_level(split[7])
 
-        elif rx_type == 'axtd':
+        elif self.rx.type == 'axtd':
             self.set_antenna(split[7])
             self.set_rf_level(split[9])
             self.set_audio_level(split[6])
-        # if self.slot == 6:
-        #     print(data)

@@ -6,8 +6,8 @@ import atexit
 import sys
 import logging
 
-from receiver import WirelessReceiver
-from transmitter import WirelessTransmitter, chart_update_list, data_update_list
+from base import ShureBaseDevice
+from transmitter import WirelessMic, chart_update_list, data_update_list
 
 WirelessReceivers = []
 WirelessMessageQueue = queue.Queue()
@@ -21,7 +21,7 @@ def check_add_receiver(ip, type):
     if rec:
         return rec
 
-    rec = WirelessReceiver(ip, type)
+    rec = ShureBaseDevice(ip, type)
     WirelessReceivers.append(rec)
     return rec
 
@@ -98,7 +98,7 @@ def SocketService():
             string = rx.writeQueue.get()
             logging.debug("write: %s data: %s", rx.ip, string)
             try:
-                if rx.type in ['qlxd', 'ulxd', 'axtd']:
+                if rx.type in ['qlxd', 'ulxd', 'axtd', 'p10t']:
                     rx.f.sendall(bytearray(string, 'UTF-8'))
                 elif rx.type == 'uhfr':
                     rx.f.sendto(bytearray(string, 'UTF-8'), (rx.ip, 2202))
