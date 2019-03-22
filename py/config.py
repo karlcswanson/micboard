@@ -109,9 +109,9 @@ def read_json_config(file):
     with open(file) as config_file:
         config_tree = json.load(config_file)
 
-        for tx in config_tree['slots']:
-            rec = shure.check_add_receiver(tx['ip'], tx['type'])
-            rec.add_transmitter(tx)
+        for ch in config_tree['slots']:
+            rec = shure.check_add_receiver(ch['ip'], ch['type'])
+            rec.add_channel_device(ch)
 
     gif_dir = get_gif_dir()
 

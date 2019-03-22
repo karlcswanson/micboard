@@ -4,7 +4,9 @@ import socket
 from collections import defaultdict
 import logging
 
-from transmitter import WirelessMic, IEM, BASE_CONST
+from device_config import BASE_CONST
+from iem import IEM
+from mic import WirelessMic
 
 
 PORT = 2202
@@ -14,7 +16,7 @@ class ShureBaseDevice:
     def __init__(self, ip, type):
         self.ip = ip
         self.type = type
-        self.transmitters = []
+        self.channels = []
         self.rx_com_status = 'DISCONNECTED'
         self.writeQueue = queue.Queue()
         self.f = None
@@ -24,13 +26,13 @@ class ShureBaseDevice:
 
     def socket_connect(self):
         try:
-            if self.type in ['qlxd', 'ulxd', 'axtd', 'p10t']:
+            if BASE_CONST[self.type]['PROTOCOL'] == 'TCP':
                 self.f = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #TCP
                 self.f.settimeout(.2)
                 self.f.connect((self.ip, PORT))
 
 
-            elif self.type == 'uhfr':
+            elif BASE_CONST[self.type]['PROTOCOL'] == 'UDP':
                 self.f = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #UDP
 
             self.set_rx_com_status('CONNECTING')
@@ -60,14 +62,14 @@ class ShureBaseDevice:
         # elif status == 'DISCONNECTED':
         #     print("Disconnected from {} at {}".format(self.ip,datetime.datetime.now()))
 
-    def add_transmitter(self, cfg):
-        if cfg['type'] in ['uhfr', 'qlxd', 'ulxd', 'atxd']:
-            self.transmitters.append(WirelessMic(self, cfg))
-        elif cfg['type'] == 'p10t':
-            self.transmitters.append(IEM(self, cfg))
+    def add_channel_device(self, cfg):
+        if BASE_CONST[self.type]['DEVICE_CLASS'] == 'WirelessMic':
+            self.channels.append(WirelessMic(self, cfg))
+        elif BASE_CONST[self.type]['DEVICE_CLASS'] == 'IEM':
+            self.channels.append(IEM(self, cfg))
 
-    def get_transmitter_by_channel(self, channel):
-        return next((x for x in self.transmitters if x.channel == int(channel)), None)
+    def get_device_by_channel(self, channel):
+        return next((x for x in self.channels if x.channel == int(channel)), None)
 
     def parse_raw_rx(self, data):
         data = data.strip('< >').strip('* ')
@@ -75,8 +77,8 @@ class ShureBaseDevice:
         split = data.split()
         try:
             if split[0] in ['REP', 'REPORT', 'SAMPLE'] and split[1] in ['1', '2', '3', '4']:
-                tx = self.get_transmitter_by_channel(int(split[1]))
-                tx.parse_raw_tx(data)
+                ch = self.get_device_by_channel(int(split[1]))
+                ch.parse_raw_ch(data)
 
             elif split[0] in ['REP', 'REPORT']:
                 self.raw[split[1]] = ' '.join(split[2:])
@@ -86,8 +88,8 @@ class ShureBaseDevice:
 
     def get_channels(self):
         channels = []
-        for transmitter in self.transmitters:
-            channels.append(transmitter.channel)
+        for channel in self.channels:
+            channels.append(channel.channel)
         return channels
 
     def get_all(self):
@@ -120,14 +122,14 @@ class ShureBaseDevice:
             self.writeQueue.put(self.BASECONST['meter_stop'].format(i))
 
     def rx_json(self):
-        tx_data = []
-        for transmitter in self.transmitters:
-            data = transmitter.tx_json()
+        ch_data = []
+        for channel in self.channels:
+            data = channel.ch_json()
             if self.rx_com_status == 'DISCONNECTED':
                 data['status'] = 'RX_COM_ERROR'
-            tx_data.append(data)
+            ch_data.append(data)
         data = {
             'ip': self.ip, 'type': self.type, 'status': self.rx_com_status,
-            'raw': self.raw, 'tx': tx_data
+            'raw': self.raw, 'tx': ch_data
         }
         return data

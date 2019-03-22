@@ -2,12 +2,13 @@ import time
 import select
 import queue
 import atexit
-# import signal
 import sys
 import logging
 
 from base import ShureBaseDevice
-from transmitter import WirelessMic, chart_update_list, data_update_list
+from channel import chart_update_list, data_update_list
+from mic import WirelessMic
+from iem import IEM
 
 WirelessReceivers = []
 WirelessMessageQueue = queue.Queue()

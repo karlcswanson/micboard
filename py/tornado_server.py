@@ -88,7 +88,7 @@ class SocketHandler(websocket.WebSocketHandler):
         if shure.data_update_list:
             out['data-update'] = []
             for tx in shure.data_update_list:
-                out['data-update'].append(tx.tx_json_mini())
+                out['data-update'].append(tx.ch_json_mini())
 
         if config.group_update_list:
             out['group-update'] = config.group_update_list
