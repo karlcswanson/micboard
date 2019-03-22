@@ -5,53 +5,53 @@ import atexit
 import sys
 import logging
 
-from base import ShureBaseDevice
+from networkdevice import ShureNetworkDevice
 from channel import chart_update_list, data_update_list
 from mic import WirelessMic
 from iem import IEM
 
-WirelessReceivers = []
-WirelessMessageQueue = queue.Queue()
+NetworkDevices = []
+DeviceMessageQueue = queue.Queue()
 
 
-def get_receiver_by_ip(ip):
-    return next((x for x in WirelessReceivers if x.ip == ip), None)
+def get_network_device_by_ip(ip):
+    return next((x for x in NetworkDevices if x.ip == ip), None)
 
 def check_add_receiver(ip, type):
-    rec = get_receiver_by_ip(ip)
-    if rec:
-        return rec
+    net = get_network_device_by_ip(ip)
+    if net:
+        return net
 
-    rec = ShureBaseDevice(ip, type)
-    WirelessReceivers.append(rec)
-    return rec
+    net = ShureNetworkDevice(ip, type)
+    NetworkDevices.append(net)
+    return net
 
 
 def print_ALL():
-    for rx in WirelessReceivers:
+    for rx in NetworkDevices:
         print("RX Type: {} IP: {} Status: {}".format(rx.type, rx.ip, rx.rx_com_status))
         for tx in rx.transmitters:
             print("Channel Name: {} Frequency: {} Slot: {} TX: {} TX State: {}"
                   .format(tx.chan_name, tx.frequency, tx.slot, tx.channel, tx.tx_state()))
 
 def watchdog_monitor():
-    for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTED'):
+    for rx in (rx for rx in NetworkDevices if rx.rx_com_status == 'CONNECTED'):
         if (int(time.perf_counter()) - rx.socket_watchdog) > 5:
             logging.debug('disconnected from: %s', rx.ip)
             rx.socket_disconnect()
 
-    for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTING'):
+    for rx in (rx for rx in NetworkDevices if rx.rx_com_status == 'CONNECTING'):
         if (int(time.perf_counter()) - rx.socket_watchdog) > 2:
             rx.socket_disconnect()
 
 
-    for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'DISCONNECTED'):
+    for rx in (rx for rx in NetworkDevices if rx.rx_com_status == 'DISCONNECTED'):
         if (int(time.perf_counter()) - rx.socket_watchdog) > 20:
             rx.socket_connect()
 
 def WirelessQueryQueue():
     while True:
-        for rx in (rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTED'):
+        for rx in (rx for rx in NetworkDevices if rx.rx_com_status == 'CONNECTED'):
             strings = rx.get_query_strings()
             for string in strings:
                 rx.writeQueue.put(string)
@@ -59,17 +59,17 @@ def WirelessQueryQueue():
 
 def ProcessRXMessageQueue():
     while True:
-        rx, msg = WirelessMessageQueue.get()
+        rx, msg = DeviceMessageQueue.get()
         rx.parse_raw_rx(msg)
 
 
 def SocketService():
-    for rx in WirelessReceivers:
+    for rx in NetworkDevices:
         rx.socket_connect()
 
     while True:
         watchdog_monitor()
-        readrx = [rx for rx in WirelessReceivers if rx.rx_com_status in ['CONNECTING', 'CONNECTED']]
+        readrx = [rx for rx in NetworkDevices if rx.rx_com_status in ['CONNECTING', 'CONNECTED']]
         writerx = [rx for rx in readrx if not rx.writeQueue.empty()]
 
         read_socks, write_socks, error_socks = select.select(readrx, writerx, readrx, .2)
@@ -89,7 +89,7 @@ def SocketService():
 
             for line in data:
                 # rx.parse_raw_rx(line)
-                WirelessMessageQueue.put((rx, line))
+                DeviceMessageQueue.put((rx, line))
 
             rx.socket_watchdog = int(time.perf_counter())
             rx.set_rx_com_status('CONNECTED')
@@ -114,7 +114,7 @@ def SocketService():
 
 # @atexit.register
 def on_exit():
-    connected = [rx for rx in WirelessReceivers if rx.rx_com_status == 'CONNECTED']
+    connected = [rx for rx in NetworkDevices if rx.rx_com_status == 'CONNECTED']
     for rx in connected:
         rx.disable_metering()
     time.sleep(50)

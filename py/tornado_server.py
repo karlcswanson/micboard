@@ -26,10 +26,10 @@ def localURL():
     ip = socket.gethostbyname(socket.gethostname())
     return 'http://{}:{}'.format(ip, config.config_tree['port'])
 
-def json_rxs(rxs):
+def micboard_json(network_devices):
     data = []
-    for rx in rxs:
-        data.append(rx.rx_json())
+    for net_device in network_devices:
+        data.append(net_device.net_json())
 
     gifs = file_list('.gif')
     jpgs = file_list('.jpg')
@@ -52,7 +52,7 @@ class IndexHandler(web.RequestHandler):
 class JsonHandler(web.RequestHandler):
     def get(self):
         self.set_header('Content-Type', 'application/json')
-        self.write(json_rxs(shure.WirelessReceivers))
+        self.write(micboard_json(shure.NetworkDevices))
 
 class SocketHandler(websocket.WebSocketHandler):
     clients = set()
@@ -87,8 +87,8 @@ class SocketHandler(websocket.WebSocketHandler):
 
         if shure.data_update_list:
             out['data-update'] = []
-            for tx in shure.data_update_list:
-                out['data-update'].append(tx.ch_json_mini())
+            for ch in shure.data_update_list:
+                out['data-update'].append(ch.ch_json_mini())
 
         if config.group_update_list:
             out['group-update'] = config.group_update_list
@@ -143,9 +143,6 @@ class GroupUpdateHandler(web.RequestHandler):
         config.update_group(data)
         print(data)
         self.write(data)
-
-
-
 
 
 def twisted():

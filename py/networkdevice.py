@@ -12,7 +12,7 @@ from mic import WirelessMic
 PORT = 2202
 
 
-class ShureBaseDevice:
+class ShureNetworkDevice:
     def __init__(self, ip, type):
         self.ip = ip
         self.type = type
@@ -121,7 +121,7 @@ class ShureBaseDevice:
         for i in self.get_channels():
             self.writeQueue.put(self.BASECONST['meter_stop'].format(i))
 
-    def rx_json(self):
+    def net_json(self):
         ch_data = []
         for channel in self.channels:
             data = channel.ch_json()
