@@ -76,7 +76,8 @@ function onDrop(id, src, dst) {
   // if (src === 'micboard' && dst === 'micboard') {
   // }
   if (src === 'eslotlist' && dst === 'micboard' && slot) {
-    charts[slot] = initChart(document.getElementById(id.id));
+    console.log(micboard.transmitters[slot]);
+    charts[slot] = initChart(document.getElementById(id.id), micboard.transmitters[slot]);
   }
   if (src === 'micboard' && dst === 'eslotlist' && slot) {
     charts[slot].slotChart.stop();

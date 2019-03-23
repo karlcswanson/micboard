@@ -158,6 +158,7 @@ class WirelessMic(ChannelDevice):
             'audio_level': self.audio_level,
             'rf_level': self.rf_level,
             'slot': self.slot,
+            'type': self.rx.type,
             'timestamp': time.time()
         }
 

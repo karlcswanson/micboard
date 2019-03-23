@@ -40,6 +40,7 @@ class IEM(ChannelDevice):
             'audio_level_l': self.audio_level_l,
             'audio_level_r': self.audio_level_r,
             'slot': self.slot,
+            'type': self.rx.type,
             'timestamp': time.time()
         }
 

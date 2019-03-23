@@ -137,53 +137,108 @@ function flexFix() {
   $('#micboard').append(flexFixHTML);
 }
 
-function updateSelector(slotSelector, data) {
-  if (micboard.transmitters[data.slot].id !== data.id) {
-    updateID(slotSelector, data);
-    micboard.transmitters[data.slot].id = data.id;
-  }
-  if (micboard.transmitters[data.slot].name !== data.name) {
-    updateName(slotSelector, data);
-    micboard.transmitters[data.slot].name = data.name;
-  }
-  if (micboard.transmitters[data.slot].name_raw !== data.name_raw) {
-    micboard.transmitters[data.slot].name_raw = data.name_raw;
-  }
 
-  if (micboard.transmitters[data.slot].status !== data.status) {
-    updateStatus(slotSelector, data);
-    micboard.transmitters[data.slot].status = data.status;
-  }
-
-  if (micboard.transmitters[data.slot].battery !== data.battery) {
-    updateBattery(slotSelector, data);
-    micboard.transmitters[data.slot].battery = data.battery;
-  }
-
-  if (micboard.transmitters[data.slot].antenna !== data.antenna) {
-    updateDiversity(slotSelector, data);
-    micboard.transmitters[data.slot].antenna = data.antenna;
-  }
-
-  if (micboard.transmitters[data.slot].tx_offset !== data.tx_offset) {
-    updateTXOffset(slotSelector, data);
-    micboard.transmitters[data.slot].tx_offset = data.tx_offset;
-  }
-  if (micboard.transmitters[data.slot].frequency !== data.frequency) {
-    updateFrequency(slotSelector, data);
-    micboard.transmitters[data.slot].frequency = data.frequency;
+function updateCheck(data, key, callback) {
+  if (key in data) {
+    if (micboard.transmitters[data.slot][key] !== data[key]) {
+      if (callback) {
+        callback();
+      }
+      micboard.transmitters[data.slot][key] = data[key];
+    }
   }
 }
 
+
+function updateSelector(slotSelector, data) {
+  updateCheck(data, 'id', () => {
+    updateID(slotSelector, data);
+  });
+  updateCheck(data, 'name', () => {
+    updateName(slotSelector, data);
+  });
+  updateCheck(data, 'name_raw');
+  updateCheck(data, 'status', () => {
+    updateStatus(slotSelector, data);
+  });
+  updateCheck(data, 'battery', () => {
+    updateBattery(slotSelector, data);
+  });
+  updateCheck(data, 'antenna', () => {
+    updateDiversity(slotSelector, data);
+  });
+  updateCheck(data, 'tx_offset', () => {
+    updateTXOffset(slotSelector, data);
+  });
+  updateCheck(data, 'frequency', () => {
+    updateFrequency(slotSelector, data);
+  });
+}
+
+
+// function updateSelector(slotSelector, data) {
+//   if (micboard.transmitters[data.slot].id !== data.id) {
+//     updateID(slotSelector, data);
+//     micboard.transmitters[data.slot].id = data.id;
+//   }
+//   if (micboard.transmitters[data.slot].name !== data.name) {
+//     updateName(slotSelector, data);
+//     micboard.transmitters[data.slot].name = data.name;
+//   }
+//   if (micboard.transmitters[data.slot].name_raw !== data.name_raw) {
+//     micboard.transmitters[data.slot].name_raw = data.name_raw;
+//   }
+//
+//   if (micboard.transmitters[data.slot].status !== data.status) {
+//     updateStatus(slotSelector, data);
+//     micboard.transmitters[data.slot].status = data.status;
+//   }
+//
+//   if (micboard.transmitters[data.slot].battery !== data.battery) {
+//     updateBattery(slotSelector, data);
+//     micboard.transmitters[data.slot].battery = data.battery;
+//   }
+//
+//   if (micboard.transmitters[data.slot].antenna !== data.antenna) {
+//     updateDiversity(slotSelector, data);
+//     micboard.transmitters[data.slot].antenna = data.antenna;
+//   }
+//
+//   if (micboard.transmitters[data.slot].tx_offset !== data.tx_offset) {
+//     updateTXOffset(slotSelector, data);
+//     micboard.transmitters[data.slot].tx_offset = data.tx_offset;
+//   }
+//   if (micboard.transmitters[data.slot].frequency !== data.frequency) {
+//     updateFrequency(slotSelector, data);
+//     micboard.transmitters[data.slot].frequency = data.frequency;
+//   }
+// }
+
 export function updateViewOnly(slotSelector, data) {
-  updateStatus(slotSelector, data);
-  updateID(slotSelector, data);
-  updateName(slotSelector, data);
-  updateTXOffset(slotSelector, data);
-  updateBattery(slotSelector, data);
-  updateFrequency(slotSelector, data);
-  updateDiversity(slotSelector, data);
-  updateIP(slotSelector, data);
+  if ('status' in data) {
+    updateStatus(slotSelector, data);
+  }
+  if ('id' in data) {
+    updateID(slotSelector, data);
+  }
+  if ('name' in data) {
+    updateName(slotSelector, data);
+  }
+  if ('tx_offset' in data) {
+    updateTXOffset(slotSelector, data);
+  }
+  if ('battery' in data) {
+    updateBattery(slotSelector, data);
+  }
+  if ('frequency' in data) {
+    updateFrequency(slotSelector, data);
+  }
+  if ('antenna' in data) {
+    updateDiversity(slotSelector, data);
+  }
+  if ('ip' in data) {
+    updateIP(slotSelector, data);
+  }
 }
 
 export function updateSlot(data) {
@@ -197,7 +252,9 @@ export function updateSlot(data) {
   const slot = 'slot-' + data.slot;
   const slotSelector = document.getElementById(slot);
   if (slotSelector) {
-    updateSelector(slotSelector, data);
+    if (data.type === 'qlxd') {
+      updateSelector(slotSelector, data);
+    }
   }
 }
 
@@ -217,7 +274,7 @@ export function renderDisplayList(dl) {
       t = document.getElementById('column-template').content.cloneNode(true);
       t.querySelector('div.col-sm').id = 'slot-' + tx[e].slot;
       updateViewOnly(t, tx[e]);
-      charts[tx[e].slot] = initChart(t);
+      charts[tx[e].slot] = initChart(t, tx[e]);
     } else {
       t = document.getElementById('column-template').content.cloneNode(true);
       t.querySelector('p.name').innerHTML = 'BLANK';

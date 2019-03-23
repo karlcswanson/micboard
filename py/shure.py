@@ -7,8 +7,8 @@ import logging
 
 from networkdevice import ShureNetworkDevice
 from channel import chart_update_list, data_update_list
-from mic import WirelessMic
-from iem import IEM
+# from mic import WirelessMic
+# from iem import IEM
 
 NetworkDevices = []
 DeviceMessageQueue = queue.Queue()
@@ -17,7 +17,7 @@ DeviceMessageQueue = queue.Queue()
 def get_network_device_by_ip(ip):
     return next((x for x in NetworkDevices if x.ip == ip), None)
 
-def check_add_receiver(ip, type):
+def check_add_network_device(ip, type):
     net = get_network_device_by_ip(ip)
     if net:
         return net
@@ -25,14 +25,6 @@ def check_add_receiver(ip, type):
     net = ShureNetworkDevice(ip, type)
     NetworkDevices.append(net)
     return net
-
-
-def print_ALL():
-    for rx in NetworkDevices:
-        print("RX Type: {} IP: {} Status: {}".format(rx.type, rx.ip, rx.rx_com_status))
-        for tx in rx.transmitters:
-            print("Channel Name: {} Frequency: {} Slot: {} TX: {} TX State: {}"
-                  .format(tx.chan_name, tx.frequency, tx.slot, tx.channel, tx.tx_state()))
 
 def watchdog_monitor():
     for rx in (rx for rx in NetworkDevices if rx.rx_com_status == 'CONNECTED'):
