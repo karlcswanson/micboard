@@ -21,7 +21,8 @@ import '../node_modules/@ibm/plex/css/ibm-plex.css';
 export var dataURL = '/data';
 
 export var micboard = [];
-
+micboard.MIC_MODELS = ['uhfr', 'qlxd', 'ulxd', 'atxd'];
+micboard.IEM_MODELS = ['p10t'];
 micboard.url = [];
 micboard.url.group = getUrlParameter('group');
 micboard.url.demo = getUrlParameter('demo');

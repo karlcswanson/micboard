@@ -31,6 +31,16 @@ class IEM(ChannelDevice):
     def parse_sample(self, split):
         pass
 
+    def ch_state(self):
+        # WCCC Specific State for unassigned microphones
+        if self.rx.rx_com_status in ['DISCONNECTED', 'CONNECTING']:
+            return 'RX_COM_ERROR'
+
+        if self.rx.rx_com_status == 'CONNECTED':
+            return 'UNASSIGNED'
+
+        return 'TX_COM_ERROR'
+
     def chart_json(self):
         # audio_level = self.audio_level
         # rf_level = self.rf_level
@@ -48,8 +58,14 @@ class IEM(ChannelDevice):
     def ch_json(self):
         name = self.get_chan_name()
         return {
-            'id': name[0], 'name': name[1], 'channel': self.channel,
+            'id': name[0], 'name': name[1], 'channel': self.channel, 'status': self.ch_state(),
             'audio_level_l' : self.audio_level_l, 'audio_level_r' : self.audio_level_r,
             'frequency': self.frequency, 'slot': self.slot, 'raw': self.raw,
             'type': self.rx.type, 'name_raw' : self.chan_name_raw
         }
+
+    def ch_json_mini(self):
+        data = self.ch_json()
+        data['timestamp'] = time.time()
+        del data['raw']
+        return data

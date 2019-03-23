@@ -3,20 +3,18 @@
 import { TimeSeries, SmoothieChart } from 'smoothie';
 import { micboard } from './script.js';
 
-const MIC_MODELS = ['uhfr', 'qlxd', 'ulxd', 'atxd'];
-const IEM_MODELS = ['p10t'];
 export const charts = {};
 
 export function updateChart(data) {
   if (micboard.displayList.includes(data.slot)) {
     const timestamp = new Date(data.timestamp * 1000);
-    if (MIC_MODELS.indexOf(data.type) > -1) {
+    if (micboard.MIC_MODELS.indexOf(data.type) > -1) {
       charts[data.slot].audioSeries.append(timestamp, data.audio_level + 100);
       charts[data.slot].rfSeries.append(timestamp, data.rf_level);
 
       micboard.transmitters[data.slot].audio_level = data.audio_level;
       micboard.transmitters[data.slot].rf_level = data.rf_level;
-    } else if (IEM_MODELS.indexOf(data.type) > -1) {
+    } else if (micboard.IEM_MODELS.indexOf(data.type) > -1) {
       charts[data.slot].audioLSeries.append(timestamp, data.audio_level_l + 100);
       charts[data.slot].audioRSeries.append(timestamp, data.audio_level_r);
 
@@ -51,7 +49,7 @@ export function initChart(slotSelector, data) {
 
   chart.slotChart = new SmoothieChart(chartOptions);
 
-  if (MIC_MODELS.indexOf(data.type) > -1) {
+  if (micboard.MIC_MODELS.indexOf(data.type) > -1) {
     chart.audioSeries = new TimeSeries();
     chart.rfSeries = new TimeSeries();
     chart.slotChart.addTimeSeries(chart.audioSeries, {
@@ -65,7 +63,7 @@ export function initChart(slotSelector, data) {
       fillStyle: '',
       lineWidth: 2,
     });
-  } else if (IEM_MODELS.indexOf(data.type) > -1) {
+  } else if (micboard.IEM_MODELS.indexOf(data.type) > -1) {
     chart.audioLSeries = new TimeSeries();
     chart.audioRSeries = new TimeSeries();
     chart.slotChart.addTimeSeries(chart.audioLSeries, {

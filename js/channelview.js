@@ -176,44 +176,6 @@ function updateSelector(slotSelector, data) {
 }
 
 
-// function updateSelector(slotSelector, data) {
-//   if (micboard.transmitters[data.slot].id !== data.id) {
-//     updateID(slotSelector, data);
-//     micboard.transmitters[data.slot].id = data.id;
-//   }
-//   if (micboard.transmitters[data.slot].name !== data.name) {
-//     updateName(slotSelector, data);
-//     micboard.transmitters[data.slot].name = data.name;
-//   }
-//   if (micboard.transmitters[data.slot].name_raw !== data.name_raw) {
-//     micboard.transmitters[data.slot].name_raw = data.name_raw;
-//   }
-//
-//   if (micboard.transmitters[data.slot].status !== data.status) {
-//     updateStatus(slotSelector, data);
-//     micboard.transmitters[data.slot].status = data.status;
-//   }
-//
-//   if (micboard.transmitters[data.slot].battery !== data.battery) {
-//     updateBattery(slotSelector, data);
-//     micboard.transmitters[data.slot].battery = data.battery;
-//   }
-//
-//   if (micboard.transmitters[data.slot].antenna !== data.antenna) {
-//     updateDiversity(slotSelector, data);
-//     micboard.transmitters[data.slot].antenna = data.antenna;
-//   }
-//
-//   if (micboard.transmitters[data.slot].tx_offset !== data.tx_offset) {
-//     updateTXOffset(slotSelector, data);
-//     micboard.transmitters[data.slot].tx_offset = data.tx_offset;
-//   }
-//   if (micboard.transmitters[data.slot].frequency !== data.frequency) {
-//     updateFrequency(slotSelector, data);
-//     micboard.transmitters[data.slot].frequency = data.frequency;
-//   }
-// }
-
 export function updateViewOnly(slotSelector, data) {
   if ('status' in data) {
     updateStatus(slotSelector, data);
@@ -252,9 +214,7 @@ export function updateSlot(data) {
   const slot = 'slot-' + data.slot;
   const slotSelector = document.getElementById(slot);
   if (slotSelector) {
-    if (data.type === 'qlxd') {
-      updateSelector(slotSelector, data);
-    }
+    updateSelector(slotSelector, data);
   }
 }
 
