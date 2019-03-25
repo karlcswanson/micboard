@@ -63,6 +63,13 @@ function calcEditSlots() {
   return output;
 }
 
+function clearAll() {
+  micboard.displayList = [];
+  renderDisplayList(micboard.displayList);
+
+  const eslots = calcEditSlots();
+  renderEditSlots(eslots);
+}
 
 function onDrop(id, src, dst) {
   const slot = parseInt(id.id.replace(/[^\d.]/g, ''), 10);
@@ -158,5 +165,8 @@ export function initEditor() {
 
   $('#editorSave').on('click', () => {
     submitSlotUpdate();
+  });
+  $('#editorClear').on('click', () => {
+    clearAll();
   });
 }

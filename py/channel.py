@@ -42,6 +42,9 @@ class ChannelDevice:
         if prefix:
             chan_id = name[0]
             chan_name = ' '.join(name[1:])
+        elif name[0] == 'IEM' and len(name[1]) == 1:
+            chan_id = ' '.join(name[:2])
+            chan_name = ' '.join(name[2:])
         else:
             chan_name = self.chan_name_raw
 

@@ -51,7 +51,6 @@ class IEM(ChannelDevice):
         pass
 
     def ch_state(self):
-        # WCCC Specific State for unassigned microphones
         if self.rx.rx_com_status in ['DISCONNECTED', 'CONNECTING']:
             return 'RX_COM_ERROR'
 
