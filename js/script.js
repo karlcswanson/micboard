@@ -21,7 +21,7 @@ import '../node_modules/@ibm/plex/css/ibm-plex.css';
 export var dataURL = '/data';
 
 export var micboard = [];
-micboard.MIC_MODELS = ['uhfr', 'qlxd', 'ulxd', 'atxd'];
+micboard.MIC_MODELS = ['uhfr', 'qlxd', 'ulxd', 'axtd'];
 micboard.IEM_MODELS = ['p10t'];
 micboard.url = [];
 micboard.url.group = getUrlParameter('group');
@@ -317,6 +317,9 @@ $(document).ready(() => {
       return;
     }
     if ($('.editzone').is(':visible')) {
+      return;
+    }
+    if ($('.sidebar-nav').is(':visible')) {
       return;
     }
 

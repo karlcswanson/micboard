@@ -102,11 +102,11 @@ BASE_CONST['p10t'] = {
         'tx_offset': 'TX_OFFSET'
     },
     'base_const' : {
-        'getAll' : ['< GET {} ALL >'],
-        'query' : [
-            '< GET {} CHAN_NAME >',
-            '< GET {} TX_BATT_BARS >'
+        'getAll' : [
+            '< GET {} CHAN_NAME >\r\n',
+            '< GET {} FREQUENCY >\r\n'
         ],
+        'query' : ['< GET {} CHAN_NAME >\r\n'],
         'meter_stop' : '< SET {} METER_RATE 0 >'
     }
 }

@@ -10,10 +10,29 @@ class IEM(ChannelDevice):
         self.audio_level_l = 0
         self.audio_level_r = 0
 
-
     def set_audio_level(self, audio_level, side):
+        audio_level = int(audio_level)
+        if audio_level < 10272:
+            audio_level = 0
+        elif 10272 <= audio_level < 23728:
+            audio_level = 10
+        elif 23728 <= audio_level < 85488:
+            audio_level = 20
+        elif 85488 <= audio_level < 246260:
+            audio_level = 30
+        elif 246260 <= audio_level < 641928:
+            audio_level = 40
+        elif 641928 <= audio_level < 1588744:
+            audio_level = 50
+        elif 1588744 <= audio_level < 2157767:
+            audio_level = 60
+        elif 2157767 <= audio_level < 2502970:
+            audio_level = 70
+        elif 2502970 <= audio_level:
+            audio_level = 80
+
         if side == 'LEFT':
-            self.audio_level_r = audio_level
+            self.audio_level_l = audio_level
         elif side == 'RIGHT':
             self.audio_level_r = audio_level
 
