@@ -3,6 +3,7 @@ import re
 from collections import defaultdict
 import logging
 
+import config
 from device_config import BASE_CONST
 
 chart_update_list = []
@@ -48,13 +49,22 @@ class ChannelDevice:
         else:
             chan_name = self.chan_name_raw
 
-        if 'extended_id' in self.cfg:
-            if self.cfg['extended_id']:
-                chan_id = self.cfg['extended_id']
+        if 'chan_name_raw' in self.cfg:
+            if self.cfg['chan_name_raw'] == self.chan_name_raw:
+                if 'extended_id' in self.cfg:
+                    if self.cfg['extended_id']:
+                        chan_id = self.cfg['extended_id']
 
-        if 'extended_name' in self.cfg:
-            if self.cfg['extended_name']:
-                chan_name = self.cfg['extended_name']
+                if 'extended_name' in self.cfg:
+                    if self.cfg['extended_name']:
+                        chan_name = self.cfg['extended_name']
+            else:
+                if 'extended_id' in self.cfg:
+                    self.cfg.pop('extended_id')
+                if 'extended_name' in self.cfg:
+                    self.cfg.pop('extended_name')
+                self.cfg.pop('chan_name_raw')
+                config.save_current_config()
 
         return (chan_id, chan_name)
 

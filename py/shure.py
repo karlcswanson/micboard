@@ -17,6 +17,12 @@ DeviceMessageQueue = queue.Queue()
 def get_network_device_by_ip(ip):
     return next((x for x in NetworkDevices if x.ip == ip), None)
 
+def get_network_device_by_slot(slot):
+    for networkdevice in NetworkDevices:
+        for channel in networkdevice.channels:
+            if channel.slot == slot:
+                return channel
+
 def check_add_network_device(ip, type):
     net = get_network_device_by_ip(ip)
     if net:

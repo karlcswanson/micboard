@@ -2,6 +2,7 @@
 
 import { micboard, setDisplayMode } from './script.js';
 import { postJSON } from './data.js';
+import { renderGroup } from './channelview.js';
 
 function configArrayGenerator() {
   const slots = [];
@@ -79,6 +80,7 @@ function initSlotEdit() {
 }
 
 export function slotEditToggle() {
+  renderGroup(0);
   if (micboard.settingsMode !== 'EXTENDED') {
     if (micboard.displayMode === 'tvmode') {
       setDisplayMode('deskmode');

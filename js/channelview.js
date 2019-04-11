@@ -30,9 +30,9 @@ function infoToggle() {
   });
 
   if (micboard.group === 0) {
-    $('#go-groupedit').text('edit extended names');
+    $('#go-groupedit').hide();
   } else if (micboard.group !== 0) {
-    $('#go-groupedit').text('edit group');
+    $('#go-groupedit').show();
   }
 }
 

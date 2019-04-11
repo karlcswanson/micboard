@@ -183,20 +183,16 @@ function mapGroups() {
   for (var p in micboard.groups) {
     str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'">' + p + ': ' + micboard.groups[p]['title'] + '</a></p>';
   }
-  str += '<p class="text-muted"><a class="nav-link" id="test-button" href="#">test button</a></p>';
   div.innerHTML += str;
 
-  $('a#go-settings').click(() => {
-    settingsView(micboard.config);
+  $('a#go-extended').click(() => {
+    slotEditToggle();
     $('.collapse').collapse('hide');
   });
 
   $('a#go-groupedit').click(() => {
     if (micboard.group !== 0) {
       groupEditToggle();
-      $('.collapse').collapse('hide');
-    } else if (micboard.group === 0) {
-      slotEditToggle();
       $('.collapse').collapse('hide');
     }
   });
@@ -388,6 +384,10 @@ $(document).ready(() => {
 
     if (e.keyCode === 73) {
       toggleInfoDrawer();
+    }
+
+    if (e.keyCode === 78) {
+      slotEditToggle();
     }
 
     if (e.keyCode === 81) {
