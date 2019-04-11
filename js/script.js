@@ -180,8 +180,15 @@ function mapGroups() {
   const div = document.getElementById('grouplist');
   let str = '';
 
-  for (var p in micboard.groups) {
-    str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'">' + p + ': ' + micboard.groups[p]['title'] + '</a></p>';
+  // for (var p in micboard.groups) {
+  //   str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'">' + p + ': ' + micboard.groups[p]['title'] + '</a></p>';
+  // }
+  for (let i = 1; i <= 9; i++) {
+    if (micboard.groups[i]) {
+      str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ i +'">' + i + ': ' + micboard.groups[i]['title'] + '</a></p>';
+    }  else {
+      str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ i +'">' + i + ':</a></p>';
+    }
   }
   div.innerHTML += str;
 

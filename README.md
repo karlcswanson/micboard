@@ -66,7 +66,7 @@ Axient Digital and PSM1000 support will be added once hardware is available for 
 
 ##### QLX-D Firmware Bug Version 2.2.11
 
-A bug causes receivers running `2.2.11` to crash. The network stack of the QLX-D locks when the TCP protocol is used. Micboard works well with receivers rolled back to `2.1.5`.
+A bug causes receivers running `2.2.11` and later to crash. The network stack of the QLX-D locks when the TCP protocol is used. Micboard works well with receivers rolled back to `2.1.5`.
 
 ## Interface
 ### Backgrounds
@@ -83,6 +83,7 @@ Video and image backgrounds can be used with Micboard. Images in the `background
 * <kbd>f</kbd> - Toggle fullscreen
 * <kbd>g</kbd> - Toggle background mode
 * <kbd>i</kbd> - Toggle display mode
+* <kbd>n</kbd> - Extended Name editor
 * <kbd>q</kbd> - Show QR code
 * <kbd>s</kbd> - Edit settings
 * <kbd>t</kbd> - TV mode
@@ -167,13 +168,24 @@ Each slot needs 4 parameters:
 ### Groups
 Microphones can be grouped into custom views. These groups are accessible from the menu and keyboard shortcuts.
 
+##### Viewing a group
+Groups can be selected from the main menu or with numeric keys.  Pressing <kbd>0</kbd> will display all devices.
+
+##### Editing a group
+Once in a group, open the group editor by pressing "edit group" in the nav menu.  The group editor can also be opened by pressing <kbd>e</kbd>.
+
+Once the editor is open -
+1. Add title
+2. Drag and channels from sidebar to display board
+3. Save
+
+
+<details><summary>Configuration Example</summary>
 
 Groups need 3 parameters:
 * **group** - A unique group number
 * **title** - The name of the group
 * **slots** - The microphones in the group
-
-<details><summary>Configuration Example</summary>
 
 ```javascript
 "groups": [
@@ -215,6 +227,16 @@ Groups need 3 parameters:
 ],
 ```
 </details>
+
+
+### Extended Names
+Large systems need channel IDs like 'H01' or 'bp14' in addition to name of the user.  These take up a minimum of 2 characters in a field that Shure often limits to 8.
+
+Micboard has an optional feature called **Extended Names**.  When set, user-defined IDs and names will be displayed instead of the name pulled from the receiver.
+
+When the receiver name is changed via WWB, the extended names for that receiver will be cleared and micboard will reflect the new from WWB.
+
+Press <kbd>n</kbd> to bring up the extended names editor.  Press save once complete.
 
 ## Developer Information
 ### Building Micboard
