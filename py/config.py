@@ -139,6 +139,7 @@ def update_group(data):
 
     group['slots'] = data['slots']
     group['title'] = data['title']
+    group['hide_charts'] = data['hide_charts']
 
     save_current_config()
 

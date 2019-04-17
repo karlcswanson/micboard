@@ -104,6 +104,16 @@ function updateBattery(slotSelector, data) {
   slotSelector.querySelector('.battery-bar-3').classList.add(outputBars[2]);
   slotSelector.querySelector('.battery-bar-4').classList.add(outputBars[3]);
   slotSelector.querySelector('.battery-bar-5').classList.add(outputBars[4]);
+
+  if (micboard.group !== 0) {
+    if (micboard.groups[micboard.group]['hide_charts']) {
+      if (data.battery === 255) {
+        slotSelector.querySelector('.slotgraph').style.display = 'none';
+      } else {
+        slotSelector.querySelector('.slotgraph').style.display = 'block';
+      }
+    }
+  }
 }
 
 

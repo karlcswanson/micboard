@@ -92,13 +92,17 @@ function onDrop(id, src, dst) {
 
 export function updateEditor(group) {
   let title = '';
+  let chartCheck = false;
 
   if (micboard.groups[group]) {
     title = micboard.groups[group]['title'];
+    chartCheck = micboard.groups[group]['hide_charts'];
   }
+
 
   document.getElementById('sidebarTitle').innerHTML = 'Group ' + group;
   document.getElementById('groupTitle').value = title;
+  document.getElementById('chartCheck').checked = chartCheck;
 }
 
 function GridLayout() {
@@ -149,6 +153,7 @@ function submitSlotUpdate() {
   const update = {
     group: micboard.group,
     title: document.getElementById('groupTitle').value,
+    hide_charts: document.getElementById('chartCheck').checked,
     slots: slotOrder(),
   };
 

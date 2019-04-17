@@ -170,6 +170,7 @@ function groupTableBuilder(data) {
     const entry = {
       slots: e.slots,
       title: e.title,
+      hide_charts: e.hide_charts,
     };
     plist[e.group] = entry;
   });
