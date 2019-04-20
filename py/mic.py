@@ -37,7 +37,7 @@ class WirelessMic(ChannelDevice):
         self.audio_level = 0
         self.rf_level = 0
         self.antenna = 'XX'
-        self.tx_offset = 0
+        self.tx_offset = 255
         self.peakstamp = time.time() - 60
 
     def set_antenna(self, antenna):

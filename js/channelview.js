@@ -37,10 +37,10 @@ function infoToggle() {
 }
 
 function updateTXOffset(slotSelector, data) {
-  if (data.type === 'uhfr') {
-    slotSelector.querySelector('p.offset').innerHTML = '';
-  } else {
+  if (data.tx_offset !== 255) {
     slotSelector.querySelector('p.offset').innerHTML = data.tx_offset + ' dB';
+  } else {
+    slotSelector.querySelector('p.offset').innerHTML = '';
   }
 }
 

@@ -12,10 +12,11 @@
   --color-gray: #616161;
   --color-white: #D7D7D7;
   --color-shadow: #616161;
+  --color-background: black;
 }
 
 html,body {
-  background-color: var(--color-black);
+  background-color: var(--color-background);
   height: 100%;
   margin: 0px;
   padding: 0px;
@@ -28,13 +29,15 @@ html,body {
 
 .col-sm {
   color: var(--color-white);
+  border: 0px;
+  // background-color: var(--color-black);
 }
 
 .deskmode #micboard .col-sm {
   /* remove for borderless */
-  border-color: var(--color-black);
+  // border-color: var(--color-background);
   border-style: solid;
-  border-width: 0 2px;
+  // border-width: 0 8px;
 }
 
 .mic_id {
@@ -50,7 +53,7 @@ html,body {
 
 
 .above-mid .col-sm {
-  border-color: var(--color-black);
+  // border-color: var(--color-background);
   padding: 0px;
 }
 
@@ -234,6 +237,9 @@ canvas.slotgraph {
 
 /* mic storage mode */
 .tvmode {
+
+  background-color: var(--color-black);
+
   .above-mid {
     height: 100%;
   }
@@ -444,8 +450,25 @@ canvas.slotgraph {
 
 
 @media (max-width: 512px) {
+  .deskmode #micboard .col-sm {
+    border-width: 0;
+  }
+
   .info-drawer {
     display: none;
+  }
+}
+
+@media (min-width: 513px) {
+
+  .deskmode #micboard .col-sm {
+    margin-bottom: 15px;
+    // border-width: 0 8px
+    margin: 8px;
+  }
+
+  .deskmode #micboard .col-sm .mic_name {
+    border-radius: 12px 12px 0 0;
   }
 }
 
@@ -500,7 +523,7 @@ canvas.slotgraph {
 }
 
 .blank {
-  background: var(--color-black);
+  background: var(--color-background);
 }
 
 .blank .mic_name {
@@ -648,4 +671,12 @@ a:link, a:visited, a:hover, a:active {
 
 .nav-link {
   display: unset;
+}
+
+.flexfix {
+  background-color: var(--color-background);
+}
+
+.info-drawer {
+  background-color: var(--color-black);
 }

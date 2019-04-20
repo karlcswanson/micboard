@@ -102,7 +102,11 @@ function randomAudioGenerator() {
 }
 
 function randomTXOffsetGenerator() {
-  return getRandomInt(0, 21);
+  const rand = getRandomInt(0, 27);
+  if (rand > 21) {
+    return 255;
+  }
+  return rand;
 }
 
 function randomFrequencyGenerator() {
