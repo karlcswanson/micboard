@@ -6,6 +6,7 @@ BASE_CONST['uhfr'] = {
     'PROTOCOL': 'UDP',
     'ch_const' : {
         'battery': 'TX_BAT',
+        'quality': 'NOTSUPPORTED',
         'frequency': 'FREQUENCY',
         'name': 'CHAN_NAME',
         'tx_offset': 'NOTQWERT',
@@ -30,6 +31,7 @@ BASE_CONST['qlxd'] = {
     'PROTOCOL' : 'TCP',
     'ch_const' : {
         'battery': 'BATT_BARS',
+        'quality': 'NOTSUPPOTTED',
         'frequency': 'FREQUENCY',
         'audio_level': 'AUDIO_LVL',
         'rf_level': 'RX_RF_LVL',
@@ -52,6 +54,7 @@ BASE_CONST['ulxd'] = {
     'PROTOCOL': 'TCP',
     'ch_const' : {
         'battery': 'BATT_BARS',
+        'quality': 'NOT_SUPPORTED',
         'frequency': 'FREQUENCY',
         'audio_level': 'AUDIO_LVL',
         'rf_level': 'RX_RF_LVL',
@@ -74,6 +77,7 @@ BASE_CONST['axtd'] = {
     'PROTOCOL': 'TCP',
     'ch_const' : {
         'battery': 'TX_BATT_BARS',
+        'quality': 'CHAN_QUALITY',
         'frequency': 'FREQUENCY',
         'audio_level': 'AUDIO_LEVEL_RMS',
         'rf_level': 'RSSI',

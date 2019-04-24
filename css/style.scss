@@ -137,6 +137,16 @@ canvas.slotgraph {
   color: var(--color-red);
 }
 
+.quality {
+  position: absolute;
+  bottom: 80px;
+  left: 5px;
+  // font-family: 'IBM Plex Mono';
+  // font-weight: 100;
+  // font-style: italic;
+  color: var(--color-purple);
+}
+
 .diversity {
   position: absolute;
   display: table;
@@ -240,9 +250,14 @@ canvas.slotgraph {
 
   background-color: var(--color-black);
 
+  .blank {
+    background-color: var(--color-black);
+  }
+
   .above-mid {
     height: 100%;
   }
+
   .name {
     font-size: calc(1vw + 7pt);
   }
@@ -251,8 +266,8 @@ canvas.slotgraph {
     position: absolute;
     top: 0px;
     font-size: 30pt;
-
   }
+
   .mic_name {
     display: flex;
     justify-content:center;
@@ -406,6 +421,11 @@ canvas.slotgraph {
   .frequency {
     bottom: 25px;
     right: 5px;
+  }
+
+  .quality {
+    bottom: 25px;
+    left: 5px;
   }
 
   canvas.slotgraph {

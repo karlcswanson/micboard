@@ -109,6 +109,14 @@ function randomTXOffsetGenerator() {
   return rand;
 }
 
+function randomQualityGenerator() {
+  let quality = getRandomInt(0, 8);
+  if (quality > 5) {
+    quality = 255;
+  }
+  return quality;
+}
+
 function randomFrequencyGenerator() {
   const frequency = getRandomInt(474, 597) + (getRandomInt(0, 40) * 0.025);
   return frequency.toFixed(3);
@@ -209,6 +217,8 @@ function meteteredRandomDataGenerator(update) {
       break;
     case 'tx_offset': data.tx_offset = randomTXOffsetGenerator();
       break;
+    case 'quality': data.quality = randomQualityGenerator();
+      break;
     case 'frequency': data.frequency = randomFrequencyGenerator();
       break;
     case 'battery':
@@ -251,6 +261,10 @@ export function autoRandom() {
   setInterval(() => {
     updateSlot(meteteredRandomDataGenerator('tx_offset'));
   }, 750);
+
+  setInterval(() => {
+    updateSlot(meteteredRandomDataGenerator('quality'));
+  }, 500);
 
   setInterval(() => {
     updateSlot(meteteredRandomDataGenerator('frequency'));

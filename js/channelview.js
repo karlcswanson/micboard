@@ -44,6 +44,19 @@ function updateTXOffset(slotSelector, data) {
   }
 }
 
+function updateQuality(slotSelector, data) {
+  const QualityTable = {
+    0: '&#9675;&#9675;&#9675;&#9675;&#9675;',
+    1: '&#9679;&#9675;&#9675;&#9675;&#9675;',
+    2: '&#9679;&#9679;&#9675;&#9675;&#9675;',
+    3: '&#9679;&#9679;&#9679;&#9675;&#9675;',
+    4: '&#9679;&#9679;&#9679;&#9679;&#9675;',
+    5: '&#9679;&#9679;&#9679;&#9679;&#9679;',
+    255: '',
+  };
+  slotSelector.querySelector('p.quality').innerHTML = QualityTable[data.quality];
+}
+
 function updateFrequency(slotSelector, data) {
   slotSelector.querySelector('p.frequency').innerHTML = data.frequency + ' Hz';
 }
@@ -180,6 +193,9 @@ function updateSelector(slotSelector, data) {
   updateCheck(data, 'tx_offset', () => {
     updateTXOffset(slotSelector, data);
   });
+  updateCheck(data, 'quality', () => {
+    updateQuality(slotSelector, data);
+  });
   updateCheck(data, 'frequency', () => {
     updateFrequency(slotSelector, data);
   });
@@ -201,6 +217,9 @@ export function updateViewOnly(slotSelector, data) {
   }
   if ('battery' in data) {
     updateBattery(slotSelector, data);
+  }
+  if ('quality' in data) {
+    updateQuality(slotSelector, data);
   }
   if ('frequency' in data) {
     updateFrequency(slotSelector, data);
