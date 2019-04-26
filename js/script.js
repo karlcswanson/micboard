@@ -6,9 +6,8 @@ import QRCode from 'qrcode';
 import 'whatwg-fetch';
 
 
-import { updateGIFBackgrounds, uploadMode } from './gif.js';
+import { updateGIFBackgrounds } from './gif.js';
 import { autoRandom, seedTransmitters } from './demodata.js';
-import { settingsView } from './settings.js';
 import { renderGroup, renderDisplayList, updateSlot } from './channelview.js';
 import { initLiveData } from './data.js';
 import { groupEditToggle, initEditor } from './dnd.js';
@@ -142,10 +141,6 @@ function toggleInfoDrawer() {
       break;
     default:
       break;
-  }
-
-  if (selector.classList.contains('uploadmode')) {
-    showDivSize();
   }
 }
 
@@ -402,19 +397,9 @@ $(document).ready(() => {
       generateQR();
       $('.modal').modal('toggle');
     }
-    if (e.keyCode === 83) {
-      DeactivateMessageBoard();
-      settingsView(micboard.config);
-    }
 
     if (e.keyCode === 84) {
       toggleDisplayMode();
-    }
-
-    if (e.keyCode === 85) {
-      if (!document.getElementById('micboard').classList.contains('uploadmode')) {
-        uploadMode();
-      }
     }
   }, false);
 });

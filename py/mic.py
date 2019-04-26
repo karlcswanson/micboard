@@ -12,7 +12,7 @@ PEAK_TIMEOUT = 10
 PEAK_LEVEL = {
     'qlxd': 80,
     'ulxd': 80,
-    'axtd': 80,
+    'axtd': 90,
     'uhfr': 100
 }
 
