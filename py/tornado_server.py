@@ -38,8 +38,6 @@ def micboard_json(network_devices):
     url = localURL()
     discovered = discover.discovered
 
-
-
     return json.dumps({
         'receivers': data, 'url': url, 'gif': gifs, 'jpg': jpgs, 'mp4': mp4s,
         'config': config.config_tree, 'discovered': discovered
@@ -56,11 +54,6 @@ class JsonHandler(web.RequestHandler):
 
 class SocketHandler(websocket.WebSocketHandler):
     clients = set()
-
-    # def initialize(self):
-    #     print("INIRT")
-    #     ioloop.PeriodicCallback(self.ws_dump,100).start()
-
 
     def check_origin(self, origin):
         return True
@@ -100,28 +93,6 @@ class SocketHandler(websocket.WebSocketHandler):
         del shure.data_update_list[:]
         del config.group_update_list[:]
 
-# https://github.com/tornadoweb/tornado/blob/master/demos/file_upload/file_receiver.py
-class UploadHandler(web.RequestHandler):
-    def post(self):
-        filename = self.get_argument('filename')
-        for field_name, files in self.request.files.items():
-            for info in files:
-                # filename = info['filename']
-                content_type = info['content_type']
-                body = info['body']
-                logging.debug('POST %s %s %s bytes', filename, content_type, len(body))
-                f = open(os.path.join(config.gif_dir, filename), 'wb')
-                f.write(body)
-        self.write('OK')
-
-class SettingsBulkUploadHandler(web.RequestHandler):
-    def post(self):
-        settings = escape.json_decode(self.request.body)
-        config.write_json_config(settings)
-        self.write('OK')
-
-
-
 class SlotHandler(web.RequestHandler):
     def get(self):
         self.write("hi - slot")
@@ -144,14 +115,11 @@ class GroupUpdateHandler(web.RequestHandler):
         print(data)
         self.write(data)
 
-
 def twisted():
     app = web.Application([
         (r'/', IndexHandler),
         (r'/ws', SocketHandler),
         (r'/data', JsonHandler),
-        (r'/upload', UploadHandler),
-        (r'/api/settings/bulkuploader', SettingsBulkUploadHandler),
         (r'/api/group', GroupUpdateHandler),
         (r'/api/slot', SlotHandler),
         (r'/static/(.*)', web.StaticFileHandler, {'path': config.app_dir('static')}),

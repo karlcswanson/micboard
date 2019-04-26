@@ -60,9 +60,6 @@ class IEM(ChannelDevice):
         return 'TX_COM_ERROR'
 
     def chart_json(self):
-        # audio_level = self.audio_level
-        # rf_level = self.rf_level
-        # timestamp = time.time()
 
         return {
             'audio_level_l': self.audio_level_l,
