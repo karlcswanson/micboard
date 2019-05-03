@@ -33,6 +33,11 @@ function openConfigFolder(file) {
   shell.showItemInFolder(configFile);
 }
 
+function openLogFile() {
+  const file = path.join(app.getPath('appData'), 'micboard', 'micboard.log');
+  shell.openItem(file);
+}
+
 
 const createPyProc = () => {
   const script = path.join(__dirname, 'dist', 'micboard-service').replace('app.asar', 'app.asar.unpacked');
@@ -67,6 +72,7 @@ app.on('ready', () => {
     { label: 'Open Configuration Directory', click() { openConfigFolder('config.json'); } },
     { type: 'separator' },
     { label: 'Restart Micboard Server', click() { restartMicboardServer(); } },
+    { label: 'Open log file', click() { openLogFile(); } },
     { role: 'quit' },
   ]);
   tray.setToolTip('micboard');
