@@ -12,14 +12,17 @@ let win;
 let tray;
 let pyProc = null;
 
-function createWindow() {
+function createWindow(url) {
   win = new BrowserWindow({
-    width: 290,
-    height: 575,
+    width: 600,
+    height: 200,
+    frame: false,
   });
 
-  win.loadURL('http://localhost:8058/');
-
+  win.loadURL(url);
+  win.webContents.on('did-finish-load', function() {
+ 	  win.webContents.insertCSS('.sidebar-nav{ display: none !important; }');
+  });
   win.on('closed', () => {
     win = null;
   });
@@ -61,11 +64,9 @@ app.on('ready', () => {
     { label: 'About' },
     { type: 'separator' },
     { label: 'Launch Micboard', click() { shell.openExternal('http://localhost:8058'); } },
-    { label: 'Edit Settings', click() { shell.openExternal('http://localhost:8058/?settings'); } },
     { label: 'Open Configuration Directory', click() { openConfigFolder('config.json'); } },
     { type: 'separator' },
     { label: 'Restart Micboard Server', click() { restartMicboardServer(); } },
-    { type: 'separator' },
     { role: 'quit' },
   ]);
   tray.setToolTip('micboard');
