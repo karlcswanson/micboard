@@ -92,6 +92,7 @@ export function toggleDisplayMode() {
     case 'deskmode': setDisplayMode('tvmode');
       break;
     case 'tvmode': setDisplayMode('deskmode');
+      setBackground('NONE');
       break;
     default:
       break;
@@ -108,14 +109,16 @@ function setBackground(mode) {
 }
 
 function toggleBackgrounds() {
-  switch (micboard.backgroundMode) {
-    case 'NONE': setBackground('MP4');
-      break;
-    case 'MP4': setBackground('IMG');
-      break;
-    case 'IMG': setBackground('NONE');
-      break;
-    default: break;
+  if (micboard.displayMode === 'tvmode') {
+    switch (micboard.backgroundMode) {
+      case 'NONE': setBackground('MP4');
+        break;
+      case 'MP4': setBackground('IMG');
+        break;
+      case 'IMG': setBackground('NONE');
+        break;
+      default: break;
+    }
   }
 }
 
