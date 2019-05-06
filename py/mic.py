@@ -1,5 +1,6 @@
 import time
 import logging
+from math import ceil
 
 from device_config import BASE_CONST
 from channel import ChannelDevice, data_update_list, chart_update_list
@@ -11,22 +12,17 @@ PEAK_TIMEOUT = 10
 
 PEAK_LEVEL = {
     'qlxd': 80,
-    'ulxd': 80,
-    'axtd': 900,
-    'uhfr': 100
+    'ulxd': 80
 }
 
-UHFR_AUDIO_TABLE = {
-    0: 0,
-    1: 13,
-    3: 25,
-    7: 38,
-    15: 50,
-    31: 63,
-    63: 75,
-    127: 88,
-    255: 100
-}
+
+# https://stackoverflow.com/questions/17027878/algorithm-to-find-the-most-significant-bit
+def MSB(audio_level):
+    bitpos = 0
+    while audio_level != 0:
+        bitpos = bitpos + 1
+        audio_level = audio_level >> 1
+    return bitpos
 
 class WirelessMic(ChannelDevice):
     def __init__(self, rx, cfg):
@@ -51,21 +47,19 @@ class WirelessMic(ChannelDevice):
 
 
     def set_audio_level(self, audio_level):
-        audio_level = float(audio_level)
+        audio_level = int(audio_level)
         if self.rx.type in ['qlxd', 'ulxd']:
-            audio_level = int(2 * audio_level)
+            audio_level = 2 * audio_level
 
         if self.rx.type == 'axtd':
-            audio_level = int(audio_level - 20)
+            audio_level = audio_level - 20
 
         if self.rx.type == 'uhfr':
-            try:
-                audio_level = UHFR_AUDIO_TABLE[audio_level]
-            except:
-                logging.warning("invalid Lookup UHFR Audio Value: %s", audio_level)
+            audio_level = int(ceil(MSB(128) * (100./8)))
 
-        if audio_level >= PEAK_LEVEL[self.rx.type]:
-            self.set_peak_flag()
+        if self.rx.type in ['qlxd', 'ulxd']:
+            if audio_level >= PEAK_LEVEL[self.rx.type]:
+                self.set_peak_flag()
 
         self.audio_level = audio_level
 
@@ -182,12 +176,15 @@ class WirelessMic(ChannelDevice):
             self.set_rf_level(split[4])
             self.set_battery(split[6])
             self.set_audio_level(split[7])
+            # TO TEST
+            self.process_audio_bitmap(split[7])
 
         elif self.rx.type == 'axtd':
             self.set_antenna(split[7])
             self.set_rf_level(split[9])
             self.set_audio_level(split[6])
             self.set_tx_quality(split[3])
+            # TO TEST
             self.process_audio_bitmap(split[4])
 
     def parse_report(self, split):
