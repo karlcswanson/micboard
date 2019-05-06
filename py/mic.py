@@ -12,7 +12,7 @@ PEAK_TIMEOUT = 10
 PEAK_LEVEL = {
     'qlxd': 80,
     'ulxd': 80,
-    'axtd': 90,
+    'axtd': 900,
     'uhfr': 100
 }
 
@@ -20,7 +20,7 @@ UHFR_AUDIO_TABLE = {
     0: 0,
     1: 13,
     3: 25,
-    7: 37,
+    7: 38,
     15: 50,
     31: 63,
     63: 75,
@@ -44,6 +44,12 @@ class WirelessMic(ChannelDevice):
     def set_antenna(self, antenna):
         self.antenna = antenna
 
+    def set_peak_flag(self):
+        self.peakstamp = time.time()
+        if self not in data_update_list:
+            data_update_list.append(self)
+
+
     def set_audio_level(self, audio_level):
         audio_level = float(audio_level)
         if self.rx.type in ['qlxd', 'ulxd']:
@@ -59,11 +65,14 @@ class WirelessMic(ChannelDevice):
                 logging.warning("invalid Lookup UHFR Audio Value: %s", audio_level)
 
         if audio_level >= PEAK_LEVEL[self.rx.type]:
-            self.peakstamp = time.time()
-            if self not in data_update_list:
-                data_update_list.append(self)
+            self.set_peak_flag()
 
         self.audio_level = audio_level
+
+    def process_audio_bitmap(self, bitmap):
+        bitmap = int(bitmap)
+        if bitmap >> 7:
+            self.set_peak_flag()
 
     def set_rf_level(self, rf_level):
         rf_level = float(rf_level)
@@ -179,6 +188,7 @@ class WirelessMic(ChannelDevice):
             self.set_rf_level(split[9])
             self.set_audio_level(split[6])
             self.set_tx_quality(split[3])
+            self.process_audio_bitmap(split[4])
 
     def parse_report(self, split):
         if split[2] == self.CHCONST['battery']:
