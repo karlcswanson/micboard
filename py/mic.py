@@ -82,18 +82,10 @@ class WirelessMic(ChannelDevice):
         self.rf_level = int(rf_level)
 
     def set_battery(self, level):
-        self.prev_battery_uhfr_raw = self.battery
         if level == 'U':
             level = 255
         level = int(level)
         self.battery = level
-        ### UNTESTED
-
-
-        if self.rx.type == 'uhfr' and self.prev_battery_uhfr_raw != self.battery:
-            if self not in data_update_list:
-                logging.debug("UHFR Battery Change Slot: %s", self.slot)
-                data_update_list.append(self)
 
         if 1 <= level <= 5:
             self.prev_battery = level
@@ -118,9 +110,9 @@ class WirelessMic(ChannelDevice):
 
         if (time.time() - self.peakstamp) < PEAK_TIMEOUT:
             return 'AUDIO_PEAK'
-
-        if not self.get_chan_name()[1]:
-            return 'UNASSIGNED'
+        # uncomment to ignore mic status of unassigned microphones
+        # if not self.get_chan_name()[1]:
+        #     return 'UNASSIGNED'
 
         if (time.time() - self.timestamp) < BATTERY_TIMEOUT:
             if 4 <= self.battery <= 5:
