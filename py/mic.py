@@ -55,7 +55,7 @@ class WirelessMic(ChannelDevice):
             audio_level = audio_level - 20
 
         if self.rx.type == 'uhfr':
-            audio_level = int(ceil(MSB(128) * (100./8)))
+            audio_level = int(ceil(MSB(audio_level) * (100./8)))
 
         if self.rx.type in ['qlxd', 'ulxd']:
             if audio_level >= PEAK_LEVEL[self.rx.type]:

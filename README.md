@@ -62,7 +62,6 @@ Micboard is a monitoring tool for network enabled Shure wireless microphones.  I
 
 
 ### Hardware Notes
-Axient Digital and PSM1000 support will be added once hardware is available for testing.
 
 ##### QLX-D Firmware Bug Version 2.2.11
 
