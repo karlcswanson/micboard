@@ -1,8 +1,12 @@
 # Micboard
+Micboard is a monitoring tool for network enabled Shure wireless microphones.
+
 
 ## Installation
 
-#### Debian/Raspberian
+## MacOS
+
+### Debian/Raspberian
 ```
 sudo apt-get update
 sudo apt-get install git python3-pip
@@ -19,80 +23,44 @@ sudo systemctl start micboard.service
 sudo systemctl enable micboard.service
 ```
 
-#### Docker
+### Docker
 ```
 docker build -t mictray .
 docker run -d -p 8058:8058 -v "$(pwd)"/micboardcfgdir:/root/.local/share/micboard mictray
 ```
 
 
+## Hardware Notes
 
-### pyinstaller notes
-https://github.com/pyenv/pyenv/issues/454
-xcode-select --install
-
-https://github.com/pyenv/pyenv/issues/443
-`env PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install -v 3.4.3`
-
-### Git Notes
-git pull origin master
-
-
-### Grafana & Influx DB notes
-docker volume create grafana-storage
-docker volume create influxdb-storage
-
-docker run \
-  -d \
-  -p 3000:3000 \
-  --name=grafana \
-  -v grafana-storage:/var/lib/grafana \
-  grafana/grafana
-
-docker run \
-  -d \
-  -p 8086:8086 \
-  --name=influxdb \
-  -v influxdb-storage:/var/lib/influxdb \
-  influxdb  
-
-
-# micboard
-Micboard is a monitoring tool for network enabled Shure wireless microphones.  It is compatible with UHF-R, QLX-D, and ULX-D microphones.
-
-
-### Hardware Notes
+### Compatibility List
+* UHF-R
+* QLX-D
+* ULX-D
+* Axient Digital
+* PSM 1000
 
 ##### QLX-D Firmware Bug Version 2.2.11
 
 A bug causes receivers running `2.2.11` and later to crash. The network stack of the QLX-D locks when the TCP protocol is used. Micboard works well with receivers rolled back to `2.1.5`.
 
 ## Interface
-### Backgrounds
+### Smart Backgrounds
 Video and image backgrounds can be used with Micboard. Images in the `backgrounds` folder of the Micboard configuration directory are displayed based on the channel name. With backgrounds enabled, `BP03 Steve` will display `steve.jpg` as a background for the `BP03 Steve` slot.
 
-
-**Upload Mode** will correctly name files and save them to the `backgrounds` directory. Pressing <kbd>u</kbd> enables Upload Mode. Upload mode stops updates to Micboard and enables a drag and drop page. When uploaded, files are renamed to match the slot they are dropped on. An mp4 dropped on `HH07 David` will be renamed to `david.mp4`.
 
 ### Keyboard Shortcuts
 * <kbd>0</kbd> - Show all slots
 * <kbd>1</kbd>...<kbd>9</kbd> - Change to group
-* <kbd>d</kbd> - Toggle demo mode
+* <kbd>d</kbd> - Demo mode (toggle)
 * <kbd>e</kbd> - Group editor
 * <kbd>f</kbd> - Toggle fullscreen
-* <kbd>g</kbd> - Toggle background mode
-* <kbd>i</kbd> - Toggle display mode
+* <kbd>g</kbd> - Background mode (toggle)
+* <kbd>i</kbd> - Display mode (toggle)
 * <kbd>n</kbd> - Extended Name editor
 * <kbd>q</kbd> - Show QR code
 * <kbd>s</kbd> - Edit settings
-* <kbd>t</kbd> - TV mode
-* <kbd>u</kbd> - Upload mode
+* <kbd>t</kbd> - TV mode (toggle)
 
-
-## Installation
-### Mac OS
-### Linux (Debian, Raspberry Pi)
-### Docker
 
 
 ## Configuration
@@ -239,12 +207,12 @@ Press <kbd>n</kbd> to bring up the extended names editor.  Press save once compl
 
 ## Developer Information
 ### Building Micboard
-### Electron Wrapper (the Mac app)
+#### Electron Wrapper (the Mac app)
 There are a few different layers to the electron wrapper for micboard.
 
 The frontend is written in JavaScript. [webpack](https://webpack.js.org) packages js, css, and font dependencies into a minified and distributable file.
 
-The Shure communications part of micboard is written in python. [pyinstaller](https://pyinstaller.readthedocs.io/en/stable/) packages a python interpreter, micboard, and its dependencies into a single executable.
+The Micboard Server is written in python. [pyinstaller](https://pyinstaller.readthedocs.io/en/stable/) packages a python interpreter, micboard, and its dependencies into a single executable.
 
 Electron-builder wraps this executable into a macOS menu bar app.
 
@@ -265,15 +233,18 @@ Shure receivers include a protocol for integration with Crestron/AMX control sys
 * [QLX-D](https://www.shure.com/americas/support/find-an-answer/qlx-d-crestron-amx-control-strings)
 * [ULX-D](https://www.shure.com/americas/support/find-an-answer/ulx-d-crestron-amx-control-strings)
 * [Axient Digital](https://www.shure.com/americas/support/find-an-answer/axient-digital-crestron-amx-control-strings)
+* [PSM 1000](https://pubs.shure.com/guide/PSM1000/en-US)
 
 Micboard connects to each receiver and enables sampling. With sampling enabled, receivers send data every 100ms.
 
 Messages from the receiver look like this -
 `< SAMPLE 1 ALL XB 035 098 >`
+`< REP 1 BATT_BARS 004 >`
 
+Micboard converts data from different types of wireless receivers into a uniform format for the micboard frontend.
 
 ### Device Discovery and Updating the DCID Database
-Shure devices are discovered via [Service Location Protocol](https://en.wikipedia.org/wiki/Service_Location_Protocol).  SLP messages are sent via multicast across the network. Micboard parses these messages for a Device Class IDentifier and looks it up in a database to determine the receiver type and number of channels.
+Modern Shure devices are discovered via [Service Location Protocol](https://en.wikipedia.org/wiki/Service_Location_Protocol).  SLP messages are sent via multicast across the network. Micboard parses these messages for a Device Class IDentifier and looks it up in a database to determine the receiver type and number of channels.
 
 Micboard includes a utility to convert the DCID list included with the [Shure Update Utility](http://www.shure.com/americas/products/software/utilities/shure-update-utility) to file that can be included with Micboard.
 
@@ -285,7 +256,7 @@ Micboard provides all data sent from receivers in JSON. This data is accessible 
 
 This capability lets you do a few fun things with the data
 * Make a 40' high VU meter out of LEDs
-* Log mic metrics into a database with InfluxDB and Grafana
+* Log metrics into a database
 
 <details><summary>Example Data</summary>
 
