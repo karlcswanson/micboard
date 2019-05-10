@@ -101,8 +101,15 @@ def config_path():
 
 def config():
     logging_init()
-    return read_json_config(config_path())
+    read_json_config(config_path())
+    logging.info('Starting Micboard {}'.format(config_tree['micboard_version']))
 
+def get_version_number():
+    with open(app_dir('package.json')) as package:
+        pkginfo = json.load(package)
+
+    return pkginfo['version']
+ 
 def read_json_config(file):
     global config_tree
     global gif_dir
@@ -114,7 +121,7 @@ def read_json_config(file):
             netDev.add_channel_device(chan)
 
     gif_dir = get_gif_dir()
-
+    config_tree['micboard_version'] = get_version_number()
 
 def write_json_config(data):
     with open(config_path(), 'w') as config_file:

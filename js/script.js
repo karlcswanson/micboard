@@ -305,6 +305,7 @@ function initialMap(callback) {
 }
 
 $(document).ready(() => {
+  console.log('Starting Micboard version: ' + VERSION);
   if (micboard.url.demo === 'true') {
     initialMap(autoRandom);
   } else {

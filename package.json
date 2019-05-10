@@ -53,6 +53,7 @@
   },
   "build": {
     "appId": "com.micboard.app",
+    "productName": "Micboard Server",
     "asar": true,
     "asarUnpack": [
       "dist/micboard-service",
