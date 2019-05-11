@@ -159,6 +159,8 @@ function generateQR() {
     if (error) console.error(error)
     console.log('success!');
   });
+
+  document.getElementById('micboard-version').innerHTML = 'Micboard version: ' + VERSION;
 }
 
 function groupTableBuilder(data) {

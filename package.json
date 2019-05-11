@@ -43,13 +43,13 @@
     "smoothie": "^1.35.0",
     "style-loader": "^0.23.1",
     "tar": "^4.4.8",
-    "webpack": "^4.30.0",
-    "webpack-cli": "^3.3.1",
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "electron": "^5.0.0",
-    "electron-builder": "^20.39.0"
+    "electron": "^5.0.1",
+    "electron-builder": "^20.40.2"
   },
   "build": {
     "appId": "com.micboard.app",
