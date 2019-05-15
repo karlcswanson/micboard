@@ -17,7 +17,10 @@ sudo apt-get install nodejs
 npm install
 
 python py/micboard.py
+```
 
+If micboard runs sucessfully, edit `User` and `WorkingDirectory` within `micboard.service` to match your installation and install it as a service.
+```
 sudo cp micboard.service /etc/systemd/system/
 sudo systemctl start micboard.service
 sudo systemctl enable micboard.service
@@ -32,14 +35,16 @@ docker run -d -p 8058:8058 -v "$(pwd)"/micboardcfgdir:/root/.local/share/micboar
 
 ## Hardware Notes
 
-### Compatibility List
+### Compatible Devices
 * UHF-R
 * QLX-D
 * ULX-D
 * Axient Digital
 * PSM 1000
 
-##### QLX-D Firmware Bug Version 2.2.11
+### Known Issues
+
+#### QLX-D Firmware Bug Version 2.2.11
 
 A bug causes receivers running `2.2.11` and later to crash. The network stack of the QLX-D locks when the TCP protocol is used. Micboard works well with receivers rolled back to `2.1.5`.
 
@@ -50,21 +55,20 @@ Video and image backgrounds can be used with Micboard. Images in the `background
 
 ### Keyboard Shortcuts
 * <kbd>0</kbd> - Show all slots
-* <kbd>1</kbd>...<kbd>9</kbd> - Change to group
-* <kbd>d</kbd> - Demo mode (toggle)
-* <kbd>e</kbd> - Group editor
+* <kbd>1</kbd>...<kbd>9</kbd> - Go to group
+* <kbd>d</kbd> - Start demo mode
+* <kbd>e</kbd> - Open group editor
 * <kbd>f</kbd> - Toggle fullscreen
-* <kbd>g</kbd> - Background mode (toggle)
-* <kbd>i</kbd> - Display mode (toggle)
+* <kbd>g</kbd> - Change background mode
+* <kbd>i</kbd> - Change display mode
 * <kbd>n</kbd> - Extended Name editor
 * <kbd>q</kbd> - Show QR code
-* <kbd>s</kbd> - Edit settings
 * <kbd>t</kbd> - TV mode (toggle)
 
 
 
 ## Configuration
-Configuration is stored in a json file.  On Mac OS X, `config.json` can be found in `~/Library/Application Support/micboard/`.  On Linux, its located in `~/.local/share/micboard/`.  Settings can be edited manually or using settings page.
+Configuration is stored in a json file.  On Mac OS X, `config.json` can be found in `~/Library/Application Support/micboard/`.  On Linux, it is typically located in `~/.local/share/micboard/`.
 
 
 ### Slots
@@ -197,7 +201,7 @@ Groups need 3 parameters:
 
 
 ### Extended Names
-Large systems need channel IDs like 'H01' or 'bp14' in addition to name of the user.  These take up a minimum of 2 characters in a field that Shure often limits to 8.
+Large systems need channel IDs like 'H01' or 'bp14' in addition to name of the user.  These take up a minimum of 2 characters of a field that Shure often limits to 8.
 
 Micboard has an optional feature called **Extended Names**.  When set, user-defined IDs and names will be displayed instead of the name pulled from the receiver.
 

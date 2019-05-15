@@ -14,8 +14,8 @@ let pyProc = null;
 
 function createWindow(url) {
   win = new BrowserWindow({
-    width: 600,
-    height: 200,
+    width: 400,
+    height: 600,
     frame: false,
   });
 
@@ -66,7 +66,7 @@ app.on('ready', () => {
   const icon = path.join(__dirname, 'build', 'trayTemplate.png').replace('app.asar', 'app.asar.unpacked');
   tray = new Tray(icon);
   const contextMenu = Menu.buildFromTemplate([
-    { label: 'About' },
+    { label: 'About', click() { createWindow('http://localhost:8058/static/about.html'); } },
     { type: 'separator' },
     { label: 'Launch Micboard', click() { shell.openExternal('http://localhost:8058'); } },
     { label: 'Open Configuration Directory', click() { openConfigFolder('config.json'); } },

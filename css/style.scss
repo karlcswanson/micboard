@@ -4,7 +4,7 @@
   --color-black: #262626;
   --color-red: #DC493A;
   --color-red-dark: #64221B;
-  --color-yellow: #EF9D51 ;
+  --color-yellow: #EF9D51;
   --color-yellow-dark: #6D4E30;
   --color-purple: #845A6D;
   --color-blue: #006494;
@@ -551,7 +551,7 @@ canvas.slotgraph {
 }
 
 .blank .electrode, .blank .info-drawer {
-  display: none;
+  display: none !important;
 }
 
 .sidebar-open .blank .mic_name {

@@ -58,7 +58,8 @@ class ChannelDevice:
                 if 'extended_name' in self.cfg:
                     if self.cfg['extended_name']:
                         chan_name = self.cfg['extended_name']
-            else:
+
+            elif 'SLOT' not in self.chan_name_raw:
                 if 'extended_id' in self.cfg:
                     self.cfg.pop('extended_id')
                 if 'extended_name' in self.cfg:
