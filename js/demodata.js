@@ -39,7 +39,8 @@ const name_sample = [
   'Fatai', 'Marshall', 'Delwin', 'Tracy TB', 'Backup', 'Steve', 'JE',
   'Sharon', 'Bob', 'Del ACU', 'Troy', 'Matt', 'Matt ACU', 'Matt Sax', 'Karl',
   'Jordan', 'Josue', 'Ashlee', 'Shawn c', 'James', 'Hallie', 'Rebekah', 'Dan',
-  'Stephen', 'Max', 'Tom', 'Nick', '',
+  'Stephen', 'Max', 'Tom', 'Nick', 'Eugene', 'Brittani', 'MattW', 'Natrice',
+  'Mollie', 'Albert', '',
 ];
 
 const prefix_sample = ['HH', 'BP'];
