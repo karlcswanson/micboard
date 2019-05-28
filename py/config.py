@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import logging
+import argparse
 from shutil import copyfile
 
 import shure
@@ -17,6 +18,8 @@ config_tree = {}
 gif_dir = ''
 
 group_update_list = []
+
+args = {}
 
 def logging_init():
     formatter = logging.Formatter(FORMAT)
@@ -36,13 +39,16 @@ def logging_init():
 
 
 def web_port():
-    if 'MICBOARD_PORT' in os.environ:
+    if args['p'] is not None:
+        return int(args['p'])
+
+    elif 'MICBOARD_PORT' in os.environ:
         return int(os.environ['MICBOARD_PORT'])
 
     return config_tree['port']
 
 
-def local_app_dir():
+def os_config_path():
     path = os.getcwd()
     if sys.platform.startswith('linux'):
         path = os.getenv('XDG_DATA_HOME', os.path.expanduser("~/.local/share"))
@@ -53,17 +59,25 @@ def local_app_dir():
     return path
 
 
-def default_app_config_dir(folder=None):
-    path = os.path.join(local_app_dir(), APPNAME)
-    if not os.path.exists(path):
-        os.makedirs(path)
+def config_path(folder=None):
+    if args['f'] is not None:
+        if os.path.exists(os.path.expanduser(args['f'])):
+            path = os.path.expanduser(args['f'])
+        else:
+            logging.warning("Invalid config path")
+            sys.exit()
+
+    else:
+        path = os.path.join(os_config_path(), APPNAME)
+        if not os.path.exists(path):
+            os.makedirs(path)
 
     if folder:
         return os.path.join(path, folder)
     return path
 
 def log_file():
-    return default_app_config_dir('micboard.log')
+    return config_path('micboard.log')
 
 # https://stackoverflow.com/questions/404744/determining-application-path-in-a-python-exe-generated-by-pyinstaller
 def app_dir(folder=None):
@@ -78,30 +92,48 @@ def app_dir(folder=None):
 
 
 def default_gif_dir():
-    path = default_app_config_dir('backgrounds')
+    path = config_path('backgrounds')
     if not os.path.exists(path):
         os.makedirs(path)
     print("GIFCHECK!")
     return path
 
 def get_gif_dir():
+    if args['b'] is not None:
+        if os.path.exists(os.path.expanduser(args['b'])):
+            return os.path.expanduser(args['b'])
+        else:
+            logging.warning("invalid config path")
+            sys.exit()
+
     if config_tree.get('background-folder'):
         return os.path.expanduser(config_tree.get('background-folder'))
     return default_gif_dir()
 
-def config_path():
+def config_file():
     if os.path.exists(app_dir(CONFIG_FILE_NAME)):
         return app_dir(CONFIG_FILE_NAME)
-    elif os.path.exists(default_app_config_dir(CONFIG_FILE_NAME)):
-        return default_app_config_dir(CONFIG_FILE_NAME)
+    elif os.path.exists(config_path(CONFIG_FILE_NAME)):
+        return config_path(CONFIG_FILE_NAME)
     else:
-        copyfile(app_dir('democonfig.json'), default_app_config_dir(CONFIG_FILE_NAME))
-        return default_app_config_dir(CONFIG_FILE_NAME)
+        copyfile(app_dir('democonfig.json'), config_path(CONFIG_FILE_NAME))
+        return config_path(CONFIG_FILE_NAME)
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--f', help='configuration directory')
+    parser.add_argument('--p', help='server port')
+    parser.add_argument('--b', help='background directory')
+    args,_ = parser.parse_known_args()
+
+    return vars(args)
 
 
 def config():
+    global args
+    args = parse_args()
     logging_init()
-    read_json_config(config_path())
+    read_json_config(config_file())
     logging.info('Starting Micboard {}'.format(config_tree['micboard_version']))
 
 def get_version_number():
@@ -109,7 +141,7 @@ def get_version_number():
         pkginfo = json.load(package)
 
     return pkginfo['version']
- 
+
 def read_json_config(file):
     global config_tree
     global gif_dir
@@ -124,8 +156,8 @@ def read_json_config(file):
     config_tree['micboard_version'] = get_version_number()
 
 def write_json_config(data):
-    with open(config_path(), 'w') as config_file:
-        json.dump(data, config_file, indent=2, separators=(',', ': '), sort_keys=True)
+    with open(config_file(), 'w') as f:
+        json.dump(data, f, indent=2, separators=(',', ': '), sort_keys=True)
 
 def save_current_config():
     return write_json_config(config_tree)

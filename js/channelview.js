@@ -119,7 +119,13 @@ function updateBattery(slotSelector, data) {
   slotSelector.querySelector('.battery-bar-5').classList.add(outputBars[4]);
 
   if (micboard.group !== 0) {
-    if (micboard.groups[micboard.group]['hide_charts']) {
+    let hideChart = false;
+
+    if (micboard.groups[micboard.group]) {
+      hideChart = micboard.groups[micboard.group]['hide_charts'];
+    }
+
+    if (hideChart) {
       if (data.battery === 255) {
         slotSelector.querySelector('.slotgraph').style.display = 'none';
       } else {

@@ -66,7 +66,7 @@ function wsConnect() {
     newUri = 'ws:';
   }
 
-  newUri += '//' + loc.host + '/ws';
+  newUri += '//' + loc.host + loc.pathname + 'ws';
 
   micboard.socket = new WebSocket(newUri);
 

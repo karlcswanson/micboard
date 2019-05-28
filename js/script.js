@@ -17,7 +17,7 @@ import '../css/style.scss';
 import '../node_modules/@ibm/plex/css/ibm-plex.css';
 
 
-export var dataURL = '/data';
+export var dataURL = 'data';
 
 export var micboard = [];
 micboard.MIC_MODELS = ['uhfr', 'qlxd', 'ulxd', 'axtd'];
@@ -172,8 +172,14 @@ function groupTableBuilder(data) {
       title: e.title,
       hide_charts: e.hide_charts,
     };
+
+    if (entry.hide_charts == null) {
+      entry.hide_charts = false;
+    }
+
     plist[e.group] = entry;
   });
+
   return plist;
 }
 
