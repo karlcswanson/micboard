@@ -1,6 +1,6 @@
 'use strict';
 
-import { micboard, setDisplayMode } from './script.js';
+import { micboard, setDisplayMode } from './app.js';
 import { postJSON } from './data.js';
 import { renderGroup } from './channelview.js';
 

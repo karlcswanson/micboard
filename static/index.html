@@ -196,8 +196,17 @@
     <!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 
-    <script src="static/bundle.js"></script>
+    <script src="static/app.js"></script>
     <script>if (window.module) module = window.module;</script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-141042301-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-141042301-1', {'page_path': window.location.pathname + window.location.hash});
+    </script> -->
 
   </body>
 </html>

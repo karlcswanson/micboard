@@ -3,6 +3,7 @@ import sys
 import json
 import logging
 import argparse
+import uuid
 from shutil import copyfile
 
 import shure
@@ -20,6 +21,14 @@ gif_dir = ''
 group_update_list = []
 
 args = {}
+
+def uuid_init():
+    if 'uuid' not in config_tree:
+        micboard_uuid = str(uuid.uuid4())
+        logging.info('Adding UUID: {} to config.conf'.format(micboard_uuid))
+        config_tree['uuid'] = micboard_uuid
+        save_current_config()
+
 
 def logging_init():
     formatter = logging.Formatter(FORMAT)
@@ -39,8 +48,8 @@ def logging_init():
 
 
 def web_port():
-    if args['p'] is not None:
-        return int(args['p'])
+    if args['server_port'] is not None:
+        return int(args['server_port'])
 
     elif 'MICBOARD_PORT' in os.environ:
         return int(os.environ['MICBOARD_PORT'])
@@ -60,9 +69,9 @@ def os_config_path():
 
 
 def config_path(folder=None):
-    if args['f'] is not None:
-        if os.path.exists(os.path.expanduser(args['f'])):
-            path = os.path.expanduser(args['f'])
+    if args['config_path'] is not None:
+        if os.path.exists(os.path.expanduser(args['config_path'])):
+            path = os.path.expanduser(args['config_path'])
         else:
             logging.warning("Invalid config path")
             sys.exit()
@@ -99,9 +108,9 @@ def default_gif_dir():
     return path
 
 def get_gif_dir():
-    if args['b'] is not None:
-        if os.path.exists(os.path.expanduser(args['b'])):
-            return os.path.expanduser(args['b'])
+    if args['background_directory'] is not None:
+        if os.path.exists(os.path.expanduser(args['background_directory'])):
+            return os.path.expanduser(args['background_directory'])
         else:
             logging.warning("invalid config path")
             sys.exit()
@@ -121,9 +130,9 @@ def config_file():
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--f', help='configuration directory')
-    parser.add_argument('--p', help='server port')
-    parser.add_argument('--b', help='background directory')
+    parser.add_argument('-f', '--config-path', help='configuration directory')
+    parser.add_argument('-p', '--server-port', help='server port')
+    parser.add_argument('-b', '--background-directory', help='background directory')
     args,_ = parser.parse_known_args()
 
     return vars(args)
@@ -134,6 +143,7 @@ def config():
     args = parse_args()
     logging_init()
     read_json_config(config_file())
+    uuid_init()
     logging.info('Starting Micboard {}'.format(config_tree['micboard_version']))
 
 def get_version_number():

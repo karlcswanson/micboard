@@ -1,0 +1,24 @@
+html,body {
+  background-color: var(--color-black);
+}
+
+.row {
+  padding-top: 50px;
+}
+
+.card {
+  background-color: var(--color-black);
+  border: 1px solid var(--color-shadow);
+  color: var(--color-white);
+}
+
+h3 {
+  font-family: 'IBM Plex Sans';
+  font-weight: 500;
+}
+
+.venue-name {
+  font-family: 'IBM Plex Sans';
+  font-weight: 300;
+  font-style: italic;
+}

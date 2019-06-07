@@ -1,9 +1,10 @@
 'use strict';
 
-import { micboard } from './script.js';
+import { micboard } from './app.js';
 import { updateSlot } from './channelview.js';
 import { updateChart } from './chart-smoothie.js';
 
+let timers = {};
 
 const batterySample = {
   0: {
@@ -247,28 +248,38 @@ function randomCharts() {
 
 
 export function autoRandom() {
-  setInterval(() => {
+  for (const key in timers) {
+    if (timers.hasOwnProperty(key)) {
+      clearInterval(timers[key]);
+    }
+  }
+
+  timers = {};
+
+  const len = micboard.displayList.length;
+
+  timers.name = setInterval(() => {
     updateSlot(meteteredRandomDataGenerator('name'));
-  }, 1250);
+  }, 750 * (12 / len));
 
-  setInterval(() => {
+  timers.antenna = setInterval(() => {
     updateSlot(meteteredRandomDataGenerator('antenna'));
-  }, 90);
+  }, 90 * (12 / len));
 
-  setInterval(() => {
+  timers.battery = setInterval(() => {
     updateSlot(meteteredRandomDataGenerator('battery'));
-  }, 1250);
+  }, 890 * (12 / len));
 
-  setInterval(() => {
+  timers.tx_offset = setInterval(() => {
     updateSlot(meteteredRandomDataGenerator('tx_offset'));
-  }, 750);
+  }, 1000 * (12 / len));
 
-  setInterval(() => {
+  timers.quality = setInterval(() => {
     updateSlot(meteteredRandomDataGenerator('quality'));
-  }, 500);
+  }, 500 * (12 / len));
 
-  setInterval(() => {
+  timers.frequeny = setInterval(() => {
     updateSlot(meteteredRandomDataGenerator('frequency'));
-  }, 750);
-  setInterval(randomCharts, 300);
+  }, 750 * (12 / len));
+  timers.charts = setInterval(randomCharts, 300);
 }

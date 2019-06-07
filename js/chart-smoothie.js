@@ -1,7 +1,7 @@
 'use strict';
 
 import { TimeSeries, SmoothieChart } from 'smoothie';
-import { micboard } from './script.js';
+import { micboard } from './app.js';
 
 export const charts = {};
 

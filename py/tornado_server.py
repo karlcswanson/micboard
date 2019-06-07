@@ -119,7 +119,7 @@ def twisted():
     app = web.Application([
         (r'/', IndexHandler),
         (r'/ws', SocketHandler),
-        (r'/data', JsonHandler),
+        (r'/data.json', JsonHandler),
         (r'/api/group', GroupUpdateHandler),
         (r'/api/slot', SlotHandler),
         (r'/static/(.*)', web.StaticFileHandler, {'path': config.app_dir('static')}),

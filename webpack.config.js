@@ -6,10 +6,14 @@ module.exports = {
   devtool: 'source-map',
   mode: 'development',
   // entry: ['./js/script.js','./js/gif.js','./js/chart-smoothie.js','./js/demodata.js'],
-  entry: ['whatwg-fetch', './js/script.js'],
+  entry: {
+    app: ['whatwg-fetch', './js/app.js'],
+    about: ['./js/about.js'],
+    venue: ['./js/venues.js'],
+  },
   output: {
     path: path.resolve(__dirname, 'static'),
-    filename: 'bundle.js',
+    filename: '[name].js',
   },
   plugins: [
     new webpack.ProvidePlugin({

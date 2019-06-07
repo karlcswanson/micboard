@@ -1,10 +1,12 @@
 # Micboard
-Micboard is a monitoring tool for network enabled Shure wireless microphones.
+Micboard is a visual mic monitoring tool for network enabled Shure devices.
 
 
 ## Installation
 
 ## MacOS
+xcode-select --install
+
 
 ### Debian/Raspberian
 ```
@@ -33,7 +35,7 @@ docker run -d -p 8058:8058 -v "$(pwd)"/micboardcfgdir:/root/.local/share/micboar
 ```
 
 
-## Hardware Notes
+## Hardware
 
 ### Compatible Devices
 * UHF-R
@@ -50,7 +52,7 @@ A bug causes receivers running `2.2.11` and later to crash. The network stack of
 
 ## Interface
 ### Smart Backgrounds
-Video and image backgrounds can be used with Micboard. Images in the `backgrounds` folder of the Micboard configuration directory are displayed based on the channel name. With backgrounds enabled, `BP03 Steve` will display `steve.jpg` as a background for the `BP03 Steve` slot.
+Video and image backgrounds can be used with Micboard. Images in the `backgrounds` folder of the micboard configuration directory are displayed based on the channel name. With backgrounds enabled, `BP03 Steve` will display `steve.jpg` as a background for the `BP03 Steve` slot.
 
 
 ### Keyboard Shortcuts
@@ -64,6 +66,7 @@ Video and image backgrounds can be used with Micboard. Images in the `background
 * <kbd>n</kbd> - Extended Name editor
 * <kbd>q</kbd> - Show QR code
 * <kbd>t</kbd> - TV mode (toggle)
+* <kbd>esc</kbd> - reload micboard
 
 
 

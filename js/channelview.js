@@ -1,9 +1,9 @@
 'use strict';
 
-import { micboard, ActivateMessageBoard, updateHash } from './script.js';
+import { micboard, ActivateMessageBoard, updateHash } from './app.js';
 import { updateBackground } from './gif.js';
 import { initChart, charts } from './chart-smoothie.js';
-import { seedTransmitters } from './demodata.js';
+import { seedTransmitters, autoRandom } from './demodata.js';
 import { updateEditor } from './dnd.js';
 
 function allSlots() {
@@ -260,6 +260,7 @@ export function renderDisplayList(dl) {
 
   if (micboard.url.demo) {
     seedTransmitters(dl);
+    autoRandom();
   }
 
   const tx = micboard.transmitters;

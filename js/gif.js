@@ -1,6 +1,6 @@
 'use strict';
 
-import { micboard } from './script.js';
+import { micboard } from './app.js';
 
 export function updateBackground(slotSelector) {
   const s = slotSelector;

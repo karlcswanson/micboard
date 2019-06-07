@@ -21,4 +21,4 @@ DCIDMap.xml
 .python-version
 static/data2.json
 static/fonts/*
-static/bundle.js*
+static/*.js*
