@@ -9,24 +9,7 @@ xcode-select --install
 
 
 ### Debian/Raspberian
-```
-sudo apt-get update
-sudo apt-get install git python3-pip
-pip3 install -r py/requirements.txt
 
-curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-sudo apt-get install nodejs
-npm install
-
-python py/micboard.py
-```
-
-If micboard runs sucessfully, edit `User` and `WorkingDirectory` within `micboard.service` to match your installation and install it as a service.
-```
-sudo cp micboard.service /etc/systemd/system/
-sudo systemctl start micboard.service
-sudo systemctl enable micboard.service
-```
 
 ### Docker
 ```
