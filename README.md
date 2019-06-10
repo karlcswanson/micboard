@@ -1,5 +1,5 @@
 # Micboard
-Micboard - the visual monitoring tool for network enabled Shure devices.
+Micboard - The visual monitoring tool for network enabled Shure devices.
 
 
 ## Installation
@@ -9,16 +9,13 @@ Micboard - the visual monitoring tool for network enabled Shure devices.
 
 ## Compatible Devices
 * UHF-R
-* QLX-D
+* QLX-D<sup>[1](#qlxd)</sup>
 * ULX-D
 * Axient Digital
 * PSM 1000
 
-### Known Issues
 
-#### QLX-D Firmware Bug Version 2.2.11
 
-A bug causes receivers running `2.2.11` and later to crash. The network stack of the QLX-D locks when the TCP protocol is used. Micboard works well with receivers rolled back to `2.1.5`.
 
 ## Interface
 ### Smart Backgrounds
@@ -113,7 +110,7 @@ Each slot needs 4 parameters:
 Microphones can be grouped into custom views. These groups are accessible from the menu and keyboard shortcuts.
 
 ##### Viewing a group
-Groups can be selected from the main menu or with numeric keys.  Pressing <kbd>0</kbd> will display all devices.
+Groups can be selected from the main menu or with numeric keys.  View all devices by pressing <kbd>0</kbd>.
 
 ##### Editing a group
 Once in a group, open the group editor by pressing "edit group" in the nav menu.  The group editor can also be opened by pressing <kbd>e</kbd>.
@@ -282,3 +279,6 @@ This capability lets you do a few fun things with the data
 }
 ```
 </details>
+
+## Known Issues
+<a name="qlxd">1</a>: [QLX-D Firmware](docs/qlxd.md)
