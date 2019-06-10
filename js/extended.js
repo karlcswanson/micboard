@@ -1,8 +1,7 @@
-'use strict';
-
-import { micboard, setDisplayMode } from './app.js';
+import { micboard } from './app.js';
 import { postJSON } from './data.js';
 import { renderGroup } from './channelview.js';
+import { setDisplayMode } from './display';
 
 function configArrayGenerator() {
   const slots = [];

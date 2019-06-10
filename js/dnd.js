@@ -3,10 +3,11 @@
 import { Sortable, Plugins } from '@shopify/draggable';
 
 
-import { micboard, toggleDisplayMode } from './app.js';
+import { micboard } from './app.js';
 import { initChart, charts } from './chart-smoothie.js';
 import { renderDisplayList, updateViewOnly } from './channelview.js';
 import { postJSON } from './data.js';
+import { toggleDisplayMode } from './display';
 
 let swappable;
 

@@ -45,7 +45,7 @@ def micboard_json(network_devices):
 
 class IndexHandler(web.RequestHandler):
     def get(self):
-        self.render(config.app_dir("static/index.html"))
+        self.render(config.app_dir("demo.html"))
 
 class JsonHandler(web.RequestHandler):
     def get(self):

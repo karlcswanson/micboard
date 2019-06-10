@@ -1,6 +1,19 @@
 # Micboard Server Platforms
+## Suggested Hardware
+Micboard server runs on a variety of platforms.
+
+
 
 # MacOS
+xcode-select --install
+
+install the homebrew package manager
+
+```
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+
 # Debian (Ubuntu & Raspbery Pi)
 Install git, python3-pip, and Node.js
 ```
@@ -15,14 +28,14 @@ Download micboard
 git clone https://github.com/karlcswanson/micboard.git
 ```
 
-Install micboard software dependencies
+Install micboard software dependencies via npm and pip
 ```
 cd micboard/
 npm install
 pip3 install -r py/requirements.txt
 ```
 
-build and run micboard
+build the micboard frontend and run micboard
 ```
 npm run build
 python py/micboard.py
@@ -36,3 +49,7 @@ sudo systemctl start micboard.service
 sudo systemctl enable micboard.service
 ```
 # Docker
+```
+docker build -t mictray .
+docker run -d -p 8058:8058 -v "$(pwd)"/micboardcfgdir:/root/.local/share/micboard mictray
+```

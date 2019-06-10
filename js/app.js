@@ -5,13 +5,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import QRCode from 'qrcode';
 import 'whatwg-fetch';
 
-
-import { updateGIFBackgrounds } from './gif.js';
 import { autoRandom, seedTransmitters } from './demodata.js';
 import { renderGroup, renderDisplayList, updateSlot } from './channelview.js';
 import { initLiveData } from './data.js';
 import { groupEditToggle, initEditor } from './dnd.js';
 import { slotEditToggle } from './extended.js';
+import { keybindings } from './kbd.js';
 
 import { analytics_init } from './analytics.js';
 
@@ -20,17 +19,12 @@ import '../css/style.scss';
 import '../node_modules/@ibm/plex/css/ibm-plex.css';
 
 
-export var dataURL = 'data.json';
+export const dataURL = 'data.json';
 
-export var micboard = [];
+export const micboard = [];
 micboard.MIC_MODELS = ['uhfr', 'qlxd', 'ulxd', 'axtd'];
 micboard.IEM_MODELS = ['p10t'];
 micboard.url = [];
-micboard.url.group = getUrlParameter('group');
-micboard.url.demo = getUrlParameter('demo');
-micboard.url.settings = getUrlParameter('settings');
-micboard.url.tvmode = getUrlParameter('tvmode');
-micboard.url.bgmode = getUrlParameter('bgmode');
 micboard.displayMode = 'deskmode';
 micboard.infoDrawerMode = 'elinfo11';
 micboard.backgroundMode = 'NONE';
@@ -42,7 +36,6 @@ micboard.connectionStatus = 'CONNECTING';
 micboard.transmitters = [];
 
 micboard.displayList = [];
-
 
 export function ActivateMessageBoard(h1, p) {
   if (!h1) {
@@ -61,96 +54,7 @@ export function ActivateMessageBoard(h1, p) {
   micboard.connectionStatus = 'DISCONNECTED';
 }
 
-export function DeactivateMessageBoard() {
-  $('#micboard').show();
-  $('.settings').hide();
-  $('.message-board').hide();
-}
-
-
-// https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
-function toggleFullScreen() {
-  if (!document.webkitFullscreenElement) {
-    document.documentElement.webkitRequestFullscreen();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
-  }
-}
-
-
-function swapClass(selector, currentClass, newClass) {
-  selector.classList.remove(currentClass);
-  selector.classList.add(newClass);
-}
-
-
-export function setDisplayMode(mode) {
-  const selector = document.getElementById('container');
-  swapClass(selector, micboard.displayMode, mode);
-  micboard.displayMode = mode;
-}
-
-export function toggleDisplayMode() {
-  switch (micboard.displayMode) {
-    case 'deskmode': setDisplayMode('tvmode');
-      break;
-    case 'tvmode': setDisplayMode('deskmode');
-      setBackground('NONE');
-      break;
-    default:
-      break;
-  }
-  updateHash();
-}
-
-function setBackground(mode) {
-  micboard.backgroundMode = mode;
-  $('#micboard .mic_name').css('background-image', '');
-  $('#micboard .mic_name').css('background-size', '');
-  updateGIFBackgrounds();
-  updateHash();
-}
-
-function toggleBackgrounds() {
-  if (micboard.displayMode === 'tvmode') {
-    switch (micboard.backgroundMode) {
-      case 'NONE': setBackground('MP4');
-        break;
-      case 'MP4': setBackground('IMG');
-        break;
-      case 'IMG': setBackground('NONE');
-        break;
-      default: break;
-    }
-  }
-}
-
-function setInfoDrawer(mode) {
-  const selector = document.getElementById('micboard');
-  swapClass(selector, micboard.infoDrawerMode, mode);
-  micboard.infoDrawerMode = mode;
-  setDisplayMode('tvmode');
-  updateHash();
-}
-
-function toggleInfoDrawer() {
-  const selector = document.getElementById('micboard');
-
-  switch (micboard.infoDrawerMode) {
-    case 'elinfo00': setInfoDrawer('elinfo01');
-      break;
-    case 'elinfo01': setInfoDrawer('elinfo10');
-      break;
-    case 'elinfo10': setInfoDrawer('elinfo11');
-      break;
-    case 'elinfo11': setInfoDrawer('elinfo00');
-      break;
-    default:
-      break;
-  }
-}
-
-function generateQR() {
+export function generateQR() {
   const qrOptions = {
     width: 600,
   };
@@ -244,6 +148,19 @@ function getUrlParameter(sParam) {
   return undefined;
 }
 
+
+function readURLParameters() {
+  micboard.url.group = getUrlParameter('group');
+  micboard.url.demo = getUrlParameter('demo');
+  micboard.url.settings = getUrlParameter('settings');
+  micboard.url.tvmode = getUrlParameter('tvmode');
+  micboard.url.bgmode = getUrlParameter('bgmode');
+
+  if (window.location.pathname.includes('demo')) {
+    micboard.url.demo = 'true';
+  }
+}
+
 export function updateHash() {
   let hash = '#';
   if (micboard.url.demo) {
@@ -315,106 +232,14 @@ function initialMap(callback) {
     });
 }
 
+
 $(document).ready(() => {
   console.log('Starting Micboard version: ' + VERSION);
+  readURLParameters();
+  keybindings();
   if (micboard.url.demo === 'true') {
     initialMap();
   } else {
     initialMap(initLiveData);
   }
-
-  document.addEventListener('keydown', (e) => {
-    if (e.keyCode === 27) {
-      window.location.reload();
-    }
-    if ($('.settings').is(':visible')) {
-      return;
-    }
-    if ($('.editzone').is(':visible')) {
-      return;
-    }
-    if ($('.sidebar-nav').is(':visible')) {
-      return;
-    }
-
-    if (e.keyCode === 48) {
-      DeactivateMessageBoard();
-      renderGroup(0);
-    }
-    if (e.keyCode === 49) {
-      DeactivateMessageBoard();
-      renderGroup(1);
-    }
-    if (e.keyCode === 50) {
-      DeactivateMessageBoard();
-      renderGroup(2);
-    }
-    if (e.keyCode === 51) {
-      DeactivateMessageBoard();
-      renderGroup(3);
-    }
-    if (e.keyCode === 52) {
-      DeactivateMessageBoard();
-      renderGroup(4);
-    }
-    if (e.keyCode === 53) {
-      DeactivateMessageBoard();
-      renderGroup(5);
-    }
-    if (e.keyCode === 54) {
-      DeactivateMessageBoard();
-      renderGroup(6);
-    }
-    if (e.keyCode === 55) {
-      DeactivateMessageBoard();
-      renderGroup(7);
-    }
-    if (e.keyCode === 56) {
-      DeactivateMessageBoard();
-      renderGroup(8);
-    }
-    if (e.keyCode === 57) {
-      DeactivateMessageBoard();
-      renderGroup(9);
-    }
-
-    if (e.keyCode === 68) {
-      micboard.url.demo = !micboard.url.demo;
-      updateHash();
-      window.location.reload();
-    }
-
-    if (e.keyCode === 69) {
-      if (micboard.group !== 0) {
-        groupEditToggle();
-      } else if (micboard.group === 0) {
-        slotEditToggle();
-      }
-    }
-
-    if (e.keyCode === 70) {
-      toggleFullScreen();
-    }
-
-    if (e.keyCode === 71) {
-      toggleBackgrounds();
-    }
-
-    if (e.keyCode === 73) {
-      toggleInfoDrawer();
-    }
-
-    if (e.keyCode === 78) {
-      slotEditToggle();
-    }
-
-    if (e.keyCode === 81) {
-      generateQR();
-      $('.modal').modal('toggle');
-    }
-
-    if (e.keyCode === 84) {
-      toggleDisplayMode();
-    }
-  }, false);
 });

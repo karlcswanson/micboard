@@ -1,26 +1,13 @@
 # Micboard
-Micboard is a visual mic monitoring tool for network enabled Shure devices.
+Micboard - the visual monitoring tool for network enabled Shure devices.
 
 
 ## Installation
 
-## MacOS
-xcode-select --install
-
-
-### Debian/Raspberian
-
-
-### Docker
-```
-docker build -t mictray .
-docker run -d -p 8058:8058 -v "$(pwd)"/micboardcfgdir:/root/.local/share/micboard mictray
-```
-
 
 ## Hardware
 
-### Compatible Devices
+## Compatible Devices
 * UHF-R
 * QLX-D
 * ULX-D

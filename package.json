@@ -9,7 +9,8 @@
     "build": "node node_modules/webpack/bin/webpack.js --progress --hide-modules --config=webpack.config.js",
     "app": "electron .",
     "pack": "electron-builder --dir -c.mac.identity=null",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "static": "python -m http.server 8058"
   },
   "private": true,
   "repository": {
