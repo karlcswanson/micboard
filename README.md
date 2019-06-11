@@ -2,19 +2,12 @@
 Micboard - The visual monitoring tool for network enabled Shure devices.
 
 
-## Installation
-
-
-## Hardware
-
 ## Compatible Devices
 * UHF-R
 * QLX-D<sup>[1](#qlxd)</sup>
 * ULX-D
 * Axient Digital
 * PSM 1000
-
-
 
 
 ## Interface
@@ -200,30 +193,6 @@ npm run binary
 npm run pack
 ```
 
-
-### Shure UDP/TCP Protocol
-Shure receivers include a protocol for integration with Crestron/AMX control systems. This protocol varies slightly for each receiver. Documentation for the protocol can be found on Shure's website.
-* [UHF-R](https://www.shure.com/americas/support/find-an-answer/amx-crestron-control-of-uhf-r-receiver)
-* [QLX-D](https://www.shure.com/americas/support/find-an-answer/qlx-d-crestron-amx-control-strings)
-* [ULX-D](https://www.shure.com/americas/support/find-an-answer/ulx-d-crestron-amx-control-strings)
-* [Axient Digital](https://www.shure.com/americas/support/find-an-answer/axient-digital-crestron-amx-control-strings)
-* [PSM 1000](https://pubs.shure.com/guide/PSM1000/en-US)
-
-Micboard connects to each receiver and enables sampling. With sampling enabled, receivers send data every 100ms.
-
-Messages from the receiver look like this -
-`< SAMPLE 1 ALL XB 035 098 >`
-`< REP 1 BATT_BARS 004 >`
-
-Micboard converts data from different types of wireless receivers into a uniform format for the micboard frontend.
-
-### Device Discovery and Updating the DCID Database
-Modern Shure devices are discovered via [Service Location Protocol](https://en.wikipedia.org/wiki/Service_Location_Protocol).  SLP messages are sent via multicast across the network. Micboard parses these messages for a Device Class IDentifier and looks it up in a database to determine the receiver type and number of channels.
-
-Micboard includes a utility to convert the DCID list included with the [Shure Update Utility](http://www.shure.com/americas/products/software/utilities/shure-update-utility) to file that can be included with Micboard.
-
-The conversion utility can be run within the micboard directory
-`python discover.py -c -o dcid.json`.  Running the utility without arguments shows Shure devices discovered on the network.  
 
 ### Extending Micboard
 Micboard provides all data sent from receivers in JSON. This data is accessible by HTTP and WebSockets.
