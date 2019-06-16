@@ -12,8 +12,6 @@ import { groupEditToggle, initEditor } from './dnd.js';
 import { slotEditToggle } from './extended.js';
 import { keybindings } from './kbd.js';
 
-import { analytics_init } from './analytics.js';
-
 import '../css/colors.scss';
 import '../css/style.scss';
 import '../node_modules/@ibm/plex/css/ibm-plex.css';
@@ -178,7 +176,6 @@ export function updateHash() {
   hash = hash.replace('&', '');
   history.replaceState(undefined, undefined, hash);
 
-  // window.gtag('config', 'UA-141042301-1', {'page_path': window.location.pathname + window.location.hash});
 }
 
 function dataFilterFromList(data) {
@@ -211,8 +208,6 @@ function initialMap(callback) {
       micboard.groups = groupTableBuilder(data);
       micboard.config = data.config;
       mapGroups();
-
-      // analytics_init();
 
       if (micboard.url.demo !== 'true') {
         dataFilterFromList(data);
