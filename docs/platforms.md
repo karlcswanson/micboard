@@ -50,6 +50,8 @@ $ sudo systemctl enable micboard.service
 ```
 # Docker
 ```
-$ docker build -t mictray .
-$ docker run -d -p 8058:8058 -v "$(pwd)"/micboardcfgdir:/root/.local/share/micboard mictray
+$ git clone https://github.com/karlcswanson/micboard.git
+$ cd micboard/
+$ docker build -t micboard .
+$ docker run -d -p 8058:8058 -v "$(pwd)"/micboardcfgdir:/root/.local/share/micboard micboard
 ```
