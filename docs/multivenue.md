@@ -34,14 +34,14 @@ WantedBy=multi-user.target
 
 Install the service
 ```
-sudo cp micboard-venue-a.service /etc/systemd/system/
-sudo systemctl start micboard-venue-a.service
-sudo systemctl enable micboard-venue-a.service
+$ sudo cp micboard-venue-a.service /etc/systemd/system/
+$ sudo systemctl start micboard-venue-a.service
+$ sudo systemctl enable micboard-venue-a.service
 ```
 
 ## Configure Landing Page
 ```
-cp static/multivenue-template.html static/multivenue.html
+$ cp static/multivenue-template.html static/multivenue.html
 ```
 
 Add your venues to the page
@@ -57,8 +57,8 @@ Add your venues to the page
 ## Configure NGINX
 Install Nginx
 ```
-sudo apt update
-sudo apt install nginx
+$ sudo apt update
+$ sudo apt install nginx
 ```
 
 A sample [nginx.conf](nginx-sample.conf) is provided in the `docs` directory.  'upstream' and `location` element must be configured for each venue.
@@ -66,5 +66,5 @@ A sample [nginx.conf](nginx-sample.conf) is provided in the `docs` directory.  '
 
 Restart Nginx
 ```
-sudo systemctl restart nginx
+$ sudo systemctl restart nginx
 ```
