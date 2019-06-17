@@ -32,4 +32,4 @@ sudo systemctl enable micboard-chapel.service
 
 
 ## Configure NGINX
-A sample [nginx.conf](docs/nginx.conf) is provided in the 
+A sample [nginx.conf](docs/nginx-sample.conf) is provided in the 
