@@ -48,10 +48,17 @@ $ sudo cp micboard.service /etc/systemd/system/
 $ sudo systemctl start micboard.service
 $ sudo systemctl enable micboard.service
 ```
+
+
 # Docker
+Download micboard from github
 ```
 $ git clone https://github.com/karlcswanson/micboard.git
+```
+
+Build and run docker image
+```
 $ cd micboard/
 $ docker build -t micboard .
-$ docker run -d -p 8058:8058 -v "$(pwd)"/micboardcfgdir:/root/.local/share/micboard micboard
+$ docker run -d -p 8058:8058 -v ~/Library/Application\ Support/micboard:/root/.local/share/micboard micboard
 ```
