@@ -1,22 +1,28 @@
-# Micboard Multivenue
-Using NGINX, a single server can provide a separate instances of micboard for each venue across a campus.
+# Micboard Multivenue Server
+Using NGINX, a single server can provide separate instances of micboard for each venue across a campus.
+
+For Micboard multivenue, NGINX is setup as a transparent proxy server.  NGINX internally routes traffic for each venue to the correct micboard instance based on the URL.  `micboard.local/venue-a` renders the instance for venue-a while `/venue-b` serves the instance for venue b.
 
 
 ## Micboard Configuration
-Setup and enable a service for each venue
+Setup and enable systemd service for each venue
 
+`micboard-venue-a`
 ```
 [Unit]
 Description=Micboard Service
 After=network.target
 
 [Service]
+# Set the network port for micboard venue-a to 8080
 Environment=MICBOARD_PORT=8080
-ExecStart=/usr/bin/python3 -u py/micboard.py -f ~/.local/share/micboard/chapel
+# Direct micboard to use a seperate configuration path for the venue-a venue
+ExecStart=/usr/bin/python3 -u py/micboard.py -f ~/.local/share/micboard/venue-a
 WorkingDirectory=/home/micboard/micboard
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
+# Run the service as user micboard
 User=micboard
 AmbientCapabilities=CAP_NET_BIND_SERVICE
 
@@ -24,12 +30,25 @@ AmbientCapabilities=CAP_NET_BIND_SERVICE
 WantedBy=multi-user.target
 ```
 
+Install the service
 ```
-sudo cp micboard-chapel.service /etc/systemd/system/
-sudo systemctl start micboard-chapel.service
-sudo systemctl enable micboard-chapel.service
+sudo cp micboard-venue-a.service /etc/systemd/system/
+sudo systemctl start micboard-venue-a.service
+sudo systemctl enable micboard-venue-a.service
 ```
 
 
 ## Configure NGINX
-A sample [nginx.conf](nginx-sample.conf) is provided in the 
+Install Nginx
+```
+sudo apt update
+sudo apt install nginx
+```
+
+A sample [nginx.conf](nginx-sample.conf) is provided in the `docs` directory.  'upstream' and `location` element must be configured for each venue.
+
+
+Restart Nginx
+```
+sudo systemctl restart nginx
+```
