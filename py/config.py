@@ -7,6 +7,7 @@ import uuid
 from shutil import copyfile
 
 import shure
+import influxdb_api
 
 APPNAME = 'micboard'
 
@@ -144,6 +145,10 @@ def config():
     logging_init()
     read_json_config(config_file())
     uuid_init()
+
+    if 'influxdb' in config_tree:
+        influxdb_api.setup()
+
     logging.info('Starting Micboard {}'.format(config_tree['micboard_version']))
 
 def get_version_number():

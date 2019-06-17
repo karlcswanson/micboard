@@ -6,6 +6,8 @@ import logging
 import config
 from device_config import BASE_CONST
 
+import influxdb_api
+
 chart_update_list = []
 data_update_list = []
 
@@ -77,6 +79,8 @@ class ChannelDevice:
             if split[0] == 'SAMPLE' and split[2] == 'ALL':
                 self.parse_sample(split)
                 chart_update_list.append(self.chart_json())
+                if 'influxdb' in config.config_tree:
+                    influxdb_api.influx_send_sample(self)
 
             if split[0] in ['REP', 'REPLY', 'REPORT']:
                 self.parse_report(split)
