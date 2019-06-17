@@ -7,7 +7,9 @@ For Micboard multivenue, [NGINX](https://www.nginx.com) is setup as a transparen
 ## Micboard Configuration
 Setup and enable systemd service for each venue.
 
-`micboard-venue-a`
+
+`$ cp micboard.service micboard-venue-a.service`
+
 ```
 [Unit]
 Description=Micboard Service
