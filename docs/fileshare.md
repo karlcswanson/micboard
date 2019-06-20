@@ -26,6 +26,11 @@ Add a share for micboard in /etc/samba/smb.conf
     browsable = yes
 ```
 
+Add a user for the share
+```
+$ sudo smbpasswd -a micboard
+```
+
 restart samba
 
 ```

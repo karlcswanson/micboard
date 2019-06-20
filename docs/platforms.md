@@ -1,8 +1,4 @@
 # Micboard Server Platforms
-## Suggested Hardware
-Micboard server runs on a variety of platforms.
-
-
 
 # MacOS
 xcode-select --install

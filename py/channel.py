@@ -37,7 +37,7 @@ class ChannelDevice:
 
     def get_chan_name(self):
         name = self.chan_name_raw.split()
-        prefix = re.match("([A-Za-z]+)([0-9])+", name[0])
+        prefix = re.match("([A-Za-z]+)([-]?)([0-9])+", name[0])
 
         chan_id = ''
         chan_name = ''
