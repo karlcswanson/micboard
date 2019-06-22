@@ -11,6 +11,7 @@ import { initLiveData } from './data.js';
 import { groupEditToggle, initEditor } from './dnd.js';
 import { slotEditToggle } from './extended.js';
 import { keybindings } from './kbd.js';
+import { setBackground, setInfoDrawer } from './display.js';
 
 import '../css/colors.scss';
 import '../css/style.scss';
@@ -120,7 +121,6 @@ function mapGroups() {
     const id = parseInt($(this).attr('id')[9], 10);
 
     $(this).click(() => {
-      DeactivateMessageBoard();
       renderGroup(id);
       $('.collapse').collapse('hide');
     });

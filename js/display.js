@@ -8,7 +8,7 @@ function swapClass(selector, currentClass, newClass) {
 }
 
 
-function setBackground(mode) {
+export function setBackground(mode) {
   micboard.backgroundMode = mode;
   $('#micboard .mic_name').css('background-image', '');
   $('#micboard .mic_name').css('background-size', '');
@@ -53,7 +53,7 @@ export function toggleBackgrounds() {
 }
 
 
-function setInfoDrawer(mode) {
+export function setInfoDrawer(mode) {
   const selector = document.getElementById('micboard');
   swapClass(selector, micboard.infoDrawerMode, mode);
   micboard.infoDrawerMode = mode;
