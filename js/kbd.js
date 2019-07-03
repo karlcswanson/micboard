@@ -1,7 +1,7 @@
 'use strict';
 
 import { micboard, updateHash, generateQR } from './app.js';
-import { toggleInfoDrawer, toggleBackgrounds, toggleDisplayMode } from './display';
+import { toggleInfoDrawer, toggleImageBackground, toggleVideoBackground, toggleDisplayMode } from './display';
 import { renderGroup } from './channelview.js';
 import { groupEditToggle, initEditor } from './dnd.js';
 import { slotEditToggle } from './extended.js';
@@ -81,7 +81,7 @@ export function keybindings() {
     }
 
     if (e.keyCode === 71) {
-      toggleBackgrounds();
+      toggleImageBackground();
     }
 
     if (e.keyCode === 73) {
@@ -99,6 +99,10 @@ export function keybindings() {
 
     if (e.keyCode === 84) {
       toggleDisplayMode();
+    }
+
+    if (e.keyCode === 86) {
+      toggleVideoBackground();
     }
   }, false);
 }

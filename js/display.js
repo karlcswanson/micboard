@@ -38,10 +38,10 @@ export function toggleDisplayMode() {
 }
 
 
-export function toggleBackgrounds() {
+export function toggleImageBackground() {
   if (micboard.displayMode === 'tvmode') {
     switch (micboard.backgroundMode) {
-      case 'NONE': setBackground('MP4');
+      case 'NONE': setBackground('IMG');
         break;
       case 'MP4': setBackground('IMG');
         break;
@@ -52,6 +52,20 @@ export function toggleBackgrounds() {
   }
 }
 
+
+export function toggleVideoBackground() {
+  if (micboard.displayMode === 'tvmode') {
+    switch (micboard.backgroundMode) {
+      case 'NONE': setBackground('MP4');
+        break;
+      case 'IMG': setBackground('MP4');
+        break;
+      case 'MP4': setBackground('NONE');
+        break;
+      default: break;
+    }
+  }
+}
 
 export function setInfoDrawer(mode) {
   const selector = document.getElementById('micboard');
