@@ -233,10 +233,16 @@ canvas.slotgraph {
 /* mic storage mode */
 .tvmode {
 
-  background-color: var(--color-black);
+  .col-sm {
+    margin-left: 3px;
+    margin-right: 3px;
+    background: var(--color-black);
+  }
+
+  background-color: black;
 
   .blank {
-    background-color: var(--color-black);
+    background: black;
   }
 
   .above-mid {
