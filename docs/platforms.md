@@ -1,12 +1,39 @@
 # Micboard Server Platforms
 
 # MacOS
-xcode-select --install
+Install the Xcode command-line tools
+```
+$ xcode-select --install
+```
 
-install the homebrew package manager
-
+Install the homebrew package manager
 ```
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+Install python3
+```
+$ brew install python3
+```
+
+Install [Node.js](https://nodejs.org/en/)
+
+Download Micboard
+```
+$ git clone https://github.com/karlcswanson/micboard.git
+```
+
+Install micboard software dependencies via npm and pip
+```
+$ cd micboard/
+$ npm install
+$ pip3 install -r py/requirements.txt
+```
+
+build the micboard frontend and run micboard
+```
+$ npm run build
+$ python3 py/micboard.py
 ```
 
 
@@ -34,8 +61,10 @@ $ pip3 install -r py/requirements.txt
 build the micboard frontend and run micboard
 ```
 $ npm run build
-$ python py/micboard.py
+$ python3 py/micboard.py
 ```
+
+Open up micboard - [http://localhost:8058](http://localhost:8058)
 
 
 If micboard runs successfully, edit `User` and `WorkingDirectory` within `micboard.service` to match your installation and install it as a service.
