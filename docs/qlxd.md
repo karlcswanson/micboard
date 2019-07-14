@@ -23,4 +23,4 @@ Here is a simple test setup to demonstrate the bug -
 I am guessing a buffer fills with sample data when the mac is unplugged.  The unit locks up and stops sending ACN data to WWB. Maybe there is a misconfigured Keep-Alive or timeout parameter for the TCP/AMX socket.  A bug report was filed with Shure in September of 2018.  They were able to reproduce the issue, but have not issued a fix.
 
 ## Can I still use Micboard with QLXD?
-Using the [Shure Update Utility](https://www.shure.com/en-US/products/software/shure_update_utility), many QLXD devices can be rolled back to `2.1.5`.  Devices using newer bands may not be able to support `2.1.5 `.
+Using the [Shure Update Utility](https://www.shure.com/en-US/products/software/shure_update_utility), many QLXD devices can be rolled back to `2.1.5`.  Devices using newer bands may not be able to be rolled back to `2.1.5 `.

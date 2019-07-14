@@ -6,7 +6,7 @@ On MacOS, open up the Sharing pane within System Preferences
 
 Enable File Sharing
 
-Add the micboard config folder.
+Add the micboard config folder. `~/Library/Application Support/micboard/`
 
 ### Debian Servers (Ubuntu & Raspberian)
 Install Samba

@@ -16,13 +16,13 @@ function createWindow(url) {
   win = new BrowserWindow({
     width: 400,
     height: 600,
-    frame: false,
+    // frame: false,
   });
 
   win.loadURL(url);
-  win.webContents.on('did-finish-load', function() {
- 	  win.webContents.insertCSS('.sidebar-nav{ display: none !important; }');
-  });
+  // win.webContents.on('did-finish-load', function() {
+ 	//   win.webContents.insertCSS('.sidebar-nav{ display: none !important; }');
+  // });
   win.on('closed', () => {
     win = null;
   });
@@ -75,10 +75,19 @@ app.on('ready', () => {
     { label: 'Open log file', click() { openLogFile(); } },
     { role: 'quit' },
   ]);
+
   tray.setToolTip('micboard');
   tray.setContextMenu(contextMenu);
+
+  createPyProc();
+  setTimeout(() => {
+    shell.openExternal('http://localhost:8058');
+  }, 3000);
 });
 
 
-app.on('ready', createPyProc);
+// app.on('ready', createPyProc);
+
+app.on('window-all-closed', e => e.preventDefault());
+
 app.on('will-quit', exitPyProc);

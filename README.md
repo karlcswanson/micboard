@@ -1,6 +1,10 @@
 # Micboard
 Micboard - The visual monitoring tool for network enabled Shure devices.
 
+Micboard is an open source microphone monitoring application.  Micboard provides views for engineers, mobile, and microphone storage.
+
+
+## Getting Started
 
 ## Compatible Devices
 * UHF-R
@@ -21,7 +25,8 @@ Video and image backgrounds can be used with Micboard. Images in the `background
 * <kbd>d</kbd> - Start demo mode
 * <kbd>e</kbd> - Open group editor
 * <kbd>f</kbd> - Toggle fullscreen
-* <kbd>g</kbd> - Change background mode
+* <kbd>g</kbd> - Change image backgrounds
+* <kbd>v</kbd> - Change video backgrounds
 * <kbd>i</kbd> - Change display mode
 * <kbd>n</kbd> - Extended Name editor
 * <kbd>q</kbd> - Show QR code
@@ -31,17 +36,17 @@ Video and image backgrounds can be used with Micboard. Images in the `background
 
 
 ## Configuration
-Configuration is stored in a json file.  On Mac OS X, `config.json` can be found in `~/Library/Application Support/micboard/`.  On Linux, it is typically located in `~/.local/share/micboard/`.
+Configuration is stored in a json file.  On Mac OS X, `config.json` can be found in `~/Library/Application Support/micboard/`.  On Linux, it is typically located in `~/.local/share/micboard/`.  On first run, a default configuration file is copied to the config directory.  Exit micboard and add in a 'slot' for each device.
 
 
 ### Slots
-Each wireless channel is stored in unique slot. A single channel QLXD receiver would use 1 slot while a ULXD4Q receiver takes 4.
+Each wireless channel is assigned unique slot. A single channel QLXD receiver would use 1 slot while a ULXD4Q receiver takes 4.
 
-Each slot needs 4 parameters:
-* **slot** - A unique slot number
-* **ip** - the IP address of the receiver
-* **channel** - the channel of the receiver
-* **type** - the type of the receiver
+Each slot requires 4 parameters:
+* **slot** - A unique slot number - `12`
+* **ip** - the IP address of the receiver - `"192.168.1.45"`
+* **channel** - the channel of the receiver - `[1, 2, 3, 4]`
+* **type** - the type of the receiver - `["uhfr", "qlxd", "ulxd", "atxd", "p10r"]`
 
 <details><summary>Configuration Example</summary>
 
@@ -102,10 +107,10 @@ Each slot needs 4 parameters:
 ### Groups
 Microphones can be grouped into custom views. These groups are accessible from the menu and keyboard shortcuts.
 
-##### Viewing a group
+##### View a group
 Groups can be selected from the main menu or with numeric keys.  View all devices by pressing <kbd>0</kbd>.
 
-##### Editing a group
+##### Edit a group
 Once in a group, open the group editor by pressing "edit group" in the nav menu.  The group editor can also be opened by pressing <kbd>e</kbd>.
 
 Once the editor is open -
@@ -164,11 +169,11 @@ Groups need 3 parameters:
 
 
 ### Extended Names
-Large systems need channel IDs like 'H01' or 'bp14' in addition to name of the user.  These take up a minimum of 2 characters of a field that Shure often limits to 8.
+Large systems need static channel IDs like 'H01' or 'bp14' in addition to name of the user.  These take up a minimum of 2 characters of a field that Shure often limits to 8.
 
 Micboard has an optional feature called **Extended Names**.  When set, user-defined IDs and names will be displayed instead of the name pulled from the receiver.
 
-When the receiver name is changed via WWB, the extended names for that receiver will be cleared and micboard will reflect the new from WWB.
+When the receiver name is changed via WWB, Micboard follows suit and displays the new name.
 
 Press <kbd>n</kbd> to bring up the extended names editor.  Press save once complete.
 
