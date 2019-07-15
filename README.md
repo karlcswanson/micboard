@@ -180,61 +180,9 @@ When the receiver name is changed via WWB, Micboard follows suit and displays th
 Press <kbd>n</kbd> to bring up the extended names editor.  Press save once complete.
 
 ## Developer Information
+[Building the Electron wrapper for macOS](docs/electron.md)
+[Extending micboard using the API](docs/api.md)
 
-### Extending Micboard
-Micboard provides all data sent from receivers in JSON. This data is accessible by HTTP and WebSockets.
-
-This capability lets you do a few fun things with the data
-* Make a 40' high VU meter out of LEDs
-* Log metrics into a database
-
-<details><summary>Example Data</summary>
-
-```javascript
-{
-  "antenna": "AX",
-  "audio_level": 68,
-  "battery": 5,
-  "channel": 1,
-  "frequency": "526.225",
-  "name": "CFO 4",
-  "raw": {
-    "ALL": "AX 079 034",
-    "AUDIO_GAIN": "030",
-    "AUDIO_LVL": "000",
-    "BATT_BARS": "005",
-    "BATT_CHARGE": "100",
-    "BATT_CYCLE": "00004",
-    "BATT_HEALTH": "100",
-    "BATT_RUN_TIME": "00607",
-    "BATT_TEMP_C": "64",
-    "BATT_TEMP_F": "116",
-    "BATT_TYPE": "LION",
-    "CHAN_NAME": "CFO 4",
-    "ENCRYPTION_WARNING": "OFF",
-    "FREQUENCY": "526225",
-    "GROUP_CHAN": "--,--",
-    "METER_RATE": "00100",
-    "RF_ANTENNA": "XX",
-    "RX_RF_LVL": "032",
-    "TX_DEVICE_ID": "",
-    "TX_MENU_LOCK": "OFF",
-    "TX_MUTE_BUTTON_STATUS": "UNKN",
-    "TX_MUTE_STATUS": "UNKN",
-    "TX_OFFSET": "000",
-    "TX_POWER_SOURCE": "UNKN",
-    "TX_PWR_LOCK": "OFF",
-    "TX_RF_PWR": "LOW",
-    "TX_TYPE": "QLXD1"
-    },
-  "rf_level": 68,
-  "slot": 4,
-  "status": "AUDIO_PEAK",
-  "tx_offset": 0,
-  "type": "qlxd"
-}
-```
-</details>
 
 ## Known Issues
 <a name="qlxd">1</a>: [QLX-D Firmware](docs/qlxd.md)
