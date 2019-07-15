@@ -7,6 +7,8 @@ The frontend is written in JavaScript. [webpack](https://webpack.js.org) package
 
 The Micboard Server is written in python. [pyinstaller](https://pyinstaller.readthedocs.io/en/stable/) packages a python interpreter, micboard, and its dependencies into a single executable.
 
+The Electron wrapper is written in JavaScript.  It provides a menubar app with access to micboard, the micboard configuration directory, and the micboard logs.
+
 ## Building the Electron Wrapper
 Here are the steps to generate `micboard-server.app`
 
