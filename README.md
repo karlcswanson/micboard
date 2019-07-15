@@ -189,13 +189,13 @@ The Micboard Server is written in python. [pyinstaller](https://pyinstaller.read
 Electron-builder wraps this executable into a macOS menu bar app.
 
 ```shell
-$ git clone https://github.com/karlcswanson/micboard
-$ cd micboard/
-$ pip3 install py/requirements.txt
-$ npm install
-$ npm run build
-$ npm run binary
-$ npm run pack
+micboard@micboard:~$ git clone https://github.com/karlcswanson/micboard
+micboard@micboard:~$ cd micboard/
+micboard@micboard:~/micboard$ pip3 install py/requirements.txt
+micboard@micboard:~/micboard$ npm install
+micboard@micboard:~/micboard$ npm run build
+micboard@micboard:~/micboard$ npm run binary
+micboard@micboard:~/micboard$ npm run pack
 ```
 
 
