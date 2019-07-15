@@ -1,7 +1,7 @@
-# Micboard Server Platforms
-Micboard can run on a variety of platforms.  
+# Micboard Platforms
+Micboard runs on a variety of platforms.
 
-# MacOS
+# MacOS - From Source
 Install the Xcode command-line tools
 ```
 $ xcode-select --install

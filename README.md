@@ -1,5 +1,5 @@
 # Micboard
-Micboard - The visual monitoring tool for network enabled Shure devices.
+Micboard - A visual monitoring tool for network enabled Shure devices.
 
 Micboard is an open source microphone monitoring application.  Micboard provides views for engineers, mobile, and microphone storage.
 
@@ -7,11 +7,13 @@ Micboard is an open source microphone monitoring application.  Micboard provides
 ## Getting Started
 
 ## Compatible Devices
+Micboard supports the following devices -
 * UHF-R
 * QLX-D<sup>[1](#qlxd)</sup>
 * ULX-D
 * Axient Digital
 * PSM 1000
+
 
 
 ## Interface
@@ -178,26 +180,6 @@ When the receiver name is changed via WWB, Micboard follows suit and displays th
 Press <kbd>n</kbd> to bring up the extended names editor.  Press save once complete.
 
 ## Developer Information
-### Building Micboard
-#### Electron Wrapper (the Mac app)
-There are a few different layers to the electron wrapper for micboard.
-
-The frontend is written in JavaScript. [webpack](https://webpack.js.org) packages js, css, and font dependencies into a minified and distributable file.
-
-The Micboard Server is written in python. [pyinstaller](https://pyinstaller.readthedocs.io/en/stable/) packages a python interpreter, micboard, and its dependencies into a single executable.
-
-Electron-builder wraps this executable into a macOS menu bar app.
-
-```shell
-micboard@micboard:~$ git clone https://github.com/karlcswanson/micboard
-micboard@micboard:~$ cd micboard/
-micboard@micboard:~/micboard$ pip3 install py/requirements.txt
-micboard@micboard:~/micboard$ npm install
-micboard@micboard:~/micboard$ npm run build
-micboard@micboard:~/micboard$ npm run binary
-micboard@micboard:~/micboard$ npm run pack
-```
-
 
 ### Extending Micboard
 Micboard provides all data sent from receivers in JSON. This data is accessible by HTTP and WebSockets.
