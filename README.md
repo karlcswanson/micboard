@@ -36,7 +36,7 @@ Video and image backgrounds can be used with Micboard. Images in the `background
 
 
 ## Configuration
-Configuration is stored in a json file.  On Mac OS X, `config.json` can be found in `~/Library/Application Support/micboard/`.  On Linux, it is typically located in `~/.local/share/micboard/`.  On first run, a default configuration file is copied to the config directory.  Exit micboard and add in a 'slot' for each device.
+Configuration is stored in a json file.  On Mac OS X, `config.json` can be found in `~/Library/Application Support/micboard/`.  On Linux, it is typically located in `~/.local/share/micboard/`.  On first run, a default configuration file is copied to the configuration directory.  Exit micboard and add in a 'slot' for each device.
 
 
 ### Slots
@@ -169,7 +169,7 @@ Groups need 3 parameters:
 
 
 ### Extended Names
-Large systems need static channel IDs like 'H01' or 'bp14' in addition to name of the user.  These take up a minimum of 2 characters of a field that Shure often limits to 8.
+Large systems may need static channel IDs like 'H01' or 'bp14' in addition to name of the user.  These take up a minimum of 2 characters of a field that Shure often limits to 8.
 
 Micboard has an optional feature called **Extended Names**.  When set, user-defined IDs and names will be displayed instead of the name pulled from the receiver.
 
@@ -188,14 +188,14 @@ The Micboard Server is written in python. [pyinstaller](https://pyinstaller.read
 
 Electron-builder wraps this executable into a macOS menu bar app.
 
-```
-git clone https://github.com/karlcswanson/micboard
-cd micboard/
-pip3 install py/requirements.txt
-npm install
-npm run build
-npm run binary
-npm run pack
+```bash
+$ git clone https://github.com/karlcswanson/micboard
+$ cd micboard/
+$ pip3 install py/requirements.txt
+$ npm install
+$ npm run build
+$ npm run binary
+$ npm run pack
 ```
 
 

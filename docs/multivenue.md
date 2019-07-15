@@ -18,7 +18,7 @@ After=network.target
 [Service]
 # Set the network port for micboard venue-a to 8080
 Environment=MICBOARD_PORT=8080
-# Direct micboard to use a seperate configuration path for the venue-a venue
+# Direct micboard to use a separate configuration path for the venue-a venue
 ExecStart=/usr/bin/python3 -u py/micboard.py -f ~/.local/share/micboard/venue-a
 WorkingDirectory=/home/micboard/micboard
 StandardOutput=inherit
