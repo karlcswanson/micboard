@@ -3,8 +3,8 @@ Micboard provides data from receivers in a machine readable JSON format. This da
 
 This data can be found at `http://your_micboard_ip:8058/data.json`
 
-This capability lets you do a few fun things with the data
-* Make a 40' high VU meter out of LED tape
+This capability lets you do a few extra things with the data
+* Make a 40' high VU meter with LED tape
 * Log metrics into a database like [InfluxDB](https://www.influxdata.com/products/influxdb-overview/)
 
 ### Example Axient Digital Data

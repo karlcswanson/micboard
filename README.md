@@ -1,10 +1,8 @@
 # Micboard
 Micboard - A visual monitoring tool for network enabled Shure devices.
 
-Micboard is an open source microphone monitoring application.  Micboard makes monitoring easy for artists, engineers, and volunteers.
+Micboard makes microphone monitoring & storage easy for artists, engineers, and volunteers.
 
-
-## Getting Started
 
 ## Compatible Networks & Devices
 Micboard currently relies on IP addresses to connect to RF devices.  RF devices can be addressed through static or reserved IPs.  They just need to be consistent.
@@ -17,9 +15,6 @@ Micboard supports the following devices -
 * PSM 1000
 
 ## Interface
-### Smart Backgrounds
-Video and image backgrounds can be used with Micboard. Images in the `backgrounds` folder of the micboard configuration directory are displayed based on the channel name. With backgrounds enabled, `BP03 Steve` will display `steve.jpg` as a background for the `BP03 Steve` slot.
-
 
 ### Keyboard Shortcuts
 * <kbd>0</kbd> - Show all slots
@@ -121,57 +116,16 @@ Once the editor is open -
 3. Save
 
 
-<details><summary>Configuration Example</summary>
+## Additional Features
+### Visual Backgrounds
+Video and image backgrounds can be used with Micboard. Images in the `backgrounds` folder of the micboard configuration directory are displayed based on the channel name. With backgrounds enabled, `BP03 Steve` will display `steve.jpg` as a background for the `BP03 Steve` slot.
 
-Groups need 3 parameters:
-* **group** - A unique group number
-* **title** - The name of the group
-* **slots** - The microphones in the group
+The micboard `backgrounds` folder can be shared via a fileserver.  This provides an easy way for teams to update pictures.
 
-```javascript
-"groups": [
-    {
-      "group": 1,
-      "title": "Primary",
-      "slots" : [1,3,5,7]
-    },
-    {
-      "group": 2,
-      "title": "Backup",
-      "slots" : [2,4,6,8]
-    },
-    {
-      "group": 3,
-      "title": "Hosts",
-      "slots" : [9,10]
-    },
-    {
-      "group": 4,
-      "title": "interview",
-      "slots" : [11,12]
-    },
-    {
-      "group": 5,
-      "title": "Opening",
-      "slots" : [18,19,20,21,0,9,10]
-    },
-    {
-      "group": 6,
-      "title": "Interview",
-      "slots" : [10,0,11,12]
-    },
-    {
-      "group" : 9,
-      "title": "Band",
-      "slots" : [18,19,20,21]
-    }
-],
-```
-</details>
-
+[Additional Documentation](docs/fileshare.md)
 
 ### Extended Names
-Larger systems may need static channel IDs like 'H01' or 'bp14' in addition to name of the user.  These take up a minimum of 2 characters of a field that Shure often limits to 8.
+Larger systems benefit from static channel IDs like 'H01' or 'bp14' and user names, like Dave.  It can be difficult to fit both in a field that Shure often limits to 8.
 
 Micboard has an optional feature called **Extended Names**.  When set, user-defined IDs and names will be displayed instead of the name pulled from the receiver.
 
@@ -179,9 +133,16 @@ When the receiver name is changed via WWB, Micboard follows suit and displays th
 
 Press <kbd>n</kbd> to bring up the extended names editor.  Press save once complete.
 
-## Developer Information
-[Building the Electron wrapper for macOS](docs/electron.md)
-[Extending micboard using the API](docs/api.md)
+
+### Micboard Multivenue
+For larger campuses, a single server can provide micboard for multiple venues.
+
+[Micboard Multivenue](docs/multivenue.md)
+
+
+## Additional Documentation
+* [Building the Electron wrapper for macOS](docs/electron.md)
+* [Extending micboard using the API](docs/api.md)
 
 
 ## Known Issues
