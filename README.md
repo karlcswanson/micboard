@@ -1,20 +1,20 @@
 # Micboard
 Micboard - A visual monitoring tool for network enabled Shure devices.
 
-Micboard is an open source microphone monitoring application.  Micboard provides views for engineers, mobile, and microphone storage.
+Micboard is an open source microphone monitoring application.  Micboard makes monitoring easy for artists, engineers, and volunteers.
 
 
 ## Getting Started
 
-## Compatible Devices
+## Compatible Networks & Devices
+Micboard currently relies on IP addresses to connect to RF devices.  RF devices can be addressed through static or reserved IPs.  They just need to be consistent.
+
 Micboard supports the following devices -
 * UHF-R
 * QLX-D<sup>[1](#qlxd)</sup>
 * ULX-D
 * Axient Digital
 * PSM 1000
-
-
 
 ## Interface
 ### Smart Backgrounds
@@ -171,7 +171,7 @@ Groups need 3 parameters:
 
 
 ### Extended Names
-Large systems may need static channel IDs like 'H01' or 'bp14' in addition to name of the user.  These take up a minimum of 2 characters of a field that Shure often limits to 8.
+Larger systems may need static channel IDs like 'H01' or 'bp14' in addition to name of the user.  These take up a minimum of 2 characters of a field that Shure often limits to 8.
 
 Micboard has an optional feature called **Extended Names**.  When set, user-defined IDs and names will be displayed instead of the name pulled from the receiver.
 

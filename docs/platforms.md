@@ -1,42 +1,6 @@
 # Micboard Platforms
 Micboard runs on a variety of platforms.
 
-# MacOS - From Source
-Install the Xcode command-line tools
-```
-$ xcode-select --install
-```
-
-Install the homebrew package manager
-```
-$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
-
-Install python3
-```
-$ brew install python3
-```
-
-Install [Node.js](https://nodejs.org/en/)
-
-Download Micboard
-```
-$ git clone https://github.com/karlcswanson/micboard.git
-```
-
-Install micboard software dependencies via npm and pip
-```
-$ cd micboard/
-$ npm install
-$ pip3 install -r py/requirements.txt
-```
-
-build the micboard frontend and run micboard
-```
-$ npm run build
-$ python3 py/micboard.py
-```
-
 
 # Debian (Ubuntu & Raspbery Pi)
 Install git, python3-pip, and Node.js
@@ -73,6 +37,43 @@ If micboard runs successfully, edit `User` and `WorkingDirectory` within `micboa
 $ sudo cp micboard.service /etc/systemd/system/
 $ sudo systemctl start micboard.service
 $ sudo systemctl enable micboard.service
+```
+
+
+# MacOS - From Source
+Install the Xcode command-line tools
+```
+$ xcode-select --install
+```
+
+Install the homebrew package manager
+```
+$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+Install python3
+```
+$ brew install python3
+```
+
+Install [Node.js](https://nodejs.org/en/)
+
+Download Micboard
+```
+$ git clone https://github.com/karlcswanson/micboard.git
+```
+
+Install micboard software dependencies via npm and pip
+```
+$ cd micboard/
+$ npm install
+$ pip3 install -r py/requirements.txt
+```
+
+build the micboard frontend and run micboard
+```
+$ npm run build
+$ python3 py/micboard.py
 ```
 
 
