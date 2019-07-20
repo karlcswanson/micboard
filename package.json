@@ -1,6 +1,6 @@
 {
   "name": "micboard",
-  "version": "1.0.0",
+  "version": "0.8.0",
   "description": "An intelligent mic tray for ethernet enabled Shure microphones.",
   "main": "main.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "binary": "pyinstaller py/micboard.spec",
     "build": "node node_modules/webpack/bin/webpack.js --progress --hide-modules --config=webpack.config.js",
     "app": "electron .",
-    "pack": "electron-builder --dir -c.mac.identity=null",
+    "pack": "node electron-build.js",
     "dist": "electron-builder",
     "static": "python -m http.server 8058"
   },
@@ -51,28 +51,5 @@
   "devDependencies": {
     "electron": "^5.0.1",
     "electron-builder": "^20.40.2"
-  },
-  "build": {
-    "appId": "com.micboard.app",
-    "productName": "Micboard Server",
-    "asar": true,
-    "asarUnpack": [
-      "dist/micboard-service",
-      "build/trayTemplate.png",
-      "build/trayTemplate@2x.png"
-    ],
-    "mac": {
-      "category": "public.app-category.utilities",
-      "extendInfo": {
-        "LSBackgroundOnly": 1,
-        "LSUIElement": 1
-      }
-    },
-    "files": [
-      "dist/micboard-service",
-      "main.js",
-      "build/trayTemplate.png",
-      "build/trayTemplate@2x.png"
-    ]
   }
 }
