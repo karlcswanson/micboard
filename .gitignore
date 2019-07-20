@@ -20,5 +20,6 @@ package-lock.json
 DCIDMap.xml
 .python-version
 static/data2.json
+*.map
 static/fonts/*
 static/*.js*
