@@ -51,7 +51,12 @@ On first run, micboard creates a blank configuration file.  Within the micboard 
 ![open-configuration-directory](img/open-config-dir.png)
 
 Open `config.json` and add in your wireless receivers.
+
 ![text editor](img/config-editor.png)
+
+Once changes have been saved, restart micboard from the micboard menu.
+
+![restart micboard](img/restart-micboard.png)
 
 
 ## MacOS - From Source
