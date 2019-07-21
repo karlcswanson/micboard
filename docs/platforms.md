@@ -2,7 +2,7 @@
 Micboard runs on a variety of platforms.
 
 
-## Debian (Ubuntu & Raspbery Pi)
+## Debian (Ubuntu & Raspberry Pi)
 Install git, python3-pip, and Node.js
 ```
 $ sudo apt-get update
@@ -29,28 +29,25 @@ $ npm run build
 $ python3 py/micboard.py
 ```
 
-Open up micboard - [http://localhost:8058](http://localhost:8058)
+Micboard creates a blank configuration file on first run.  Open `/root/.local/share/micboard/config.json` and add in your receivers.  Check the [configuration](configuration.md) docs for more information on configuring micboard.
 
-
-If micboard runs successfully, edit `User` and `WorkingDirectory` within `micboard.service` to match your installation and install it as a service.
+Edit `User` and `WorkingDirectory` within `micboard.service` to match your installation and install it as a service.
 ```
 $ sudo cp micboard.service /etc/systemd/system/
 $ sudo systemctl start micboard.service
 $ sudo systemctl enable micboard.service
 ```
 
+
+
 ## MacOS - Desktop Application
-Download micboard from the project's [GitHub Release](https://github.com/karlcswanson/micboard/releases/) page.
-
-Mount the diskimage
-
-Run micboard-server
+Download and run micboard-server from the project's [GitHub Release](https://github.com/karlcswanson/micboard/releases/) page.
 
 On first run, micboard creates a blank configuration file.  Within the micboard menubar app, selet "Open Configuration Directory"
 
 ![open-configuration-directory](img/open-config-dir.png)
 
-Open `config.json` and add in your wireless receivers.
+Open `config.json` and add in your rf devices.  Check the [configuration](configuration.md) docs for more information on configuring micboard.
 
 ![text editor](img/config-editor.png)
 
@@ -95,6 +92,12 @@ $ npm run build
 $ python3 py/micboard.py
 ```
 
+Micboard creates a blank configuration file on first run.  Open `~/Library/Application Support/micboard/config.json` and add in your receivers.  Check the [configuration](configuration.md) docs for more information on configuring micboard.
+
+Restart micboard
+```
+$ python3 py/micboard.py
+```
 
 ## Docker
 Download micboard from github

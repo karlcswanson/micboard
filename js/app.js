@@ -56,6 +56,7 @@ export function ActivateMessageBoard(h1, p) {
 export function generateQR() {
   const qrOptions = {
     width: 600,
+    margin: 0,
   };
 
   const url = micboard.localURL + location.pathname + location.search;
