@@ -2,7 +2,7 @@
 Micboard runs on a variety of platforms.
 
 
-# Debian (Ubuntu & Raspbery Pi)
+## Debian (Ubuntu & Raspbery Pi)
 Install git, python3-pip, and Node.js
 ```
 $ sudo apt-get update
@@ -39,8 +39,21 @@ $ sudo systemctl start micboard.service
 $ sudo systemctl enable micboard.service
 ```
 
+## MacOS - Desktop Application
+Download micboard from the project's [GitHub Release](https://github.com/karlcswanson/micboard/releases/) page.
 
-# MacOS - From Source
+Mount the diskimage
+
+Run micboard-server
+
+On first run, micboard creates a blank configuration file.  Within the micboard menubar app, selet "Open Configuration Directory"
+![open-configuration-directory](img/open-config-dir.png)
+
+Open `config.json` and add in your wireless receivers.
+![text editor](img/config-editor.png)
+
+
+## MacOS - From Source
 Install the Xcode command-line tools
 ```
 $ xcode-select --install
@@ -77,7 +90,7 @@ $ python3 py/micboard.py
 ```
 
 
-# Docker
+## Docker
 Download micboard from github
 ```
 $ git clone https://github.com/karlcswanson/micboard.git
