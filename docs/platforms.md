@@ -47,6 +47,7 @@ Mount the diskimage
 Run micboard-server
 
 On first run, micboard creates a blank configuration file.  Within the micboard menubar app, selet "Open Configuration Directory"
+
 ![open-configuration-directory](img/open-config-dir.png)
 
 Open `config.json` and add in your wireless receivers.
