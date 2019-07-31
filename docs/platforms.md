@@ -67,12 +67,10 @@ Install the homebrew package manager
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-Install python3
+Install python3 and node
 ```
-$ brew install python3
+$ brew install python3 node
 ```
-
-Install [Node.js](https://nodejs.org/en/)
 
 Download Micboard
 ```

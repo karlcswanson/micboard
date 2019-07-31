@@ -45,7 +45,11 @@ def micboard_json(network_devices):
 
 class IndexHandler(web.RequestHandler):
     def get(self):
-        self.render(config.app_dir("demo.html"))
+        self.render(config.app_dir('demo.html'))
+
+class AboutHandler(web.RequestHandler):
+    def get(self):
+        self.render(config.app_dir('static/about.html'))
 
 class JsonHandler(web.RequestHandler):
     def get(self):
@@ -118,6 +122,7 @@ class GroupUpdateHandler(web.RequestHandler):
 def twisted():
     app = web.Application([
         (r'/', IndexHandler),
+        (r'/about', AboutHandler),
         (r'/ws', SocketHandler),
         (r'/data.json', JsonHandler),
         (r'/api/group', GroupUpdateHandler),

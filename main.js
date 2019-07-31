@@ -66,7 +66,7 @@ app.on('ready', () => {
   const icon = path.join(__dirname, 'build', 'trayTemplate.png').replace('app.asar', 'app.asar.unpacked');
   tray = new Tray(icon);
   const contextMenu = Menu.buildFromTemplate([
-    { label: 'About', click() { createWindow('http://localhost:8058/static/about.html'); } },
+    { label: 'About', click() { createWindow('http://localhost:8058/about'); } },
     { type: 'separator' },
     { label: 'Launch Micboard', click() { shell.openExternal('http://localhost:8058'); } },
     { label: 'Open Configuration Directory', click() { openConfigFolder('config.json'); } },
