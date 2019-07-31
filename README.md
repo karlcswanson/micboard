@@ -1,8 +1,15 @@
 # Micboard
 Micboard - A visual monitoring tool for network enabled Shure devices.
 
-Micboard makes microphone monitoring & storage easy for artists, engineers, and volunteers.
+// Micboard makes microphone monitoring & storage easy for artists, engineers, and volunteers.
 
+![Micboard Storage Photo]()
+
+* Any web browser on the network.
+* Engineer view
+* Mobile view
+* TV view
+* 
 
 ## Compatible Networks & Devices
 Micboard currently relies on IP addresses to connect to RF devices.  RF devices can be addressed through static or reserved IPs.  They just need to be consistent.
@@ -38,7 +45,7 @@ For larger campuses, a single server can provide micboard for multiple venues.
 [Micboard Multivenue](docs/multivenue.md)
 
 
-## Additional Documentation
+## Additional Developer Documentation
 * [Building the Electron wrapper for macOS](docs/electron.md)
 * [Extending micboard using the API](docs/api.md)
 

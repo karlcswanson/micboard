@@ -6,12 +6,11 @@ Configuration is stored in a json file.  On Mac OS X, `config.json` can be found
 Each wireless channel is assigned unique slot. A single channel QLXD receiver would use 1 slot while a ULXD4Q receiver takes 4.
 
 Each slot requires 4 parameters:
-* **slot** - A unique slot number - `12`
-* **ip** - the IP address of the receiver - `"192.168.1.45"`
-* **channel** - the channel of the receiver - `[1, 2, 3, 4]`
+* **slot** - A unique slot number
+* **ip** - the IP address of the receiver
+* **channel** - the device channel on the receiver
 * **type** - the type of the receiver - `["uhfr", "qlxd", "ulxd", "atxd", "p10r"]`
 
-<details><summary>Configuration Example</summary>
 
 ```javascript
 "slots": [
@@ -65,10 +64,9 @@ Each slot requires 4 parameters:
     }
   ]
 ```
-</details>
 
 ## Groups
-Microphones can be grouped into custom views. These groups are accessible from the menu and keyboard shortcuts.
+Devices can be grouped into custom views. These groups are accessible from the menu and keyboard shortcuts.
 
 #### View a group
 Groups can be selected from the main menu or with numeric keys.  View all devices by pressing <kbd>0</kbd>.
