@@ -71,7 +71,7 @@ $ sudo systemctl restart nginx
 ## Setup Background Fileshare
 Setup [Samba](fileshare.md) to map to the micboard `backgrounds` folder.  Multiple venues can share or have separate background image repositories.
 
-Micboard defaults to a seperate backgrounds folder for each instance.  A shared directory can be set via `-b`.  For micboard multivenue, this can be set in the systemd /etc/systemd/service/micboard-venue.service file.
+Micboard defaults to a separate backgrounds folder for each instance.  A shared directory can be set via `-b`.  For micboard multivenue, this can be set in the systemd /etc/systemd/service/micboard-venue.service file.
 
 ```bash
 ExecStart=/usr/bin/python3 -u py/micboard.py -f ~/.local/share/micboard/venue-a -b ~/.local/share/micboard/backgrounds

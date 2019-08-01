@@ -37,14 +37,8 @@ Micboard supports the following devices -
 * <kbd>esc</kbd> - reload micboard
 
 
-
-## Micboard Multivenue
-For larger campuses, a single server can provide micboard for multiple venues.
-
-[Micboard Multivenue](docs/multivenue.md)
-
-
-## Additional Developer Documentation
+## Additional Documentation
+* [Use Micboard across a campus with Multivenue](docs/multivenue.md)
 * [Building the Electron wrapper for macOS](docs/electron.md)
 * [Extending micboard using the API](docs/api.md)
 
