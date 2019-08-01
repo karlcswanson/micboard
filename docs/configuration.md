@@ -3,7 +3,7 @@ Configuration is stored in a json file.  On Mac OS X, `config.json` can be found
 
 
 ## Slots
-Each wireless channel is assigned unique slot. A single channel QLXD receiver would use 1 slot while a ULXD4Q receiver takes 4.
+Each wireless channel is assigned unique slot. A single channel QLXD receiver would use 1 slot while a ULXD4Q receiver uses 4.
 
 Each slot requires 4 parameters:
 * **slot** - A unique slot number

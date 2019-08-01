@@ -1,6 +1,4 @@
-# Micboard Platforms
-Micboard runs on a variety of platforms.
-
+# Micboard Installation
 
 ## Debian (Ubuntu & Raspberry Pi)
 Install git, python3-pip, and Node.js
