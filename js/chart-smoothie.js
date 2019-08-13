@@ -5,9 +5,33 @@ import { micboard } from './app.js';
 
 export const charts = {};
 
+// prefer server time, but drop back to local time if out of sync
+// this is for embedded devices that may not always have an accurate clock
+export function setTimeMode(servertimeString) {
+  const servertime = Date.parse(servertimeString);
+  const localtime = new Date().getTime();
+
+  const delta = Math.abs(localtime - servertime);
+
+  if (delta > (30 * 1000)) {
+    console.log(`Using local time. time delta: ${delta} ms`);
+    micboard.chartTimeSrc = 'LOCAL';
+  } else {
+    console.log(`Using server time. time delta: ${delta} ms`);
+    micboard.chartTimeSrc = 'SERVER';
+  }
+}
+
 export function updateChart(data) {
   if (micboard.displayList.includes(data.slot)) {
-    const timestamp = new Date(data.timestamp * 1000);
+    let timestamp;
+
+    if (micboard.chartTimeSrc === 'SERVER') {
+      timestamp = new Date(data.timestamp * 1000);
+    } else {
+      timestamp = new Date().getTime();
+    }
+
     if (micboard.MIC_MODELS.indexOf(data.type) > -1) {
       charts[data.slot].audioSeries.append(timestamp, data.audio_level + 100);
       charts[data.slot].rfSeries.append(timestamp, data.rf_level);

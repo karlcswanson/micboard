@@ -12,6 +12,7 @@ import { groupEditToggle, initEditor } from './dnd.js';
 import { slotEditToggle } from './extended.js';
 import { keybindings } from './kbd.js';
 import { setBackground, setInfoDrawer } from './display.js';
+import { setTimeMode } from './chart-smoothie.js';
 
 import '../css/colors.scss';
 import '../css/style.scss';
@@ -28,6 +29,7 @@ micboard.displayMode = 'deskmode';
 micboard.infoDrawerMode = 'elinfo11';
 micboard.backgroundMode = 'NONE';
 micboard.settingsMode = 'NONE';
+micboard.chartTimeSrc = 'SERVER';
 
 micboard.group = 0;
 micboard.connectionStatus = 'CONNECTING';
@@ -198,33 +200,38 @@ function displayListChooser() {
   }
 }
 
+
+
 function initialMap(callback) {
   fetch(dataURL)
-    .then(response => response.json())
-    .then((data) => {
-      micboard.discovered = data.discovered;
-      micboard.mp4_list = data.mp4;
-      micboard.img_list = data.jpg;
-      micboard.localURL = data.url;
-      micboard.groups = groupTableBuilder(data);
-      micboard.config = data.config;
-      mapGroups();
+    .then((response) => {
+      setTimeMode(response.headers.get('Date'));
 
-      if (micboard.url.demo !== 'true') {
-        dataFilterFromList(data);
-      }
-      displayListChooser();
+      response.json().then((data) => {
+        micboard.discovered = data.discovered;
+        micboard.mp4_list = data.mp4;
+        micboard.img_list = data.jpg;
+        micboard.localURL = data.url;
+        micboard.groups = groupTableBuilder(data);
+        micboard.config = data.config;
+        mapGroups();
 
-      if (callback) {
-        callback();
-      }
-      if (['MP4', 'IMG'].indexOf(micboard.url.bgmode) >= 0) {
-        setBackground(micboard.url.bgmode);
-      }
-      if (['elinfo00', 'elinfo01', 'elinfo10', 'elinfo11'].indexOf(micboard.url.tvmode) >= 0) {
-        setInfoDrawer(micboard.url.tvmode);
-      }
-      initEditor();
+        if (micboard.url.demo !== 'true') {
+          dataFilterFromList(data);
+        }
+        displayListChooser();
+
+        if (callback) {
+          callback();
+        }
+        if (['MP4', 'IMG'].indexOf(micboard.url.bgmode) >= 0) {
+          setBackground(micboard.url.bgmode);
+        }
+        if (['elinfo00', 'elinfo01', 'elinfo10', 'elinfo11'].indexOf(micboard.url.tvmode) >= 0) {
+          setInfoDrawer(micboard.url.tvmode);
+        }
+        initEditor();
+      });
     });
 }
 
