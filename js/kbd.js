@@ -18,7 +18,7 @@ function toggleFullScreen() {
 
 export function keybindings() {
   document.addEventListener('keydown', (e) => {
-    if (e.keyCode === 27) {
+    if (e.key === 'Escape') {
       window.location.reload();
     }
     if ($('.settings').is(':visible')) {
@@ -31,44 +31,44 @@ export function keybindings() {
       return;
     }
 
-    if (e.keyCode === 48) {
+    if (e.key === '0') {
       renderGroup(0);
     }
-    if (e.keyCode === 49) {
+    if (e.key === '1') {
       renderGroup(1);
     }
-    if (e.keyCode === 50) {
+    if (e.key === '2') {
       renderGroup(2);
     }
-    if (e.keyCode === 51) {
+    if (e.key === '3') {
       renderGroup(3);
     }
-    if (e.keyCode === 52) {
+    if (e.key === '4') {
       renderGroup(4);
     }
-    if (e.keyCode === 53) {
+    if (e.key === '5') {
       renderGroup(5);
     }
-    if (e.keyCode === 54) {
+    if (e.key === '6') {
       renderGroup(6);
     }
-    if (e.keyCode === 55) {
+    if (e.key === '7') {
       renderGroup(7);
     }
-    if (e.keyCode === 56) {
+    if (e.key === '8') {
       renderGroup(8);
     }
-    if (e.keyCode === 57) {
+    if (e.key === '9') {
       renderGroup(9);
     }
 
-    if (e.keyCode === 68) {
+    if (e.key === 'd') {
       micboard.url.demo = !micboard.url.demo;
       updateHash();
       window.location.reload();
     }
 
-    if (e.keyCode === 69) {
+    if (e.key === 'e') {
       if (micboard.group !== 0) {
         groupEditToggle();
       } else if (micboard.group === 0) {
@@ -76,32 +76,32 @@ export function keybindings() {
       }
     }
 
-    if (e.keyCode === 70) {
+    if (e.key === 'f') {
       toggleFullScreen();
     }
 
-    if (e.keyCode === 71) {
+    if (e.key === 'g') {
       toggleImageBackground();
     }
 
-    if (e.keyCode === 73) {
+    if (e.key === 'i') {
       toggleInfoDrawer();
     }
 
-    if (e.keyCode === 78) {
+    if (e.key === 'n') {
       slotEditToggle();
     }
 
-    if (e.keyCode === 81) {
+    if (e.key === 'q') {
       generateQR();
       $('.modal').modal('toggle');
     }
 
-    if (e.keyCode === 84) {
+    if (e.key === 't') {
       toggleDisplayMode();
     }
 
-    if (e.keyCode === 86) {
+    if (e.key === 'v') {
       toggleVideoBackground();
     }
   }, false);

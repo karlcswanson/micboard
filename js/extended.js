@@ -30,6 +30,15 @@ function slotValues() {
   return slotList;
 }
 
+function loadBulkNames() {
+  const names = document.getElementById('bulk-box').value.split('\n');
+
+  const currentBoard = document.getElementById('micboard').getElementsByClassName('col-sm');
+
+  for (let i = 0; i < currentBoard.length; i += 1) {
+    currentBoard[i].getElementsByClassName('ext-name')[0].value = names[i];
+  }
+}
 
 function submitUpdate(data) {
   const url = 'api/slot';
@@ -67,6 +76,10 @@ function initSlotEdit() {
 
   $('#slotSave').on('click', () => {
     submitUpdate(slotValues());
+  });
+
+  $('#bulk-name-loader').on('click', () => {
+    loadBulkNames();
   });
 
   $('#clear-id').on('click', () => {
