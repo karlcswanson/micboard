@@ -229,10 +229,20 @@ canvas.slotgraph {
   display: block;
 }
 
-#save-box .form-row {
+#save-box .form-row,
+#paste-box .form-row {
   padding-top: 15px;
 }
 
+#paste-box {
+  display: none;
+}
+
+#bulkbox {
+  background-color: var(--color-black);
+  color: var(--color-yellow);
+  border-color: var(--color-gray);
+}
 
 /* mic storage mode */
 .tvmode {

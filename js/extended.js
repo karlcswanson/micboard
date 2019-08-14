@@ -31,12 +31,15 @@ function slotValues() {
 }
 
 function loadBulkNames() {
-  const names = document.getElementById('bulk-box').value.split('\n');
+  const names = document.getElementById('bulkbox').value.split('\n');
 
   const currentBoard = document.getElementById('micboard').getElementsByClassName('col-sm');
 
   for (let i = 0; i < currentBoard.length; i += 1) {
-    currentBoard[i].getElementsByClassName('ext-name')[0].value = names[i];
+    const bulkName = names[i];
+    if (bulkName) {
+      currentBoard[i].getElementsByClassName('ext-name')[0].value = bulkName;
+    }
   }
 }
 

@@ -92,6 +92,11 @@ export function keybindings() {
       slotEditToggle();
     }
 
+    if (e.key === 'N') {
+      slotEditToggle();
+      $('#paste-box').show();
+    }
+
     if (e.key === 'q') {
       generateQR();
       $('.modal').modal('toggle');
