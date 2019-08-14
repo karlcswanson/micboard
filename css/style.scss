@@ -174,13 +174,12 @@ canvas.slotgraph {
 }
 
 .editzone {
+  position: absolute;
   font-family: IBM Plex Mono;
   font-weight: 100;
   font-style: italic;
   color: var(--color-yellow);
-  height:100px;
-  bottom:15px;
-  padding-top: 80px;
+  bottom: 10px;
   display: none;
 }
 
@@ -215,6 +214,11 @@ canvas.slotgraph {
   padding-left: 5px;
   color: var(--color-white);
   font-weight: 300;
+}
+
+.editzone .form-row {
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 #save-box {

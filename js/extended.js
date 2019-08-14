@@ -1,7 +1,7 @@
 import { micboard } from './app.js';
 import { postJSON } from './data.js';
 import { renderGroup } from './channelview.js';
-import { setDisplayMode } from './display';
+import { setDisplayMode, setBackground } from './display';
 
 function configArrayGenerator() {
   const slots = [];
@@ -80,6 +80,7 @@ function initSlotEdit() {
 
 export function slotEditToggle() {
   renderGroup(0);
+  setBackground('NONE');
   if (micboard.settingsMode !== 'EXTENDED') {
     if (micboard.displayMode === 'tvmode') {
       setDisplayMode('deskmode');
