@@ -37,11 +37,11 @@ const rfSample = ['AX', 'XB', 'XX', 'BRXX', 'XRXB', 'XXBR'];
 
 
 const name_sample = [
-  'Fatai', 'Marshall', 'Delwin', 'Tracy TB', 'Backup', 'Steve', 'JE',
-  'Sharon', 'Bob', 'Del ACU', 'Troy', 'Matt', 'Matt ACU', 'Matt Sax', 'Karl',
-  'Jordan', 'Josue', 'Ashlee', 'Shawn c', 'James', 'Hallie', 'Rebekah', 'Dan',
-  'Stephen', 'Max', 'Tom', 'Nick', 'Eugene', 'Brittani', 'MattW', 'Natrice',
-  'Mollie', 'Albert', 'Gillen', '',
+  'Fatai', 'Marsh', 'Delwin', 'Tracy', 'Backup', 'Steve', 'J.E.', 'Lonnie',
+  'Sharon', 'Del ACU', 'Troy', 'Matt', 'Karl', 'Anders', 'Mikey', 'Dan',
+  'Jordan', 'Josue', 'Ashlee', 'Shawn c', 'James', 'Hallie', 'Rebekah', 'Jazmine',
+  'Stephen', 'Aaron', 'Tom', 'Nick', 'Eugene', 'Brittany', 'MattW', 'Natrice',
+  'Mollie', 'Albert', 'Gillen', 'Steph', '',
 ];
 
 const prefix_sample = ['HH', 'BP'];

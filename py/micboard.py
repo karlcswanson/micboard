@@ -6,7 +6,6 @@ import config
 import tornado_server
 import shure
 import discover
-import influxdb_api
 
 
 def main():
@@ -24,10 +23,6 @@ def main():
     web_t.start()
     discover_t.start()
     rxparse_t.start()
-
-    if 'influxdb' in config.config_tree:
-        influxup_t = threading.Thread(target=influxdb_api.influx_thread)
-        influxup_t.start()
 
 
 if __name__ == '__main__':
