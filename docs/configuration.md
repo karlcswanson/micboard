@@ -96,24 +96,7 @@ When the receiver name is changed via WWB, Micboard follows suit and displays th
 Press <kbd>n</kbd> to bring up the extended names editor.  Press save once complete.
 
 ### Bulk Name Loader
-A list of names can be imported with the **Bulk Loader**
+Channel names can be imported from spreadsheets and text files with the **Bulk Loader**.
 1. Open the Extended Names editor with <kbd>⇧ Shift</kbd> + <kbd>n</kbd>.
-2. Paste in a list.  These can be copied straight from a spreadsheet column of an input list.
-```
-James
-Fatai
-Brittani
-Matt
-
-
-ACU
-Sax
-
-
-Backup
-
-Announcement
-
-Steve
-```
-3.  **Load Bulk Names** copies names to the names field of each device.  Make any necessary edits and **Save**
+2. Paste a list of names into the bulk box.
+3. Click **Load Bulk Names** to load names from the imported list.  Make any necessary edits in the extended editor and **Save**.
