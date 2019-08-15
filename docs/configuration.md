@@ -94,3 +94,26 @@ Micboard has an optional feature called **Extended Names**.  When set, user-defi
 When the receiver name is changed via WWB, Micboard follows suit and displays the new name.
 
 Press <kbd>n</kbd> to bring up the extended names editor.  Press save once complete.
+
+### Bulk Name Loader
+A list of names can be imported with the **Bulk Loader**
+1. Open the Extended Names editor with <kbd>⇧ Shift</kbd> + <kbd>n</kbd>.
+2. Paste in a list.  These can be copied straight from a spreadsheet column of an input list.
+```
+James
+Fatai
+Brittani
+Matt
+
+
+ACU
+Sax
+
+
+Backup
+
+Announcement
+
+Steve
+```
+3.  **Load Bulk Names** copies names to the names field of each device.  Make any necessary edits and **Save**
