@@ -27,7 +27,7 @@ $ npm run build
 $ python3 py/micboard.py
 ```
 
-Micboard creates a blank configuration file on first run.  Open `/root/.local/share/micboard/config.json` and add in your receivers.  Check the [configuration](configuration.md) docs for more information on configuring micboard.
+Micboard creates a blank configuration file on first run.  Open `~/.local/share/micboard/config.json` and add in your receivers.  Check the [configuration](configuration.md) docs for more information on configuring micboard.
 
 Edit `User` and `WorkingDirectory` within `micboard.service` to match your installation and install it as a service.
 ```
