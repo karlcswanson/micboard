@@ -6,9 +6,18 @@ Micboard simplifies microphone monitoring and storage for artists, engineers, an
 ![Micboard Storage Photo]()
 
 ## Screenshots
-* Engineer view
-* Mobile view
-* TV view
+<p align="center">
+  <img src="docs/img/desktop_ui.png">
+</p>
+
+<p align="center">
+  <img width="33%" src="docs/img/phone_home.png"><img width="33%" src="docs/img/phone_ui.png"><img width="33%" src="docs/img/phone_ui_exp.png">
+</p>
+
+<p align="center">
+  <img width="50%" src="docs/img/tv.png"><img width="50%" src="docs/img/tv_imagebg.png">
+</p>
+
 
 ## Compatible Networks & Devices
 Micboard currently relies on IP addresses to connect to RF devices.  RF devices can be addressed through static or reserved IPs.  They just need to be consistent.

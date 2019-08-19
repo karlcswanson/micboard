@@ -1,4 +1,8 @@
 # Micboard Multivenue Server
+
+![micboard multivenue](img/multivenue.png)
+
+
 A single server can provide separate instances of micboard for multiple venues across a campus.
 
 For Micboard multivenue, [NGINX](https://www.nginx.com) is used as a transparent proxy server.  NGINX internally routes traffic for each venue to the correct micboard instance based on the URL.  `micboard.local/venue-a` renders the instance for venue-a while `/venue-b` serves the instance for venue b.

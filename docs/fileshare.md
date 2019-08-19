@@ -1,7 +1,13 @@
 # File Sharing via Samba
+<p align="center">
+  <img width="50%" src="img/smb.png"><img width="50%" src="img/smb_folder.png">
+</p>
+
+
 Micboard's configuration directory can be shared via [Samba](https://www.samba.org).  This makes it easy to remotely add backgrounds, edit micboard configurations, and view logs.
 
 ### MacOS
+![mac fileshare](img/smb_server_mac.png)
 On MacOS, open up the Sharing pane within System Preferences
 
 Enable File Sharing
