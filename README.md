@@ -6,45 +6,31 @@ Micboard simplifies microphone monitoring and storage for artists, engineers, an
 ![Micboard Storage Photo]()
 
 ## Screenshots
+#### Desktop
 <p align="center">
   <img src="docs/img/desktop_ui.png">
 </p>
 
+#### Mobile
 <p align="center">
   <img width="33%" src="docs/img/phone_home.png"><img width="33%" src="docs/img/phone_ui.png"><img width="33%" src="docs/img/phone_ui_exp.png">
 </p>
 
+#### Mic Storage
 <p align="center">
-  <img width="50%" src="docs/img/tv.png"><img width="50%" src="docs/img/tv_imagebg.png">
+  <img src="docs/img/tv_imagebg.png">
 </p>
 
 
-## Compatible Networks & Devices
-Micboard currently relies on IP addresses to connect to RF devices.  RF devices can be addressed through static or reserved IPs.  They just need to be consistent.
+## Compatible Devices
+Micboard uses IP addresses to connect to RF devices.  RF devices can be addressed through static or reserved IPs.  They just need to be consistent.
 
 Micboard supports the following devices -
-* UHF-R
-* QLX-D<sup>[1](#qlxd)</sup>
-* ULX-D
-* Axient Digital
-* PSM 1000
-
-## Interface
-
-### Keyboard Shortcuts
-* <kbd>0</kbd> - Show all slots
-* <kbd>1</kbd>...<kbd>9</kbd> - Go to group
-* <kbd>d</kbd> - Start demo mode
-* <kbd>e</kbd> - Open group editor
-* <kbd>f</kbd> - Toggle fullscreen
-* <kbd>g</kbd> - Change image backgrounds
-* <kbd>v</kbd> - Change video backgrounds
-* <kbd>i</kbd> - Change display mode
-* <kbd>n</kbd> - Extended Name editor
-* <kbd>q</kbd> - Show QR code
-* <kbd>t</kbd> - TV mode (toggle)
-* <kbd>esc</kbd> - reload micboard
-
+* Shure UHF-R
+* Shure QLX-D<sup>[1](#qlxd)</sup>
+* Shure ULX-D
+* Shure Axient Digital
+* Shure PSM 1000
 
 ## Additional Documentation
 * [Use Micboard across a campus with Multivenue](docs/multivenue.md)

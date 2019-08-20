@@ -1,4 +1,6 @@
-# Micboard Installation
+# Installation
+Micboard can be installed on many different platforms.
+
 
 ## Debian (Ubuntu & Raspberry Pi)
 Install git, python3-pip, and Node.js
@@ -43,15 +45,23 @@ Download and run micboard-server from the project's [GitHub Release](https://git
 
 On first run, micboard creates a blank configuration file.  Within the micboard menubar app, selet "Open Configuration Directory"
 
-![open-configuration-directory](img/open-config-dir.png)
+<p align="center">
+  <img src="img/open-config-dir.png">
+</p>
 
 Open `config.json` and add in your rf devices.  Check the [configuration](configuration.md) docs for more information on configuring micboard.
 
-![text editor](img/config-editor.png)
+<p align="center">
+  <img src="img/config-editor.png">
+</p>
+
 
 Once changes have been saved, restart micboard from the micboard menu.
 
-![restart micboard](img/restart-micboard.png)
+<p align="center">
+  <img src="img/restart-micboard.png">
+</p>
+
 
 
 ## MacOS - From Source
