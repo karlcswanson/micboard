@@ -36,9 +36,11 @@ function loadBulkNames() {
   const currentBoard = document.getElementById('micboard').getElementsByClassName('col-sm');
 
   for (let i = 0; i < currentBoard.length; i += 1) {
-    const bulkName = names[i];
-    if (bulkName) {
-      currentBoard[i].getElementsByClassName('ext-name')[0].value = bulkName;
+    if (typeof names[i] === 'undefined') {
+      // does not exist
+    } else {
+      // does exist
+      currentBoard[i].getElementsByClassName('ext-name')[0].value = names[i];
     }
   }
 }

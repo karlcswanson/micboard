@@ -1,6 +1,7 @@
-# Installation
-Micboard can be installed on many different platforms.
+# Server Installation
+Micboard server can be installed on many different platforms.  For small and portable systems, micboard can run on Raspberry Pi hidden in the back of a rack.  Ubuntu Server is recommended for large permanent installations.
 
+The MacOS app provides a great way to try micboard before purchasing additional hardware. 
 
 ## Debian (Ubuntu & Raspberry Pi)
 Install git, python3-pip, and Node.js
