@@ -1,7 +1,7 @@
 # Server Installation
-Micboard server can be installed on many different platforms.  For small and portable systems, micboard can run on Raspberry Pi hidden in the back of a rack.  Ubuntu Server is recommended for large permanent installations.
+Micboard server can be installed on many different platforms.  For small and portable systems, Micboard can run on a Raspberry Pi hidden in the back of a rack.  Ubuntu Server is recommended for large permanent installations.
 
-The MacOS app provides a great way to try micboard before purchasing additional hardware. 
+The macOS app provides a great way to try Micboard before purchasing additional hardware.
 
 ## Debian (Ubuntu & Raspberry Pi)
 Install git, python3-pip, and Node.js
@@ -41,31 +41,24 @@ $ sudo systemctl enable micboard.service
 
 
 
-## MacOS - Desktop Application
-Download and run micboard-server from the project's [GitHub Release](https://github.com/karlcswanson/micboard/releases/) page.
+## macOS - Desktop Application
+Download and run micboard from the project's [GitHub Release](https://github.com/karlcswanson/micboard/releases/) page.
 
 On first run, micboard creates a blank configuration file.  Within the micboard menubar app, selet "Open Configuration Directory"
 
-<p align="center">
-  <img src="img/open-config-dir.png">
-</p>
+
+![config dir](img/open-config-dir.png)
 
 Open `config.json` and add in your rf devices.  Check the [configuration](configuration.md) docs for more information on configuring micboard.
 
-<p align="center">
-  <img src="img/config-editor.png">
-</p>
-
+![config editor](img/config-editor.png)
 
 Once changes have been saved, restart micboard from the micboard menu.
 
-<p align="center">
-  <img src="img/restart-micboard.png">
-</p>
+![restart micboard](img/restart-micboard.png)
 
 
-
-## MacOS - From Source
+## macOS - From Source
 Install the Xcode command-line tools
 ```
 $ xcode-select --install

@@ -1,15 +1,12 @@
 # Micboard
-Micboard - A visual monitoring tool for network enabled Shure devices.
-
-Micboard simplifies microphone monitoring and storage for artists, engineers, and volunteers.  View battery, audio, and RF levels from any device on the network.
+A visual monitoring tool for network enabled Shure devices.  Micboard simplifies microphone monitoring and storage for artists, engineers, and volunteers.  View battery, audio, and RF levels from any device on the network.
 
 ![Micboard Storage Photo]()
 
 ## Screenshots
 #### Desktop
-<p align="center">
-  <img src="docs/img/desktop_ui.png">
-</p>
+![Desktop](docs/img/desktop_ui.png)
+
 
 #### Mobile
 <p align="center">
@@ -17,14 +14,9 @@ Micboard simplifies microphone monitoring and storage for artists, engineers, an
 </p>
 
 #### Mic Storage
-<p align="center">
-  <img src="docs/img/tv_imagebg.png">
-</p>
-
+![mic storage](docs/img/tv_imagebg.png)
 
 ## Compatible Devices
-Micboard uses IP addresses to connect to RF devices.  RF devices can be addressed through static or reserved IPs.  They just need to be consistent.
-
 Micboard supports the following devices -
 * Shure UHF-R
 * Shure QLX-D<sup>[1](#qlxd)</sup>
@@ -32,8 +24,15 @@ Micboard supports the following devices -
 * Shure Axient Digital
 * Shure PSM 1000
 
-## Additional Documentation
-* [Use Micboard across a campus with Multivenue](docs/multivenue.md)
+Micboard uses IP addresses to connect to RF devices.  RF devices can be addressed through static or reserved IPs.  They just need to be consistent.
+
+
+## Documentation
+* [Installation](docs/installation.md)
+* [Configuration](docs/configuration.md)
+* [Micboard MultiVenue](docs/multivenue.md)
+
+#### Developer Info
 * [Building the Electron wrapper for macOS](docs/electron.md)
 * [Extending micboard using the API](docs/api.md)
 
