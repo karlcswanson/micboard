@@ -11,7 +11,7 @@ Each slot requires 4 parameters:
 * **slot** - A unique slot number
 * **ip** - the IP address of the receiver
 * **channel** - the device channel on the receiver.  For example, the third channel of a ULXD receiver would be channel 3.  For single channel devices, like QLXD, use channel 1.
-* **type** - the type of the receiver - `["uhfr", "qlxd", "ulxd", "atxd", "p10r"]`
+* **type** - the type of the receiver - `["uhfr", "qlxd", "ulxd", "axtd", "p10r"]`
 
 
 ```javascript
