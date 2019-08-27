@@ -40,7 +40,7 @@ const name_sample = [
   'Fatai', 'Marsh', 'Delwin', 'Tracy', 'Backup', 'Steve', 'J.E.', 'Lonnie',
   'Sharon', 'Del ACU', 'Troy', 'Matt', 'Karl', 'Anders', 'Mikey', 'Dan',
   'Jordan', 'Josue', 'Ashlee', 'Shawn c', 'James', 'Hallie', 'Rebekah', 'Jazmine',
-  'Stephen', 'Aaron', 'Tom', 'Nick', 'Eugene', 'Brittany', 'MattW', 'Natrice',
+  'Stephen', 'Aaron', 'Tom', 'Nick', 'Eugene', 'Brittani', 'MattW', 'Natrice',
   'Mollie', 'Albert', 'Gillen', 'Steph', '',
 ];
 
