@@ -241,6 +241,7 @@ $(document).ready(() => {
   readURLParameters();
   keybindings();
   if (micboard.url.demo === 'true') {
+    $('#hud').show();
     initialMap();
   } else {
     initialMap(initLiveData);

@@ -72,6 +72,7 @@ Save `config.json` and restart micboard.
 ## Keyboard Shortcuts
 Micboard is primarily controlled with keyboard shortcuts
 
+* <li><kbd>?</kbd> - Show keyboard shortcuts</li>
 * <kbd>0</kbd> - Show all slots
 * <kbd>1</kbd>...<kbd>9</kbd> - Load group
 * <kbd>d</kbd> - Start demo mode

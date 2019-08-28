@@ -3,6 +3,9 @@ A visual monitoring tool for network enabled Shure devices.  Micboard simplifies
 
 ![Micboard Storage Photo]()
 
+
+![micboard diagram](docs/img/slug.png)
+
 ## Screenshots
 #### Desktop
 ![Desktop](docs/img/desktop_ui.png)

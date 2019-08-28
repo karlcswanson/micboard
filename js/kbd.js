@@ -17,6 +17,11 @@ function toggleFullScreen() {
 }
 
 export function keybindings() {
+  $('#hud-button').click( function() {
+    $('#hud').hide();
+  });
+
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       window.location.reload();
@@ -108,6 +113,10 @@ export function keybindings() {
 
     if (e.key === 'v') {
       toggleVideoBackground();
+    }
+
+    if (e.key === '?') {
+      $('#hud').toggle();
     }
   }, false);
 }

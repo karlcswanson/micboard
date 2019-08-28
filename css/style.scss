@@ -711,3 +711,18 @@ a:link, a:visited, a:hover, a:active {
   padding-top: 1em;
   padding-bottom: 2em;
 }
+
+#hud {
+  display: none;
+  position: absolute;
+  right: 25px;
+  bottom: 25px;
+  z-index: 50;
+  opacity: 75;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  font-family: 'IBM Plex Sans';
+  font-weight: 300;
+  border-radius: 12px;
+  padding: 1em;
+}
