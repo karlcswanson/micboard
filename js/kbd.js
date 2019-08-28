@@ -76,8 +76,6 @@ export function keybindings() {
     if (e.key === 'e') {
       if (micboard.group !== 0) {
         groupEditToggle();
-      } else if (micboard.group === 0) {
-        slotEditToggle();
       }
     }
 

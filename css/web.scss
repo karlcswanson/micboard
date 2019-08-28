@@ -1,5 +1,5 @@
 html,body {
-  // background-color: var(--color-black);
+  // background-color: black;
 }
 
 .row {
@@ -12,7 +12,38 @@ html,body {
   // color: var(--color-white);
 }
 
-h3 {
+.jumbotron h1 {
   font-family: 'IBM Plex Sans';
   font-weight: 500;
+}
+
+.jumbotron p.lead{
+  font-family: 'IBM Plex Sans';
+  font-style: italic;
+  font-weight: 200;
+}
+
+.jumbotron p{
+  font-family: 'IBM Plex Sans';
+  font-weight: 300;
+}
+
+.jumbotron {
+  // background: var(--color-black);
+  // color: var(--color-white);
+}
+
+.jumbotron img {
+  height: 110px;
+  padding-right: 1em;
+}
+
+.footer {
+  font-family: 'IBM Plex Sans';
+  font-weight: 300;
+}
+
+.footer img {
+  height: 110px;
+  margin: 1em;
 }
