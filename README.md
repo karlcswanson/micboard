@@ -6,7 +6,7 @@
 
 A visual monitoring tool for network enabled Shure devices.  Micboard simplifies microphone monitoring and storage for artists, engineers, and volunteers.  View battery, audio, and RF levels from any device on the network.
 
-![Micboard Storage Photo]()
+![Micboard Storage Photo](docs/img/wccc.jpg)
 
 
 ![micboard diagram](docs/img/slug.png)
@@ -22,7 +22,7 @@ A visual monitoring tool for network enabled Shure devices.  Micboard simplifies
 </p>
 
 #### Mic Storage
-![mic storage](docs/img/wccc.jpg)
+![mic storage](docs/img/tv_imagebg.png)
 
 ## Compatible Devices
 Micboard supports the following devices -
