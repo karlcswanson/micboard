@@ -22,7 +22,7 @@ A visual monitoring tool for network enabled Shure devices.  Micboard simplifies
 </p>
 
 #### Mic Storage
-![mic storage](docs/img/tv_imagebg.png)
+![mic storage](docs/img/wccc.jpg)
 
 ## Compatible Devices
 Micboard supports the following devices -
