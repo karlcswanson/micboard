@@ -4,7 +4,7 @@ MAINTAINER Karl Swanson <karlcswanson@gmail.com>
 
 WORKDIR /usr/src/app
 
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 RUN apt-get install nodejs
 
 COPY . .
