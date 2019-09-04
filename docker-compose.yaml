@@ -8,4 +8,4 @@ services:
     ports:
       - '8058:8058'
     volumes:
-      - ~/Library/Application\ Support/micboard:/root/.local/share/micboard
+      - ./config:/root/.local/share/micboard
