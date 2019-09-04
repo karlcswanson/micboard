@@ -109,5 +109,5 @@ Build and run docker image
 ```
 $ cd micboard/
 $ docker build -t micboard .
-$ docker run -d -p 8058:8058 -v ~/Library/Application\ Support/micboard:/root/.local/share/micboard micboard
+$ docker-compose up
 ```

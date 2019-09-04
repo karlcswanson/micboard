@@ -23,3 +23,4 @@ static/data2.json
 *.map
 static/fonts/*
 static/*.js*
+config/*
