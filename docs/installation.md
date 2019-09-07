@@ -20,7 +20,7 @@ $ git clone https://github.com/karlcswanson/micboard.git
 Install micboard software dependencies via npm and pip
 ```
 $ cd micboard/
-$ npm install
+$ npm install --only=prod
 $ pip3 install -r py/requirements.txt
 ```
 
@@ -82,7 +82,7 @@ $ git clone https://github.com/karlcswanson/micboard.git
 Install micboard software dependencies via npm and pip
 ```
 $ cd micboard/
-$ npm install
+$ npm install --only=prod
 $ pip3 install -r py/requirements.txt
 ```
 
