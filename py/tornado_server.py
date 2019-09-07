@@ -23,8 +23,13 @@ def file_list(extension):
 
 # Its not efficecent to get the IP each time, but for now we'll assume server might have dynamic IP
 def localURL():
-    ip = socket.gethostbyname(socket.gethostname())
-    return 'http://{}:{}'.format(ip, config.config_tree['port'])
+    if 'local_url' in config.config_tree:
+        return config.config_tree['local_url']
+    try:
+        ip = socket.gethostbyname(socket.gethostname())
+        return 'http://{}:{}'.format(ip, config.config_tree['port'])
+    except:
+        return 'https://micboard.io'
 
 def micboard_json(network_devices):
     data = []
