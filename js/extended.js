@@ -76,8 +76,7 @@ function initSlotEdit() {
   });
 
   const t = document.getElementById('save-template').content.cloneNode(true);
-  const b = document.getElementsByClassName('flexfix')[0];
-  document.getElementById('micboard').insertBefore(t, b);
+  document.getElementById('micboard').appendChild(t);
 
   $('#slotSave').on('click', () => {
     submitUpdate(slotValues());

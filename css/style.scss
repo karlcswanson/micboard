@@ -15,7 +15,17 @@ html,body {
 .col-sm {
   color: var(--color-white);
   border: 0px;
+  // flex-grow: unset;
   // background-color: var(--color-black);
+}
+
+#micboard {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(256px, 1fr));
+  align-items: flex-start;
+  align-content: flex-start;
+  grid-gap: 16px;
 }
 
 .deskmode #micboard .col-sm {
@@ -246,11 +256,18 @@ canvas.slotgraph {
 
 /* mic storage mode */
 .tvmode {
+  #micboard{
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    grid-gap: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
 
   .col-sm {
     margin-left: 3px;
     margin-right: 3px;
     background: var(--color-black);
+    height: 100vh;
   }
 
   background-color: black;
@@ -281,10 +298,6 @@ canvas.slotgraph {
 
   .info-drawer {
     /* height: 250px; */
-  }
-
-  .flexfix {
-    display: none;
   }
 
   /* electrode & info drawer switch */
@@ -464,7 +477,9 @@ canvas.slotgraph {
   }
 
   .above-mid {
-    padding-top: 38px;
+    padding-top: 46px;
+    padding-left: 8px;
+    padding-right: 8px;
   }
 
   .AUDIO_PEAK {
@@ -475,6 +490,13 @@ canvas.slotgraph {
 
 
 @media (max-width: 512px) {
+  #micboard {
+    grid-gap: 0px;
+    padding-top: 38px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
   .deskmode #micboard .col-sm {
     border-width: 0;
   }
@@ -487,9 +509,9 @@ canvas.slotgraph {
 @media (min-width: 513px) {
 
   .deskmode #micboard .col-sm {
-    margin-bottom: 15px;
+    // margin-bottom: 15px;
     // border-width: 0 8px
-    margin: 8px;
+    // margin: 8px;
   }
 
   .deskmode #micboard .col-sm .mic_name {
@@ -632,11 +654,15 @@ a:link, a:visited, a:hover, a:active {
 
 .sidebar-nav {
   display: none;
-  position: relative;
-  width: 300px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
   height: 100%;
   padding-top: 38px;
   background-color: var(--color-gray);
+  overflow-x: hidden;
+  // transition: .5s;
 }
 
 .row {
@@ -645,14 +671,13 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .sidebar-open #micboard {
-  top: 0px;
-  position: absolute;
-  left: 300px;
-  min-height: 100px;
+  padding-left: 308px;
 }
 
 .sidebar-open .sidebar-nav {
   display: block;
+  width: 300px;
+  transition: .5s;
 }
 
 .slot-prototype-list .col-sm .info-drawer {
@@ -692,10 +717,6 @@ a:link, a:visited, a:hover, a:active {
 
 .nav-link {
   display: unset;
-}
-
-.flexfix {
-  background-color: var(--color-background);
 }
 
 .info-drawer {

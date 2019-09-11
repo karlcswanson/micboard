@@ -156,17 +156,6 @@ function updateDiversity(slotSelector, data) {
   div.innerHTML = newBar;
 }
 
-// https://medium.com/developedbyjohn/equal-width-flex-items-a5ba1bfacb77
-// Shouldn't be fixing this with js, yet here I am.
-function flexFix() {
-  const flexFixHTML = `<div class="col-sm flexfix"></div>
-                       <div class="col-sm flexfix"></div>
-                       <div class="col-sm flexfix"></div>
-                       <div class="col-sm flexfix"></div>`;
-  $('#micboard').append(flexFixHTML);
-}
-
-
 function updateCheck(data, key, callback) {
   if (key in data) {
     if (micboard.transmitters[data.slot][key] !== data[key]) {
@@ -280,7 +269,6 @@ export function renderDisplayList(dl) {
   });
 
   infoToggle();
-  flexFix();
 }
 
 export function renderGroup(group) {
