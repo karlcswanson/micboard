@@ -124,6 +124,13 @@ class GroupUpdateHandler(web.RequestHandler):
         print(data)
         self.write(data)
 
+# https://stackoverflow.com/questions/12031007/disable-static-file-caching-in-tornado
+class NoCacheHandler(web.StaticFileHandler):
+    def set_extra_headers(self, path):
+        # Disable cache
+        self.set_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+
+
 def twisted():
     app = web.Application([
         (r'/', IndexHandler),
@@ -133,7 +140,7 @@ def twisted():
         (r'/api/group', GroupUpdateHandler),
         (r'/api/slot', SlotHandler),
         (r'/static/(.*)', web.StaticFileHandler, {'path': config.app_dir('static')}),
-        (r'/bg/(.*)', web.StaticFileHandler, {'path': config.get_gif_dir()})
+        (r'/bg/(.*)', NoCacheHandler, {'path': config.get_gif_dir()})
     ])
     # https://github.com/tornadoweb/tornado/issues/2308
     asyncio.set_event_loop(asyncio.new_event_loop())
