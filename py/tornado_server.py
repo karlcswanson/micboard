@@ -30,6 +30,7 @@ def localURL():
         return 'http://{}:{}'.format(ip, config.config_tree['port'])
     except:
         return 'https://micboard.io'
+    return 'https://micboard.io'
 
 def micboard_json(network_devices):
     data = []
