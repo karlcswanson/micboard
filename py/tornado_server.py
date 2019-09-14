@@ -9,6 +9,7 @@ from tornado import websocket, web, ioloop, escape
 import shure
 import config
 import discover
+import offline
 
 
 # https://stackoverflow.com/questions/5899497/checking-file-extension
@@ -33,9 +34,13 @@ def localURL():
     return 'https://micboard.io'
 
 def micboard_json(network_devices):
+    offline_devices = offline.offline_json()
     data = []
     for net_device in network_devices:
         data.append(net_device.net_json())
+
+    if offline_devices:
+        data.append(offline_devices)
 
     gifs = file_list('.gif')
     jpgs = file_list('.jpg')

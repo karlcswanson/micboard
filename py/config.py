@@ -7,6 +7,7 @@ import uuid
 from shutil import copyfile
 
 import shure
+import offline
 
 APPNAME = 'micboard'
 
@@ -161,8 +162,13 @@ def read_json_config(file):
         config_tree = json.load(config_file)
 
         for chan in config_tree['slots']:
-            netDev = shure.check_add_network_device(chan['ip'], chan['type'])
-            netDev.add_channel_device(chan)
+            if chan['type'] in ['uhfr', 'qlxd', 'ulxd', 'axtd', 'p10t']:
+                netDev = shure.check_add_network_device(chan['ip'], chan['type'])
+                netDev.add_channel_device(chan)
+
+            elif chan['type'] == 'offline':
+                offline.add_device(chan)
+
 
     gif_dir = get_gif_dir()
     config_tree['micboard_version'] = get_version_number()
@@ -217,7 +223,11 @@ def update_slot(data):
         slot_cfg.pop('extended_name', None)
 
     if save_name:
-        slot_cfg['chan_name_raw'] = shure.get_network_device_by_slot(data['slot']).chan_name_raw
+        try:
+            slot_cfg['chan_name_raw'] = shure.get_network_device_by_slot(data['slot']).chan_name_raw
+        except:
+            pass
+
     elif 'chan_name_raw' in slot_cfg:
         slot_cfg.pop('chan_name_raw')
 

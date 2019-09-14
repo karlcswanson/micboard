@@ -59,6 +59,10 @@ function updateQuality(slotSelector, data) {
 
 function updateFrequency(slotSelector, data) {
   slotSelector.querySelector('p.frequency').innerHTML = data.frequency + ' Hz';
+  if (data.frequency === '000000')
+  {
+    slotSelector.querySelector('.frequency').style.display = 'none';
+  }
 }
 
 function updateID(slotSelector, data) {
