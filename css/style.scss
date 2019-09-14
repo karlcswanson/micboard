@@ -575,11 +575,30 @@ canvas.slotgraph {
   display: none;
 }
 
+.blank .errortype {
+  display: none;
+}
+
+.blank .info-drawer {
+  // background-color: black;
+}
+
 .blank .electrode, .blank .info-drawer {
   display: none !important;
 }
 
-.sidebar-open .blank .mic_name {
+.sidebar-open #micboard .blank {
+  .mic_name {
+    display: block;
+    background: var(--color-black);
+  }
+
+  .electrode, .info-drawer {
+    display: block !important;
+  }
+}
+
+.sidebar-open .sidebar-nav .blank .mic_name {
   display: unset;
 }
 
