@@ -4,10 +4,12 @@ import json
 import logging
 import argparse
 import uuid
+import time
 from shutil import copyfile
 
 import shure
 import offline
+import tornado_server
 
 APPNAME = 'micboard'
 
@@ -148,6 +150,19 @@ def config():
 
 
     logging.info('Starting Micboard {}'.format(config_tree['micboard_version']))
+
+def reconfig():
+    tornado_server.SocketHandler.close_all_ws()
+    config_tree.clear()
+    for device in shure.NetworkDevices:
+        device.socket_disconnect()
+        del device.channels[:]
+
+    del shure.NetworkDevices[:]
+    del offline.OfflineDevices[:]
+
+    time.sleep(2)
+    config()
 
 def get_version_number():
     with open(app_dir('package.json')) as package:

@@ -80,6 +80,11 @@ class SocketHandler(websocket.WebSocketHandler):
         self.clients.remove(self)
 
     @classmethod
+    def close_all_ws(cls):
+        for c in cls.clients:
+            c.close()
+
+    @classmethod
     def broadcast(cls, data):
         for c in cls.clients:
             try:
@@ -130,6 +135,14 @@ class GroupUpdateHandler(web.RequestHandler):
         print(data)
         self.write(data)
 
+class MicboardReloadConfigHandler(web.RequestHandler):
+    def post(self):
+        print("RECONFIG")
+        config.reconfig()
+        self.write("restarting")
+
+
+
 # https://stackoverflow.com/questions/12031007/disable-static-file-caching-in-tornado
 class NoCacheHandler(web.StaticFileHandler):
     def set_extra_headers(self, path):
@@ -145,6 +158,7 @@ def twisted():
         (r'/data.json', JsonHandler),
         (r'/api/group', GroupUpdateHandler),
         (r'/api/slot', SlotHandler),
+        (r'/restart/', MicboardReloadConfigHandler),
         (r'/static/(.*)', web.StaticFileHandler, {'path': config.app_dir('static')}),
         (r'/bg/(.*)', NoCacheHandler, {'path': config.get_gif_dir()})
     ])
