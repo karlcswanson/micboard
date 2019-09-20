@@ -155,7 +155,8 @@ def reconfig():
     tornado_server.SocketHandler.close_all_ws()
     config_tree.clear()
     for device in shure.NetworkDevices:
-        device.socket_disconnect()
+        # device.socket_disconnect()
+        device.disable_metering()
         del device.channels[:]
 
     del shure.NetworkDevices[:]

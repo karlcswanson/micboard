@@ -62,6 +62,8 @@ function updateFrequency(slotSelector, data) {
   if (data.frequency === '000000')
   {
     slotSelector.querySelector('.frequency').style.display = 'none';
+  } else {
+    slotSelector.querySelector('.frequency').style.display = 'block';
   }
 }
 
