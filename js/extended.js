@@ -63,7 +63,13 @@ function initSlotEdit() {
     slotSelector.querySelector('.editzone').style.display = 'block';
     slotSelector.querySelector('.info-drawer').style.display = 'block';
 
-    slotSelector.querySelector('.errortype').innerHTML = 'Slot ' + t.slot + ' CH ' + t.channel;
+    if (t.channel) {
+      slotSelector.querySelector('.errortype').innerHTML = 'Slot ' + t.slot + ' CH ' + t.channel;
+    } else {
+      slotSelector.querySelector('.errortype').innerHTML = 'Slot ' + t.slot;
+    }
+
+
     slotSelector.querySelector('.ip').innerHTML = t.ip;
     slotSelector.querySelector('.rxinfo').innerHTML = t.name_raw;
 
