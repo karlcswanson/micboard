@@ -50,7 +50,7 @@ def discover():
     sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
     while True:
         data, (ip, _) = sock.recvfrom(1024)
-        data = data.decode('UTF-8',errors="ignore")
+        data = data.decode('UTF-8', errors="ignore")
         # print(data)
         type = rx_type(data)
         dcid = dcid_find(data)
@@ -58,11 +58,12 @@ def discover():
             device = dcid_get(dcid)
             channels = RX_CHANNEL_MAP[device['model']]
             if __name__ == '__main__':
-                print('RX: {} at: {} DCID: {} BAND: {} CHANNELS: {}'.format(type,ip,dcid,device['band'],channels))
+                print('RX: {} at: {} DCID: {} BAND: {} CHANNELS: {}'.format(type, ip, dcid, device['band'], channels))
 
-            add_rx(ip,type,channels)
+            add_rx(ip, type, channels)
+        # print(discovered)
 
-def add_rx(ip,rx_type,channels):
+def add_rx(ip, rx_type, channels):
 
     rx = next((x for x in discovered if x['ip'] == ip), None)
 

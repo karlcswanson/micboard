@@ -36,6 +36,7 @@ def localURL():
 def micboard_json(network_devices):
     offline_devices = offline.offline_json()
     data = []
+    discovered = []
     for net_device in network_devices:
         data.append(net_device.net_json())
 
@@ -45,9 +46,10 @@ def micboard_json(network_devices):
     gifs = file_list('.gif')
     jpgs = file_list('.jpg')
     mp4s = file_list('.mp4')
-
     url = localURL()
-    discovered = discover.discovered
+
+    for device in discover.discovered:
+        discovered.append(device)
 
     return json.dumps({
         'receivers': data, 'url': url, 'gif': gifs, 'jpg': jpgs, 'mp4': mp4s,
