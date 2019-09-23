@@ -44,6 +44,11 @@ function updateTXOffset(slotSelector, data) {
   }
 }
 
+
+function updateRuntime(slotSelector, data) {
+  slotSelector.querySelector('p.runtime').innerHTML = data.runtime;
+}
+
 function updateQuality(slotSelector, data) {
   const QualityTable = {
     0: '&#9675;&#9675;&#9675;&#9675;&#9675;',
@@ -188,6 +193,9 @@ function updateSelector(slotSelector, data) {
   updateCheck(data, 'battery', () => {
     updateBattery(slotSelector, data);
   });
+  updateCheck(data, 'runtime', () => {
+    updateRuntime(slotSelector, data);
+  });
   updateCheck(data, 'antenna', () => {
     updateDiversity(slotSelector, data);
   });
@@ -218,6 +226,9 @@ export function updateViewOnly(slotSelector, data) {
   }
   if ('battery' in data) {
     updateBattery(slotSelector, data);
+  }
+  if ('runtime' in data) {
+    updateRuntime(slotSelector, data);
   }
   if ('quality' in data) {
     updateQuality(slotSelector, data);
