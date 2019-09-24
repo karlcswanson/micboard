@@ -101,8 +101,20 @@
         <div class="card card-body bg-light">
           <h3>Micboard Settings</h3>
         </div>
-        <div id='editor_holder' class='medium-12 columns'></div>
-        <div style="height: 50px;"></div>
+
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-4">
+            <h3 class="text-center">Discovered Devices</h3>
+          </div>
+          <div class="col-2"></div>
+          <div class="col-4">
+            <h3 class="text-center">Slot Configuration</h3>
+            <div id="editor_holder"></div>
+          </div>
+          <div class="col-1"></div>
+        </div>
+
         <div class='medium-12 columns'>
           <div class="card card-body bg-light">
             <!-- <form> -->
@@ -223,6 +235,42 @@
       </div>
     </template>
 
+    <template id="config-template">
+      <div class="cfg-row">
+        <form>
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control cfg-ip" placeholder="IP Address">
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <select class="form-control cfg-type" id="exampleFormControlSelect1">
+                  <option>atxd</option>
+                  <option>ulxd</option>
+                  <option>qlxd</option>
+                  <option>uhfr</option>
+                  <option>p10t</option>
+                  <option>offline</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <select class="form-control cfg-channel" id="exampleFormControlSelect1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+            </div>
+            <div class="col navbar-dark">
+              <span class="navbar-toggler-icon" style="color:black;"></span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </template>
     <!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 

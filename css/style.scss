@@ -654,11 +654,15 @@ canvas.slotgraph {
 
 .settings {
   display: none;
-  background-color: var(--color-blue);
+  // background-color: var(--color-blue);
   color: var(--color-black);
-  margin-left: -15px;
-  margin-right: -15px;
-  padding: 3em;
+  // margin-left: -15px;
+  // margin-right: -15px;
+  // padding: 3em;
+}
+
+#editor_holder {
+  background-color: var(--color-blue);
 }
 
 .navbar-toggler {
