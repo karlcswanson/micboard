@@ -1,6 +1,6 @@
 'use strict';
 
-import { Swappable, Plugins } from '@shopify/draggable';
+import { Sortable, Plugins } from '@shopify/draggable';
 
 import { micboard } from './app.js';
 import { postJSON } from './data.js';
@@ -24,22 +24,39 @@ function getMaxSlot() {
 }
 
 
+function updateSlotID() {
+  const configList = document.querySelectorAll('#editor_holder .cfg-row');
+  let i = 1;
+  configList.forEach((t) => {
+    t.querySelector('.slot-number span').innerHTML = 'slot ' + i;
+    t.id = 'editslot-' + i;
+    i += 1;
+    console.log(i);
+  });
+}
+
 function dragSetup() {
-  const containerSelector = '.slot_edit_holder';
+  const containerSelector = '#discovered_list, #editor_holder';
   const containers = document.querySelectorAll(containerSelector);
 
   if (containers.length === 0) {
     return false;
   }
 
-  const swappable = new Swappable(containers, {
+  const sortable = new Sortable(containers, {
     draggable: '.cfg-row',
     handle: '.navbar-dark',
+    mirror: {
+      constrainDimensions: true,
+    },
+    plugins: [Plugins.ResizeMirror],
   });
 
-  swappable.on('drag:start', () => console.log('drag:start'));
-  swappable.on('drag:move', () => console.log('drag:move'));
-  swappable.on('drag:stop', () => console.log('drag:stop'));
+  sortable.on('drag:start', () => console.log('drag:start'));
+  sortable.on('drag:move', () => console.log('drag:move'));
+  sortable.on('sortable:stop', function() {
+    setTimeout(updateSlotID, 125);
+  });
 }
 
 function renderSlotList() {
@@ -58,30 +75,19 @@ function renderSlotList() {
     t = document.getElementById(slotID);
     updateEditEntry(t, e);
   });
-
-  $('.cfg-type').change(function() {
-    if ($(this).val() === 'offline') {
-      $(this).closest('.cfg-row').find('.cfg-ip').hide()
-      $(this).closest('.cfg-row').find('.cfg-channel').hide();
-    } else {
-      $(this).closest('.cfg-row').find('.cfg-ip').show();
-      $(this).closest('.cfg-row').find('.cfg-channel').show();
-    }
-  }).change();
-
 }
 
 
-
-
-function renderConfigList() {
-  const config = micboard.config.slots;
+function renderDiscoverdDeviceList() {
+  const discovered = micboard.discovered;
   let t;
-  config.forEach((e) => {
-    t = document.getElementById('config-template').content.cloneNode(true);
-    console.log(e);
-    updateEditEntry(t, e);
-    document.getElementById('editor_holder').append(t);
+  discovered.forEach((e) => {
+    for (let i = 1; i <= e.channels; i += 1) {
+      t = document.getElementById('config-slot-template').content.cloneNode(true);
+      e.channel = i;
+      updateEditEntry(t, e);
+      document.getElementById('discovered_list').append(t);
+    }
   });
 }
 
@@ -89,8 +95,20 @@ function renderConfigList() {
 export function initConfigEditor() {
   $('#micboard').hide();
   $('.settings').show();
-  // renderConfigList();
-  console.log("Max Slot: " + getMaxSlot());
+
   renderSlotList();
+  renderDiscoverdDeviceList();
+
   dragSetup();
+
+  $('.cfg-type').change(function() {
+    const type = $(this).val();
+    if (type === 'offline' || type === '') {
+      $(this).closest('.cfg-row').find('.cfg-ip').hide()
+      $(this).closest('.cfg-row').find('.cfg-channel').hide();
+    } else {
+      $(this).closest('.cfg-row').find('.cfg-ip').show();
+      $(this).closest('.cfg-row').find('.cfg-channel').show();
+    }
+  }).change();
 }
