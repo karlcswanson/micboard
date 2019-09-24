@@ -235,16 +235,17 @@
       </div>
     </template>
 
-    <template id="config-template">
-      <div class="cfg-row">
-        <form>
-          <div class="row">
-            <div class="col">
+    <template id="config-slot-template">
+      <div class="row">
+        <div class="col-2 slot-number"><span></span></div>
+        <div class="col-10 slot_edit_holder">
+          <div class="cfg-row row">
+            <div class="col-6">
               <input type="text" class="form-control cfg-ip" placeholder="IP Address">
             </div>
-            <div class="col">
+            <div class="col-3">
               <div class="form-group">
-                <select class="form-control cfg-type" id="exampleFormControlSelect1">
+                <select class="form-control cfg-type">
                   <option>atxd</option>
                   <option>ulxd</option>
                   <option>qlxd</option>
@@ -254,9 +255,9 @@
                 </select>
               </div>
             </div>
-            <div class="col">
+            <div class="col-2">
               <div class="form-group">
-                <select class="form-control cfg-channel" id="exampleFormControlSelect1">
+                <select class="form-control cfg-channel">
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -264,11 +265,47 @@
                 </select>
               </div>
             </div>
-            <div class="col navbar-dark">
-              <span class="navbar-toggler-icon" style="color:black;"></span>
+            <div class="col-1 navbar-dark">
+              <span class="navbar-toggler-icon"></span>
             </div>
           </div>
-        </form>
+
+
+
+        </div>
+      </div>
+    </template>
+
+    <template id="config-template">
+      <div class="cfg-row row">
+        <div class="col">
+          <input type="text" class="form-control cfg-ip" placeholder="IP Address">
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <select class="form-control cfg-type">
+              <option>atxd</option>
+              <option>ulxd</option>
+              <option>qlxd</option>
+              <option>uhfr</option>
+              <option>p10t</option>
+              <option>offline</option>
+            </select>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <select class="form-control cfg-channel">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+          </div>
+        </div>
+        <div class="col navbar-dark">
+          <span class="navbar-toggler-icon"></span>
+        </div>
       </div>
     </template>
     <!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
