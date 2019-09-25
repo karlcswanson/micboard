@@ -5,6 +5,7 @@ import { Sortable, Plugins } from '@shopify/draggable';
 import { micboard } from './app.js';
 import { postJSON } from './data.js';
 
+const NET_DEVICE_TYPES = ['axtd', 'ulxd', 'qlxd', 'uhfr', 'p10t'];
 
 function updateEditEntry(slotSelector, data) {
   slotSelector.querySelector('.cfg-ip').value = data.ip;
@@ -90,6 +91,31 @@ function renderDiscoverdDeviceList() {
   });
 }
 
+function generateJSONConfig() {
+  const slotList = [];
+  const configBoard = document.getElementById('editor_holder').getElementsByClassName('cfg-row');
+
+  for (let i = 0; i < configBoard.length; i += 1) {
+    const slot = parseInt(configBoard[i].id.replace(/[^\d.]/g, ''), 10);
+    if (slot && (slotList.indexOf(slot) === -1)) {
+      const output = {};
+
+      output.slot = slot;
+      output.type = configBoard[i].querySelector('.cfg-type').value;
+
+      if (NET_DEVICE_TYPES.indexOf(output.type) > -1) {
+        output.ip = configBoard[i].querySelector('.cfg-ip').value;
+        output.channel = parseInt(configBoard[i].querySelector('.cfg-channel').value, 10);
+      }
+
+      if (output.type) {
+        slotList.push(output);
+      }
+    }
+  }
+  return slotList;
+}
+
 
 export function initConfigEditor() {
   $('#micboard').hide();
@@ -110,4 +136,8 @@ export function initConfigEditor() {
       $(this).closest('.cfg-row').find('.cfg-channel').show();
     }
   }).change();
+
+  $('#save').click(function() {
+    console.log(generateJSONConfig());
+  });
 }
