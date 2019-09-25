@@ -151,9 +151,14 @@ def config():
 
     logging.info('Starting Micboard {}'.format(config_tree['micboard_version']))
 
-def reconfig():
+def reconfig(slots):
     tornado_server.SocketHandler.close_all_ws()
+
+    config_tree['slots'] = slots
+    save_current_config()
+
     config_tree.clear()
+
     for device in shure.NetworkDevices:
         # device.socket_disconnect()
         device.disable_metering()
@@ -163,6 +168,7 @@ def reconfig():
     del offline.OfflineDevices[:]
 
     time.sleep(2)
+
     config()
 
 def get_version_number():

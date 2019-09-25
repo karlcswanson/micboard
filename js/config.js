@@ -148,7 +148,10 @@ export function initConfigEditor() {
   });
 
   $('#save').click(function() {
-    console.log(generateJSONConfig());
+    const data = generateJSONConfig();
+    const url = 'api/config';
+    console.log(data);
+    postJSON(url, data, window.location.reload());
   });
 
   $('#add-config-row').click(function() {

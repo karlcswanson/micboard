@@ -126,6 +126,15 @@ class SlotHandler(web.RequestHandler):
             config.update_slot(slot_update)
             print(slot_update)
 
+class ConfigHandler(web.RequestHandler):
+    def get(self):
+        self.write("hi - slot")
+
+    def post(self):
+        data = json.loads(self.request.body)
+        print(data)
+        self.write('{}')
+        config.reconfig(data)
 
 class GroupUpdateHandler(web.RequestHandler):
     def get(self):
@@ -160,7 +169,8 @@ def twisted():
         (r'/data.json', JsonHandler),
         (r'/api/group', GroupUpdateHandler),
         (r'/api/slot', SlotHandler),
-        (r'/restart/', MicboardReloadConfigHandler),
+        (r'/api/config', ConfigHandler),
+        # (r'/restart/', MicboardReloadConfigHandler),
         (r'/static/(.*)', web.StaticFileHandler, {'path': config.app_dir('static')}),
         (r'/bg/(.*)', NoCacheHandler, {'path': config.get_gif_dir()})
     ])
