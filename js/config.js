@@ -80,15 +80,33 @@ function renderSlotList() {
   });
 }
 
+
+function discoverFilter(item, currentSlotList) {
+  let out = true;
+  currentSlotList.forEach((e) => {
+    if ((e.ip === item.ip) && (e.type === item.type) && (e.channel === item.channel)) {
+      out = false;
+    }
+  });
+  return out;
+}
+
 function renderDiscoverdDeviceList() {
   const discovered = micboard.discovered;
+  const currentSlotList = generateJSONConfig();
+
   let t;
+
+
+
   discovered.forEach((e) => {
     for (let i = 1; i <= e.channels; i += 1) {
-      t = document.getElementById('config-slot-template').content.cloneNode(true);
-      e.channel = i;
-      updateEditEntry(t, e);
-      document.getElementById('discovered_list').append(t);
+      if (discoverFilter(e, currentSlotList)) {
+        t = document.getElementById('config-slot-template').content.cloneNode(true);
+        e.channel = i;
+        updateEditEntry(t, e);
+        document.getElementById('discovered_list').append(t);
+      }
     }
   });
 }
