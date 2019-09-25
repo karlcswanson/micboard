@@ -659,18 +659,78 @@ canvas.slotgraph {
   // margin-left: -15px;
   // margin-right: -15px;
   // padding: 3em;
+  padding-top: 76px;
 }
 
-#editor_holder {
-  background-color: var(--color-blue);
+.settings .config-header {
+  background-color: var(--color-black);
+  padding: .75rem 1.25rem;
+  border: 1px solid var(--color-gray);
+  margin-left: -5px;
+  margin-right: -5px;
+  border-radius: 12px 12px 0 0;
 }
+
+.settings .config-header h3 {
+  padding: 1em;
+  color: var(--color-white);
+}
+
+.settings .config-footer {
+  background-color: var(--color-black);
+  padding: .75rem 1.25rem;
+  border: 1px solid var(--color-gray);
+  margin-left: -5px;
+  margin-right: -5px;
+  border-radius: 0 0 12px 12px;
+}
+
+
+#discovered_list input, #discovered_list select{
+  pointer-events: none;
+}
+
+
 
 #discovered_list .slot-number {
   display: none;
 }
 
-.config-row {
-  background-color: var(--color-blue);
+.slot-number {
+  color: var(--color-white);
+  font-weight: bold;
+}
+
+.cfg-row {
+  background-color: var(--color-black);
+  padding: .75rem 1.25rem;
+  border: 1px solid var(--color-gray);
+  font-family: 'IBM Plex Sans';
+  font-weight: 300;
+}
+
+.cfg-row input, .cfg-row input:focus {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-color: var(--color-gray);
+  font-style: italic;
+}
+
+
+
+.cfg-row select {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-color: var(--color-gray);
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.cfg-row select:focus, .cfg-row select:hover {
+    box-shadow: 0 0 0 3px -moz-mac-focusring;
+    color: var(--color-white);
+    background-color: var(--color-black);
 }
 
 .navbar-toggler {

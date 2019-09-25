@@ -8,7 +8,9 @@ import { postJSON } from './data.js';
 const NET_DEVICE_TYPES = ['axtd', 'ulxd', 'qlxd', 'uhfr', 'p10t'];
 
 function updateEditEntry(slotSelector, data) {
-  slotSelector.querySelector('.cfg-ip').value = data.ip;
+  if (data.ip) {
+    slotSelector.querySelector('.cfg-ip').value = data.ip;
+  }
   slotSelector.querySelector('.cfg-type').value = data.type;
   slotSelector.querySelector('.cfg-channel').value = data.channel;
   console.log(data);
@@ -30,7 +32,7 @@ function updateSlotID() {
   const configList = document.querySelectorAll('#editor_holder .cfg-row');
   let i = 1;
   configList.forEach((t) => {
-    t.querySelector('.slot-number span').innerHTML = 'slot ' + i;
+    t.querySelector('.slot-number label').innerHTML = 'slot ' + i;
     t.id = 'editslot-' + i;
     i += 1;
   });
@@ -66,7 +68,7 @@ function renderSlotList() {
   let t;
   for (let i = 1; i <= slotCount; i += 1) {
     t = document.getElementById('config-slot-template').content.cloneNode(true);
-    t.querySelector('span').innerHTML = 'slot ' + i;
+    t.querySelector('label').innerHTML = 'slot ' + i;
     t.querySelector('.cfg-row').id = 'editslot-' + i;
     document.getElementById('editor_holder').append(t);
   }
@@ -117,6 +119,19 @@ function generateJSONConfig() {
 }
 
 
+function updateHiddenSlots() {
+  $('.cfg-type').each(function() {
+    const type = $(this).val();
+    if (type === 'offline' || type === '') {
+      $(this).closest('.cfg-row').find('.cfg-ip').hide()
+      $(this).closest('.cfg-row').find('.cfg-channel').hide();
+    } else {
+      $(this).closest('.cfg-row').find('.cfg-ip').show();
+      $(this).closest('.cfg-row').find('.cfg-channel').show();
+    }
+  });
+}
+
 export function initConfigEditor() {
   $('#micboard').hide();
   $('.settings').show();
@@ -126,18 +141,20 @@ export function initConfigEditor() {
 
   dragSetup();
 
-  $('.cfg-type').change(function() {
-    const type = $(this).val();
-    if (type === 'offline' || type === '') {
-      $(this).closest('.cfg-row').find('.cfg-ip').hide()
-      $(this).closest('.cfg-row').find('.cfg-channel').hide();
-    } else {
-      $(this).closest('.cfg-row').find('.cfg-ip').show();
-      $(this).closest('.cfg-row').find('.cfg-channel').show();
-    }
-  }).change();
+  updateHiddenSlots();
+
+  $(document).on('change', '.cfg-type', function() {
+    updateHiddenSlots();
+  });
 
   $('#save').click(function() {
     console.log(generateJSONConfig());
+  });
+
+  $('#add-config-row').click(function() {
+    const t = document.getElementById('config-slot-template').content.cloneNode(true);
+    document.getElementById('editor_holder').append(t);
+    updateSlotID();
+    updateHiddenSlots();
   });
 }
