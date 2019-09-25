@@ -665,6 +665,10 @@ canvas.slotgraph {
   background-color: var(--color-blue);
 }
 
+#discovered_list .slot-number {
+  display: none;
+}
+
 .config-row {
   background-color: var(--color-blue);
 }

@@ -9,7 +9,8 @@ import { postJSON } from './data.js';
 function updateEditEntry(slotSelector, data) {
   slotSelector.querySelector('.cfg-ip').value = data.ip;
   slotSelector.querySelector('.cfg-type').value = data.type;
-  slotSelector.querySelector('.cfg-channel').value = data.type;
+  slotSelector.querySelector('.cfg-channel').value = data.channel;
+  console.log(data);
 }
 
 
@@ -31,7 +32,6 @@ function updateSlotID() {
     t.querySelector('.slot-number span').innerHTML = 'slot ' + i;
     t.id = 'editslot-' + i;
     i += 1;
-    console.log(i);
   });
 }
 
@@ -76,7 +76,6 @@ function renderSlotList() {
     updateEditEntry(t, e);
   });
 }
-
 
 function renderDiscoverdDeviceList() {
   const discovered = micboard.discovered;
