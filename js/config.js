@@ -101,9 +101,9 @@ function renderDiscoverdDeviceList() {
 
   discovered.forEach((e) => {
     for (let i = 1; i <= e.channels; i += 1) {
+      e.channel = i;
       if (discoverFilter(e, currentSlotList)) {
         t = document.getElementById('config-slot-template').content.cloneNode(true);
-        e.channel = i;
         updateEditEntry(t, e);
         document.getElementById('discovered_list').append(t);
       }
