@@ -40,7 +40,7 @@ function openLogFile() {
 
 
 const createPyProc = () => {
-  const script = path.join(__dirname, 'dist', 'micboard-service').replace('app.asar', 'app.asar.unpacked');
+  const script = path.join(__dirname, 'dist', 'micboard-service', 'micboard-service').replace('app.asar', 'app.asar.unpacked');
   pyProc = child.spawn(script, [], {
     stdio: ['ignore', 'inherit', 'inherit'],
   });
