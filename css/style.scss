@@ -696,6 +696,10 @@ canvas.slotgraph {
   display: none;
 }
 
+#discovered_list .del-btn {
+  display: none;
+}
+
 .slot-number {
   color: var(--color-white);
   font-weight: bold;

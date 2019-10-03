@@ -158,7 +158,6 @@ def reconfig(slots):
     save_current_config()
 
     config_tree.clear()
-
     for device in shure.NetworkDevices:
         # device.socket_disconnect()
         device.disable_metering()
@@ -170,6 +169,8 @@ def reconfig(slots):
     time.sleep(2)
 
     config()
+    for rx in shure.NetworkDevices:
+        rx.socket_connect()
 
 def get_version_number():
     with open(app_dir('package.json')) as package:

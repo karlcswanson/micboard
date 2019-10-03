@@ -97,7 +97,7 @@ function renderDiscoverdDeviceList() {
 
   let t;
 
-
+  document.getElementById('discovered_list').innerHTML = '';
 
   discovered.forEach((e) => {
     for (let i = 1; i <= e.channels; i += 1) {
@@ -170,6 +170,12 @@ export function initConfigEditor() {
     const url = 'api/config';
     console.log(data);
     postJSON(url, data, window.location.reload());
+  });
+
+  $('.del-btn').click(function() {
+    $(this).closest('.cfg-row').remove();
+    updateSlotID();
+    renderDiscoverdDeviceList();
   });
 
   $('#add-config-row').click(function() {
