@@ -69,6 +69,7 @@ app.on('ready', () => {
     { label: 'About', click() { createWindow('http://localhost:8058/about'); } },
     { type: 'separator' },
     { label: 'Launch Micboard', click() { shell.openExternal('http://localhost:8058'); } },
+    { label: 'Edit Configuration', click() { shell.openExternal('http://localhost:8058/#settings=true'); } },
     { label: 'Open Configuration Directory', click() { openConfigFolder('config.json'); } },
     { type: 'separator' },
     { label: 'Restart Micboard Server', click() { restartMicboardServer(); } },
