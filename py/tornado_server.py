@@ -48,7 +48,7 @@ def micboard_json(network_devices):
     mp4s = file_list('.mp4')
     url = localURL()
 
-    for device in discover.discovered:
+    for device in discover.time_filterd_discovered_list():
         discovered.append(device)
 
     return json.dumps({
