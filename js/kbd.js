@@ -25,6 +25,8 @@ export function keybindings() {
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
+      micboard.settingsMode = 'NONE';
+      updateHash();
       window.location.reload();
     }
     if ($('.settings').is(':visible')) {
@@ -103,6 +105,7 @@ export function keybindings() {
 
     if (e.key === 's') {
       initConfigEditor();
+      updateHash();
     }
 
     if (e.key === 'q') {

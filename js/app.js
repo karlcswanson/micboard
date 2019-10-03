@@ -13,6 +13,7 @@ import { slotEditToggle } from './extended.js';
 import { keybindings } from './kbd.js';
 import { setBackground, setInfoDrawer } from './display.js';
 import { setTimeMode } from './chart-smoothie.js';
+import { initConfigEditor } from './config.js';
 
 import '../css/colors.scss';
 import '../css/style.scss';
@@ -113,6 +114,11 @@ function mapGroups() {
     $('.collapse').collapse('hide');
   });
 
+  $('a#go-config').click(() => {
+    initConfigEditor();
+    $('.collapse').collapse('hide');
+  });
+
   $('a#go-groupedit').click(() => {
     if (micboard.group !== 0) {
       groupEditToggle();
@@ -175,6 +181,9 @@ export function updateHash() {
   }
   if (micboard.backgroundMode !== 'NONE') {
     hash += '&bgmode=' + micboard.backgroundMode;
+  }
+  if (micboard.settingsMode === 'CONFIG') {
+    hash = '#settings=true'
   }
   hash = hash.replace('&', '');
   history.replaceState(undefined, undefined, hash);
@@ -248,5 +257,12 @@ $(document).ready(() => {
     initialMap();
   } else {
     initialMap(initLiveData);
+  }
+
+  if (micboard.url.settings === 'true') {
+    setTimeout(() => {
+      initConfigEditor();
+      updateHash();
+    }, 100);
   }
 });

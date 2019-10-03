@@ -66,6 +66,9 @@ function renderSlotList() {
   const config = micboard.config.slots;
   const slotCount = getMaxSlot() + 4;
   let t;
+
+  document.getElementById('editor_holder').innerHTML = '';
+
   for (let i = 1; i <= slotCount; i += 1) {
     t = document.getElementById('config-slot-template').content.cloneNode(true);
     t.querySelector('label').innerHTML = 'slot ' + i;
@@ -151,6 +154,7 @@ function updateHiddenSlots() {
 }
 
 export function initConfigEditor() {
+  micboard.settingsMode = 'CONFIG';
   $('#micboard').hide();
   $('.settings').show();
 
