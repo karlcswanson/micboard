@@ -2,7 +2,7 @@
 
 import { Sortable, Plugins } from '@shopify/draggable';
 
-import { micboard } from './app.js';
+import { micboard, updateHash } from './app.js';
 import { postJSON } from './data.js';
 
 const NET_DEVICE_TYPES = ['axtd', 'ulxd', 'qlxd', 'uhfr', 'p10t'];
@@ -173,7 +173,11 @@ export function initConfigEditor() {
     const data = generateJSONConfig();
     const url = 'api/config';
     console.log(data);
-    postJSON(url, data, window.location.reload());
+    postJSON(url, data, () => {
+      micboard.settingsMode = 'NONE';
+      updateHash();
+      window.location.reload();
+    });
   });
 
   $('.del-btn').click(function() {
