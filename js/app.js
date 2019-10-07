@@ -93,22 +93,20 @@ function groupTableBuilder(data) {
   return plist;
 }
 
-function mapGroups() {
-  const div = document.getElementById('grouplist');
+export function updateNavLinks() {
   let str = '';
-
-  // for (var p in micboard.groups) {
-  //   str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'">' + p + ': ' + micboard.groups[p]['title'] + '</a></p>';
-  // }
-  for (let i = 1; i <= 9; i++) {
+  for (let i = 1; i <= 9; i += 1) {
+    str = '';
     if (micboard.groups[i]) {
-      str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ i +'">' + i + ': ' + micboard.groups[i]['title'] + '</a></p>';
-    }  else {
-      str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ i +'">' + i + ':</a></p>';
+      str = `${i}: ${micboard.groups[i].title}`;
+    } else {
+      str = `${i}:`;
     }
+    document.getElementById(`go-group-${i}`).innerHTML = str;
   }
-  div.innerHTML += str;
+}
 
+function mapGroups() {
   $('a#go-extended').click(() => {
     slotEditToggle();
     $('.collapse').collapse('hide');
@@ -134,6 +132,8 @@ function mapGroups() {
       $('.collapse').collapse('hide');
     });
   });
+
+  updateNavLinks();
 }
 
 // https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js
