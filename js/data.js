@@ -83,7 +83,7 @@ function wsConnect() {
 
     if (data['group-update']) {
       data['group-update'].forEach(updateGroup);
-      mapGroups();
+      updateNavLinks();
     }
   };
 
