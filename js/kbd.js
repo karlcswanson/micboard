@@ -105,7 +105,6 @@ export function keybindings() {
 
     if (e.key === 's') {
       initConfigEditor();
-      updateHash();
     }
 
     if (e.key === 'q') {

@@ -289,6 +289,10 @@ export function renderDisplayList(dl) {
 }
 
 export function renderGroup(group) {
+  if (micboard.settingsMode === 'CONFIG') {
+    $('#micboard').show();
+    $('.settings').hide();
+  }
   micboard.group = group;
   updateHash();
   if (group === 0) {

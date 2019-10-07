@@ -155,6 +155,7 @@ function updateHiddenSlots() {
 
 export function initConfigEditor() {
   micboard.settingsMode = 'CONFIG';
+  updateHash();
   $('#micboard').hide();
   $('.settings').show();
 
