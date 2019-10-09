@@ -147,5 +147,14 @@ Names can be imported from spreadsheets and text files with the **Bulk Loader**.
 2. Paste a list of names into the bulk box.
 3. Click **Load Bulk Names** to load names from the imported list.  Make any necessary edits in the extended editor and **Save**.
 
+## Additional Configuration Options
+
+### Local URL
+By default, micboard displays the IP address of the machine as the QR code.  For machines with multiple NICs, you can specify a hostname or IP to be shown by setting the `local_url` key in `config.json`
+
+```
+  "local_url": "http://micboard.io:9000",
+```
+
 ## Notes
 <a name="mp4">1</a>: At this time, video backgrounds are only supported on Safari
