@@ -7,6 +7,7 @@
 - Custom QR code support using `local_url` config key.
 - Offline device type for devices like PSM900s that need slots, but may not have network connectivity.
 - docker-compose for simplified docker deployment.
+- Added color guide to help HUD
 
 
 ### Changed
@@ -15,6 +16,7 @@
 
 
 ### Fixed
+- Disable caching for background images.
 - Updated Dockerfile to Node 10.
 - Invalid 'p10t' device type in configuration documentation.
 - Resolved issue with PyInstaller that required the Mac app to be occasionally restarted.

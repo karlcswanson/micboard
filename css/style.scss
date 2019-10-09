@@ -630,7 +630,7 @@ canvas.slotgraph {
 
 }
 
-.electrode.AUDIO_PEAK, .elinfo00 .AUDIO_PEAK, .elinfo10 .AUDIO_PEAK {
+.electrode.AUDIO_PEAK, .elinfo00 .AUDIO_PEAK, .elinfo10 .AUDIO_PEAK, #hud .AUDIO_PEAK {
   animation: pulse .5s infinite;
 }
 
@@ -855,4 +855,31 @@ a:link, a:visited, a:hover, a:active {
   font-weight: 300;
   border-radius: 12px;
   padding: 1em;
+}
+
+.keyboard-guide {
+  color: var(--color-black);
+}
+
+.color-guide-color p {
+  font-style: italic;
+}
+
+.color-guide-color {
+  color: var(--color-white);
+  font-family: 'IBM Plex Sans';
+  font-weight: 300;
+  padding: .75em;
+  border-radius: 12px;
+  margin: .45em;
+}
+
+.color-guide-color h3 {
+  font-family: 'IBM Plex Sans';
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.color-guide-color p {
+  font-style: italic;
+  margin-bottom: 0px;
 }
