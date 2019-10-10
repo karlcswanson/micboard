@@ -160,6 +160,7 @@ export function initConfigEditor() {
   $('.settings').show();
 
   renderSlotList();
+  // updateSlotID();
   renderDiscoverdDeviceList();
 
   dragSetup();
@@ -184,6 +185,18 @@ export function initConfigEditor() {
   $('.del-btn').click(function() {
     $(this).closest('.cfg-row').remove();
     updateSlotID();
+    renderDiscoverdDeviceList();
+  });
+
+  $('#clear-config').click(function() {
+    $('#editor_holder .cfg-row').remove();
+    let t;
+    for (let i = 0; i < 4; i += 1) {
+      t = document.getElementById('config-slot-template').content.cloneNode(true);
+      document.getElementById('editor_holder').append(t);
+    }
+    updateSlotID();
+    updateHiddenSlots();
     renderDiscoverdDeviceList();
   });
 
