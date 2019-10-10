@@ -142,8 +142,11 @@ function generateJSONConfig() {
 
 function addAllDiscoveredDevices() {
   const devices = document.querySelectorAll('#discovered_list .cfg-row');
+  const cfg_list = document.getElementById('editor_holder');
+  const top = cfg_list.querySelector('.cfg-row');
+
   devices.forEach((e) => {
-    document.querySelector('#editor_holder').appendChild(e);
+    cfg_list.insertBefore(e, top);
   });
   updateSlotID();
 }
@@ -200,7 +203,7 @@ export function initConfigEditor() {
     });
   });
 
-  $('.del-btn').click(function() {
+  $('#editor_holder').on('click', '.del-btn', function() {
     $(this).closest('.cfg-row').remove();
     updateSlotID();
     renderDiscoverdDeviceList();
