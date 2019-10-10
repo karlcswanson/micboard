@@ -10,26 +10,32 @@ const batterySample = {
   0: {
     battery: 255,
     status: ['CRITICAL', 'UNASSIGNED', 'RX_COM_ERROR', 'TX_COM_ERROR'],
+    runtime_min_max: [0, 0],
   },
   1: {
     battery: 1,
     status: ['CRITICAL', 'PREV_CRITICAL'],
+    runtime_min_max: [0, 1],
   },
   2: {
     battery: 2,
     status: ['CRITICAL', 'PREV_CRITICAL'],
+    runtime_min_max: [1, 2],
   },
   3: {
     battery: 3,
     status: ['REPLACE', 'PREV_REPLACE'],
+    runtime_min_max: [3, 4],
   },
   4: {
     battery: 4,
     status: ['GOOD', 'GOOD', 'PREV_GOOD', 'UNASSIGNED'],
+    runtime_min_max: [5, 6],
   },
   5: {
     battery: 5,
     status: ['GOOD', 'GOOD', 'PREV_GOOD'],
+    runtime_min_max: [7, 9],
   },
 };
 
@@ -128,6 +134,13 @@ function randomRfGenerator() {
   return getRandomInt(0, 50);
 }
 
+
+function randomRuntimeGenerator(battery_minmax) {
+  const hours = getRandomInt(battery_minmax[0], battery_minmax[1]);
+  const mins = getRandomInt(0, 59).toString().padStart(2, '0');
+  return `${hours}:${mins}`;
+}
+
 function randomBatteryGenerator() {
   const batt_index = getRandomInt(0, 5);
   const battery = batterySample[batt_index];
@@ -137,6 +150,7 @@ function randomBatteryGenerator() {
   const res = {
     battery: battery.battery,
     status: battery.status[status_index],
+    runtime: randomRuntimeGenerator(battery.runtime_min_max),
   };
   return res;
 }
@@ -226,6 +240,7 @@ function meteteredRandomDataGenerator(update) {
     case 'battery':
     case 'status': data.battery = battery.battery;
       data.status = battery.status;
+      data.runtime = battery.runtime;
       break;
     default:
       break;
