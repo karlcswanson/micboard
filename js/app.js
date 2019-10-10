@@ -225,6 +225,12 @@ function initialMap(callback) {
         micboard.config = data.config;
         mapGroups();
 
+        if (micboard.config.slots.length < 1) {
+          setTimeout(function() {
+            initConfigEditor();
+          }, 125);
+        }
+
         if (micboard.url.demo !== 'true') {
           dataFilterFromList(data);
         }
