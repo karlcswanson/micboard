@@ -18,29 +18,5 @@
 	  }
   ],
   "slots": [
-    {
-      "slot": 1,
-      "ip" : "192.0.2.11",
-      "channel": 1,
-      "type": "qlxd"
-    },
-    {
-      "slot": 2,
-      "ip" : "192.0.2.12",
-      "channel": 1,
-      "type": "qlxd"
-    },
-    {
-      "slot": 3,
-      "ip" : "192.0.2.13",
-      "channel": 1,
-      "type": "qlxd"
-    },
-    {
-      "slot": 4,
-      "ip" : "192.0.2.14",
-      "channel": 1,
-      "type": "qlxd"
-    }
   ]
 }
