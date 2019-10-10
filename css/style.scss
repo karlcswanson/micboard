@@ -700,6 +700,10 @@ canvas.slotgraph {
   display: none;
 }
 
+#cfg-discovered-col {
+  padding-bottom: 1em;
+}
+
 .settings .navbar-toggler-icon {
   height: 100%;
 }
@@ -711,7 +715,7 @@ canvas.slotgraph {
 
 .cfg-row {
   background-color: var(--color-black);
-  padding: .75rem 1.25rem;
+  padding: 0 1.25rem .75rem 1.25rem;
   border: 1px solid var(--color-gray);
   font-family: 'IBM Plex Sans';
   font-weight: 300;
@@ -739,6 +743,10 @@ canvas.slotgraph {
     box-shadow: 0 0 0 3px -moz-mac-focusring;
     color: var(--color-white);
     background-color: var(--color-black);
+}
+
+.cfg-row-form {
+  padding-top: .75rem;
 }
 
 .navbar-toggler {

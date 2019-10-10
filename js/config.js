@@ -55,9 +55,9 @@ function dragSetup() {
     plugins: [Plugins.ResizeMirror],
   });
 
-  sortable.on('drag:start', () => console.log('drag:start'));
-  sortable.on('drag:move', () => console.log('drag:move'));
-  sortable.on('sortable:stop', function() {
+  // sortable.on('sortable:start', () => console.log('drag:start'));
+  // sortable.on('sortable:move', () => console.log('drag:move'));
+  sortable.on('drag:stop', () => {
     setTimeout(updateSlotID, 125);
   });
 }
@@ -140,6 +140,14 @@ function generateJSONConfig() {
 }
 
 
+function addAllDiscoveredDevices() {
+  const devices = document.querySelectorAll('#discovered_list .cfg-row');
+  devices.forEach((e) => {
+    document.querySelector('#editor_holder').appendChild(e);
+  });
+  updateSlotID();
+}
+
 function updateHiddenSlots() {
   $('.cfg-type').each(function() {
     const type = $(this).val();
@@ -154,21 +162,31 @@ function updateHiddenSlots() {
 }
 
 export function initConfigEditor() {
+  if (micboard.settingsMode === 'CONFIG') {
+    console.log('oh that explains it!')
+    return;
+  }
+
   micboard.settingsMode = 'CONFIG';
   updateHash();
   $('#micboard').hide();
   $('.settings').show();
 
   renderSlotList();
-  // updateSlotID();
   renderDiscoverdDeviceList();
 
   dragSetup();
+
+
 
   updateHiddenSlots();
 
   $(document).on('change', '.cfg-type', function() {
     updateHiddenSlots();
+  });
+
+  $('#add-discovered').click(function() {
+    addAllDiscoveredDevices();
   });
 
   $('#save').click(function() {

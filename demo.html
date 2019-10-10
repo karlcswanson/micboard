@@ -172,6 +172,15 @@
             </div>
 
             <div id="discovered_list"></div>
+            <div class="config-footer">
+              <div class="form-row">
+
+                <div class="col">
+                  <button id="add-discovered" class="btn btn-block btn-info">Add All Discovered Devices</button>
+                </div>
+
+              </div>
+            </div>
           </div>
 
           <div class="col-xl-6" id="cfg-slot-col">
@@ -183,7 +192,7 @@
               <div class="form-row">
 
                 <div class="col">
-                  <button id="clear-config" class="btn btn-block btn-danger">Clear Config</button>
+                  <button id="clear-config" class="btn btn-block btn-danger">Clear</button>
                 </div>
                 <div class="col">
                   <button id="add-config-row" class="btn btn-block btn-warning">Add Row</button>
@@ -316,16 +325,20 @@
 
     <template id="config-slot-template">
       <div class="form-row cfg-row">
-        <div class="col-1 navbar-dark align-middle">
+        <div class="col-md-1 col-4 navbar-dark align-middle cfg-row-form">
           <span class="navbar-toggler-icon"></span>
         </div>
-        <div class="col-2 slot-number"><label class="col-form-label"></label></div>
+        <div class="col-md-2 col-4 slot-number text-center cfg-row-form"><label class="col-form-label"></label></div>
 
-        <div class="col-4">
+        <div class="col-md-1 order-md-12 col-4 del-btn cfg-row-form">
+          <button type="button btn-block" class="btn float-right btn-danger"><span aria-hidden="true">&times;</span></button>
+        </div>
+
+        <div class="col-md-4 col-12 cfg-row-form">
           <input type="text" class="form-control cfg-ip" placeholder="IP Address">
         </div>
 
-        <div class="col-2">
+        <div class="col-md-2 col-6 cfg-row-form">
           <select class="form-control cfg-type">
             <option></option>
             <option>axtd</option>
@@ -337,18 +350,13 @@
           </select>
         </div>
 
-        <div class="col-2">
+        <div class="col-md-2 col-6 cfg-row-form">
           <select class="form-control cfg-channel">
             <option>1</option>
             <option>2</option>
             <option>3</option>
             <option>4</option>
           </select>
-        </div>
-
-
-        <div class="col-1 del-btn">
-          <button type="button btn-block" class="btn btn-danger"><span aria-hidden="true">&times;</span></button>
         </div>
 
       </div>
