@@ -83,7 +83,7 @@ app.on('ready', () => {
   createPyProc();
   setTimeout(() => {
     shell.openExternal('http://localhost:8058');
-  }, 3000);
+  }, 5000);
 });
 
 
