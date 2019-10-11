@@ -40,7 +40,7 @@ function openLogFile() {
 
 
 const createPyProc = () => {
-  const script = path.join(__dirname, 'dist', 'micboard-service').replace('app.asar', 'app.asar.unpacked');
+  const script = path.join(__dirname, 'dist', 'micboard-service', 'micboard-service').replace('app.asar', 'app.asar.unpacked');
   pyProc = child.spawn(script, [], {
     stdio: ['ignore', 'inherit', 'inherit'],
   });
@@ -69,6 +69,7 @@ app.on('ready', () => {
     { label: 'About', click() { createWindow('http://localhost:8058/about'); } },
     { type: 'separator' },
     { label: 'Launch Micboard', click() { shell.openExternal('http://localhost:8058'); } },
+    { label: 'Edit Configuration', click() { shell.openExternal('http://localhost:8058/#settings=true'); } },
     { label: 'Open Configuration Directory', click() { openConfigFolder('config.json'); } },
     { type: 'separator' },
     { label: 'Restart Micboard Server', click() { restartMicboardServer(); } },
@@ -82,7 +83,7 @@ app.on('ready', () => {
   createPyProc();
   setTimeout(() => {
     shell.openExternal('http://localhost:8058');
-  }, 3000);
+  }, 5000);
 });
 
 

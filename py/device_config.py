@@ -10,6 +10,7 @@ BASE_CONST['uhfr'] = {
         'frequency': 'FREQUENCY',
         'name': 'CHAN_NAME',
         'tx_offset': 'NOTQWERT',
+        'runtime' : 'NOTQWERT',
     },
     'base_const': {
         'getAll' : [
@@ -23,6 +24,10 @@ BASE_CONST['uhfr'] = {
             '* GET {} GROUP_CHAN *'
         ],
         'meter_stop' : '* METER {} ALL STOP *'
+    },
+    'DCID_MODEL' : {
+        'UR4S' : 1,
+        'UR4D' : 2,
     }
 }
 
@@ -37,7 +42,8 @@ BASE_CONST['qlxd'] = {
         'rf_level': 'RX_RF_LVL',
         'name': 'CHAN_NAME',
         'antenna': 'RF_ANTENNA',
-        'tx_offset' : 'TX_OFFSET'
+        'tx_offset' : 'TX_OFFSET',
+        'runtime' : 'BATT_RUN_TIME',
         },
     'base_const' : {
         'getAll' : ['< GET {} ALL >'],
@@ -46,7 +52,13 @@ BASE_CONST['qlxd'] = {
             '< GET {} BATT_BARS >'
         ],
         'meter_stop' : '< SET {} METER_RATE 0 >'
+    },
+    'DCID_MODEL' : {
+        'QLX-DSingle' : 1,
+        'QLX-D1GSingle' : 1,
+        'QLX-DIsmSingle' : 1,
     }
+
 }
 
 BASE_CONST['ulxd'] = {
@@ -60,7 +72,8 @@ BASE_CONST['ulxd'] = {
         'rf_level': 'RX_RF_LVL',
         'name': 'CHAN_NAME',
         'antenna': 'RF_ANTENNA',
-        'tx_offset' : 'TX_OFFSET'
+        'tx_offset' : 'TX_OFFSET',
+        'runtime' : 'BATT_RUN_TIME',
     },
     'base_const': {
         'getAll' : ['< GET {} ALL >'],
@@ -69,6 +82,17 @@ BASE_CONST['ulxd'] = {
             '< GET {} BATT_BARS >'
         ],
         'meter_stop' : '< SET {} METER_RATE 0 >'
+    },
+    'DCID_MODEL' : {
+        'ULX-DSingle': 1,
+        'ULX-D1GSingle' : 1,
+        'ULX-DIsmSingle' : 1,
+        'ULX-DDual': 2,
+        'ULX-D1GDual' : 2,
+        'ULX-DIsmDual' : 2,
+        'ULX-DQuad': 4,
+        'ULX-D1GQuad' : 4,
+        'ULX-DIsmQuad' : 4,
     }
 }
 
@@ -83,7 +107,8 @@ BASE_CONST['axtd'] = {
         'rf_level': 'RSSI',
         'name': 'CHAN_NAME',
         'antenna': 'ANTENNA_STATUS',
-        'tx_offset': 'TX_OFFSET'
+        'tx_offset': 'TX_OFFSET',
+        'runtime' : 'TX_BATT_MINS',
     },
     'base_const' : {
         'getAll' : ['< GET {} ALL >'],
@@ -92,6 +117,10 @@ BASE_CONST['axtd'] = {
             '< GET {} TX_BATT_BARS >'
         ],
         'meter_stop' : '< SET {} METER_RATE 0 >'
+    },
+    'DCID_MODEL' : {
+        'AD4D': 2,
+        'AD4Q': 4,
     }
 }
 
@@ -112,5 +141,8 @@ BASE_CONST['p10t'] = {
         ],
         'query' : ['< GET {} CHAN_NAME >\r\n'],
         'meter_stop' : '< SET {} METER_RATE 0 >'
+    },
+    'DCID_MODEL' : {
+        'PSM1KTx': 2,
     }
 }

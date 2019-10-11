@@ -15,7 +15,17 @@ html,body {
 .col-sm {
   color: var(--color-white);
   border: 0px;
+  // flex-grow: unset;
   // background-color: var(--color-black);
+}
+
+#micboard {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(256px, 1fr));
+  align-items: flex-start;
+  align-content: flex-start;
+  grid-gap: 16px;
 }
 
 .deskmode #micboard .col-sm {
@@ -121,6 +131,17 @@ canvas.slotgraph {
   font-style: italic;
   color: var(--color-red);
 }
+
+.runtime {
+  position: absolute;
+  bottom: 180px;
+  left: 5px;
+  font-family: 'IBM Plex Mono';
+  font-weight: 100;
+  font-style: italic;
+  color: var(--color-green);
+}
+
 
 .quality {
   position: absolute;
@@ -246,11 +267,16 @@ canvas.slotgraph {
 
 /* mic storage mode */
 .tvmode {
+  #micboard{
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    grid-gap: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
 
   .col-sm {
-    margin-left: 3px;
-    margin-right: 3px;
     background: var(--color-black);
+    height: 100vh;
   }
 
   background-color: black;
@@ -281,10 +307,6 @@ canvas.slotgraph {
 
   .info-drawer {
     /* height: 250px; */
-  }
-
-  .flexfix {
-    display: none;
   }
 
   /* electrode & info drawer switch */
@@ -428,6 +450,11 @@ canvas.slotgraph {
     right: 5px;
   }
 
+  .runtime {
+    bottom: 75px;
+    left: 5px;
+  }
+
   .quality {
     bottom: 25px;
     left: 5px;
@@ -464,7 +491,9 @@ canvas.slotgraph {
   }
 
   .above-mid {
-    padding-top: 38px;
+    padding-top: 46px;
+    padding-left: 8px;
+    padding-right: 8px;
   }
 
   .AUDIO_PEAK {
@@ -475,6 +504,13 @@ canvas.slotgraph {
 
 
 @media (max-width: 512px) {
+  #micboard {
+    grid-gap: 0px;
+    padding-top: 38px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
   .deskmode #micboard .col-sm {
     border-width: 0;
   }
@@ -487,9 +523,9 @@ canvas.slotgraph {
 @media (min-width: 513px) {
 
   .deskmode #micboard .col-sm {
-    margin-bottom: 15px;
+    // margin-bottom: 15px;
     // border-width: 0 8px
-    margin: 8px;
+    // margin: 8px;
   }
 
   .deskmode #micboard .col-sm .mic_name {
@@ -555,11 +591,30 @@ canvas.slotgraph {
   display: none;
 }
 
+.blank .errortype {
+  display: none;
+}
+
+.blank .info-drawer {
+  // background-color: black;
+}
+
 .blank .electrode, .blank .info-drawer {
   display: none !important;
 }
 
-.sidebar-open .blank .mic_name {
+.sidebar-open #micboard .blank {
+  .mic_name {
+    display: block;
+    background: var(--color-black);
+  }
+
+  .electrode, .info-drawer {
+    display: block !important;
+  }
+}
+
+.sidebar-open .sidebar-nav .blank .mic_name {
   display: unset;
 }
 
@@ -575,7 +630,7 @@ canvas.slotgraph {
 
 }
 
-.electrode.AUDIO_PEAK, .elinfo00 .AUDIO_PEAK, .elinfo10 .AUDIO_PEAK {
+.electrode.AUDIO_PEAK, .elinfo00 .AUDIO_PEAK, .elinfo10 .AUDIO_PEAK, #hud .AUDIO_PEAK {
   animation: pulse .5s infinite;
 }
 
@@ -599,11 +654,99 @@ canvas.slotgraph {
 
 .settings {
   display: none;
-  background-color: var(--color-blue);
+  // background-color: var(--color-blue);
   color: var(--color-black);
-  margin-left: -15px;
-  margin-right: -15px;
-  padding: 3em;
+  // margin-left: -15px;
+  // margin-right: -15px;
+  // padding: 3em;
+  padding-top: 76px;
+}
+
+.settings .config-header {
+  background-color: var(--color-black);
+  padding: .75rem 1.25rem;
+  border: 1px solid var(--color-gray);
+  margin-left: -5px;
+  margin-right: -5px;
+  border-radius: 12px 12px 0 0;
+}
+
+.settings .config-header h3 {
+  padding: 1em;
+  color: var(--color-white);
+}
+
+.settings .config-footer {
+  background-color: var(--color-black);
+  padding: .75rem 1.25rem;
+  border: 1px solid var(--color-gray);
+  margin-left: -5px;
+  margin-right: -5px;
+  border-radius: 0 0 12px 12px;
+}
+
+
+#discovered_list input, #discovered_list select{
+  pointer-events: none;
+}
+
+
+
+#discovered_list .slot-number {
+  display: none;
+}
+
+#discovered_list .del-btn {
+  display: none;
+}
+
+#cfg-discovered-col {
+  padding-bottom: 1em;
+}
+
+.settings .navbar-toggler-icon {
+  height: 100%;
+}
+
+.slot-number {
+  color: var(--color-white);
+  font-weight: bold;
+}
+
+.cfg-row {
+  background-color: var(--color-black);
+  padding: 0 1.25rem .75rem 1.25rem;
+  border: 1px solid var(--color-gray);
+  font-family: 'IBM Plex Sans';
+  font-weight: 300;
+}
+
+.cfg-row input, .cfg-row input:focus {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-color: var(--color-gray);
+  font-style: italic;
+}
+
+
+
+.cfg-row select {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-color: var(--color-gray);
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.cfg-row select:focus, .cfg-row select:hover {
+    box-shadow: 0 0 0 3px -moz-mac-focusring;
+    color: var(--color-white);
+    background-color: var(--color-black);
+}
+
+.cfg-row-form {
+  padding-top: .75rem;
 }
 
 .navbar-toggler {
@@ -632,11 +775,15 @@ a:link, a:visited, a:hover, a:active {
 
 .sidebar-nav {
   display: none;
-  position: relative;
-  width: 300px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
   height: 100%;
   padding-top: 38px;
   background-color: var(--color-gray);
+  overflow-x: hidden;
+  // transition: .5s;
 }
 
 .row {
@@ -645,18 +792,13 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .sidebar-open #micboard {
-  top: 0px;
-  position: absolute;
-  left: 0px;
-  min-height: 100px;
-}
-
-.sidebar-open #micboard {
-  left: 300px
+  padding-left: 308px;
 }
 
 .sidebar-open .sidebar-nav {
   display: block;
+  width: 300px;
+  transition: .5s;
 }
 
 .slot-prototype-list .col-sm .info-drawer {
@@ -698,10 +840,6 @@ a:link, a:visited, a:hover, a:active {
   display: unset;
 }
 
-.flexfix {
-  background-color: var(--color-background);
-}
-
 .info-drawer {
   background-color: var(--color-black);
 }
@@ -725,4 +863,35 @@ a:link, a:visited, a:hover, a:active {
   font-weight: 300;
   border-radius: 12px;
   padding: 1em;
+}
+
+.keyboard-guide {
+  color: var(--color-black);
+}
+
+.color-guide {
+  margin-bottom: .5em;
+}
+
+.color-guide-color p {
+  font-style: italic;
+}
+
+.color-guide-color {
+  color: var(--color-white);
+  font-family: 'IBM Plex Sans';
+  font-weight: 300;
+  padding: .75em;
+  border-radius: 12px;
+  margin: .45em;
+}
+
+.color-guide-color h3 {
+  font-family: 'IBM Plex Sans';
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.color-guide-color p {
+  font-style: italic;
+  margin-bottom: 0px;
 }

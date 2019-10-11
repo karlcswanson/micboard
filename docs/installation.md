@@ -20,7 +20,7 @@ $ git clone https://github.com/karlcswanson/micboard.git
 Install micboard software dependencies via npm and pip
 ```
 $ cd micboard/
-$ npm install
+$ npm install --only=prod
 $ pip3 install -r py/requirements.txt
 ```
 
@@ -30,8 +30,6 @@ $ npm run build
 $ python3 py/micboard.py
 ```
 
-Micboard creates a blank configuration file on first run.  Open `~/.local/share/micboard/config.json` and add in your receivers.  Check the [configuration](configuration.md) docs for more information on configuring micboard.
-
 Edit `User` and `WorkingDirectory` within `micboard.service` to match your installation and install it as a service.
 ```
 $ sudo cp micboard.service /etc/systemd/system/
@@ -39,23 +37,12 @@ $ sudo systemctl start micboard.service
 $ sudo systemctl enable micboard.service
 ```
 
-
+Check the [configuration](configuration.md) docs for more information on configuring micboard.
 
 ## macOS - Desktop Application
-Download and run micboard from the project's [GitHub Release](https://github.com/karlcswanson/micboard/releases/) page.
+Download and run micboard from the project's [GitHub Release](https://github.com/karlcswanson/micboard/releases/) page.  Add RF devices to the 'Slot Configuration' and press 'Save'.
 
-On first run, micboard creates a blank configuration file.  Within the micboard menubar app, selet "Open Configuration Directory"
-
-
-![config dir](img/open-config-dir.png)
-
-Open `config.json` and add in your rf devices.  Check the [configuration](configuration.md) docs for more information on configuring micboard.
-
-![config editor](img/config-editor.png)
-
-Once changes have been saved, restart micboard from the micboard menu.
-
-![restart micboard](img/restart-micboard.png)
+Check the [configuration](configuration.md) docs for more information on configuring micboard.
 
 
 ## macOS - From Source
@@ -82,7 +69,7 @@ $ git clone https://github.com/karlcswanson/micboard.git
 Install micboard software dependencies via npm and pip
 ```
 $ cd micboard/
-$ npm install
+$ npm install --only=prod
 $ pip3 install -r py/requirements.txt
 ```
 
@@ -92,7 +79,7 @@ $ npm run build
 $ python3 py/micboard.py
 ```
 
-Micboard creates a blank configuration file on first run.  Open `~/Library/Application Support/micboard/config.json` and add in your receivers.  Check the [configuration](configuration.md) docs for more information on configuring micboard.
+Check the [configuration](configuration.md) docs for more information on configuring micboard.
 
 Restart micboard
 ```

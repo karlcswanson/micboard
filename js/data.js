@@ -1,7 +1,7 @@
 'use strict';
 
 import 'whatwg-fetch';
-import { dataURL, ActivateMessageBoard, micboard } from './app.js';
+import { dataURL, ActivateMessageBoard, micboard, updateNavLinks } from './app.js';
 import { renderGroup, updateSlot } from './channelview.js';
 import { updateChart } from './chart-smoothie.js';
 
@@ -49,6 +49,7 @@ function updateGroup(data) {
   if (micboard.group === data.group) {
     renderGroup(data.group);
   }
+  updateNavLinks();
 }
 
 export function initLiveData() {
@@ -82,6 +83,7 @@ function wsConnect() {
 
     if (data['group-update']) {
       data['group-update'].forEach(updateGroup);
+      updateNavLinks();
     }
   };
 

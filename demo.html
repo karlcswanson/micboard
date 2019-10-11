@@ -33,24 +33,89 @@
 
   </head>
   <body>
-    <div id="hud" class="">
-      <h2>Keyboard Shortcuts</h2>
-      <ul>
-        <li><kbd>?</kbd> - Show keyboard shortcuts</li>
-        <li><kbd>0</kbd> - Show all slots</li>
-        <li><kbd>1</kbd>...<kbd>9</kbd> - Load group</li>
-        <li><kbd>d</kbd> - Start demo mode</li>
-        <li><kbd>e</kbd> - Open group editor</li>
-        <li><kbd>t</kbd> - Toggle TV view</li>
-        <li><kbd>i</kbd> - Change tv display mode</li>
-        <li><kbd>f</kbd> - Toggle fullscreen</li>
-        <li><kbd>g</kbd> - Toggle image backgrounds</li>
-        <li><kbd>v</kbd> - Toggle video backgrounds</li>
-        <li><kbd>n</kbd> - Extended Name editor</li>
-        <li><kbd>q</kbd> - Show QR code</li>
-        <li><kbd>esc</kbd> - reload micboard</li>
-      </ul>
+    <div id="hud" class="container">
+      <div class="row">
+        <div class="col-4 keyboard-guide">
+          <h2 class="text-center">Keyboard Shortcuts</h2>
+          <ul>
+            <li><kbd>?</kbd> - Show keyboard shortcuts</li>
+            <li><kbd>0</kbd> - Show all slots</li>
+            <li><kbd>1</kbd>...<kbd>9</kbd> - Load group</li>
+            <li><kbd>d</kbd> - Start demo mode</li>
+            <li><kbd>e</kbd> - Open group editor</li>
+            <li><kbd>t</kbd> - Toggle TV view</li>
+            <li><kbd>i</kbd> - Change tv display mode</li>
+            <li><kbd>f</kbd> - Toggle fullscreen</li>
+            <li><kbd>g</kbd> - Toggle image backgrounds</li>
+            <li><kbd>v</kbd> - Toggle video backgrounds</li>
+            <li><kbd>n</kbd> - Extended Name editor</li>
+            <li><kbd>s</kbd> - Device configuration editor</li>
+            <li><kbd>q</kbd> - Show QR code</li>
+            <li><kbd>esc</kbd> - reload micboard</li>
+          </ul>
+        </div>
+        <div class="col-8 color-guide">
+          <h2 class="text-center">Color Guide</h2>
+
+
+          <div class="container">
+            <div class="row">
+              <div class="col color-guide-color GOOD">
+                <h3>Good</h3>
+                <p>Mic ON.  4 - 5 Battery Bars.</p>
+              </div>
+              <div class="col color-guide-color PREV_GOOD">
+                <h3>Previously Good</h3>
+                <p>Mic OFF.  4 - 5 Battery Bars.</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col color-guide-color REPLACE">
+                <h3>Replace</h3>
+                <p>Mic ON.  3 Battery Bars.</p>
+              </div>
+              <div class="col color-guide-color PREV_REPLACE">
+                <h3>Previously Replace</h3>
+                <p>Mic OFF.  3 Battery Bars.</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col color-guide-color CRITICAL">
+                <h3>Critical</h3>
+                <p>Mic ON.  1 - 2 Battery Bars.</p>
+              </div>
+              <div class="col color-guide-color PREV_CRITICAL">
+                <h3>Previously Critical</h3>
+                <p>Mic OFF.  1 - 2 Battery Bars.</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col color-guide-color UNASSIGNED">
+                <h3>Unknown</h3>
+                <p>Micboard doeesn't make battery assumptions once a mic is off for over 30 minutes.</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col color-guide-color RX_COM_ERROR">
+                <h3>RX COM Error</h3>
+                <p>Micboard can't connect to the device.</p>
+              </div>
+              <div class="col color-guide-color AUDIO_PEAK">
+                <h3>Audio Peak</h3>
+                <p>Input peak.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
       <button id="hud-button" type="button" class="btn btn-success btn-lg btn-block">Close</button>
+
     </div>
     <div class="container-fluid fullHeight deskmode" id="container">
 
@@ -97,29 +162,53 @@
         <h1>Connection Error!</h1>
         <p>Could not connect to the micboard server. Please refresh the page.</p>
       </div>
-      <div class="above-mid settings">
-        <div class="card card-body bg-light">
-          <h3>Micboard Settings</h3>
-        </div>
-        <div id='editor_holder' class='medium-12 columns'></div>
-        <div style="height: 50px;"></div>
-        <div class='medium-12 columns'>
-          <div class="card card-body bg-light">
-            <!-- <form> -->
+      <div class="settings">
+
+        <div class="row">
+
+          <div class="col-xl-6" id="cfg-discovered-col">
+            <div class="config-header">
+              <h3 class="text-center">Discovered Devices</h3>
+            </div>
+
+            <div id="discovered_list"></div>
+            <div class="config-footer">
               <div class="form-row">
+
                 <div class="col">
-                  <button id="download" type="button" class="btn btn-info">Backup Configuration</button>
-                  <button id="upload" type="button" class="btn btn-danger" disabled>Upload Configuration</button>
+                  <button id="add-discovered" class="btn btn-block btn-danger">Add All Discovered Devices</button>
                 </div>
-                <div class="col">
-                  <button id="save" class="btn btn-success">Save</button>
-                </div>
+
               </div>
-            <!-- </form> -->
+            </div>
+          </div>
 
+          <div class="col-xl-6" id="cfg-slot-col">
+            <div class="config-header">
+              <h3 class="text-center">Slot Configuration</h3>
+            </div>
+            <div id="editor_holder"></div>
+            <div class="config-footer">
+              <div class="form-row">
 
+                <div class="col">
+                  <button id="clear-config" class="btn btn-block btn-danger">Clear</button>
+                </div>
+                <div class="col">
+                  <button id="add-config-row" class="btn btn-block btn-warning">Add Row</button>
+                </div>
+                <div class="col">
+                  <button id="save" class="btn btn-block btn-success">Save</button>
+                </div>
+
+              </div>
+            </div>
           </div>
         </div>
+
+
+
+
         <div style="height: 50px;"></div>
       </div>
       <nav class="navbar fixed-top navbar-dark bg-dark py-0">
@@ -128,8 +217,19 @@
           <div class="collapse" id="navbarToggleExternalContent">
             <div class="bg-dark p-4 navbar-nav" id="grouplist">
               <h4 class="text-white"><a class="nav-link" href='/'>micboard</a></h4>
-              <p class="text-muted"><a class="nav-link preset-link" id="go-group-0">all devices</a> | <a class="nav-link" id="go-extended" href="#">edit extended names</a></p>
+              <p class="text-muted"><a class="nav-link preset-link" id="go-group-0">all devices</a> | <a class="nav-link" id="go-extended" href="#">edit extended names</a> | <a class="nav-link" id="go-config">edit config</a></p>
               <p class="text-muted"><a class="nav-link" id="go-groupedit" href="#">edit group</a></p>
+              <div id="navbar-grouplist">
+                <p class="text-muted grp-link"><a class="nav-link preset-link" id="go-group-1">1:</a></p>
+                <p class="text-muted grp-link"><a class="nav-link preset-link" id="go-group-2">2:</a></p>
+                <p class="text-muted grp-link"><a class="nav-link preset-link" id="go-group-3">3:</a></p>
+                <p class="text-muted grp-link"><a class="nav-link preset-link" id="go-group-4">4:</a></p>
+                <p class="text-muted grp-link"><a class="nav-link preset-link" id="go-group-5">5:</a></p>
+                <p class="text-muted grp-link"><a class="nav-link preset-link" id="go-group-6">6:</a></p>
+                <p class="text-muted grp-link"><a class="nav-link preset-link" id="go-group-7">7:</a></p>
+                <p class="text-muted grp-link"><a class="nav-link preset-link" id="go-group-8">8:</a></p>
+                <p class="text-muted grp-link"><a class="nav-link preset-link" id="go-group-9">9:</a></p>
+              </div>
             </div>
           </div>
           <nav class="navbar navbar-dark bg-dark py-0">
@@ -160,10 +260,11 @@
             <div class="battery-bar battery-bar-5"></div>
           </div>
           <div class="chartzone">
-            <p class="offset chartzone"></p>
-            <canvas class="slotgraph chartzone"></canvas>
-            <p class="quality chartzone"></p>
-            <p class="frequency chartzone"></p>
+            <p class="runtime"></p>
+            <p class="offset"></p>
+            <canvas class="slotgraph"></canvas>
+            <p class="quality"></p>
+            <p class="frequency"></p>
           </div>
 
           <div class="errorzone">
@@ -222,6 +323,44 @@
       </div>
     </template>
 
+    <template id="config-slot-template">
+      <div class="form-row cfg-row">
+        <div class="col-md-1 col-4 navbar-dark align-middle cfg-row-form">
+          <span class="navbar-toggler-icon"></span>
+        </div>
+        <div class="col-md-2 col-4 slot-number text-center cfg-row-form"><label class="col-form-label"></label></div>
+
+        <div class="col-md-1 order-md-12 col-4 del-btn cfg-row-form">
+          <button type="button btn-block" class="btn float-right btn-danger"><span aria-hidden="true">&times;</span></button>
+        </div>
+
+        <div class="col-md-4 col-12 cfg-row-form">
+          <input type="text" class="form-control cfg-ip" placeholder="IP Address">
+        </div>
+
+        <div class="col-md-2 col-6 cfg-row-form">
+          <select class="form-control cfg-type">
+            <option></option>
+            <option>axtd</option>
+            <option>ulxd</option>
+            <option>qlxd</option>
+            <option>uhfr</option>
+            <option>p10t</option>
+            <option>offline</option>
+          </select>
+        </div>
+
+        <div class="col-md-2 col-6 cfg-row-form">
+          <select class="form-control cfg-channel">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+        </div>
+
+      </div>
+    </template>
     <!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 

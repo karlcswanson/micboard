@@ -44,6 +44,11 @@ function updateTXOffset(slotSelector, data) {
   }
 }
 
+
+function updateRuntime(slotSelector, data) {
+  slotSelector.querySelector('p.runtime').innerHTML = data.runtime;
+}
+
 function updateQuality(slotSelector, data) {
   const QualityTable = {
     0: '&#9675;&#9675;&#9675;&#9675;&#9675;',
@@ -59,6 +64,12 @@ function updateQuality(slotSelector, data) {
 
 function updateFrequency(slotSelector, data) {
   slotSelector.querySelector('p.frequency').innerHTML = data.frequency + ' Hz';
+  if (data.frequency === '000000')
+  {
+    slotSelector.querySelector('.frequency').style.display = 'none';
+  } else {
+    slotSelector.querySelector('.frequency').style.display = 'block';
+  }
 }
 
 function updateID(slotSelector, data) {
@@ -156,17 +167,6 @@ function updateDiversity(slotSelector, data) {
   div.innerHTML = newBar;
 }
 
-// https://medium.com/developedbyjohn/equal-width-flex-items-a5ba1bfacb77
-// Shouldn't be fixing this with js, yet here I am.
-function flexFix() {
-  const flexFixHTML = `<div class="col-sm flexfix"></div>
-                       <div class="col-sm flexfix"></div>
-                       <div class="col-sm flexfix"></div>
-                       <div class="col-sm flexfix"></div>`;
-  $('#micboard').append(flexFixHTML);
-}
-
-
 function updateCheck(data, key, callback) {
   if (key in data) {
     if (micboard.transmitters[data.slot][key] !== data[key]) {
@@ -192,6 +192,9 @@ function updateSelector(slotSelector, data) {
   });
   updateCheck(data, 'battery', () => {
     updateBattery(slotSelector, data);
+  });
+  updateCheck(data, 'runtime', () => {
+    updateRuntime(slotSelector, data);
   });
   updateCheck(data, 'antenna', () => {
     updateDiversity(slotSelector, data);
@@ -223,6 +226,9 @@ export function updateViewOnly(slotSelector, data) {
   }
   if ('battery' in data) {
     updateBattery(slotSelector, data);
+  }
+  if ('runtime' in data) {
+    updateRuntime(slotSelector, data);
   }
   if ('quality' in data) {
     updateQuality(slotSelector, data);
@@ -280,10 +286,13 @@ export function renderDisplayList(dl) {
   });
 
   infoToggle();
-  flexFix();
 }
 
 export function renderGroup(group) {
+  if (micboard.settingsMode === 'CONFIG') {
+    $('#micboard').show();
+    $('.settings').hide();
+  }
   micboard.group = group;
   updateHash();
   if (group === 0) {

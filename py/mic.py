@@ -1,6 +1,7 @@
 import time
 import logging
 from math import ceil
+from datetime import timedelta
 
 from device_config import BASE_CONST
 from channel import ChannelDevice, data_update_list, chart_update_list
@@ -36,6 +37,7 @@ class WirelessMic(ChannelDevice):
         self.tx_offset = 255
         self.peakstamp = time.time() - 60
         self.quality = 255
+        self.runtime = 65535
 
     def set_antenna(self, antenna):
         self.antenna = antenna
@@ -91,6 +93,13 @@ class WirelessMic(ChannelDevice):
             self.prev_battery = level
             self.timestamp = time.time()
 
+    # https://stackoverflow.com/questions/1784952/how-get-hoursminutes
+    def set_runtime(self, runtime):
+        runtime = int(runtime)
+        if 0 <= runtime <= 65532:
+            self.runtime = str(timedelta(minutes=runtime))[:-3]
+        else:
+            self.runtime = ''
 
     def set_tx_offset(self, tx_offset):
         if tx_offset != '255':
@@ -139,7 +148,7 @@ class WirelessMic(ChannelDevice):
             'rf_level': self.rf_level, 'frequency': self.frequency,
             'battery':self.battery, 'tx_offset': self.tx_offset, 'quality': self.quality,
             'status': self.tx_state(), 'slot': self.slot, 'raw': self.raw,
-            'type': self.rx.type, 'name_raw' : self.chan_name_raw
+            'type': self.rx.type, 'name_raw' : self.chan_name_raw, 'runtime' : self.runtime
         }
 
     def ch_json_mini(self):
@@ -182,6 +191,8 @@ class WirelessMic(ChannelDevice):
     def parse_report(self, split):
         if split[2] == self.CHCONST['battery']:
             self.set_battery(split[3])
+        elif split[2] == self.CHCONST['runtime']:
+            self.set_runtime(split[3])
         elif split[2] == self.CHCONST['name']:
             self.set_chan_name_raw(' '.join(split[3:]))
         elif split[2] == self.CHCONST['quality']:

@@ -1,6 +1,7 @@
 import socket
 import struct
 import json
+import time
 
 import os
 import platform
@@ -11,26 +12,12 @@ import sys
 import xml.etree.ElementTree as ET
 
 import config
-
+from device_config import BASE_CONST
 
 MCAST_GRP = '239.255.254.253'
 MCAST_PORT = 8427
 
-
-rx_types = ['UHFR', 'QLXD', 'ULXD', 'AXTD']
-
 DEFAULT_DCID_XML = '/Applications/Shure Update Utility.app/Contents/Resources/DCIDMap.xml'
-
-RX_CHANNEL_MAP = {
-    'UR4S': 1,
-    'QLX-DSingle': 1,
-    'ULX-DSingle': 1,
-    'UR4D': 2,
-    'ULX-DDual': 2,
-    'AD4D': 2,
-    'ULX-DQuad': 4,
-    'AD4Q': 4
-}
 
 
 deviceList = {}
@@ -43,48 +30,27 @@ def discover():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
     # sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1) #mac fix
-    sock.bind(('', MCAST_PORT))  # use MCAST_GRP instead of '' to listen only
+    sock.bind((MCAST_GRP, MCAST_PORT))  # use MCAST_GRP instead of '' to listen only
                                  # to MCAST_GRP, not all groups on MCAST_PORT
     mreq = struct.pack("4sl", socket.inet_aton(MCAST_GRP), socket.INADDR_ANY)
 
     sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
     while True:
         data, (ip, _) = sock.recvfrom(1024)
-        data = data.decode('UTF-8',errors="ignore")
-        # print(data)
-        type = rx_type(data)
-        dcid = dcid_find(data)
-        if type is not '':
-            device = dcid_get(dcid)
-            channels = RX_CHANNEL_MAP[device['model']]
-            if __name__ == '__main__':
-                print('RX: {} at: {} DCID: {} BAND: {} CHANNELS: {}'.format(type,ip,dcid,device['band'],channels))
+        data = data.decode('UTF-8', errors="ignore")
+        try:
+            process_discovery_packet(ip, data)
+        except:
+            pass
 
-            add_rx(ip,type,channels)
+def process_discovery_packet(ip, data):
+    dcid = dcid_find(data)
+    device = dcid_get(dcid)
+    rx_type, channels = dcid_model_lookup(device['model'])
+    if __name__ == '__main__':
+        print('RX: {} at: {} DCID: {} BAND: {} CHANNELS: {}'.format(rx_type, ip, dcid, device['band'], channels))
 
-def add_rx(ip,rx_type,channels):
-
-    rx = next((x for x in discovered if x['ip'] == ip), None)
-
-    if rx:
-        rx['type'] = rx_type.lower()
-        rx['channels'] = channels
-
-    else:
-        discovered.append({
-            'ip' : ip,
-            'type': rx_type.lower(),
-            'channels': channels
-        })
-    discovered.sort(key=lambda x: x['ip'])
-    # print(discovered)
-
-def rx_type(data):
-    rx = ''
-    for i in rx_types:
-        if i in data:
-            rx = i
-    return rx
+    add_rx_to_dlist(ip, rx_type, channels)
 
 def dcid_find(data):
     dcid = ''
@@ -100,6 +66,39 @@ def dcid_find(data):
 
 def dcid_get(dcid):
     return deviceList[dcid]
+
+def dcid_model_lookup(name):
+    for (type_k, type_v) in BASE_CONST.items():
+        for (model_k, model_v) in type_v['DCID_MODEL'].items():
+            if name == model_k:
+                # print('Type: {} DCID_MODEL: {} Channels: {}'.format(type_k, model_k, model_v))
+                return (type_k, model_v)
+    return None
+
+
+def add_rx_to_dlist(ip, rx_type, channels):
+    rx = next((x for x in discovered if x['ip'] == ip), None)
+
+    if rx:
+        rx['timestamp'] = time.time()
+
+    else:
+        discovered.append({
+            'ip' : ip,
+            'type': rx_type,
+            'channels': channels,
+            'timestamp': time.time()
+        })
+
+    discovered.sort(key=lambda x: x['ip'])
+
+
+def time_filterd_discovered_list():
+    out = []
+    for i in discovered:
+        if (time.time() - i['timestamp']) < 30:
+            out.append(i)
+    return out
 
 
 def DCID_Parse(file):

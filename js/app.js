@@ -13,6 +13,7 @@ import { slotEditToggle } from './extended.js';
 import { keybindings } from './kbd.js';
 import { setBackground, setInfoDrawer } from './display.js';
 import { setTimeMode } from './chart-smoothie.js';
+import { initConfigEditor } from './config.js';
 
 import '../css/colors.scss';
 import '../css/style.scss';
@@ -92,24 +93,27 @@ function groupTableBuilder(data) {
   return plist;
 }
 
-function mapGroups() {
-  const div = document.getElementById('grouplist');
+export function updateNavLinks() {
   let str = '';
-
-  // for (var p in micboard.groups) {
-  //   str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ p +'">' + p + ': ' + micboard.groups[p]['title'] + '</a></p>';
-  // }
-  for (let i = 1; i <= 9; i++) {
+  for (let i = 1; i <= 9; i += 1) {
+    str = '';
     if (micboard.groups[i]) {
-      str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ i +'">' + i + ': ' + micboard.groups[i]['title'] + '</a></p>';
-    }  else {
-      str += '<p class="text-muted"><a class="nav-link preset-link" id="go-group-'+ i +'">' + i + ':</a></p>';
+      str = `${i}: ${micboard.groups[i].title}`;
+    } else {
+      str = `${i}:`;
     }
+    document.getElementById(`go-group-${i}`).innerHTML = str;
   }
-  div.innerHTML += str;
+}
 
+function mapGroups() {
   $('a#go-extended').click(() => {
     slotEditToggle();
+    $('.collapse').collapse('hide');
+  });
+
+  $('a#go-config').click(() => {
+    initConfigEditor();
     $('.collapse').collapse('hide');
   });
 
@@ -128,6 +132,8 @@ function mapGroups() {
       $('.collapse').collapse('hide');
     });
   });
+
+  updateNavLinks();
 }
 
 // https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js
@@ -176,6 +182,9 @@ export function updateHash() {
   if (micboard.backgroundMode !== 'NONE') {
     hash += '&bgmode=' + micboard.backgroundMode;
   }
+  if (micboard.settingsMode === 'CONFIG') {
+    hash = '#settings=true'
+  }
   hash = hash.replace('&', '');
   history.replaceState(undefined, undefined, hash);
 
@@ -216,6 +225,12 @@ function initialMap(callback) {
         micboard.config = data.config;
         mapGroups();
 
+        if (micboard.config.slots.length < 1) {
+          setTimeout(function() {
+            initConfigEditor();
+          }, 125);
+        }
+
         if (micboard.url.demo !== 'true') {
           dataFilterFromList(data);
         }
@@ -248,5 +263,12 @@ $(document).ready(() => {
     initialMap();
   } else {
     initialMap(initLiveData);
+  }
+
+  if (micboard.url.settings === 'true') {
+    setTimeout(() => {
+      initConfigEditor();
+      updateHash();
+    }, 100);
   }
 });

@@ -5,6 +5,7 @@ import { toggleInfoDrawer, toggleImageBackground, toggleVideoBackground, toggleD
 import { renderGroup } from './channelview.js';
 import { groupEditToggle, initEditor } from './dnd.js';
 import { slotEditToggle } from './extended.js';
+import { initConfigEditor } from './config.js';
 
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
@@ -24,6 +25,8 @@ export function keybindings() {
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
+      micboard.settingsMode = 'NONE';
+      updateHash();
       window.location.reload();
     }
     if ($('.settings').is(':visible')) {
@@ -98,6 +101,10 @@ export function keybindings() {
     if (e.key === 'N') {
       slotEditToggle();
       $('#paste-box').show();
+    }
+
+    if (e.key === 's') {
+      initConfigEditor();
     }
 
     if (e.key === 'q') {

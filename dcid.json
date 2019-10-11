@@ -2,47 +2,47 @@
   "03EC1770-FD5A-11E3-9967-0015C5F3F612": {
     "band": "JB",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03EC5E6A-FD5A-11E3-9058-0015C5F3F612": {
     "band": "X51",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03ECA0F0-FD5A-11E3-A1C6-0015C5F3F612": {
     "band": "R52",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03ECE6B4-FD5A-11E3-B768-0015C5F3F612": {
     "band": "JB",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03ED6706-FD5A-11E3-8F81-0015C5F3F612": {
     "band": "G56",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03EF431E-FD5A-11E3-9619-0015C5F3F612": {
     "band": "R52",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03EF81F8-FD5A-11E3-B109-0015C5F3F612": {
     "band": "G56",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03EFE9C2-FD5A-11E3-87B5-0015C5F3F612": {
     "band": "K56",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03F09D7C-FD5A-11E3-935B-0015C5F3F612": {
     "band": "K56",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03F15118-FD5A-11E3-A73A-0015C5F3F612": {
     "band": "",
@@ -99,75 +99,65 @@
     "model": "ULX-D1GQuad",
     "model_name": "ULX-D Extended Bands Quad-Channel Receiver"
   },
-  "03F8D6CC-FD5A-11E3-B599-0015C5F3F612": {
-    "band": "Z20",
-    "model": "ULX-DBG1GTx",
-    "model_name": "ULX-D Extended Bands Boundary / Gooseneck Transmitter"
-  },
   "03F992E2-FD5A-11E3-A8DD-0015C5F3F612": {
     "band": "G62",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03FA24B4-FD5A-11E3-882D-0015C5F3F612": {
     "band": "G62",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03FAB32A-FD5A-11E3-B44E-0015C5F3F612": {
     "band": "G62",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03FB5BE0-FD5A-11E3-BC95-0015C5F3F612": {
     "band": "G62",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03FBE48E-FD5A-11E3-A2A7-0015C5F3F612": {
     "band": "G62",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03FC14A4-FD5A-11E3-9480-0015C5F3F612": {
     "band": "G54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03FCD7F4-FD5A-11E3-A4F6-0015C5F3F612": {
     "band": "G55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03FDC47A-FD5A-11E3-B3F3-0015C5F3F612": {
     "band": "G56",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03FE0606-FD5A-11E3-9850-0015C5F3F612": {
     "band": "G62",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03FE5142-FD5A-11E3-AA08-0015C5F3F612": {
     "band": "H54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03FEFC28-FD5A-11E3-AA89-0015C5F3F612": {
     "band": "K57",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "03FF8A8A-FD5A-11E3-B767-0015C5F3F612": {
     "band": "L54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
-  },
-  "0400358E-FD5A-11E3-B2AE-0015C5F3F612": {
-    "band": "Z20",
-    "model": "ULX-DBG1GTx",
-    "model_name": "ULX-D Extended Bands Boundary / Gooseneck Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "04006D1A-FD5A-11E3-8CBA-0015C5F3F612": {
     "band": "",
@@ -262,62 +252,62 @@
   "0408741A-FD5A-11E3-A468-0015C5F3F612": {
     "band": "G57",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "0408BED4-FD5A-11E3-9651-0015C5F3F612": {
     "band": "K54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "0408FA16-FD5A-11E3-B65D-0015C5F3F612": {
     "band": "G57",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "04093D8C-FD5A-11E3-A432-0015C5F3F612": {
     "band": "K54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "04099ED0-FD5A-11E3-B7AB-0015C5F3F612": {
     "band": "G57",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "0409E728-FD5A-11E3-B75E-0015C5F3F612": {
     "band": "K54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "040A29AE-FD5A-11E3-AF24-0015C5F3F612": {
     "band": "G57",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "040A6B1C-FD5A-11E3-8AC3-0015C5F3F612": {
     "band": "K54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "040AA794-FD5A-11E3-9281-0015C5F3F612": {
     "band": "G57",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "040AEDD0-FD5A-11E3-A0DF-0015C5F3F612": {
     "band": "K54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "040B52DE-FD5A-11E3-9D19-0015C5F3F612": {
     "band": "G57",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "040B9708-FD5A-11E3-B032-0015C5F3F612": {
     "band": "K54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "041382D8-FD5A-11E3-A8AA-0015C5F3F612": {
     "band": "G62",
@@ -594,6 +584,16 @@
     "model": "ULX-DTx",
     "model_name": "ULX-D Bodypack / Handheld Transmitter"
   },
+  "0422E1CE-FD5A-11E3-BA08-0015C5F3F612": {
+    "band": "",
+    "model": "MXCW640-MXCW2",
+    "model_name": "MXCW640 Wireless Discussion Unit"
+  },
+  "04232760-FD5A-11E3-B7F2-0015C5F3F612": {
+    "band": "",
+    "model": "SBC220_240",
+    "model_name": "SBC220, SBC240: Networked Docking Charger"
+  },
   "0423D214-FD5A-11E3-8123-0015C5F3F612": {
     "band": "J8A",
     "model": "PSM1KTx",
@@ -737,12 +737,12 @@
   "042D1C02-FD5A-11E3-B298-0015C5F3F612": {
     "band": "R52",
     "model": "AD4D",
-    "model_name": "AXT-D Dual-Channel Receiver"
+    "model_name": "AD4D: Two-Channel Digital Wireless Receiver"
   },
   "042D5A00-FD5A-11E3-A553-0015C5F3F612": {
     "band": "R52",
     "model": "AD4Q",
-    "model_name": "AXT-D Quad-Channel Receiver"
+    "model_name": "AD4Q: Four-Channel Digital Wireless Receiver"
   },
   "042DC742-FD5A-11E3-9900-0015C5F3F612": {
     "band": "L50A",
@@ -764,6 +764,256 @@
     "model": "ULX-DBGTx",
     "model_name": "ULX-D Boundary / Gooseneck Transmitter"
   },
+  "0436A72C-FD5A-11E3-BBD9-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "04370D5C-FD5A-11E3-9309-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043750BE-FD5A-11E3-A507-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "04379466-FD5A-11E3-BC58-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "0438022A-FD5A-11E3-BA6D-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "04384780-FD5A-11E3-9021-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "04388B3C-FD5A-11E3-88AB-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "0438CDE0-FD5A-11E3-9F52-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "0438FA9A-FD5A-11E3-9C59-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "04393398-FD5A-11E3-A104-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "04396BA6-FD5A-11E3-AABA-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "0439C498-FD5A-11E3-B583-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043A00D4-FD5A-11E3-BFD0-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043A35A4-FD5A-11E3-AAD4-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043A6DE4-FD5A-11E3-B89D-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043AA642-FD5A-11E3-9290-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043ADF7C-FD5A-11E3-B7C0-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043B4732-FD5A-11E3-8F48-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043BA2C2-FD5A-11E3-8573-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043BE976-FD5A-11E3-92EB-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043C276A-FD5A-11E3-8CA2-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043C6B94-FD5A-11E3-A030-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043CCD96-FD5A-11E3-B41E-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043D1332-FD5A-11E3-90E6-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043D5414-FD5A-11E3-8ABA-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043D9938-FD5A-11E3-A83A-0015C5F3F612": {
+    "band": "",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "043DD3E4-FD5A-11E3-8BD4-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "043E1D40-FD5A-11E3-973A-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "043E8406-FD5A-11E3-ABBC-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "043EC6FA-FD5A-11E3-A490-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "043F3EF0-FD5A-11E3-BCDE-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "043F8964-FD5A-11E3-8BA4-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "043FC582-FD5A-11E3-A21C-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "04400F24-FD5A-11E3-8E03-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "044071E4-FD5A-11E3-8577-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "0440BDCA-FD5A-11E3-ADDA-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "0440FF92-FD5A-11E3-B79C-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "0441460A-FD5A-11E3-B015-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "0441A5B4-FD5A-11E3-9BFE-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "0441E218-FD5A-11E3-9C49-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "04421BF2-FD5A-11E3-A49F-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "04425748-FD5A-11E3-8061-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "0442926C-FD5A-11E3-AC96-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "0442C3CC-FD5A-11E3-85DA-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "044339EC-FD5A-11E3-B393-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "0443658E-FD5A-11E3-8A8B-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "0443AE5E-FD5A-11E3-BA09-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "04445A34-FD5A-11E3-B4F9-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "0444AA0C-FD5A-11E3-A5CA-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
+  "0444F584-FD5A-11E3-ACBA-0015C5F3F612": {
+    "band": "",
+    "model": "PSM900Rx",
+    "model_name": "PSM900 Bodypack Receiver"
+  },
   "04454354-FD5A-11E3-AD70-0015C5F3F612": {
     "band": "L50",
     "model": "ULX-DBGTx",
@@ -773,6 +1023,596 @@
     "band": "L50",
     "model": "ULX-DBGTx",
     "model_name": "ULX-D Boundary / Gooseneck Transmitter"
+  },
+  "04471BCA-FD5A-11E3-BF7F-0015C5F3F612": {
+    "band": "L3A",
+    "model": "AXTTx",
+    "model_name": "AXT Transmitter"
+  },
+  "04485E36-FD5A-11E3-8DAB-0015C5F3F612": {
+    "band": "J5A",
+    "model": "AXTTx",
+    "model_name": "AXT Transmitter"
+  },
+  "0448FAB2-FD5A-11E3-99B2-0015C5F3F612": {
+    "band": "",
+    "model": "IHOP_CH",
+    "model_name": "MXW 2/4/8-Bay Networked Charging Station"
+  },
+  "04497230-FD5A-11E3-A404-0015C5F3F612": {
+    "band": "",
+    "model": "IHOP_CH",
+    "model_name": "MXW 2/4/8-Bay Networked Charging Station"
+  },
+  "044A1D3E-FD5A-11E3-87C9-0015C5F3F612": {
+    "band": "",
+    "model": "IHOP_CH",
+    "model_name": "MXW 2/4/8-Bay Networked Charging Station"
+  },
+  "046859DE-FD5A-11E3-85B2-0015C5F3F612": {
+    "band": "Z16",
+    "model": "ADTx",
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
+  },
+  "04690870-FD5A-11E3-9FDF-0015C5F3F612": {
+    "band": "Z16",
+    "model": "ADTx",
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
+  },
+  "04698D54-FD5A-11E3-AB1B-0015C5F3F612": {
+    "band": "L50 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "0469CA08-FD5A-11E3-AA0A-0015C5F3F612": {
+    "band": "Z20 REV2",
+    "model": "ULX-D1GSingle",
+    "model_name": "ULX-D Extended Bands Single-Channel Receiver"
+  },
+  "046A1422-FD5A-11E3-9A7B-0015C5F3F612": {
+    "band": "J50 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "046A4EB0-FD5A-11E3-A7B3-0015C5F3F612": {
+    "band": "V50 REV2",
+    "model": "ULX-D1GSingle",
+    "model_name": "ULX-D Extended Bands Single-Channel Receiver"
+  },
+  "046ABC24-FD5A-11E3-A10D-0015C5F3F612": {
+    "band": "H51 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "046AF450-FD5A-11E3-8E65-0015C5F3F612": {
+    "band": "L50A REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "046B43EC-FD5A-11E3-A0B6-0015C5F3F612": {
+    "band": "Z18 REV2",
+    "model": "ULX-D1GSingle",
+    "model_name": "ULX-D Extended Bands Single-Channel Receiver"
+  },
+  "046B7C9A-FD5A-11E3-AB33-0015C5F3F612": {
+    "band": "H50 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "046BB67E-FD5A-11E3-B84F-0015C5F3F612": {
+    "band": "J51 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "046BF42C-FD5A-11E3-B11D-0015C5F3F612": {
+    "band": "X52 REV2",
+    "model": "ULX-DIsmSingle",
+    "model_name": "ULX-D 900 MHz ISM Single-Channel Receiver"
+  },
+  "046C5160-FD5A-11E3-BDEA-0015C5F3F612": {
+    "band": "G51 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "046C9CB0-FD5A-11E3-A272-0015C5F3F612": {
+    "band": "Z16 REV2",
+    "model": "ULX-D1GSingle",
+    "model_name": "ULX-D Extended Bands Single-Channel Receiver"
+  },
+  "046CE22E-FD5A-11E3-89AF-0015C5F3F612": {
+    "band": "L51 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "046D2D2E-FD5A-11E3-BEFA-0015C5F3F612": {
+    "band": "X54 REV2",
+    "model": "ULX-DIsmSingle",
+    "model_name": "ULX-D 900 MHz ISM Single-Channel Receiver"
+  },
+  "046D6F96-FD5A-11E3-B523-0015C5F3F612": {
+    "band": "X51 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "046DB8B6-FD5A-11E3-9088-0015C5F3F612": {
+    "band": "L53 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "046E0302-FD5A-11E3-A120-0015C5F3F612": {
+    "band": "Z19 REV2",
+    "model": "ULX-D1GSingle",
+    "model_name": "ULX-D Extended Bands Single-Channel Receiver"
+  },
+  "046E749A-FD5A-11E3-95B9-0015C5F3F612": {
+    "band": "P51 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "046ECE90-FD5A-11E3-B396-0015C5F3F612": {
+    "band": "X50 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "046F1A80-FD5A-11E3-BAE2-0015C5F3F612": {
+    "band": "Q51 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "046F8560-FD5A-11E3-84A4-0015C5F3F612": {
+    "band": "AB REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "046FD024-FD5A-11E3-BCD1-0015C5F3F612": {
+    "band": "X53 REV2",
+    "model": "ULX-DIsmSingle",
+    "model_name": "ULX-D 900 MHz ISM Single-Channel Receiver"
+  },
+  "04702146-FD5A-11E3-9478-0015C5F3F612": {
+    "band": "V51 REV2",
+    "model": "ULX-D1GSingle",
+    "model_name": "ULX-D Extended Bands Single-Channel Receiver"
+  },
+  "0470707E-FD5A-11E3-9AAC-0015C5F3F612": {
+    "band": "J50A REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "0470B3D6-FD5A-11E3-9F91-0015C5F3F612": {
+    "band": "Z17 REV2",
+    "model": "ULX-D1GSingle",
+    "model_name": "ULX-D Extended Bands Single-Channel Receiver"
+  },
+  "0470FD00-FD5A-11E3-AE6B-0015C5F3F612": {
+    "band": "G62 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "04716718-FD5A-11E3-AB65-0015C5F3F612": {
+    "band": "R51 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "0471AD5E-FD5A-11E3-B83A-0015C5F3F612": {
+    "band": "H52 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "0471EEE0-FD5A-11E3-B3EC-0015C5F3F612": {
+    "band": "G52 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "04723328-FD5A-11E3-8D29-0015C5F3F612": {
+    "band": "K51 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "04728DD2-FD5A-11E3-B163-0015C5F3F612": {
+    "band": "G50 REV2",
+    "model": "ULX-DSingle",
+    "model_name": "ULX-D Single-Channel Receiver"
+  },
+  "047351C2-FD5A-11E3-B511-0015C5F3F612": {
+    "band": "H51 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "0473C9F4-FD5A-11E3-BACF-0015C5F3F612": {
+    "band": "R51 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "0474383A-FD5A-11E3-B1E7-0015C5F3F612": {
+    "band": "Q51 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "0474A1A8-FD5A-11E3-A5DD-0015C5F3F612": {
+    "band": "X53 REV2",
+    "model": "ULX-DIsmQuad",
+    "model_name": "ULX-D 900 MHz ISM Quad-Channel Receiver"
+  },
+  "0474F982-FD5A-11E3-95D4-0015C5F3F612": {
+    "band": "J50 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "04757060-FD5A-11E3-87A8-0015C5F3F612": {
+    "band": "Z16 REV2",
+    "model": "ULX-D1GQuad",
+    "model_name": "ULX-D Extended Bands Quad-Channel Receiver"
+  },
+  "0475FB70-FD5A-11E3-A1ED-0015C5F3F612": {
+    "band": "K51 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "0476DB6C-FD5A-11E3-8355-0015C5F3F612": {
+    "band": "L53 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "04778670-FD5A-11E3-A299-0015C5F3F612": {
+    "band": "H52 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "04786B12-FD5A-11E3-A35C-0015C5F3F612": {
+    "band": "J51 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "0478F4CE-FD5A-11E3-9353-0015C5F3F612": {
+    "band": "G52 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "0479B4AE-FD5A-11E3-B33E-0015C5F3F612": {
+    "band": "X51 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "0479FE3C-FD5A-11E3-9DC2-0015C5F3F612": {
+    "band": "H50 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "047AE28E-FD5A-11E3-8FEB-0015C5F3F612": {
+    "band": "G62 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "047BC410-FD5A-11E3-AEA6-0015C5F3F612": {
+    "band": "Z17 REV2",
+    "model": "ULX-D1GQuad",
+    "model_name": "ULX-D Extended Bands Quad-Channel Receiver"
+  },
+  "047C3B84-FD5A-11E3-951B-0015C5F3F612": {
+    "band": "V51 REV2",
+    "model": "ULX-D1GQuad",
+    "model_name": "ULX-D Extended Bands Quad-Channel Receiver"
+  },
+  "047CC022-FD5A-11E3-9825-0015C5F3F612": {
+    "band": "G50 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "047CF98E-FD5A-11E3-989F-0015C5F3F612": {
+    "band": "J50A REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "047D9A1A-FD5A-11E3-9ECA-0015C5F3F612": {
+    "band": "X52 REV2",
+    "model": "ULX-DIsmQuad",
+    "model_name": "ULX-D 900 MHz ISM Quad-Channel Receiver"
+  },
+  "047E50CC-FD5A-11E3-A886-0015C5F3F612": {
+    "band": "Z19 REV2",
+    "model": "ULX-D1GQuad",
+    "model_name": "ULX-D Extended Bands Quad-Channel Receiver"
+  },
+  "047EF1F8-FD5A-11E3-BFA1-0015C5F3F612": {
+    "band": "Z18 REV2",
+    "model": "ULX-D1GQuad",
+    "model_name": "ULX-D Extended Bands Quad-Channel Receiver"
+  },
+  "047F30D2-FD5A-11E3-9B6C-0015C5F3F612": {
+    "band": "V50 REV2",
+    "model": "ULX-D1GQuad",
+    "model_name": "ULX-D Extended Bands Quad-Channel Receiver"
+  },
+  "047F7D9E-FD5A-11E3-86FE-0015C5F3F612": {
+    "band": "X50 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "04801BC8-FD5A-11E3-95F6-0015C5F3F612": {
+    "band": "X54 REV2",
+    "model": "ULX-DIsmQuad",
+    "model_name": "ULX-D 900 MHz ISM Quad-Channel Receiver"
+  },
+  "0481423C-FD5A-11E3-B138-0015C5F3F612": {
+    "band": "P51 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "0481E67E-FD5A-11E3-8A8E-0015C5F3F612": {
+    "band": "L51 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "04826D7E-FD5A-11E3-9481-0015C5F3F612": {
+    "band": "Z20 REV2",
+    "model": "ULX-D1GQuad",
+    "model_name": "ULX-D Extended Bands Quad-Channel Receiver"
+  },
+  "0482B4AA-FD5A-11E3-8FAB-0015C5F3F612": {
+    "band": "G51 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "048356C6-FD5A-11E3-A4C3-0015C5F3F612": {
+    "band": "AB REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "04839834-FD5A-11E3-87C9-0015C5F3F612": {
+    "band": "L50 REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "0483DD4E-FD5A-11E3-9D5C-0015C5F3F612": {
+    "band": "L50A REV2",
+    "model": "ULX-DQuad",
+    "model_name": "ULX-D Quad-Channel Receiver"
+  },
+  "048459FE-FD5A-11E3-B0CA-0015C5F3F612": {
+    "band": "X52 REV2",
+    "model": "ULX-DIsmDual",
+    "model_name": "ULX-D 900 MHz ISM Dual-Channel Receiver"
+  },
+  "04849266-FD5A-11E3-BFF5-0015C5F3F612": {
+    "band": "R51 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "0485E788-FD5A-11E3-9B06-0015C5F3F612": {
+    "band": "H50 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "04861EBA-FD5A-11E3-8645-0015C5F3F612": {
+    "band": "J51 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "048744B6-FD5A-11E3-8093-0015C5F3F612": {
+    "band": "Z17 REV2",
+    "model": "ULX-D1GDual",
+    "model_name": "ULX-D Extended Bands Dual-Channel Receiver"
+  },
+  "0487DBC4-FD5A-11E3-86B7-0015C5F3F612": {
+    "band": "V51 REV2",
+    "model": "ULX-D1GDual",
+    "model_name": "ULX-D Extended Bands Dual-Channel Receiver"
+  },
+  "04885A72-FD5A-11E3-93E9-0015C5F3F612": {
+    "band": "G50 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "04895468-FD5A-11E3-AC5F-0015C5F3F612": {
+    "band": "K51 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "0489FE4A-FD5A-11E3-9624-0015C5F3F612": {
+    "band": "J50A REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "048A8A4A-FD5A-11E3-9B96-0015C5F3F612": {
+    "band": "H52 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "048B12BC-FD5A-11E3-BBF1-0015C5F3F612": {
+    "band": "G62 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "048B7CE8-FD5A-11E3-B39E-0015C5F3F612": {
+    "band": "AB REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "048C64FA-FD5A-11E3-84CC-0015C5F3F612": {
+    "band": "Q51 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "048CF96A-FD5A-11E3-AE97-0015C5F3F612": {
+    "band": "X50 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "048D4456-FD5A-11E3-B5C5-0015C5F3F612": {
+    "band": "H51 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "048DB9E0-FD5A-11E3-8480-0015C5F3F612": {
+    "band": "L53 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "048E5E4A-FD5A-11E3-8D21-0015C5F3F612": {
+    "band": "Z16 REV2",
+    "model": "ULX-D1GDual",
+    "model_name": "ULX-D Extended Bands Dual-Channel Receiver"
+  },
+  "048E9536-FD5A-11E3-8D3B-0015C5F3F612": {
+    "band": "J50 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "048ECDC6-FD5A-11E3-AE4D-0015C5F3F612": {
+    "band": "G52 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "048F7492-FD5A-11E3-A760-0015C5F3F612": {
+    "band": "X53 REV2",
+    "model": "ULX-DIsmDual",
+    "model_name": "ULX-D 900 MHz ISM Dual-Channel Receiver"
+  },
+  "04900C90-FD5A-11E3-B4B0-0015C5F3F612": {
+    "band": "V50 REV2",
+    "model": "ULX-D1GDual",
+    "model_name": "ULX-D Extended Bands Dual-Channel Receiver"
+  },
+  "0490B730-FD5A-11E3-8009-0015C5F3F612": {
+    "band": "X54 REV2",
+    "model": "ULX-DIsmDual",
+    "model_name": "ULX-D 900 MHz ISM Dual-Channel Receiver"
+  },
+  "0491DE44-FD5A-11E3-8F49-0015C5F3F612": {
+    "band": "L50 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "049269D6-FD5A-11E3-A21A-0015C5F3F612": {
+    "band": "P51 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "0492B0F8-FD5A-11E3-852A-0015C5F3F612": {
+    "band": "Z18 REV2",
+    "model": "ULX-D1GDual",
+    "model_name": "ULX-D Extended Bands Dual-Channel Receiver"
+  },
+  "0492F89C-FD5A-11E3-935B-0015C5F3F612": {
+    "band": "Z19 REV2",
+    "model": "ULX-D1GDual",
+    "model_name": "ULX-D Extended Bands Dual-Channel Receiver"
+  },
+  "04933D48-FD5A-11E3-B3C7-0015C5F3F612": {
+    "band": "X51 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "0493F49A-FD5A-11E3-A966-0015C5F3F612": {
+    "band": "L51 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "04947F00-FD5A-11E3-AD5B-0015C5F3F612": {
+    "band": "G51 REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "0494DA18-FD5A-11E3-9015-0015C5F3F612": {
+    "band": "Z20 REV2",
+    "model": "ULX-D1GDual",
+    "model_name": "ULX-D Extended Bands Dual-Channel Receiver"
+  },
+  "04959B42-FD5A-11E3-A4AE-0015C5F3F612": {
+    "band": "L50A REV2",
+    "model": "ULX-DDual",
+    "model_name": "ULX-D Dual-Channel Receiver"
+  },
+  "0496551E-FD5A-11E3-A0AC-0015C5F3F612": {
+    "band": "D12",
+    "model": "AD4D",
+    "model_name": "AD4D: Two-Channel Digital Wireless Receiver"
+  },
+  "0496C6D4-FD5A-11E3-BFDE-0015C5F3F612": {
+    "band": "D12",
+    "model": "AD4Q",
+    "model_name": "AD4Q: Four-Channel Digital Wireless Receiver"
+  },
+  "049EB740-FD5A-11E3-8F82-0015C5F3F612": {
+    "band": "V52",
+    "model": "ULX-D1GSingle",
+    "model_name": "ULX-D Extended Bands Single-Channel Receiver"
+  },
+  "049EF94E-FD5A-11E3-8586-0015C5F3F612": {
+    "band": "V52 REV2",
+    "model": "ULX-D1GSingle",
+    "model_name": "ULX-D Extended Bands Single-Channel Receiver"
+  },
+  "049F3224-FD5A-11E3-9D52-0015C5F3F612": {
+    "band": "V52",
+    "model": "ULX-D1GQuad",
+    "model_name": "ULX-D Extended Bands Quad-Channel Receiver"
+  },
+  "049F6514-FD5A-11E3-98C3-0015C5F3F612": {
+    "band": "V52 REV2",
+    "model": "ULX-D1GQuad",
+    "model_name": "ULX-D Extended Bands Quad-Channel Receiver"
+  },
+  "04A01F4A-FD5A-11E3-BC95-0015C5F3F612": {
+    "band": "V52 REV2",
+    "model": "ULX-D1GDual",
+    "model_name": "ULX-D Extended Bands Dual-Channel Receiver"
+  },
+  "04A06748-FD5A-11E3-951E-0015C5F3F612": {
+    "band": "V52",
+    "model": "ULX-D1GDual",
+    "model_name": "ULX-D Extended Bands Dual-Channel Receiver"
+  },
+  "04A0C990-FD5A-11E3-BA31-0015C5F3F612": {
+    "band": "V52",
+    "model": "ULX-D1GTx",
+    "model_name": "ULX-D Extended Bands Bodypack / Handheld Transmitter"
+  },
+  "04A11684-FD5A-11E3-A1CE-0015C5F3F612": {
+    "band": "V52",
+    "model": "ULX-D1GTx",
+    "model_name": "ULX-D Extended Bands Bodypack / Handheld Transmitter"
+  },
+  "04A15AEA-FD5A-11E3-AD2D-0015C5F3F612": {
+    "band": "V52",
+    "model": "QLX-D1GSingle",
+    "model_name": "QLX-D Extended Bands Single-Channel Receiver"
+  },
+  "04A19E60-FD5A-11E3-967E-0015C5F3F612": {
+    "band": "V52",
+    "model": "QLX-D1GTx",
+    "model_name": "QLX-D Extended Bands Bodypack / Handheld Transmitter"
+  },
+  "04A1E956-FD5A-11E3-875F-0015C5F3F612": {
+    "band": "V52",
+    "model": "QLX-D1GTx",
+    "model_name": "QLX-D Extended Bands Bodypack / Handheld Transmitter"
+  },
+  "04A4E08E-FD5A-11E3-97D1-0015C5F3F612": {
+    "band": "Z16",
+    "model": "ADTx",
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
+  },
+  "04A5BA0E-FD5A-11E3-A0A2-0015C5F3F612": {
+    "band": "Z16",
+    "model": "ADTx",
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
+  },
+  "04A780B4-FD5A-11E3-B3E4-0015C5F3F612": {
+    "band": "Z16",
+    "model": "ADTx",
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
+  },
+  "04A9D5D0-FD5A-11E3-B27D-0015C5F3F612": {
+    "band": "H22",
+    "model": "PSM1KRx",
+    "model_name": "PSM1000 Bodypack Receiver"
+  },
+  "04AA19BE-FD5A-11E3-BFFD-0015C5F3F612": {
+    "band": "H22",
+    "model": "PSM1KTx",
+    "model_name": "PSM1000 Dual-Channel Transmitter"
   },
   "28672756-024C-416B-A552-527E1B5091E1": {
     "band": "",
@@ -1177,7 +2017,7 @@
   "CCC63F04-E139-11DF-8EFB-0015C5F3F612": {
     "band": "",
     "model": "AXT900",
-    "model_name": "AXT Rackmount Battery Charger"
+    "model_name": "AXT900: Rack Mount Charging Station"
   },
   "CCC665EC-E139-11DF-86B9-0015C5F3F612": {
     "band": "G10",
@@ -1779,11 +2619,6 @@
     "model": "ULX-DSingle",
     "model_name": "ULX-D Single-Channel Receiver"
   },
-  "CCDFA50C-E139-11DF-9331-0015C5F3F612": {
-    "band": "R52",
-    "model": "ULX-DSingle",
-    "model_name": "ULX-D Single-Channel Receiver"
-  },
   "CCDFCAB4-E139-11DF-94CE-0015C5F3F612": {
     "band": "G52",
     "model": "ULX-DDual",
@@ -1794,11 +2629,6 @@
     "model": "ULX-DDual",
     "model_name": "ULX-D Dual-Channel Receiver"
   },
-  "CCE016AE-E139-11DF-9866-0015C5F3F612": {
-    "band": "R52",
-    "model": "ULX-DDual",
-    "model_name": "ULX-D Dual-Channel Receiver"
-  },
   "CCE03CA6-E139-11DF-9128-0015C5F3F612": {
     "band": "G52",
     "model": "ULX-DQuad",
@@ -1806,11 +2636,6 @@
   },
   "CCE0626C-E139-11DF-9733-0015C5F3F612": {
     "band": "H52",
-    "model": "ULX-DQuad",
-    "model_name": "ULX-D Quad-Channel Receiver"
-  },
-  "CCE08788-E139-11DF-9A8A-0015C5F3F612": {
-    "band": "R52",
     "model": "ULX-DQuad",
     "model_name": "ULX-D Quad-Channel Receiver"
   },
@@ -2716,7 +3541,7 @@
   },
   "CD06781C-E139-11DF-9160-0015C5F3F612": {
     "band": "",
-    "model": "GLXD-RX-BAGGABLE",
+    "model": "GLXD-BAGGABLE-RX",
     "model_name": "GLX-D Receiver"
   },
   "CD06A2E2-E139-11DF-80E4-0015C5F3F612": {
@@ -2897,22 +3722,27 @@
   "CD0C625E-E139-11DF-9AB3-0015C5F3F612": {
     "band": "",
     "model": "SBRC",
-    "model_name": "Shure Battery Rack Charger"
+    "model_name": "SBRC: Shure Battery Rack Charger"
   },
   "CD0C8A68-E139-11DF-9B00-0015C5F3F612": {
     "band": "",
     "model": "SBC840M",
-    "model_name": "AXT-D 8-Bay Networked Micro-Bodypack Battery Charger"
+    "model_name": "SBC840M: Networked Battery Charger"
   },
   "CD0CB29A-E139-11DF-8DC3-0015C5F3F612": {
     "band": "",
-    "model": "SBC240",
-    "model_name": "AXT-D 2-Bay Networked Battery Charger"
+    "model": "SBC220_240",
+    "model_name": "SBC220, SBC240: Networked Docking Charger"
   },
   "CD0CD978-E139-11DF-895B-0015C5F3F612": {
     "band": "",
     "model": "SBC840",
-    "model_name": "AXT-D 8-Bay Networked Battery Charger"
+    "model_name": "SBC840: Networked Battery Charger"
+  },
+  "CD0D0010-E139-11DF-8CEF-0015C5F3F612": {
+    "band": "",
+    "model": "MXCWNCS",
+    "model_name": "MXCWNCS SB930 Network Charging Station"
   },
   "CD0D4DF4-E139-11DF-8245-0015C5F3F612": {
     "band": "Z16",
@@ -3157,352 +3987,352 @@
   "CD155CBA-E139-11DF-8DBC-0015C5F3F612": {
     "band": "G55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD15846A-E139-11DF-9B3C-0015C5F3F612": {
     "band": "G53",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD15AB48-E139-11DF-83C3-0015C5F3F612": {
     "band": "G54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD15D212-E139-11DF-99E3-0015C5F3F612": {
     "band": "H54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD162F00-E139-11DF-88B9-0015C5F3F612": {
     "band": "K57",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD16573C-E139-11DF-9B59-0015C5F3F612": {
     "band": "L54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD167CB2-E139-11DF-895B-0015C5F3F612": {
     "band": "K55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD16A5DE-E139-11DF-9066-0015C5F3F612": {
     "band": "K53",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD17179E-E139-11DF-8EEA-0015C5F3F612": {
     "band": "JB",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD17E7DC-E139-11DF-869C-0015C5F3F612": {
     "band": "X51",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD181752-E139-11DF-894A-0015C5F3F612": {
     "band": "X55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD186E28-E139-11DF-95FC-0015C5F3F612": {
     "band": "G54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD18948E-E139-11DF-9101-0015C5F3F612": {
     "band": "G55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD18BB6C-E139-11DF-984F-0015C5F3F612": {
     "band": "G53",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD190B8A-E139-11DF-98E0-0015C5F3F612": {
     "band": "H54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD195FE0-E139-11DF-9453-0015C5F3F612": {
     "band": "L54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD198DDA-E139-11DF-8DF4-0015C5F3F612": {
     "band": "K55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD19BC74-E139-11DF-82CD-0015C5F3F612": {
     "band": "K56",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD19E938-E139-11DF-86D4-0015C5F3F612": {
     "band": "K58",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD1A155C-E139-11DF-9BEA-0015C5F3F612": {
     "band": "K57",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD1AFC56-E139-11DF-889B-0015C5F3F612": {
     "band": "X55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD1B84C8-E139-11DF-9EE8-0015C5F3F612": {
     "band": "G53",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD1C98EA-E139-11DF-88D0-0015C5F3F612": {
     "band": "K55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD1CC7C0-E139-11DF-81AC-0015C5F3F612": {
     "band": "K53",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD1D5258-E139-11DF-920D-0015C5F3F612": {
     "band": "K58",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD1E5E1E-E139-11DF-8AB0-0015C5F3F612": {
     "band": "X55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD1EBA6C-E139-11DF-86B9-0015C5F3F612": {
     "band": "G55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD1EEABE-E139-11DF-9F3A-0015C5F3F612": {
     "band": "G53",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD1F1BEC-E139-11DF-8EC4-0015C5F3F612": {
     "band": "G54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD1F4806-E139-11DF-98D2-0015C5F3F612": {
     "band": "H54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD1FA454-E139-11DF-93B1-0015C5F3F612": {
     "band": "K57",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD1FD104-E139-11DF-8122-0015C5F3F612": {
     "band": "L54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD1FFF6C-E139-11DF-877B-0015C5F3F612": {
     "band": "K55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD202CDA-E139-11DF-94AE-0015C5F3F612": {
     "band": "K53",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD20B330-E139-11DF-8F94-0015C5F3F612": {
     "band": "JB",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD218F8A-E139-11DF-9686-0015C5F3F612": {
     "band": "X51",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD21BD16-E139-11DF-9ECD-0015C5F3F612": {
     "band": "X55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD22175C-E139-11DF-981F-0015C5F3F612": {
     "band": "G55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD224330-E139-11DF-958A-0015C5F3F612": {
     "band": "G56",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD226B44-E139-11DF-9BD9-0015C5F3F612": {
     "band": "G53",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD2291B4-E139-11DF-8D0D-0015C5F3F612": {
     "band": "G54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD22C1F2-E139-11DF-90BD-0015C5F3F612": {
     "band": "H54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD231F80-E139-11DF-9CD9-0015C5F3F612": {
     "band": "L54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD234C94-E139-11DF-9374-0015C5F3F612": {
     "band": "K55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD2374EE-E139-11DF-88C0-0015C5F3F612": {
     "band": "K56",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD23A25C-E139-11DF-8CE6-0015C5F3F612": {
     "band": "K57",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD23D010-E139-11DF-9100-0015C5F3F612": {
     "band": "K58",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD24AA1C-E139-11DF-9057-0015C5F3F612": {
     "band": "X55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD24F814-E139-11DF-854A-0015C5F3F612": {
     "band": "G55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD251EC0-E139-11DF-848F-0015C5F3F612": {
     "band": "G53",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD254472-E139-11DF-96A6-0015C5F3F612": {
     "band": "G54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD256A06-E139-11DF-957E-0015C5F3F612": {
     "band": "H54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD25B5BA-E139-11DF-843F-0015C5F3F612": {
     "band": "K57",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD25DD60-E139-11DF-9D6B-0015C5F3F612": {
     "band": "L54",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD26081C-E139-11DF-8133-0015C5F3F612": {
     "band": "K55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD26304E-E139-11DF-837C-0015C5F3F612": {
     "band": "K53",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD26BF0A-E139-11DF-9460-0015C5F3F612": {
     "band": "K58",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD27CFDA-E139-11DF-8575-0015C5F3F612": {
     "band": "X55",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD282D40-E139-11DF-8481-0015C5F3F612": {
     "band": "",
     "model": "AD4D",
-    "model_name": "AXT-D Dual-Channel Receiver"
+    "model_name": "AD4D: Two-Channel Digital Wireless Receiver"
   },
   "CD285B30-E139-11DF-8923-0015C5F3F612": {
     "band": "",
     "model": "AD4D",
-    "model_name": "AXT-D Dual-Channel Receiver"
+    "model_name": "AD4D: Two-Channel Digital Wireless Receiver"
   },
   "CD2886E6-E139-11DF-8A35-0015C5F3F612": {
     "band": "",
     "model": "AD4D",
-    "model_name": "AXT-D Dual-Channel Receiver"
+    "model_name": "AD4D: Two-Channel Digital Wireless Receiver"
   },
   "CD28B486-E139-11DF-8E0F-0015C5F3F612": {
     "band": "",
     "model": "AD4D",
-    "model_name": "AXT-D Dual-Channel Receiver"
+    "model_name": "AD4D: Two-Channel Digital Wireless Receiver"
   },
   "CD28E12C-E139-11DF-8153-0015C5F3F612": {
     "band": "",
     "model": "AD4Q",
-    "model_name": "AXT-D Quad-Channel Receiver"
+    "model_name": "AD4Q: Four-Channel Digital Wireless Receiver"
   },
   "CD290B70-E139-11DF-8374-0015C5F3F612": {
     "band": "",
     "model": "AD4Q",
-    "model_name": "AXT-D Quad-Channel Receiver"
+    "model_name": "AD4Q: Four-Channel Digital Wireless Receiver"
   },
   "CD293640-E139-11DF-9DC0-0015C5F3F612": {
     "band": "",
     "model": "AD4Q",
-    "model_name": "AXT-D Quad-Channel Receiver"
+    "model_name": "AD4Q: Four-Channel Digital Wireless Receiver"
   },
   "CD296318-E139-11DF-8044-0015C5F3F612": {
     "band": "",
     "model": "AD4Q",
-    "model_name": "AXT-D Quad-Channel Receiver"
+    "model_name": "AD4Q: Four-Channel Digital Wireless Receiver"
   },
   "CD29BC1E-E139-11DF-8BA3-0015C5F3F612": {
     "band": "K53",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD2A37C0-E139-11DF-80E1-0015C5F3F612": {
     "band": "K53",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD2AAA7A-E139-11DF-82F9-0015C5F3F612": {
     "band": "K58",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD2AD072-E139-11DF-88C1-0015C5F3F612": {
     "band": "K58",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD2B9282-E139-11DF-9CC1-0015C5F3F612": {
     "band": "",
@@ -3514,6 +4344,16 @@
     "model": "IHOP_CH",
     "model_name": "MXW 2/4/8-Bay Networked Charging Station"
   },
+  "CD2BEEEE-E139-11DF-8193-0015C5F3F612": {
+    "band": "",
+    "model": "MXCWAPT",
+    "model_name": "MXCWAPT Access Point"
+  },
+  "CD2C1DBA-E139-11DF-8AC3-0015C5F3F612": {
+    "band": "",
+    "model": "MXCW640-MXCW2",
+    "model_name": "MXCW640 Wireless Discussion Unit"
+  },
   "CD2C4BF0-E139-11DF-9AD3-0015C5F3F612": {
     "band": "",
     "model": "ANI4IN",
@@ -3522,7 +4362,7 @@
   "CD2D311E-E139-11DF-8434-0015C5F3F612": {
     "band": "",
     "model": "AD610",
-    "model_name": "AXT-D ShowLink Access Point"
+    "model_name": "AD610: ShowLink TM Access Point"
   },
   "CD2D5946-E139-11DF-9DC3-0015C5F3F612\"": {
     "band": "H20",
@@ -3638,26 +4478,6 @@
     "band": "X54",
     "model": "ULX-DBGTxIsm",
     "model_name": "ULX-D 900 MHz ISM Boundary / Gooseneck Transmitter"
-  },
-  "CD313CBE-E139-11DF-9121-0015C5F3F612": {
-    "band": "Z16",
-    "model": "ULX-DBG1GTx",
-    "model_name": "ULX-D Extended Bands Boundary / Gooseneck Transmitter"
-  },
-  "CD31704E-E139-11DF-982C-0015C5F3F612": {
-    "band": "Z17",
-    "model": "ULX-DBG1GTx",
-    "model_name": "ULX-D Extended Bands Boundary / Gooseneck Transmitter"
-  },
-  "CD319CB8-E139-11DF-82A3-0015C5F3F612": {
-    "band": "Z18",
-    "model": "ULX-DBG1GTx",
-    "model_name": "ULX-D Extended Bands Boundary / Gooseneck Transmitter"
-  },
-  "CD31CBDE-E139-11DF-8EB2-0015C5F3F612": {
-    "band": "Z19",
-    "model": "ULX-DBG1GTx",
-    "model_name": "ULX-D Extended Bands Boundary / Gooseneck Transmitter"
   },
   "CD31F8FC-E139-11DF-89FB-0015C5F3F612": {
     "band": "H53",
@@ -3779,26 +4599,6 @@
     "model": "ULX-DBGTxIsm",
     "model_name": "ULX-D 900 MHz ISM Boundary / Gooseneck Transmitter"
   },
-  "CD360384-E139-11DF-832D-0015C5F3F612": {
-    "band": "Z16",
-    "model": "ULX-DBG1GTx",
-    "model_name": "ULX-D Extended Bands Boundary / Gooseneck Transmitter"
-  },
-  "CD362AC6-E139-11DF-80C5-0015C5F3F612": {
-    "band": "Z17",
-    "model": "ULX-DBG1GTx",
-    "model_name": "ULX-D Extended Bands Boundary / Gooseneck Transmitter"
-  },
-  "CD36510E-E139-11DF-8B33-0015C5F3F612": {
-    "band": "Z18",
-    "model": "ULX-DBG1GTx",
-    "model_name": "ULX-D Extended Bands Boundary / Gooseneck Transmitter"
-  },
-  "CD367C92-E139-11DF-80E4-0015C5F3F612": {
-    "band": "Z19",
-    "model": "ULX-DBG1GTx",
-    "model_name": "ULX-D Extended Bands Boundary / Gooseneck Transmitter"
-  },
   "CD36A866-E139-11DF-9E50-0015C5F3F612": {
     "band": "H53",
     "model": "ULX-DBGTx",
@@ -3827,17 +4627,17 @@
   "CD376FC6-E139-11DF-8F42-0015C5F3F612": {
     "band": "",
     "model": "ULX-DDock",
-    "model_name": "ULX-D 2/4/8-Bay Networked Charging Station"
+    "model_name": "SBC250, SBC450, SBC850: Networked Docking Station"
   },
   "CD3796FE-E139-11DF-96F4-0015C5F3F612": {
     "band": "",
     "model": "ULX-DDock",
-    "model_name": "ULX-D 2/4/8-Bay Networked Charging Station"
+    "model_name": "SBC250, SBC450, SBC850: Networked Docking Station"
   },
   "CD37BD82-E139-11DF-9E97-0015C5F3F612": {
     "band": "",
     "model": "ULX-DDock",
-    "model_name": "ULX-D 2/4/8-Bay Networked Charging Station"
+    "model_name": "SBC250, SBC450, SBC850: Networked Docking Station"
   },
   "CD3A685C-E139-11DF-9503-0015C5F3F612": {
     "band": "",
@@ -3862,51 +4662,51 @@
   "CD3C4D98-E139-11DF-9D47-0015C5F3F612": {
     "band": "R52",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD3C7AD4-E139-11DF-9FD1-0015C5F3F612": {
     "band": "G56",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD3CA324-E139-11DF-8570-0015C5F3F612": {
     "band": "K56",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD3CCB42-E139-11DF-8C2D-0015C5F3F612": {
     "band": "R52",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD3CF234-E139-11DF-81AE-0015C5F3F612": {
     "band": "G56",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD3D193A-E139-11DF-8B94-0015C5F3F612": {
     "band": "R52",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD3D3F96-E139-11DF-9E80-0015C5F3F612": {
     "band": "JB",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD3DF648-E139-11DF-9838-0015C5F3F612": {
     "band": "K56",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "CD3E50A2-E139-11DF-93F1-0015C5F3F612": {
     "band": "R52",
     "model": "ADTx",
-    "model_name": "AXT-D Bodypack / Handheld Transmitter"
+    "model_name": "AD1, AD2, ADX1, ADX1M, ADX2, ADX2FD: Bodypack / Handheld Transmitter"
   },
   "F52B5E53-EAC7-4AF0-AE02-F1A666B99CD0": {
     "band": "",
-    "model": "GLXD-RX-BAGGABLE2",
+    "model": "GLXD-BAGGABLE-RX",
     "model_name": "GLX-D Receiver"
   }
 }
