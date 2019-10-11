@@ -3,7 +3,7 @@
 
 ## [0.8.5] - 2019-10-10
 ### Added
-- Configuration page.
+- Device configuration page.
 - Estimated battery times for devices using Shure rechargeable batteries.
 - Offline device type for devices like PSM900s.
 - Added color guide to help HUD.
