@@ -124,6 +124,11 @@ function mapGroups() {
     }
   });
 
+  $('a#go-hud').click(() => {
+    $('#hud').toggle();
+    $('.collapse').collapse('hide');
+  });
+
   $('a.preset-link').each(function(index) {
     const id = parseInt($(this).attr('id')[9], 10);
 
