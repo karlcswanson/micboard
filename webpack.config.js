@@ -11,6 +11,7 @@ module.exports = {
     about: ['./js/about.js'],
     venue: ['./js/venues.js'],
     web: ['./js/web.js'],
+    react: ['./js/react.jsx'],
   },
   output: {
     path: path.resolve(__dirname, 'static'),
