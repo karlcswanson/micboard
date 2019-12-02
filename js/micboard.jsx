@@ -28,10 +28,8 @@ class Micboard extends React.Component {
         }
       }
     }
+    // console.log(out);
 
-
-    console.log(out);
-    //
     newSlotList[data.slot] = out
     this.setState({ slots: newSlotList })
   }
@@ -75,15 +73,9 @@ class Micboard extends React.Component {
     return socket;
   }
 
-  functionTest() {
-    console.log("fin");
-
-  }
 
   componentDidMount() {
-    // this.wsInit();
     this.socket = this.wsInit();
-    // console.log("hello!");
   }
 
 
