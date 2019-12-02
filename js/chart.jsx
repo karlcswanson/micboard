@@ -124,6 +124,10 @@ class Chart extends React.Component {
     this.chart = this.initChart(this.props.data)
   }
 
+  componentWillUnmount() {
+    this.chart.slotChart.stop();
+  }
+
   render() {
     // console.log(this.props)
     return (
