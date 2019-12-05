@@ -131,10 +131,7 @@ class Chart extends React.Component {
   render() {
     // console.log(this.props)
     return (
-      <div>
-        <p>RF Level: { this.props.data.rf_level}</p>
-        <canvas width={400} height={200} ref={ x => this.chartElement = x } />
-      </div>
+      <canvas width={400} height={200} ref={ x => this.chartElement = x } />
     )
   }
 }

@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Chart } from './chart.jsx';
+import { Chart } from './slot/chart.jsx';
+
+import { Quality } from './slot/quality.jsx';
+import { Frequency } from './slot/frequency.jsx';
+import { Offset } from './slot/offset.jsx';
 
 class Slot extends React.Component {
   render() {
@@ -13,12 +17,12 @@ class Slot extends React.Component {
         <p>Batterys Level: { this.props.data.battery }</p>
         <p>runtime: { this.props.data.runtime }</p>
         <p>antenna: { this.props.data.antenna }</p>
-        <p>frequency: { this.props.data.frequency}</p>
+        <Frequency data={ this.props.data} />
         <p>name: { this.props.data.name}</p>
         <p>status: { this.props.data.status}</p>
         <p>type: { this.props.data.type}</p>
-        <p>offset: { this.props.data.tx_offset}</p>
-        <p>quality: { this.props.data.quality }</p>
+        <Offset data={ this.props.data } />
+        <Quality data={ this.props.data } />
       </div>
     )
   }
