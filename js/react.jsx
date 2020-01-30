@@ -1,5 +1,6 @@
 "use strict";
 
+import '../css/new.scss';
 import '../css/colors.scss';
 
 import React from 'react';

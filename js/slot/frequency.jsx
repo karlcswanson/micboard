@@ -1,4 +1,5 @@
 import React from 'react';
+// import '../../css/slot/frequency.scss';
 
 function frequency(input) {
   if (input === '000000') {
@@ -11,7 +12,7 @@ class Frequency extends React.Component {
 
   render() {
     return (
-      <p>{ frequency(this.props.data.frequency) }</p>
+      <p className='frequency'>{ frequency(this.props.data.frequency) }</p>
     )
   }
 }
