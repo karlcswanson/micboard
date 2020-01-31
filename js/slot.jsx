@@ -24,6 +24,7 @@ class Slot extends React.Component {
         <p>runtime: { this.props.data.runtime }</p>
         <Diversity data={ this.props.data } />
         <Frequency data={ this.props.data } />
+        <p>id: { this.props.data.id}</p>
         <p>name: { this.props.data.name}</p>
         <p>status: { this.props.data.status}</p>
         <p>type: { this.props.data.type}</p>
