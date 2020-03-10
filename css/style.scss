@@ -143,6 +143,12 @@ canvas.slotgraph {
 }
 
 
+.powerlock{
+  position: absolute;
+  bottom: 80px;
+  left: 5px;
+}
+
 .quality {
   position: absolute;
   bottom: 80px;
@@ -452,6 +458,11 @@ canvas.slotgraph {
 
   .runtime {
     bottom: 75px;
+    left: 5px;
+  }
+
+  .powerlock {
+    bottom: 25px;
     left: 5px;
   }
 

@@ -49,6 +49,10 @@ function updateRuntime(slotSelector, data) {
   slotSelector.querySelector('p.runtime').innerHTML = data.runtime;
 }
 
+function updatePowerlock(slotSelector, data) {
+  slotSelector.querySelector('p.powerlock').innerHTML = data.power_lock;
+}
+
 function updateQuality(slotSelector, data) {
   const QualityTable = {
     0: '&#9675;&#9675;&#9675;&#9675;&#9675;',
@@ -208,6 +212,9 @@ function updateSelector(slotSelector, data) {
   updateCheck(data, 'frequency', () => {
     updateFrequency(slotSelector, data);
   });
+  updateCheck(data, 'power_lock', () => {
+    updatePowerlock(slotSelector, data);
+  });
 }
 
 
@@ -241,6 +248,9 @@ export function updateViewOnly(slotSelector, data) {
   }
   if ('ip' in data) {
     updateIP(slotSelector, data);
+  }
+  if ('power_lock' in data) {
+    updatePowerlock(slotSelector, data);
   }
 }
 
