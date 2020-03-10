@@ -144,9 +144,11 @@ canvas.slotgraph {
 
 
 .powerlock{
+  display: none;
   position: absolute;
-  bottom: 80px;
+  bottom: 15px;
   left: 5px;
+  color: var(--color-yellow);
 }
 
 .quality {
@@ -462,8 +464,8 @@ canvas.slotgraph {
   }
 
   .powerlock {
-    bottom: 25px;
-    left: 5px;
+    bottom: 3px;
+    left: 1px;
   }
 
   .quality {

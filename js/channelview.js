@@ -50,7 +50,13 @@ function updateRuntime(slotSelector, data) {
 }
 
 function updatePowerlock(slotSelector, data) {
-  slotSelector.querySelector('p.powerlock').innerHTML = data.power_lock;
+  if (data.power_lock === 'ON') {
+    slotSelector.querySelector('p.powerlock').style.display = 'block';
+  } else {
+    slotSelector.querySelector('p.powerlock').style.display = 'none';
+  }
+
+
 }
 
 function updateQuality(slotSelector, data) {
