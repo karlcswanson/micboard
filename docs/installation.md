@@ -26,7 +26,7 @@ $ pip3 install -r py/requirements.txt
 
 Create the config file used by micboard
 ```
-touch config.json
+$ touch config.json
 ```
 
 build the micboard frontend and run micboard
