@@ -22,6 +22,8 @@ import '../node_modules/@ibm/plex/css/ibm-plex.css';
 
 export const dataURL = 'data.json';
 
+const adminPass = 'Iccc6430$';
+
 export const micboard = [];
 micboard.MIC_MODELS = ['uhfr', 'qlxd', 'ulxd', 'axtd'];
 micboard.IEM_MODELS = ['p10t'];
@@ -108,19 +110,29 @@ export function updateNavLinks() {
 
 function mapGroups() {
   $('a#go-extended').click(() => {
-    slotEditToggle();
+    var promptPass = prompt('Please enter password to proceed.');
+    if (promptPass != null && promptPass === adminPass) {
+      slotEditToggle();
     $('.collapse').collapse('hide');
+    }
   });
 
   $('a#go-config').click(() => {
-    initConfigEditor();
+    var promptPass = prompt('Please enter password to proceed.');
+    if (promptPass != null && promptPass === adminPass) {
+      initConfigEditor();
     $('.collapse').collapse('hide');
+    }
+    
   });
 
   $('a#go-groupedit').click(() => {
-    if (micboard.group !== 0) {
-      groupEditToggle();
-      $('.collapse').collapse('hide');
+    var promptPass = prompt('Please enter password to proceed.')
+    if (promptPass =! null && promptPass === adminPass) {
+      if (micboard.group !== 0) {
+        groupEditToggle();
+        $('.collapse').collapse('hide');
+      }
     }
   });
 
