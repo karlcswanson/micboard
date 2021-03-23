@@ -24,6 +24,11 @@ $ npm install --only=prod
 $ pip3 install -r py/requirements.txt
 ```
 
+Create the config file used by micboard
+```
+$ touch config.json
+```
+
 build the micboard frontend and run micboard
 ```
 $ npm run build
@@ -36,6 +41,8 @@ $ sudo cp micboard.service /etc/systemd/system/
 $ sudo systemctl start micboard.service
 $ sudo systemctl enable micboard.service
 ```
+
+Visit your instance of Micboard at http://server_ip_address:8058
 
 Check the [configuration](configuration.md) docs for more information on configuring micboard.
 
