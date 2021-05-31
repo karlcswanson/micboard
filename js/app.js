@@ -107,24 +107,24 @@ export function updateNavLinks() {
 }
 
 function mapGroups() {
-  $('a#go-extended').click(() => {
+  $('a#go-extended').on('click', () => {
     slotEditToggle();
     $('.collapse').collapse('hide');
   });
 
-  $('a#go-config').click(() => {
+  $('a#go-config').on('click', () => {
     initConfigEditor();
     $('.collapse').collapse('hide');
   });
 
-  $('a#go-groupedit').click(() => {
+  $('a#go-groupedit').on('click', () => {
     if (micboard.group !== 0) {
       groupEditToggle();
       $('.collapse').collapse('hide');
     }
   });
 
-  $('a#go-hud').click(() => {
+  $('a#go-hud').on('click', () => {
     $('#hud').toggle();
     $('.collapse').collapse('hide');
   });
@@ -132,7 +132,7 @@ function mapGroups() {
   $('a.preset-link').each(function(index) {
     const id = parseInt($(this).attr('id')[9], 10);
 
-    $(this).click(() => {
+    $(this).on('click', () => {
       renderGroup(id);
       $('.collapse').collapse('hide');
     });

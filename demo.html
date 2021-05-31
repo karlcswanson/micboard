@@ -173,7 +173,7 @@
 
             <div id="discovered_list"></div>
             <div class="config-footer">
-              <div class="form-row">
+              <div class="row">
 
                 <div class="col">
                   <button id="add-discovered" class="btn btn-block btn-danger">Add All Discovered Devices</button>
@@ -189,7 +189,7 @@
             </div>
             <div id="editor_holder"></div>
             <div class="config-footer">
-              <div class="form-row">
+              <div class="row">
 
                 <div class="col">
                   <button id="clear-config" class="btn btn-block btn-danger">Clear</button>
@@ -234,10 +234,11 @@
             </div>
           </div>
           <nav class="navbar navbar-dark bg-dark py-0">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-
+            <div class="container-fluid">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
           </nav>
 
         </div>
@@ -282,7 +283,7 @@
           </div>
 
           <div class="editzone">
-            <div class="form-row">
+            <div class="row">
               <div class="col">
                 <input type="text" class="form-control ext-id" aria-label="Default" aria-describedby="inputGroup-sizing-default" autocomplete="off" placeholder="ID">
               </div>
@@ -302,25 +303,25 @@
 
     <template id="save-template">
       <div class="col-sm" id="paste-box">
-        <div class="form-row">
+        <div class="row">
           <div class="col">
             <textarea class="form-control" id="bulkbox" rows="3"></textarea>
           </div>
         </div>
-        <div class="form-row">
+        <div class="row">
           <div class="col">
             <button type="button" class="btn btn-success btn-block" id="bulk-name-loader">Load Bulk Names</button>
           </div>
         </div>
       </div>
       <div class="col-sm" id="save-box">
-        <div class="form-row">
+        <div class="row">
           <div class="col">
             <button type="button" class="btn btn-success btn-block" id="slotSave">Save</button>
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="row">
           <div class="col">
             <button type="button" class="btn btn-secondary btn-warning btn-block" id="clear-id">Clear IDs</button>
           </div>
@@ -332,7 +333,7 @@
     </template>
 
     <template id="config-slot-template">
-      <div class="form-row cfg-row">
+      <div class="row cfg-row">
         <div class="col-md-1 col-4 navbar-dark align-middle cfg-row-form">
           <span class="navbar-toggler-icon"></span>
         </div>

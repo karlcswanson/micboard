@@ -15,6 +15,7 @@ html,body {
 .col-sm {
   color: var(--color-white);
   border: 0px;
+  position: relative;
   // flex-grow: unset;
   // background-color: var(--color-black);
 }
@@ -247,7 +248,7 @@ canvas.slotgraph {
   font-weight: 300;
 }
 
-.editzone .form-row {
+.editzone .row {
   margin-left: 5px;
   margin-right: 5px;
 }
@@ -260,8 +261,8 @@ canvas.slotgraph {
   display: block;
 }
 
-#save-box .form-row,
-#paste-box .form-row {
+#save-box .row,
+#paste-box .row {
   padding-top: 15px;
 }
 
