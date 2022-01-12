@@ -17,7 +17,7 @@ import { initConfigEditor } from './config.js';
 
 import '../css/colors.scss';
 import '../css/style.scss';
-import '../node_modules/@ibm/plex/css/ibm-plex.css';
+import '../node_modules/@ibm/plex/scss/ibm-plex.scss';
 
 
 export const dataURL = 'data.json';

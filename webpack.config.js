@@ -8,9 +8,9 @@ module.exports = {
   // entry: ['./js/script.js','./js/gif.js','./js/chart-smoothie.js','./js/demodata.js'],
   entry: {
     app: ['whatwg-fetch', './js/app.js'],
-    about: ['./js/about.js'],
-    venue: ['./js/venues.js'],
-    web: ['./js/web.js'],
+    // about: ['./js/about.js'],
+    // venue: ['./js/venues.js'],
+    // web: ['./js/web.js'],
   },
   output: {
     path: path.resolve(__dirname, 'static'),
@@ -48,15 +48,11 @@ module.exports = {
         }],
       },
       {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: 'fonts/',
-            publicPath: 'static/fonts/',
-          },
-        }],
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name][ext]',
+        }
       },
       {
         test: /.jsx?$/,
