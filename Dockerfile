@@ -5,7 +5,7 @@ COPY . .
 RUN npm install
 RUN npm run build
 
-FROM python:3 as micboard_server
+FROM python:3-alpine as micboard_server
 
 LABEL org.opencontainers.image.authors="karl@micboard.io"
 
