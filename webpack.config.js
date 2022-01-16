@@ -8,9 +8,8 @@ module.exports = {
   // entry: ['./js/script.js','./js/gif.js','./js/chart-smoothie.js','./js/demodata.js'],
   entry: {
     app: ['whatwg-fetch', './js/app.js'],
-    // about: ['./js/about.js'],
-    // venue: ['./js/venues.js'],
-    // web: ['./js/web.js'],
+    venue: ['./js/venues.js'],
+    web: ['./js/web.js'],
   },
   output: {
     path: path.resolve(__dirname, 'static'),

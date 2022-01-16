@@ -5,11 +5,7 @@
   "main": "main.js",
   "scripts": {
     "server": "python py/micboard.py",
-    "binary": "pyinstaller py/micboard.spec",
     "build": "node node_modules/webpack/bin/webpack.js --progress --config=webpack.config.js",
-    "app": "electron .",
-    "pack": "node electron-build.js",
-    "dist": "electron-builder",
     "static": "python -m http.server 8058"
   },
   "private": true,
@@ -45,8 +41,6 @@
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
-    "electron": "^16.0.7",
-    "electron-builder": "^22.14.5",
     "eslint": "^8.6.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4",
