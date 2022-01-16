@@ -16,7 +16,6 @@ static/gifs/*
 *.gif
 static/backgrounds/*
 node_modules/*
-package-lock.json
 DCIDMap.xml
 .python-version
 static/data2.json
