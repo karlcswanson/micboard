@@ -311,24 +311,24 @@
           </div>
         </div>
         <div class="row">
-          <div class="col">
-            <button type="button" class="btn btn-success btn-block" id="bulk-name-loader">Load Bulk Names</button>
+          <div class="col d-grid gap-2">
+            <button type="button" class="btn btn-success" id="bulk-name-loader">Load Bulk Names</button>
           </div>
         </div>
       </div>
       <div class="col-sm" id="save-box">
         <div class="row">
-          <div class="col">
-            <button type="button" class="btn btn-success btn-block" id="slotSave">Save</button>
+          <div class="col d-grid gap-2">
+            <button type="button" class="btn btn-success" id="slotSave">Save</button>
           </div>
         </div>
 
         <div class="row">
-          <div class="col">
-            <button type="button" class="btn btn-secondary btn-warning btn-block" id="clear-id">Clear IDs</button>
+          <div class="col d-grid gap-2">
+            <button type="button" class="btn btn-secondary btn-warning" id="clear-id">Clear IDs</button>
           </div>
-          <div class="col">
-            <button type="button" class="btn btn-secondary btn-warning btn-block" id="clear-name">Clear Names</button>
+          <div class="col d-grid gap-2">
+            <button type="button" class="btn btn-secondary btn-warning" id="clear-name">Clear Names</button>
           </div>
         </div>
       </div>
@@ -341,8 +341,8 @@
         </div>
         <div class="col-md-2 col-4 slot-number text-center cfg-row-form"><label class="col-form-label"></label></div>
 
-        <div class="col-md-1 order-md-12 col-4 del-btn cfg-row-form">
-          <button type="button btn-block" class="btn float-right btn-danger"><span aria-hidden="true">&times;</span></button>
+        <div class="col-md-1 order-md-12 col-4 del-btn cfg-row-form d-grid gap-2">
+          <button type="button" class="btn float-right btn-danger"><span aria-hidden="true">&times;</span></button>
         </div>
 
         <div class="col-md-4 col-12 cfg-row-form">
@@ -372,11 +372,6 @@
 
       </div>
     </template>
-    <!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
-    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-
     <script src="static/app.js"></script>
-    <script>if (window.module) module = window.module;</script>
-
   </body>
 </html>
