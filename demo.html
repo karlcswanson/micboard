@@ -113,8 +113,9 @@
 
         </div>
       </div>
-
-      <button id="hud-button" type="button" class="btn btn-success btn-lg btn-block">Close</button>
+      <div class="d-grid gap-2">
+        <button id="hud-button" type="button" class="btn btn-success btn-lg">Close</button>
+      </div>
 
     </div>
     <div class="container-fluid fullHeight deskmode" id="container">
@@ -148,10 +149,11 @@
               <input type="checkbox" id="chartCheck">
             </div>
           </div>
-
-          <button type="button" class="btn btn-success btn-lg btn-block" id="editorSave">Save</button>
-          <button type="button" class="btn btn-warning btn-lg btn-block" id="editorClose">Close</button>
-          <button type="button" class="btn btn-danger btn-lg btn-block" id="editorClear">Clear</button>
+          <div class="d-grid gap-1">
+            <button type="button" class="btn btn-success btn-lg" id="editorSave">Save</button>
+            <button type="button" class="btn btn-warning btn-lg" id="editorClose">Close</button>
+            <button type="button" class="btn btn-danger btn-lg" id="editorClear">Clear</button>
+          </div>
         </div>
       </div>
       <div id="micboard" class="row above-mid bg-std elinfo11 drag-container">
@@ -175,8 +177,8 @@
             <div class="config-footer">
               <div class="row">
 
-                <div class="col">
-                  <button id="add-discovered" class="btn btn-block btn-danger">Add All Discovered Devices</button>
+                <div class="col d-grid gap-2">
+                  <button id="add-discovered" class="btn btn-danger">Add All Discovered Devices</button>
                 </div>
 
               </div>
@@ -191,14 +193,14 @@
             <div class="config-footer">
               <div class="row">
 
-                <div class="col">
-                  <button id="clear-config" class="btn btn-block btn-danger">Clear</button>
+                <div class="col d-grid gap-2">
+                  <button id="clear-config" class="btn btn-danger">Clear</button>
                 </div>
-                <div class="col">
-                  <button id="add-config-row" class="btn btn-block btn-warning">Add Row</button>
+                <div class="col d-grid gap-2">
+                  <button id="add-config-row" class="btn btn-warning">Add Row</button>
                 </div>
-                <div class="col">
-                  <button id="save" class="btn btn-block btn-success">Save</button>
+                <div class="col d-grid gap-2">
+                  <button id="save" class="btn btn-success">Save</button>
                 </div>
 
               </div>
