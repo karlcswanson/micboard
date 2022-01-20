@@ -1,6 +1,6 @@
 "use strict";
 
-import 'bootstrap';
+import { Collapse } from 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import QRCode from 'qrcode';
 import 'whatwg-fetch';
@@ -122,11 +122,6 @@ function mapGroups() {
       groupEditToggle();
       $('.collapse').collapse('hide');
     }
-  });
-
-  $('a#go-hud').on('click', () => {
-    $('#hud').toggle();
-    $('.collapse').collapse('hide');
   });
 
   $('a.preset-link').each(function(index) {
@@ -262,7 +257,7 @@ $(document).ready(() => {
   keybindings();
   if (micboard.url.demo === 'true') {
     setTimeout(() => {
-      $('#hud').show();
+      new Collapse(document.getElementById('hud'), { show: true})
     }, 100);
 
     initialMap();

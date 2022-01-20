@@ -23,7 +23,7 @@ function allSlots() {
 
 // enables info-drawer toggle for mobile clients
 function infoToggle() {
-  $('.col-sm').click((e) => {
+  $('.col-sm').on('click', (e) => {
     if ($(window).width() <= 980 && micboard.settingsMode !== 'EXTENDED') {
       $(e.currentTarget).find('.info-drawer').toggle();
     }

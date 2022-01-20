@@ -1,5 +1,6 @@
 'use strict';
 
+import { Collapse} from 'bootstrap'
 import { micboard, updateHash, generateQR } from './app.js';
 import { toggleInfoDrawer, toggleImageBackground, toggleVideoBackground, toggleDisplayMode } from './display';
 import { renderGroup } from './channelview.js';
@@ -18,9 +19,9 @@ function toggleFullScreen() {
 }
 
 export function keybindings() {
-  $('#hud-button').click( function() {
-    $('#hud').hide();
-  });
+  // $('#hud-button').on('click', function() {
+  //   $('#hud').hide();
+  // });
 
 
   document.addEventListener('keydown', (e) => {
@@ -121,7 +122,7 @@ export function keybindings() {
     }
 
     if (e.key === '?') {
-      $('#hud').toggle();
+      new Collapse(document.getElementById('hud'), { toggle: true} )
     }
   }, false);
 }
