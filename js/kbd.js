@@ -19,11 +19,6 @@ function toggleFullScreen() {
 }
 
 export function keybindings() {
-  // $('#hud-button').on('click', function() {
-  //   $('#hud').hide();
-  // });
-
-
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       micboard.settingsMode = 'NONE';

@@ -45,13 +45,13 @@ export function ActivateMessageBoard(h1, p) {
     p = 'Could not connect to the micboard server. Please <a href=".">refresh</a> the page.';
   }
 
-  $('#micboard').hide();
-  $('.settings').hide();
+  document.getElementById('micboard').style.display = 'none'
+  document.getElementsByClassName('settings')[0].style.display = 'none';
   const eb = document.getElementsByClassName('message-board')[0];
   eb.querySelector('h1').innerHTML = h1;
   eb.querySelector('p').innerHTML = p;
 
-  $('.message-board').show();
+  document.getElementsByClassName('message-board')[0].style.display = 'block'
 
   micboard.connectionStatus = 'DISCONNECTED';
 }
@@ -107,29 +107,38 @@ export function updateNavLinks() {
 }
 
 function mapGroups() {
-  $('a#go-extended').on('click', () => {
+  const navbar = document.getElementById('navbarToggleExternalContent')
+  const help = document.getElementById('hud')
+  document.getElementById('go-hud').addEventListener('click', () => {
+    if (!document.getElementById('hud').classList.contains('show')) {
+      new Collapse(help, {toggle: true})
+    }
+    new Collapse(navbar, { hide: true })
+  })
+
+  document.getElementById('go-extended').addEventListener('click', () => {
     slotEditToggle();
-    $('.collapse').collapse('hide');
-  });
+    new Collapse(navbar, { hide: true })
+  })
 
-  $('a#go-config').on('click', () => {
+  document.getElementById('go-config').addEventListener('click', () => {
     initConfigEditor();
-    $('.collapse').collapse('hide');
+    new Collapse(navbar, { hide: true })
   });
 
-  $('a#go-groupedit').on('click', () => {
+  document.getElementById('go-groupedit').addEventListener('click', () => {
     if (micboard.group !== 0) {
       groupEditToggle();
-      $('.collapse').collapse('hide');
+      new Collapse(navbar, { hide: true })
     }
   });
 
-  $('a.preset-link').each(function(index) {
-    const id = parseInt($(this).attr('id')[9], 10);
-
-    $(this).on('click', () => {
-      renderGroup(id);
-      $('.collapse').collapse('hide');
+  const preset_links = document.getElementsByClassName('preset-link')
+  Array.from(preset_links).forEach((element) => {
+    element.addEventListener('click', (e) => {
+      const target = parseInt(e.target.id[9], 10)
+      renderGroup(target)
+      new Collapse(navbar, {hide: true })
     });
   });
 
@@ -251,7 +260,7 @@ function initialMap(callback) {
 }
 
 
-$(document).ready(() => {
+document.addEventListener('DOMContentLoaded', () => {
   console.log('Starting Micboard version: ' + VERSION);
   readURLParameters();
   keybindings();
