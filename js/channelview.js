@@ -23,16 +23,24 @@ function allSlots() {
 
 // enables info-drawer toggle for mobile clients
 function infoToggle() {
-  $('.col-sm').on('click', (e) => {
-    if ($(window).width() <= 980 && micboard.settingsMode !== 'EXTENDED') {
-      $(e.currentTarget).find('.info-drawer').toggle();
-    }
-  });
+  const cols = document.getElementsByClassName('col-sm')
+  Array.from(cols).forEach((element) => {
+    element.addEventListener('click', (e) => {
+      if (window.innerWidth <= 980 && micboard.settingsMode !== 'EXTENDED') {
+        const id = e.currentTarget.querySelector('.info-drawer')
+        if (id.style.display == 'none' || id.style.display == '') {
+          id.style.display = 'block';
+        } else if (id.style.display == 'block' ){
+          id.style.display = 'none'
+        }
+      }
+    })
+  })
 
   if (micboard.group === 0) {
-    $('#go-groupedit').hide();
+    document.getElementById('go-groupedit').style.display = 'none'
   } else if (micboard.group !== 0) {
-    $('#go-groupedit').show();
+    document.getElementById('go-groupedit').style.display = 'block'
   }
 }
 
@@ -309,8 +317,8 @@ export function renderDisplayList(dl) {
 
 export function renderGroup(group) {
   if (micboard.settingsMode === 'CONFIG') {
-    $('#micboard').show();
-    $('.settings').hide();
+    document.getElementById('micboard').style.display = 'grid'
+    document.getElementsByClassName('settings')[0].style.display = 'none'
   }
   micboard.group = group;
   updateHash();
