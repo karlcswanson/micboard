@@ -8,5 +8,4 @@ DockerfileArch
 docker-compose.yaml
 micboard.service
 package-lock.json
-package.json
 webpack.config.js
