@@ -152,16 +152,17 @@ function addAllDiscoveredDevices() {
 }
 
 function updateHiddenSlots() {
-  $('.cfg-type').each(function() {
-    const type = $(this).val();
-    if (type === 'offline' || type === '') {
-      $(this).closest('.cfg-row').find('.cfg-ip').hide()
-      $(this).closest('.cfg-row').find('.cfg-channel').hide();
+  const cfgRows = document.querySelectorAll('#editor_holder .cfg-row')
+  Array.from(cfgRows).forEach((e) => {
+    const type = e.querySelector('.cfg-type').value
+    if ( type === 'offline' || type === '') {
+      e.querySelector('.cfg-ip').style.display = "none"
+      e.querySelector('.cfg-channel').style.display = "none"
     } else {
-      $(this).closest('.cfg-row').find('.cfg-ip').show();
-      $(this).closest('.cfg-row').find('.cfg-channel').show();
+      e.querySelector('.cfg-ip').style.display = "block"
+      e.querySelector('.cfg-channel').style.display = "block"
     }
-  });
+  })
 }
 
 export function initConfigEditor() {
@@ -172,8 +173,8 @@ export function initConfigEditor() {
 
   micboard.settingsMode = 'CONFIG';
   updateHash();
-  $('#micboard').hide();
-  $('.settings').show();
+  document.getElementById('micboard').style.display = "none"
+  document.querySelector('.settings').style.display = "block"
 
   renderSlotList();
   renderDiscoverdDeviceList();
@@ -183,16 +184,17 @@ export function initConfigEditor() {
 
 
   updateHiddenSlots();
+  
+  const cfgTypeInputs = document.getElementsByClassName('cfg-type')
+  Array.from(cfgTypeInputs).forEach((e) => {
+    e.addEventListener('change', () => updateHiddenSlots())
+  })
 
-  $(document).on('change', '.cfg-type', function() {
-    updateHiddenSlots();
-  });
-
-  $('#add-discovered').click(function() {
+  document.getElementById('add-discovered').addEventListener('click', () => {
     addAllDiscoveredDevices();
   });
 
-  $('#save').click(function() {
+  document.getElementById('save').addEventListener('click', ()=> {
     const data = generateJSONConfig();
     const url = 'api/config';
     console.log(data);
@@ -203,14 +205,18 @@ export function initConfigEditor() {
     });
   });
 
-  $('#editor_holder').on('click', '.del-btn', function() {
-    $(this).closest('.cfg-row').remove();
-    updateSlotID();
-    renderDiscoverdDeviceList();
+  const delBtns = document.querySelectorAll('#editor_holder .del-btn')
+  Array.from(delBtns).forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const row = e.target.closest('.cfg-row').remove()
+      updateSlotID();
+      renderDiscoverdDeviceList();
+    })
   });
 
-  $('#clear-config').click(function() {
-    $('#editor_holder .cfg-row').remove();
+  document.getElementById('clear-config').addEventListener('click', () => {
+    const cfg_list = document.querySelectorAll('#editor_holder .cfg-row')
+    Array.from(cfg_list).forEach(e => e.remove())
     let t;
     for (let i = 0; i < 4; i += 1) {
       t = document.getElementById('config-slot-template').content.cloneNode(true);
@@ -221,7 +227,7 @@ export function initConfigEditor() {
     renderDiscoverdDeviceList();
   });
 
-  $('#add-config-row').click(function() {
+  document.getElementById('add-config-row').addEventListener('click', () => {
     const t = document.getElementById('config-slot-template').content.cloneNode(true);
     document.getElementById('editor_holder').append(t);
     updateSlotID();
