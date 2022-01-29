@@ -20,8 +20,9 @@ jobs:
 
       - name: Build Frontend
         uses: actions/setup-node@v2
-        run: npm install
-        run: npm run build
+
+      - run: npm install
+      - run: npm run build
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
