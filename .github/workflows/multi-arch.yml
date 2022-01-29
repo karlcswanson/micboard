@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches:
-      - '0.8.7-updates'
+      - '0.8.7-updates__DISABLED'
 
 env:
   REGISTRY: ghcr.io
