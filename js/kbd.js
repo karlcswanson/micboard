@@ -1,6 +1,6 @@
 'use strict';
 
-import { Collapse} from 'bootstrap'
+import { Collapse, Modal } from 'bootstrap'
 import { micboard, updateHash, generateQR } from './app.js';
 import { toggleInfoDrawer, toggleImageBackground, toggleVideoBackground, toggleDisplayMode } from './display';
 import { renderGroup } from './channelview.js';
@@ -18,6 +18,18 @@ function toggleFullScreen() {
   }
 }
 
+
+function activeDiv(querySelector) {
+  const div = document.querySelector(querySelector)
+  if (div) {
+    if (window.getComputedStyle(div).getPropertyValue('display') === "block") {
+      return true
+    }
+  }
+  return false
+}
+
+
 export function keybindings() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -25,13 +37,16 @@ export function keybindings() {
       updateHash();
       window.location.reload();
     }
-    if ($('.settings').is(':visible')) {
+
+    if (activeDiv('.settings')) {
       return;
     }
-    if ($('.editzone').is(':visible')) {
+
+    if (activeDiv('.editzone')) {
       return;
     }
-    if ($('.sidebar-nav').is(':visible')) {
+
+    if (activeDiv('.sidebar-nav')) {
       return;
     }
 
@@ -96,7 +111,7 @@ export function keybindings() {
 
     if (e.key === 'N') {
       slotEditToggle();
-      $('#paste-box').show();
+      document.getElementById('paste-box').style.display = "block"
     }
 
     if (e.key === 's') {
@@ -105,7 +120,8 @@ export function keybindings() {
 
     if (e.key === 'q') {
       generateQR();
-      $('.modal').modal('toggle');
+      const qrMod = Modal.getOrCreateInstance('#qr-modal')
+      qrMod.toggle()
     }
 
     if (e.key === 't') {
