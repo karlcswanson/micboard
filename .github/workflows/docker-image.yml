@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ 0.8.7-updates_disabled ]
+    branches: [ 0.8.7-updates ]
 
 env:
   REGISTRY: ghcr.io
