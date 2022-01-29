@@ -1,5 +1,12 @@
-build/*
-css/*
-docs/*
-js/*
-node_modules/*
+build
+css
+docs
+js
+node_modules
+Dockerfile
+DockerfileArch
+docker-compose.yaml
+micboard.service
+package-lock.json
+package.json
+webpack.config.js
