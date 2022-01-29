@@ -17,7 +17,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-    
+
+      - name: Build Frontend
+        uses: actions/setup-node@v2
+        run: npm install
+        run: npm run build
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -42,6 +47,7 @@ jobs:
         with:
           context: .
           push: true
+          file: DockerfileArch
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
