@@ -5,6 +5,7 @@ js
 node_modules
 Dockerfile
 DockerfileArch
+DockerfileArch.dockerignore
 docker-compose.yaml
 micboard.service
 package-lock.json

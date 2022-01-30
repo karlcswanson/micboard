@@ -655,12 +655,12 @@ canvas.slotgraph {
   padding-top: 4em;
 }
 
-.message-board{
+.message-board {
   display: none;
   background-color: var(--color-blue);
   color: var(--color-white);
-  margin-left: -15px;
-  margin-right: -15px;
+  padding-left: 50px !important;
+  padding-top: 75px !important;
   padding: 3em;
 }
 
