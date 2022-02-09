@@ -4,7 +4,7 @@ Micboard server can be installed on many different platforms.  For small and por
 ## Docker (Recommended)
 Download and install Docker & Docker Compose
 
-Run docker the dockercompose.yml file
+Run docker the docker-compose.yaml file
 ```
 $ mkdir -p ~/docker/micboard
 $ cd ~/docker/micboard/
