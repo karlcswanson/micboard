@@ -23,16 +23,24 @@ function allSlots() {
 
 // enables info-drawer toggle for mobile clients
 function infoToggle() {
-  $('.col-sm').click((e) => {
-    if ($(window).width() <= 980 && micboard.settingsMode !== 'EXTENDED') {
-      $(e.currentTarget).find('.info-drawer').toggle();
-    }
-  });
+  const cols = document.getElementsByClassName('col-sm')
+  Array.from(cols).forEach((element) => {
+    element.addEventListener('click', (e) => {
+      if (window.innerWidth <= 980 && micboard.settingsMode !== 'EXTENDED') {
+        const id = e.currentTarget.querySelector('.info-drawer')
+        if (id.style.display == 'none' || id.style.display == '') {
+          id.style.display = 'block';
+        } else if (id.style.display == 'block' ){
+          id.style.display = 'none'
+        }
+      }
+    })
+  })
 
   if (micboard.group === 0) {
-    $('#go-groupedit').hide();
+    document.getElementById('go-groupedit').style.display = 'none'
   } else if (micboard.group !== 0) {
-    $('#go-groupedit').show();
+    document.getElementById('go-groupedit').style.display = 'block'
   }
 }
 
@@ -47,6 +55,16 @@ function updateTXOffset(slotSelector, data) {
 
 function updateRuntime(slotSelector, data) {
   slotSelector.querySelector('p.runtime').innerHTML = data.runtime;
+}
+
+function updatePowerlock(slotSelector, data) {
+  if (data.power_lock === 'ON') {
+    slotSelector.querySelector('p.powerlock').style.display = 'block';
+  } else {
+    slotSelector.querySelector('p.powerlock').style.display = 'none';
+  }
+
+
 }
 
 function updateQuality(slotSelector, data) {
@@ -208,6 +226,9 @@ function updateSelector(slotSelector, data) {
   updateCheck(data, 'frequency', () => {
     updateFrequency(slotSelector, data);
   });
+  updateCheck(data, 'power_lock', () => {
+    updatePowerlock(slotSelector, data);
+  });
 }
 
 
@@ -242,6 +263,9 @@ export function updateViewOnly(slotSelector, data) {
   if ('ip' in data) {
     updateIP(slotSelector, data);
   }
+  if ('power_lock' in data) {
+    updatePowerlock(slotSelector, data);
+  }
 }
 
 export function updateSlot(data) {
@@ -273,16 +297,19 @@ export function renderDisplayList(dl) {
   dl.forEach((e) => {
     let t;
     if (e !== 0) {
-      t = document.getElementById('column-template').content.cloneNode(true);
-      t.querySelector('div.col-sm').id = 'slot-' + tx[e].slot;
-      updateViewOnly(t, tx[e]);
-      charts[tx[e].slot] = initChart(t, tx[e]);
+      if (typeof tx[e] !== 'undefined') {
+        t = document.getElementById('column-template').content.cloneNode(true);
+        t.querySelector('div.col-sm').id = 'slot-' + tx[e].slot;
+        updateViewOnly(t, tx[e]);
+        charts[tx[e].slot] = initChart(t, tx[e]);
+        document.getElementById('micboard').appendChild(t);
+      }
     } else {
       t = document.getElementById('column-template').content.cloneNode(true);
       t.querySelector('p.name').innerHTML = 'BLANK';
       t.querySelector('.col-sm').classList.add('blank');
+      document.getElementById('micboard').appendChild(t);
     }
-    document.getElementById('micboard').appendChild(t);
   });
 
   infoToggle();
@@ -290,8 +317,8 @@ export function renderDisplayList(dl) {
 
 export function renderGroup(group) {
   if (micboard.settingsMode === 'CONFIG') {
-    $('#micboard').show();
-    $('.settings').hide();
+    document.getElementById('micboard').style.display = 'grid'
+    document.getElementsByClassName('settings')[0].style.display = 'none'
   }
   micboard.group = group;
   updateHash();

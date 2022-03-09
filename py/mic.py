@@ -37,7 +37,8 @@ class WirelessMic(ChannelDevice):
         self.tx_offset = 255
         self.peakstamp = time.time() - 60
         self.quality = 255
-        self.runtime = 65535
+        self.runtime = ''
+        self.power_lock = ''
 
     def set_antenna(self, antenna):
         self.antenna = antenna
@@ -112,6 +113,12 @@ class WirelessMic(ChannelDevice):
     def set_tx_quality(self, quality):
         self.quality = int(quality)
 
+    def set_power_lock(self, power_lock):
+        if power_lock in ['OFF', 'UNKN', 'UNKNOWN', 'NONE']:
+            self.power_lock = 'OFF'
+        elif power_lock in ['ON', 'ALL', 'POWER']:
+            self.power_lock = 'ON'
+
     def tx_state(self):
         # WCCC Specific State for unassigned microphones
         if self.rx.rx_com_status in ['DISCONNECTED', 'CONNECTING']:
@@ -148,7 +155,8 @@ class WirelessMic(ChannelDevice):
             'rf_level': self.rf_level, 'frequency': self.frequency,
             'battery':self.battery, 'tx_offset': self.tx_offset, 'quality': self.quality,
             'status': self.tx_state(), 'slot': self.slot, 'raw': self.raw,
-            'type': self.rx.type, 'name_raw' : self.chan_name_raw, 'runtime' : self.runtime
+            'type': self.rx.type, 'name_raw' : self.chan_name_raw,
+            'power_lock': self.power_lock, 'runtime' : self.runtime
         }
 
     def ch_json_mini(self):
@@ -201,3 +209,5 @@ class WirelessMic(ChannelDevice):
             self.set_frequency(split[3])
         elif split[2] == self.CHCONST['tx_offset']:
             self.set_tx_offset(split[3])
+        elif split[2] == self.CHCONST['power_lock']:
+            self.set_power_lock(split[3])

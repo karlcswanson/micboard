@@ -1,0 +1,13 @@
+FROM python:3-alpine
+
+LABEL org.opencontainers.image.authors="karl@micboard.io"
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN pip3 install -r py/requirements.txt
+
+EXPOSE 8058
+
+CMD ["python3", "py/micboard.py"]

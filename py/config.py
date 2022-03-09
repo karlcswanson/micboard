@@ -151,10 +151,28 @@ def config():
 
     logging.info('Starting Micboard {}'.format(config_tree['micboard_version']))
 
+
+def config_mix(slots):
+    for slot in slots:
+        current = get_slot_by_number(slot['slot'])
+        if current:
+            if 'extended_id' in current:
+                slot['extended_id'] = current['extended_id']
+
+            if 'extended_name' in current:
+                slot['extended_name'] = current['extended_name']
+
+            if 'chan_name_raw' in current:
+                slot['chan_name_raw'] = current['chan_name_raw']
+
+    return slots
+
+
 def reconfig(slots):
     tornado_server.SocketHandler.close_all_ws()
 
-    config_tree['slots'] = slots
+    config_tree['slots'] = config_mix(slots)
+
     save_current_config()
 
     config_tree.clear()

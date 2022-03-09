@@ -1,7 +1,17 @@
 # Server Installation
-Micboard server can be installed on many different platforms.  For small and portable systems, Micboard can run on a Raspberry Pi hidden in the back of a rack.  Ubuntu Server is recommended for large permanent installations.
+Micboard server can be installed on many different platforms.  For small and portable systems, Micboard can run on a Raspberry Pi hidden in the back of a rack.
 
-The macOS app provides a great way to try Micboard before purchasing additional hardware.
+## Docker (Recommended)
+Download and install Docker & Docker Compose
+
+Run docker the docker-compose.yaml file
+```
+$ mkdir -p ~/docker/micboard
+$ cd ~/docker/micboard/
+$ curl -O https://raw.githubusercontent.com/karlcswanson/micboard/master/docker-compose.yaml
+$ docker compose up
+```
+
 
 ## Debian (Ubuntu & Raspberry Pi)
 Install git, python3-pip, and Node.js
@@ -40,9 +50,7 @@ $ sudo systemctl enable micboard.service
 Check the [configuration](configuration.md) docs for more information on configuring micboard.
 
 ## macOS - Desktop Application
-Download and run micboard from the project's [GitHub Release](https://github.com/karlcswanson/micboard/releases/) page.  Add RF devices to the 'Slot Configuration' and press 'Save'.
-
-Check the [configuration](configuration.md) docs for more information on configuring micboard.
+The Mac desktop app has been discontinued.
 
 
 ## macOS - From Source
@@ -84,17 +92,4 @@ Check the [configuration](configuration.md) docs for more information on configu
 Restart micboard
 ```
 $ python3 py/micboard.py
-```
-
-## Docker
-Download micboard from github
-```
-$ git clone https://github.com/karlcswanson/micboard.git
-```
-
-Build and run docker image
-```
-$ cd micboard/
-$ docker build -t micboard .
-$ docker-compose up
 ```

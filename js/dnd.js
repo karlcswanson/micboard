@@ -165,14 +165,14 @@ function submitSlotUpdate() {
 }
 
 export function initEditor() {
-  $('#editorClose').on('click', () => {
+  document.getElementById('editorClose').addEventListener('click', () => {
     groupEditToggle();
   });
 
-  $('#editorSave').on('click', () => {
+  document.getElementById('editorSave').addEventListener('click', () => {
     submitSlotUpdate();
   });
-  $('#editorClear').on('click', () => {
+  document.getElementById('editorClear').addEventListener('click', () => {
     clearAll();
   });
 }

@@ -37,8 +37,9 @@ Add a user for the share
 $ sudo smbpasswd -a micboard
 ```
 
-restart samba
+restart samba and enable it at startup
 
 ```
-$ sudo service smbd restart
+$ sudo systemctl restart smbd
+$ sudo systemctl enable smbd
 ```

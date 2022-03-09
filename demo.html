@@ -33,7 +33,7 @@
 
   </head>
   <body>
-    <div id="hud" class="container">
+    <div id="hud" class="container collapse">
       <div class="row">
         <div class="col-4 keyboard-guide">
           <h2 class="text-center">Keyboard Shortcuts</h2>
@@ -113,13 +113,14 @@
 
         </div>
       </div>
-
-      <button id="hud-button" type="button" class="btn btn-success btn-lg btn-block">Close</button>
+      <div class="d-grid gap-2">
+        <button id="hud-button" type="button" class="btn btn-success btn-lg" data-bs-toggle="collapse" data-bs-target="#hud">Close</button>
+      </div>
 
     </div>
     <div class="container-fluid fullHeight deskmode" id="container">
 
-      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div id="qr-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
           <div class="modal-content">
             <div class="qr text-center">
@@ -148,10 +149,11 @@
               <input type="checkbox" id="chartCheck">
             </div>
           </div>
-
-          <button type="button" class="btn btn-success btn-lg btn-block" id="editorSave">Save</button>
-          <button type="button" class="btn btn-warning btn-lg btn-block" id="editorClose">Close</button>
-          <button type="button" class="btn btn-danger btn-lg btn-block" id="editorClear">Clear</button>
+          <div class="d-grid gap-1">
+            <button type="button" class="btn btn-success btn-lg" id="editorSave">Save</button>
+            <button type="button" class="btn btn-warning btn-lg" id="editorClose">Close</button>
+            <button type="button" class="btn btn-danger btn-lg" id="editorClear">Clear</button>
+          </div>
         </div>
       </div>
       <div id="micboard" class="row above-mid bg-std elinfo11 drag-container">
@@ -173,10 +175,10 @@
 
             <div id="discovered_list"></div>
             <div class="config-footer">
-              <div class="form-row">
+              <div class="row">
 
-                <div class="col">
-                  <button id="add-discovered" class="btn btn-block btn-danger">Add All Discovered Devices</button>
+                <div class="col d-grid gap-2">
+                  <button id="add-discovered" class="btn btn-danger">Add All Discovered Devices</button>
                 </div>
 
               </div>
@@ -189,16 +191,16 @@
             </div>
             <div id="editor_holder"></div>
             <div class="config-footer">
-              <div class="form-row">
+              <div class="row">
 
-                <div class="col">
-                  <button id="clear-config" class="btn btn-block btn-danger">Clear</button>
+                <div class="col d-grid gap-2">
+                  <button id="clear-config" class="btn btn-danger">Clear</button>
                 </div>
-                <div class="col">
-                  <button id="add-config-row" class="btn btn-block btn-warning">Add Row</button>
+                <div class="col d-grid gap-2">
+                  <button id="add-config-row" class="btn btn-warning">Add Row</button>
                 </div>
-                <div class="col">
-                  <button id="save" class="btn btn-block btn-success">Save</button>
+                <div class="col d-grid gap-2">
+                  <button id="save" class="btn btn-success">Save</button>
                 </div>
 
               </div>
@@ -230,13 +232,15 @@
                 <p class="text-muted grp-link"><a class="nav-link preset-link" id="go-group-8">8:</a></p>
                 <p class="text-muted grp-link"><a class="nav-link preset-link" id="go-group-9">9:</a></p>
               </div>
+              <p class="text-muted"><a class="nav-link" id="go-hud" role="button">help</a></p>
             </div>
           </div>
           <nav class="navbar navbar-dark bg-dark py-0">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-
+            <div class="container-fluid">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
           </nav>
 
         </div>
@@ -263,6 +267,13 @@
             <p class="runtime"></p>
             <p class="offset"></p>
             <canvas class="slotgraph"></canvas>
+            <p class="powerlock">
+              <svg class="bi lock-fill" width="1.5em" height="1.5em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <rect width="11" height="9" x="4.5" y="8" rx="2"/>
+                <path fill-rule="evenodd" d="M6.5 5a3.5 3.5 0 117 0v3h-1V5a2.5 2.5 0 00-5 0v3h-1V5z" clip-rule="evenodd"/>
+                <!-- <path fill-rule="evenodd" d="M13.655 9H6.333c-.264 0-.398.068-.471.121a.73.73 0 00-.224.296 1.626 1.626 0 00-.138.59V15c0 .342.076.531.14.635.064.106.151.18.256.237a1.122 1.122 0 00.436.127l.013.001h7.322c.264 0 .398-.068.471-.121a.73.73 0 00.224-.296 1.627 1.627 0 00.138-.59V10c0-.342-.076-.531-.14-.635a.658.658 0 00-.255-.237 1.123 1.123 0 00-.45-.128zm.012-1H6.333C4.5 8 4.5 10 4.5 10v5c0 2 1.833 2 1.833 2h7.334c1.833 0 1.833-2 1.833-2v-5c0-2-1.833-2-1.833-2zM6.5 5a3.5 3.5 0 117 0v3h-1V5a2.5 2.5 0 00-5 0v3h-1V5z" clip-rule="evenodd"/> -->
+              </svg>
+            </p>
             <p class="quality"></p>
             <p class="frequency"></p>
           </div>
@@ -274,7 +285,7 @@
           </div>
 
           <div class="editzone">
-            <div class="form-row">
+            <div class="row">
               <div class="col">
                 <input type="text" class="form-control ext-id" aria-label="Default" aria-describedby="inputGroup-sizing-default" autocomplete="off" placeholder="ID">
               </div>
@@ -294,51 +305,47 @@
 
     <template id="save-template">
       <div class="col-sm" id="paste-box">
-        <div class="form-row">
+        <div class="row">
           <div class="col">
             <textarea class="form-control" id="bulkbox" rows="3"></textarea>
           </div>
         </div>
-        <div class="form-row">
-          <div class="col">
-            <button type="button" class="btn btn-success btn-block" id="bulk-name-loader">Load Bulk Names</button>
+        <div class="row">
+          <div class="col d-grid gap-2">
+            <button type="button" class="btn btn-success" id="bulk-name-loader">Load Bulk Names</button>
           </div>
         </div>
       </div>
       <div class="col-sm" id="save-box">
-        <div class="form-row">
-          <div class="col">
-            <button type="button" class="btn btn-success btn-block" id="slotSave">Save</button>
+        <div class="row">
+          <div class="col d-grid gap-2">
+            <button type="button" class="btn btn-success" id="slotSave">Save</button>
           </div>
         </div>
 
-        <div class="form-row">
-          <div class="col">
-            <button type="button" class="btn btn-secondary btn-warning btn-block" id="clear-id">Clear IDs</button>
+        <div class="row">
+          <div class="col d-grid gap-2">
+            <button type="button" class="btn btn-secondary btn-warning" id="clear-id">Clear IDs</button>
           </div>
-          <div class="col">
-            <button type="button" class="btn btn-secondary btn-warning btn-block" id="clear-name">Clear Names</button>
+          <div class="col d-grid gap-2">
+            <button type="button" class="btn btn-secondary btn-warning" id="clear-name">Clear Names</button>
           </div>
         </div>
       </div>
     </template>
 
     <template id="config-slot-template">
-      <div class="form-row cfg-row">
-        <div class="col-md-1 col-4 navbar-dark align-middle cfg-row-form">
+      <div class="row cfg-row">
+        <div class="col col-md-1 col-4 navbar-dark align-middle cfg-row-form">
           <span class="navbar-toggler-icon"></span>
         </div>
-        <div class="col-md-2 col-4 slot-number text-center cfg-row-form"><label class="col-form-label"></label></div>
+        <div class="col col-md-2 col-4 slot-number text-center cfg-row-form"><label class="col-form-label"></label></div>
 
-        <div class="col-md-1 order-md-12 col-4 del-btn cfg-row-form">
-          <button type="button btn-block" class="btn float-right btn-danger"><span aria-hidden="true">&times;</span></button>
-        </div>
-
-        <div class="col-md-4 col-12 cfg-row-form">
+        <div class="col col-md-4 col-12 cfg-row-form">
           <input type="text" class="form-control cfg-ip" placeholder="IP Address">
         </div>
 
-        <div class="col-md-2 col-6 cfg-row-form">
+        <div class="col col-md-2 col-6 cfg-row-form">
           <select class="form-control cfg-type">
             <option></option>
             <option>axtd</option>
@@ -350,7 +357,7 @@
           </select>
         </div>
 
-        <div class="col-md-2 col-6 cfg-row-form">
+        <div class="col col-md-2 col-6 cfg-row-form">
           <select class="form-control cfg-channel">
             <option>1</option>
             <option>2</option>
@@ -359,13 +366,12 @@
           </select>
         </div>
 
+        <div class="col col-md-1 col-12 del-btn cfg-row-form d-grid gap-2">
+          <button type="button" class="btn float-right btn-danger"><span aria-hidden="true">&times;</span></button>
+        </div>
+
       </div>
     </template>
-    <!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
-    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-
     <script src="static/app.js"></script>
-    <script>if (window.module) module = window.module;</script>
-
   </body>
 </html>

@@ -10,6 +10,7 @@ BASE_CONST['uhfr'] = {
         'frequency': 'FREQUENCY',
         'name': 'CHAN_NAME',
         'tx_offset': 'NOTQWERT',
+        'power_lock': 'NOTQWERT',
         'runtime' : 'NOTQWERT',
     },
     'base_const': {
@@ -43,6 +44,7 @@ BASE_CONST['qlxd'] = {
         'name': 'CHAN_NAME',
         'antenna': 'RF_ANTENNA',
         'tx_offset' : 'TX_OFFSET',
+        'power_lock': 'TX_PWR_LOCK',
         'runtime' : 'BATT_RUN_TIME',
         },
     'base_const' : {
@@ -73,6 +75,7 @@ BASE_CONST['ulxd'] = {
         'name': 'CHAN_NAME',
         'antenna': 'RF_ANTENNA',
         'tx_offset' : 'TX_OFFSET',
+        'power_lock': 'TX_PWR_LOCK',
         'runtime' : 'BATT_RUN_TIME',
     },
     'base_const': {
@@ -108,6 +111,7 @@ BASE_CONST['axtd'] = {
         'name': 'CHAN_NAME',
         'antenna': 'ANTENNA_STATUS',
         'tx_offset': 'TX_OFFSET',
+        'power_lock': 'TX_LOCK',
         'runtime' : 'TX_BATT_MINS',
     },
     'base_const' : {

@@ -1,17 +1,20 @@
-FROM python:3
+# syntax=docker/dockerfile:1
+FROM node:17-alpine AS micboard_frontend
+WORKDIR /home/node/app
+COPY . .
+RUN npm install
+RUN npm run build
 
-MAINTAINER Karl Swanson <karlcswanson@gmail.com>
+FROM python:3-alpine as micboard_server
+
+LABEL org.opencontainers.image.authors="karl@micboard.io"
 
 WORKDIR /usr/src/app
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get install nodejs
-
 COPY . .
+COPY --from=micboard_frontend /home/node/app/static /usr/src/app/static/
 
 RUN pip3 install -r py/requirements.txt
-RUN npm install --only=prod
-RUN npm run build
 
 EXPOSE 8058
 
