@@ -1,18 +1,18 @@
-FROM python:3
 
+FROM python:3.9.14-slim-buster
 MAINTAINER Karl Swanson <karlcswanson@gmail.com>
 
+RUN apt-get update -y
+RUN apt-get install git curl make build-essential -y
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install nodejs -y
+RUN npm install yarn -g
+
 WORKDIR /usr/src/app
-
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get install nodejs
-
 COPY . .
 
+RUN yarn install --prod
 RUN pip3 install -r py/requirements.txt
-RUN npm install --only=prod
-RUN npm run build
 
-EXPOSE 8058
-
-CMD ["python3", "py/micboard.py"]
+RUN yarn build
+CMD ["python", "py/micboard.py"]
