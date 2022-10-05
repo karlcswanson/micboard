@@ -1,5 +1,6 @@
 
 FROM python:3.9.14-slim-buster
+MAINTAINER Karl Swanson <karlcswanson@gmail.com>
 
 RUN apt-get update -y
 RUN apt-get install git curl make build-essential -y
